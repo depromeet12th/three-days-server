@@ -1,0 +1,3 @@
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-batch:2.7.4'
+}
