@@ -1,7 +1,9 @@
 package com.depromeet.threedays.controller.member.dto.request;
 
 import com.depromeet.threedays.domain.member.entity.Member;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 
@@ -11,8 +13,6 @@ import javax.validation.constraints.NotBlank;
 public class CreateMemberRequestDto {
     @NotBlank
     private String nickname;
-
-    private String test;
 
     public Member toEntity() {
         return Member.builder()
