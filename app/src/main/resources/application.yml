@@ -1,33 +1,17 @@
-##SERVER###
-server:
-  port: 8085
-
 spring:
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-  datasource:
-    hikari:
-      maximum-pool-size: 30
-      max-lifetime: 60000
-      jdbc-url: jdbc:h2:mem:testdb;MODE=MYSQL
-      username: sa
-      password:
-      connection-timeout: 5000
-      pool-name: Spring-HikariPool
+  web:
+    resources:
+      add-mappings: false
+  mvc:
+    throw-exception-if-no-handler-found: true
   jpa:
-    database-platform: H2
-    show-sql: true
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL57Dialect
-        dialect.storage_engine: innodb
-        default_batch_fetch_size: 500
-        format_sql: true
-      open-in-view: false
+    open-in-view: false
+  servlet:
+    multipart:
+      maxFileSize: 100MB
+      maxRequestSize: 100MB
+  session.jdbc.initialize-schema: never
+
 
 ###SWAGGER###
 springdoc:

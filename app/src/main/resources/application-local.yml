@@ -1,0 +1,13 @@
+spring:
+  # ToDO:
+  config:
+    use-legacy-processing: true
+  profiles:
+    active: local
+    include:
+      - data-local
+  redis:
+    host: localhost
+    password:
+    port: 16379
+
