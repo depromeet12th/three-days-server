@@ -1,14 +1,14 @@
 package com.depromeet.threedays.front.domain.usecase.member;
 
-import com.depromeet.threedays.data.DomainTransactional;
 import com.depromeet.threedays.front.controller.command.member.SaveMemberCommand;
 import com.depromeet.threedays.front.domain.converter.member.MemberConverter;
 import com.depromeet.threedays.front.domain.model.Member;
 import com.depromeet.threedays.front.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@DomainTransactional
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class SaveMemberUseCase {
