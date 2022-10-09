@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Import;
 			HibernateJpaAutoConfiguration.class
 		})
 @ComponentScan({
-	"com.depromeet.threedays",
+	"com.depromeet.threedays.front",
 })
 @Import({JpaDataSourceConfig.class, DataConfig.class})
 public class ApplicationConfig {}
