@@ -18,8 +18,7 @@ public class MemberController {
 	private final SaveMemberUseCase saveUseCase;
 
 	@PostMapping
-	public ResponseEntity<Member> add(
-			@RequestBody @Valid SaveMemberCommand command) {
+	public ResponseEntity<Member> add(@RequestBody @Valid SaveMemberCommand command) {
 		return ResponseEntity.ok(saveUseCase.execute(command));
 	}
 

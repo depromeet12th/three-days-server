@@ -16,6 +16,7 @@ public class GetMemberUseCase {
 	private final MemberRepository memberRepository;
 
 	public Member execute(Long id) {
-		return MemberConverter.from(memberRepository.findById(id).orElseThrow(ResourceNotFoundException::new));
+		return MemberConverter.from(
+				memberRepository.findById(id).orElseThrow(ResourceNotFoundException::new));
 	}
 }
