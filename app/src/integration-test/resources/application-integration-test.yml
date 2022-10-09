@@ -3,7 +3,6 @@ spring:
     host: localhost
     password:
     port: 16379
-  # ToDO:
   config:
     use-legacy-processing: true
   profiles:

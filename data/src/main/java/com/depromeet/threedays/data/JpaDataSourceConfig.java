@@ -37,7 +37,6 @@ public class JpaDataSourceConfig {
 	public static final String TRANSACTION_MANAGER_NAME = SERVICE_NAME + "DomainTransactionManager";
 	public static final String PERSIST_UNIT = SERVICE_NAME + "Domain";
 
-	//	@Primary
 	@Bean(name = ENTITY_MANAGER_FACTORY_NAME)
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(
 			@Qualifier(INTEGRATION_DATA_SOURCE_NAME) DataSource integrationDataSource) {
@@ -53,7 +52,6 @@ public class JpaDataSourceConfig {
 				.build();
 	}
 
-	//	@Primary
 	@Bean(name = TRANSACTION_MANAGER_NAME)
 	public PlatformTransactionManager transactionManager(
 			@Qualifier(ENTITY_MANAGER_FACTORY_NAME) EntityManagerFactory entityManagerFactory) {

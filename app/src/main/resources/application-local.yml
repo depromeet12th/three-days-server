@@ -1,5 +1,4 @@
 spring:
-  # ToDO:
   config:
     use-legacy-processing: true
   profiles:
