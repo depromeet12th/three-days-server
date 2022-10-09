@@ -30,7 +30,7 @@ class GetMemberUseCaseSpec extends IntegrationTestSpecification{
         then:
         actual != null
 
-        actual.id == id
+        actual.memberId == id
         actual.nickname == actual.nickname
     }
 }

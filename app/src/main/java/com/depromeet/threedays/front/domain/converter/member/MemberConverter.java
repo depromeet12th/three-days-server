@@ -15,7 +15,7 @@ public class MemberConverter {
 			return null;
 		}
 
-		return Member.builder().id(entity.getId()).nickname(entity.getNickname()).build();
+		return Member.builder().memberId(entity.getId()).nickname(entity.getNickname()).build();
 	}
 
 	public static MemberEntity to(final Member data) {
@@ -23,7 +23,7 @@ public class MemberConverter {
 			return null;
 		}
 
-		return MemberEntity.builder().id(data.getId()).nickname(data.getNickname()).build();
+		return MemberEntity.builder().id(data.getMemberId()).nickname(data.getNickname()).build();
 	}
 
 	public static MemberEntity to(final SaveMemberCommand data) {

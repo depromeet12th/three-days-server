@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class Member {
-	private Long id;
+	private Long memberId;
 	private String nickname;
 }
