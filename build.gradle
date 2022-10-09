@@ -3,6 +3,9 @@ buildscript {
         springBootVersion = '2.7.4'
         flywayVersion = '7.15.0'
         queryDslVersion = '5.0.0'
+        hibernateValidatorVersion = '6.1.2.Final'
+        javaxAnnotationApiVersion = '1.3.2'
+        jsr305Version = '3.0.1'
     }
     repositories {
         mavenCentral()

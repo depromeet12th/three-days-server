@@ -23,9 +23,9 @@ dependencies {
     implementation 'org.mariadb.jdbc:mariadb-java-client'
 
     implementation 'org.hibernate:hibernate-envers'
-    implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.1.2.Final'
-    implementation group: 'javax.annotation', name: 'javax.annotation-api', version: '1.3.2'
-    implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
+    implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: '${hibernateValidatorVersion}'
+    implementation group: 'javax.annotation', name: 'javax.annotation-api', version: '${javaxAnnotationApiVersion}'
+    implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '${jsr305Version}'
 
     annotationProcessor("javax.persistence:javax.persistence-api")
 
