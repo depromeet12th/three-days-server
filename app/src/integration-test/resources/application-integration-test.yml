@@ -1,0 +1,49 @@
+spring:
+  redis:
+    host: localhost
+    password:
+    port: 16379
+  config:
+    use-legacy-processing: true
+  profiles:
+    active: local
+    include:
+      - data-local
+
+threedays:
+  datasource:
+    write:
+      jdbc-url: jdbc:mysql://localhost:13306/threedays?allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: root
+      password: root
+      maximum-pool-size: 5
+      idle-timeout: 0
+      max-lifetime: 55000
+      pool-name: threedays-pool-write
+    read:
+      jdbc-url: jdbc:mysql://localhost:13306/threedays?allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: root
+      password: root
+      maximum-pool-size: 5
+      idle-timeout: 0
+      max-lifetime: 55000
+      pool-name: threedays-pool-read
+      readOnly: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        hbm2ddl:
+          jdbc_metadata_extraction_strategy: individually
+        format_sql: true
+        show-sql: false
+        order_inserts: true
+        order_updates: true
+        jdbc:
+          batch_size: 500
+          fetch_size: 500
+          batch_versioned_data: true

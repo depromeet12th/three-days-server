@@ -1,0 +1,48 @@
+buildscript {
+    ext {
+        generatedSourcesDir = "src/main/generated"
+    }
+}
+
+sourceSets {
+    main.java.srcDirs += [generatedSourcesDir]
+}
+
+compileJava.with {
+    it.options.annotationProcessorGeneratedSourcesDirectory file(generatedSourcesDir)
+}
+
+clean.doLast {
+    file(generatedSourcesDir).deleteDir()
+}
+
+dependencies {
+    api 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'mysql:mysql-connector-java'
+    implementation 'org.mariadb.jdbc:mariadb-java-client'
+
+    implementation 'org.hibernate:hibernate-envers'
+    implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: "${hibernateValidatorVersion}"
+    implementation group: 'javax.annotation', name: 'javax.annotation-api', version: "${javaxAnnotationApiVersion}"
+    implementation group: 'com.google.code.findbugs', name: 'jsr305', version: "${jsr305Version}"
+
+    annotationProcessor("javax.persistence:javax.persistence-api")
+
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+    implementation("com.querydsl:querydsl-core:${queryDslVersion}")
+    annotationProcessor("com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
+}
+
+
+apply plugin: "org.flywaydb.flyway"
+
+flyway {
+    url = "jdbc:mysql://localhost:13306/threedays?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true"
+    user = "root"
+    password = "root"
+    locations = ["filesystem:${file('migration').absolutePath}"]
+    encoding = 'UTF-8'
+    outOfOrder = true
+    validateOnMigrate = true
+}

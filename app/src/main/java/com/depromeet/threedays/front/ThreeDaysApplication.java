@@ -1,12 +1,12 @@
-package com.depromeet.threedays;
+package com.depromeet.threedays.front;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BatchApplication {
+public class ThreeDaysApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BatchApplication.class, args);
+		SpringApplication.run(ThreeDaysApplication.class, args);
 	}
 }
