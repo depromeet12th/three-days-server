@@ -11,6 +11,8 @@ tags:
     description: 사용자
   - name: Objective
     description: 목표
+  - name: History
+    description: 목표 히스토리
 paths:
   /api/v1/members:
     post:
@@ -140,7 +142,6 @@ paths:
           description: NOT FOUND
         '500':
           description: INTERNAL SERVER ERROR
-
   /api/v1/objectives/{objectiveId}:
     get:
       tags:
@@ -233,6 +234,36 @@ paths:
           description: NOT FOUND
         '500':
           description: INTERNAL SERVER ERROR
+  /api/v1/histories:
+    post:
+      tags:
+        - History
+      summary: save history
+      description: saveHistoryAPI
+      operationId: saveHistory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveHistoryCommand'
+            example:
+              objective_id: 1
+              member_id: 1
+              title: "물을 마시자"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/History'
+        '400':
+          description: BAD REQUEST
+        '404':
+          description: NOT FOUND
+        '500':
+          description: INTERNAL SERVER ERROR
 components:
   schemas:
     Objective:
@@ -305,6 +336,33 @@ components:
         start_time:
           type: string
         end_time:
+          type: string
+    History:
+      type: object
+      properties:
+        objective_history_id:
+          type: integer
+          format: int64
+        objective_id:
+          type: integer
+          format: int64
+        member_id:
+          type: integer
+          format: int64
+        achievement_date:
+          type: string
+        title:
+          type: string
+    SaveHistoryCommand:
+      type: object
+      properties:
+        objective_id:
+          type: integer
+          format: int64
+        member_id:
+          type: integer
+          format: int64
+        title:
           type: string
     BaseResponse:
       type: object
