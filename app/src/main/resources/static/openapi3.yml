@@ -97,6 +97,13 @@ paths:
       summary: update objective
       description: memberId는 인증 기능 개발 후 설정 예정입니다.
       operationId: updateObjective
+      parameters:
+        - name: objectiveId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
       requestBody:
         content:
           application/json:
