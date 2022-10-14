@@ -2,26 +2,28 @@ openapi: 3.0.1
 info:
   title: depromeet
   description: description
-  version: '@project.version@'
+  version: '1.0.0'
 servers:
   - url: http://localhost:8085
     description: local
 tags:
   - name: Member
-    description: Member tag
+    description: 사용자
+  - name: Objective
+    description: 목표
 paths:
   /api/v1/members:
     post:
       tags:
         - Member
       summary: save member
-      description: saveMemberAPIDEfas
-      operationId: createUser
+      description: saveMemberAPI
+      operationId: saveMember
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MemberCreateRequestDto'
+              $ref: '#/components/schemas/SaveMemberCommand'
         required: true
       responses:
         '200':
@@ -29,7 +31,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MemberResponseDto'
+                $ref: '#/components/schemas/Member'
         '400':
           description: BAD REQUEST
         '404':
@@ -54,24 +56,96 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MemberResponseDto'
+                $ref: '#/components/schemas/Member'
+  /api/v1/objectives/:
+    post:
+      tags:
+        - Objective
+      summary: save objective
+      description: saveObjectiveAPI
+      operationId: saveObjective
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveObjectiveCommand'
+            example:
+              member_id: 1
+              title: "물을마시자"
+              start_date: "2022-10-14"
+              end_date: "2022-10-15"
+              start_time: "10:00:00"
+              end_time: "10:30:00"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Objective'
+        '400':
+          description: BAD REQUEST
+        '404':
+          description: NOT FOUND
+        '500':
+          description: INTERNAL SERVER ERROR
 components:
   schemas:
-    MemberCreateRequestDto:
+    Objective:
+      type: object
+      properties:
+        objectiveId:
+          type: integer
+          format: int64
+        title:
+          type: string
+        start_date:
+          type: string
+        end_date:
+          type: string
+        start_time:
+          type: string
+        end_time:
+          type: string
+        status:
+          type: string
+        create_date:
+          type: string
+        sequence:
+          type: string
+        last_achievement_date:
+          type: string
+    SaveMemberCommand:
       required: [ nickname ]
       type: object
       properties:
         nickname:
           type: string
-        test:
-          type: string
-    MemberResponseDto:
+    Member:
       type: object
       properties:
-        id:
+        memberId:
           type: integer
           format: int64
         nickname:
+          type: string
+    SaveObjectiveCommand:
+      required: [ member_id, title ]
+      type: object
+      properties:
+        member_id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        start_date:
+          type: string
+        end_date:
+          type: string
+        start_time:
+          type: string
+        end_time:
           type: string
     BaseResponse:
       type: object
