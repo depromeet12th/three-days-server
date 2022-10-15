@@ -7,58 +7,11 @@ servers:
   - url: http://localhost:8085
     description: local
 tags:
-  - name: Member
-    description: 사용자
   - name: Objective
     description: 목표
   - name: History
     description: 목표 히스토리
 paths:
-  /api/v1/members:
-    post:
-      tags:
-        - Member
-      summary: save member
-      description: saveMemberAPI
-      operationId: saveMember
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SaveMemberCommand'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Member'
-        '400':
-          description: BAD REQUEST
-        '404':
-          description: NOT FOUND
-        '500':
-          description: INTERNAL SERVER ERROR
-  /api/v1/members/{id}:
-    get:
-      tags:
-        - Member
-      operationId: findUserById
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Member'
   /api/v1/objectives:
     post:
       tags:
@@ -292,20 +245,6 @@ components:
         sequence:
           type: string
         last_achievement_date:
-          type: string
-    SaveMemberCommand:
-      required: [ nickname ]
-      type: object
-      properties:
-        nickname:
-          type: string
-    Member:
-      type: object
-      properties:
-        memberId:
-          type: integer
-          format: int64
-        nickname:
           type: string
     SaveObjectiveCommand:
       required: [ member_id, title ]
