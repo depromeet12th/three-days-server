@@ -168,7 +168,7 @@ paths:
         - Objective
       summary: delete objective
       description: memberId는 인증 기능 개발 후 설정 예정입니다.
-      operationId: updateObjective
+      operationId: deleteObjective
       parameters:
         - name: objectiveId
           in: path
@@ -182,7 +182,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BaseResponse'
+                $ref: '#/components/schemas/ApiResponse'
         '400':
           description: BAD REQUEST
         '404':
@@ -305,7 +305,7 @@ components:
           format: int64
         title:
           type: string
-    BaseResponse:
+    ApiResponse:
       type: object
       properties:
         code:
