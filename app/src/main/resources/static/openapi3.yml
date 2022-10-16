@@ -11,7 +11,38 @@ tags:
     description: 목표
   - name: History
     description: 목표 히스토리
+  - name: Member
+    description: 사용자
 paths:
+  /api/v1/members/{memberId}/objectives:
+    get:
+      tags:
+        - Member
+      summary: get objective list by memberId
+      description: 해당 멤버의 모든 objective list를 반환한다.
+      operationId: getObjectiveByMemberId
+      parameters:
+        - name: memberId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Objective'
+        '400':
+          description: BAD REQUEST
+        '404':
+          description: NOT FOUND
+        '500':
+          description: INTERNAL SERVER ERROR
   /api/v1/objectives:
     post:
       tags:
@@ -51,35 +82,6 @@ paths:
       summary: get objective list
       description: 모든 objective list를 반환한다
       operationId: getObjectives
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Objective'
-        '400':
-          description: BAD REQUEST
-        '404':
-          description: NOT FOUND
-        '500':
-          description: INTERNAL SERVER ERROR
-  /api/v1/objectives/members/{memberId}:
-    get:
-      tags:
-        - Objective
-      summary: get objective list by memberId
-      description: 해당 멤버의 모든 objective list를 반환한다.
-      operationId: getObjectiveByMemberId
-      parameters:
-        - name: memberId
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
       responses:
         '200':
           description: OK
