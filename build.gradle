@@ -99,4 +99,12 @@ subprojects {
             exceptionFormat "full"
         }
     }
+
+    if (project.name.startsWithAny('data')) {
+        bootJar { enabled = false }
+        jar { enabled = true }
+    } else {
+        bootJar { enabled = true }
+        jar { enabled = false }
+    }
 }
