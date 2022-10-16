@@ -49,6 +49,9 @@ allprojects {
         mavenCentral()
     }
 
+    jar {
+        enabled = false
+    }
 }
 
 subprojects {
