@@ -130,6 +130,7 @@ paths:
       tags:
         - Objective
       summary: update objective last achievement date
+      description: 목표 달성시 클라이언트 기준 오늘 날짜, 취소시 null 전송
       operationId: updateLastAchievementDate
       parameters:
         - name: objectiveId
@@ -231,6 +232,10 @@ components:
           type: string
           format: date
           example: "2022-10-15"
+        achievementCount:
+          type: integer
+          format: int64
+          example: 5
         notification:
           type: object
           properties:
@@ -251,7 +256,7 @@ components:
               format: time
               example: "10:30:00"
     PostObjectiveCommand:
-      required: [ title, start_date, end_date, start_time, end_time, notificationTime  ]
+      required: [ title, start_date, end_date, start_time, end_time, notification ]
       type: object
       properties:
         title:
@@ -284,7 +289,7 @@ components:
               type: string
               example: "일어났니? 양치하고 얼른 물 마셔"
     PutObjectiveCommand:
-      required: [ title, start_date, end_date, start_time, end_time, notificationTime  ]
+      required: [ objectiveId, memberId, title, start_date, end_date, start_time, end_time, notification  ]
       type: object
       properties:
         objectiveId:
