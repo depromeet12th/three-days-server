@@ -39,10 +39,22 @@ paths:
                   $ref: '#/components/schemas/Objective'
         '400':
           description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
         '404':
           description: NOT FOUND
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
         '500':
           description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
   /api/v1/objectives:
     post:
       tags:
@@ -72,10 +84,22 @@ paths:
                 $ref: '#/components/schemas/Objective'
         '400':
           description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
         '404':
           description: NOT FOUND
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
         '500':
           description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
     get:
       tags:
         - Objective
@@ -93,10 +117,22 @@ paths:
                   $ref: '#/components/schemas/Objective'
         '400':
           description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
         '404':
           description: NOT FOUND
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
         '500':
           description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
   /api/v1/objectives/{objectiveId}:
     get:
       tags:
@@ -120,10 +156,22 @@ paths:
                 $ref: '#/components/schemas/Objective'
         '400':
           description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
         '404':
           description: NOT FOUND
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
         '500':
           description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
 
     patch:
       tags:
@@ -159,16 +207,28 @@ paths:
                 $ref: '#/components/schemas/Objective'
         '400':
           description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
         '404':
           description: NOT FOUND
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
         '500':
           description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
     delete:
       tags:
         - Objective
       summary: delete objective
       description: memberId는 인증 기능 개발 후 설정 예정입니다.
-      operationId: updateObjective
+      operationId: deleteObjective
       parameters:
         - name: objectiveId
           in: path
@@ -182,13 +242,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BaseResponse'
+                $ref: '#/components/schemas/ApiResponse'
         '400':
           description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
         '404':
           description: NOT FOUND
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
         '500':
           description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
   /api/v1/histories:
     post:
       tags:
@@ -215,10 +287,22 @@ paths:
                 $ref: '#/components/schemas/History'
         '400':
           description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
         '404':
           description: NOT FOUND
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
         '500':
           description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
 components:
   schemas:
     Objective:
@@ -305,14 +389,19 @@ components:
           format: int64
         title:
           type: string
-    BaseResponse:
+    ApiResponse:
+      type: object
+      properties:
+        data:
+          type: string
+      xml:
+        name: '##default'
+    ApiFailureResponse:
       type: object
       properties:
         code:
           type: integer
           format: int32
-        type:
-          type: string
         message:
           type: string
       xml:
