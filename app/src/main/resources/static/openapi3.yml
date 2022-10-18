@@ -2,47 +2,27 @@ openapi: 3.0.1
 info:
   title: depromeet
   description: description
-  version: '@project.version@'
+  version: '1.0.0'
 servers:
   - url: http://localhost:8085
     description: local
 tags:
+  - name: Objective
+    description: 목표
+  - name: History
+    description: 목표 히스토리
   - name: Member
-    description: Member tag
+    description: 사용자
 paths:
-  /api/v1/members:
-    post:
-      tags:
-        - Member
-      summary: save member
-      description: saveMemberAPIDEfas
-      operationId: createUser
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/MemberCreateRequestDto'
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/MemberResponseDto'
-        '400':
-          description: BAD REQUEST
-        '404':
-          description: NOT FOUND
-        '500':
-          description: INTERNAL SERVER ERROR
-  /api/v1/members/{id}:
+  /api/v1/members/{memberId}/objectives:
     get:
       tags:
         - Member
-      operationId: findUserById
+      summary: get objective list by memberId
+      description: 해당 멤버의 모든 objective list를 반환한다.
+      operationId: getObjectiveByMemberId
       parameters:
-        - name: id
+        - name: memberId
           in: path
           required: true
           schema:
@@ -54,33 +34,374 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MemberResponseDto'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Objective'
+        '400':
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+        '404':
+          description: NOT FOUND
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+  /api/v1/objectives:
+    post:
+      tags:
+        - Objective
+      summary: save objective
+      description: saveObjectiveAPI
+      operationId: saveObjective
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveObjectiveCommand'
+            example:
+              member_id: 1
+              title: "물을마시자"
+              start_date: "2022-10-14"
+              end_date: "2022-10-15"
+              start_time: "10:00:00"
+              end_time: "10:30:00"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Objective'
+        '400':
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+        '404':
+          description: NOT FOUND
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+    get:
+      tags:
+        - Objective
+      summary: get objective list
+      description: 모든 objective list를 반환한다
+      operationId: getObjectives
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Objective'
+        '400':
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+        '404':
+          description: NOT FOUND
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+  /api/v1/objectives/{objectiveId}:
+    get:
+      tags:
+        - Objective
+      summary: get single objective
+      description: memberId는 인증 기능 개발 후 설정 예정입니다.
+      operationId: getSingleObjective
+      parameters:
+        - name: objectiveId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Objective'
+        '400':
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+        '404':
+          description: NOT FOUND
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+
+    patch:
+      tags:
+        - Objective
+      summary: update objective
+      description: memberId는 인증 기능 개발 후 설정 예정입니다.
+      operationId: updateObjective
+      parameters:
+        - name: objectiveId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateObjectiveCommand'
+            example:
+              title: "물을마시자"
+              start_date: "2022-10-14"
+              end_date: "2022-10-15"
+              start_time: "10:00:00"
+              end_time: "10:30:00"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Objective'
+        '400':
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+        '404':
+          description: NOT FOUND
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+    delete:
+      tags:
+        - Objective
+      summary: delete objective
+      description: memberId는 인증 기능 개발 후 설정 예정입니다.
+      operationId: deleteObjective
+      parameters:
+        - name: objectiveId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+        '404':
+          description: NOT FOUND
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+  /api/v1/histories:
+    post:
+      tags:
+        - History
+      summary: save history
+      description: saveHistoryAPI
+      operationId: saveHistory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveHistoryCommand'
+            example:
+              objective_id: 1
+              member_id: 1
+              title: "물을 마시자"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/History'
+        '400':
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+        '404':
+          description: NOT FOUND
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
 components:
   schemas:
-    MemberCreateRequestDto:
-      required: [ nickname ]
+    Objective:
       type: object
       properties:
-        nickname:
-          type: string
-        test:
-          type: string
-    MemberResponseDto:
-      type: object
-      properties:
-        id:
+        objectiveId:
           type: integer
           format: int64
-        nickname:
+        memberId:
+          type: integer
+          format: int64
+        title:
           type: string
-    BaseResponse:
+        start_date:
+          type: string
+        end_date:
+          type: string
+        start_time:
+          type: string
+        end_time:
+          type: string
+        status:
+          type: string
+        create_date:
+          type: string
+        sequence:
+          type: string
+        last_achievement_date:
+          type: string
+    SaveObjectiveCommand:
+      required: [ member_id, title ]
+      type: object
+      properties:
+        member_id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        start_date:
+          type: string
+        end_date:
+          type: string
+        start_time:
+          type: string
+        end_time:
+          type: string
+    UpdateObjectiveCommand:
+      type: object
+      properties:
+        title:
+          type: string
+        start_date:
+          type: string
+        end_date:
+          type: string
+        start_time:
+          type: string
+        end_time:
+          type: string
+    History:
+      type: object
+      properties:
+        objective_history_id:
+          type: integer
+          format: int64
+        objective_id:
+          type: integer
+          format: int64
+        member_id:
+          type: integer
+          format: int64
+        achievement_date:
+          type: string
+        title:
+          type: string
+    SaveHistoryCommand:
+      type: object
+      properties:
+        objective_id:
+          type: integer
+          format: int64
+        member_id:
+          type: integer
+          format: int64
+        title:
+          type: string
+    ApiResponse:
+      type: object
+      properties:
+        data:
+          type: string
+      xml:
+        name: '##default'
+    ApiFailureResponse:
       type: object
       properties:
         code:
           type: integer
           format: int32
-        type:
-          type: string
         message:
           type: string
       xml:
