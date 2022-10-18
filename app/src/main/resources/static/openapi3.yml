@@ -9,52 +9,7 @@ servers:
 tags:
   - name: Objective
     description: 목표
-  - name: History
-    description: 목표 히스토리
-  - name: Member
-    description: 사용자
 paths:
-  /api/v1/members/{memberId}/objectives:
-    get:
-      tags:
-        - Member
-      summary: get objective list by memberId
-      description: 해당 멤버의 모든 objective list를 반환한다.
-      operationId: getObjectiveByMemberId
-      parameters:
-        - name: memberId
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Objective'
-        '400':
-          description: BAD REQUEST
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
-        '404':
-          description: NOT FOUND
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
-        '500':
-          description: INTERNAL SERVER ERROR
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
   /api/v1/objectives:
     post:
       tags:
@@ -66,14 +21,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SaveObjectiveCommand'
-            example:
-              member_id: 1
-              title: "물을마시자"
-              start_date: "2022-10-14"
-              end_date: "2022-10-15"
-              start_time: "10:00:00"
-              end_time: "10:30:00"
+              $ref: '#/components/schemas/PostObjectiveCommand'
         required: true
       responses:
         '200':
@@ -87,19 +35,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
-        '404':
-          description: NOT FOUND
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
+                $ref: '#/components/schemas/400ApiFailureResponse'
         '500':
           description: INTERNAL SERVER ERROR
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
+                $ref: '#/components/schemas/500ApiFailureResponse'
     get:
       tags:
         - Objective
@@ -115,30 +57,17 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Objective'
-        '400':
-          description: BAD REQUEST
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
-        '404':
-          description: NOT FOUND
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
         '500':
           description: INTERNAL SERVER ERROR
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
+                $ref: '#/components/schemas/500ApiFailureResponse'
   /api/v1/objectives/{objectiveId}:
     get:
       tags:
         - Objective
       summary: get single objective
-      description: memberId는 인증 기능 개발 후 설정 예정입니다.
       operationId: getSingleObjective
       parameters:
         - name: objectiveId
@@ -154,30 +83,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Objective'
-        '400':
-          description: BAD REQUEST
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
-        '404':
-          description: NOT FOUND
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
         '500':
           description: INTERNAL SERVER ERROR
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
-
-    patch:
+                $ref: '#/components/schemas/500ApiFailureResponse'
+    put:
       tags:
         - Objective
       summary: update objective
-      description: memberId는 인증 기능 개발 후 설정 예정입니다.
       operationId: updateObjective
       parameters:
         - name: objectiveId
@@ -190,13 +105,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateObjectiveCommand'
-            example:
-              title: "물을마시자"
-              start_date: "2022-10-14"
-              end_date: "2022-10-15"
-              start_time: "10:00:00"
-              end_time: "10:30:00"
+              $ref: '#/components/schemas/PutObjectiveCommand'
         required: true
       responses:
         '200':
@@ -210,24 +119,47 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
-        '404':
-          description: NOT FOUND
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
+                $ref: '#/components/schemas/400ApiFailureResponse'
         '500':
           description: INTERNAL SERVER ERROR
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
+                $ref: '#/components/schemas/500ApiFailureResponse'
+    patch:
+      tags:
+        - Objective
+      summary: update objective last achievement date
+      operationId: updateLastAchievementDate
+      parameters:
+        - name: objectiveId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchObjectiveCommand'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Objective'
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500ApiFailureResponse'
     delete:
       tags:
         - Objective
       summary: delete objective
-      description: memberId는 인증 기능 개발 후 설정 예정입니다.
       operationId: deleteObjective
       parameters:
         - name: objectiveId
@@ -243,66 +175,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponse'
-        '400':
-          description: BAD REQUEST
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
-        '404':
-          description: NOT FOUND
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
         '500':
           description: INTERNAL SERVER ERROR
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
-  /api/v1/histories:
-    post:
-      tags:
-        - History
-      summary: save history
-      description: saveHistoryAPI
-      operationId: saveHistory
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SaveHistoryCommand'
-            example:
-              objective_id: 1
-              member_id: 1
-              title: "물을 마시자"
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/History'
-        '400':
-          description: BAD REQUEST
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
-        '404':
-          description: NOT FOUND
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
-        '500':
-          description: INTERNAL SERVER ERROR
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
+                $ref: '#/components/schemas/500ApiFailureResponse'
 components:
   schemas:
     Objective:
@@ -311,98 +189,177 @@ components:
         objectiveId:
           type: integer
           format: int64
+          example: 1
         memberId:
           type: integer
           format: int64
+          example: 1
         title:
           type: string
-        start_date:
+          example: "물을 마시자"
+        startDate:
           type: string
-        end_date:
+          format: date
+          example: "2022-10-15"
+        endDate:
           type: string
-        start_time:
+          format: date
+          example: "2022-10-17"
+        startTime:
           type: string
-        end_time:
+          format: time
+          example: "10:30:00"
+        endTime:
           type: string
+          format: time
+          example: "10:30:00"
         status:
           type: string
-        create_date:
+          enum:
+            - ACTIVATE
+            - DEACTIVATE
+            - DONE
+          example: "ACTIVATE"
+        createDate:
           type: string
+          example: "2022-10-15T10:30:00.000"
         sequence:
-          type: string
-        last_achievement_date:
-          type: string
-    SaveObjectiveCommand:
-      required: [ member_id, title ]
-      type: object
-      properties:
-        member_id:
           type: integer
           format: int64
+          example: 0
+        lastAchievementDate:
+          type: string
+          format: date
+          example: "2022-10-15"
+        notification:
+          type: object
+          properties:
+            notificationId:
+              type: integer
+              format: int64
+              example: 1
+            objectiveId:
+              type: integer
+              format: int64
+              example: 1
+            memberId:
+              type: integer
+              format: int64
+              example: 1
+            notificationTime:
+              type: string
+              format: time
+              example: "10:30:00"
+    PostObjectiveCommand:
+      required: [ title, start_date, end_date, start_time, end_time, notificationTime  ]
+      type: object
+      properties:
         title:
           type: string
+          example: "물을 마시자"
         start_date:
           type: string
+          format: date
+          example: "2022-10-14"
         end_date:
           type: string
+          format: date
+          example: "2022-10-15"
         start_time:
           type: string
+          format: time
+          example: "10:00:00"
         end_time:
           type: string
-    UpdateObjectiveCommand:
+          format: time
+          example: "10:30:00"
+        notification:
+          type: object
+          properties:
+            notificationTime:
+              type: string
+              format: time
+              example: "10:30:00"
+            contents:
+              type: string
+              example: "일어났니? 양치하고 얼른 물 마셔"
+    PutObjectiveCommand:
+      required: [ title, start_date, end_date, start_time, end_time, notificationTime  ]
       type: object
       properties:
+        objectiveId:
+          type: integer
+          example: 1
+        memberId:
+          type: integer
+          example: 1
         title:
           type: string
+          example: "물을 마시자"
         start_date:
           type: string
+          format: date
+          example: "2022-10-14"
         end_date:
           type: string
+          format: date
+          example: "2022-10-15"
         start_time:
           type: string
+          format: time
+          example: "10:00:00"
         end_time:
           type: string
-    History:
+          format: time
+          example: "10:30:00"
+        notification:
+          type: object
+          properties:
+            notificationId:
+              type: integer
+              example: 1
+            objectiveId:
+              type: integer
+              example: 1
+            memberId:
+              type: integer
+              example: 1
+            notificationTime:
+              type: string
+              format: time
+              example: "10:30:00"
+            contents:
+              type: string
+              example: "일어났니? 양치하고 얼른 물 마셔"
+    PatchObjectiveCommand:
+      required: [lastAchievementDate]
       type: object
       properties:
-        objective_history_id:
-          type: integer
-          format: int64
-        objective_id:
-          type: integer
-          format: int64
-        member_id:
-          type: integer
-          format: int64
-        achievement_date:
+        lastAchievementDate:
           type: string
-        title:
-          type: string
-    SaveHistoryCommand:
-      type: object
-      properties:
-        objective_id:
-          type: integer
-          format: int64
-        member_id:
-          type: integer
-          format: int64
-        title:
-          type: string
+          format: date
+          example: "2022-10-15"
     ApiResponse:
       type: object
-      properties:
-        data:
-          type: string
       xml:
         name: '##default'
-    ApiFailureResponse:
+    400ApiFailureResponse:
       type: object
       properties:
         code:
-          type: integer
-          format: int32
+          type: string
+          example: bad.request
         message:
           type: string
+          example: "id 컬럼은 숫자여야만 합니다."
+    500ApiFailureResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          example: invalid.objective
+        message:
+          type: string
+          example: "서버 에러"
       xml:
         name: '##default'
