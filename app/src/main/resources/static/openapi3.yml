@@ -256,25 +256,25 @@ components:
               format: time
               example: "10:30:00"
     PostObjectiveCommand:
-      required: [ title, start_date, end_date, start_time, end_time, notification ]
+      required: [ title, startDate, endDate, startTime, endTime, notification ]
       type: object
       properties:
         title:
           type: string
           example: "물을 마시자"
-        start_date:
+        startDate:
           type: string
           format: date
           example: "2022-10-14"
-        end_date:
+        endDate:
           type: string
           format: date
           example: "2022-10-15"
-        start_time:
+        startTime:
           type: string
           format: time
           example: "10:00:00"
-        end_time:
+        endTime:
           type: string
           format: time
           example: "10:30:00"
@@ -289,7 +289,7 @@ components:
               type: string
               example: "일어났니? 양치하고 얼른 물 마셔"
     PutObjectiveCommand:
-      required: [ objectiveId, memberId, title, start_date, end_date, start_time, end_time, notification  ]
+      required: [ objectiveId, memberId, title, startDate, endDate, startTime, endTime, notification  ]
       type: object
       properties:
         objectiveId:
@@ -301,19 +301,19 @@ components:
         title:
           type: string
           example: "물을 마시자"
-        start_date:
+        startDate:
           type: string
           format: date
           example: "2022-10-14"
-        end_date:
+        endDate:
           type: string
           format: date
           example: "2022-10-15"
-        start_time:
+        startTime:
           type: string
           format: time
           example: "10:00:00"
-        end_time:
+        endTime:
           type: string
           format: time
           example: "10:30:00"
