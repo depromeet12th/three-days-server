@@ -1,6 +1,8 @@
 package com.depromeet.threedays.front.support;
 
+import com.depromeet.threedays.front.exception.AuthorizedException;
 import com.depromeet.threedays.front.support.ApiResponse.FailureBody;
+import javax.naming.AuthenticationException;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
 import lombok.experimental.UtilityClass;
@@ -19,7 +21,7 @@ public class FailureBodyResolver {
 				fieldName = node.getName();
 			}
 
-			return new ApiResponse.FailureBody(fieldName, v.getMessage())
+			return new ApiResponse.FailureBody(fieldName, v.getMessage());
 		}).findFirst().orElse(null);
 	}
 
@@ -36,6 +38,15 @@ public class FailureBodyResolver {
 			return new ApiResponse.FailureBody(error.getCode(), error.getDefaultMessage());
 		}
 		return null;
+	}
+
+	public static ApiResponse.FailureBody resolveFrom(final AuthenticationException ex) {
+		return new ApiResponse.FailureBody(ex.getMessage());
+	}
+
+
+	public static ApiResponse.FailureBody resolveFrom(final AuthorizedException ex) {
+		return new ApiResponse.FailureBody(ex.getMessage());
 	}
 
 }
