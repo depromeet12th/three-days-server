@@ -37,5 +37,5 @@ public class MemberEntity {
 	String fcmToken;
 
 	@OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
-	List<ObjectiveEntity> objectiveEntity = new ArrayList<>();
+	List<ObjectiveEntity> objectiveEntities = new ArrayList<>();
 }
