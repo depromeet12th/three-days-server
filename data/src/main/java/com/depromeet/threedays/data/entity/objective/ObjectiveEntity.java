@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @EntityListeners(value = {AuditingEntityListener.class})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 @Builder
 @Table(name = "objective")
