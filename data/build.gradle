@@ -23,18 +23,19 @@ dependencies {
     implementation 'org.mariadb.jdbc:mariadb-java-client'
 
     implementation 'org.hibernate:hibernate-envers'
-    implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: "${hibernateValidatorVersion}"
-    implementation group: 'javax.annotation', name: 'javax.annotation-api', version: "${javaxAnnotationApiVersion}"
-    implementation group: 'com.google.code.findbugs', name: 'jsr305', version: "${jsr305Version}"
 
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "${jacksonDatabindVersion}"
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "${jacksonCoreVersion}"
+    implementation 'org.hibernate.validator:hibernate-validator'
+    implementation 'javax.annotation:javax.annotation-api'
+
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'com.fasterxml.jackson.core:jackson-core'
+    implementation group: 'com.google.code.findbugs', name: 'jsr305', version: "${jsr305Version}"
 
     annotationProcessor("javax.persistence:javax.persistence-api")
 
-    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
-    implementation("com.querydsl:querydsl-core:${queryDslVersion}")
-    annotationProcessor("com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
+    implementation 'com.querydsl:querydsl-jpa'
+    implementation 'com.querydsl:querydsl-core'
+    implementation 'com.querydsl:querydsl-apt'
 }
 
 
