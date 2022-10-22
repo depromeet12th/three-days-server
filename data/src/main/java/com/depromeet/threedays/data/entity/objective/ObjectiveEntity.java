@@ -1,12 +1,15 @@
 package com.depromeet.threedays.data.entity.objective;
 
 import com.depromeet.threedays.data.entity.member.MemberEntity;
+import com.depromeet.threedays.data.entity.objective_history.ObjectiveHistoryEntity;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @EntityListeners(value = {AuditingEntityListener.class})
@@ -43,4 +46,8 @@ public class ObjectiveEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     MemberEntity member;
+
+    @OneToMany(mappedBy = "objective", cascade = CascadeType.PERSIST)
+    List<ObjectiveHistoryEntity> objectiveHistoryEntities = new ArrayList<>();
+
 }
