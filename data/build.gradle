@@ -27,6 +27,9 @@ dependencies {
     implementation group: 'javax.annotation', name: 'javax.annotation-api', version: "${javaxAnnotationApiVersion}"
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: "${jsr305Version}"
 
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "${jacksonDatabindVersion}"
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "${jacksonCoreVersion}"
+
     annotationProcessor("javax.persistence:javax.persistence-api")
 
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
