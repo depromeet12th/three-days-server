@@ -1,6 +1,6 @@
 package com.depromeet.threedays.front.repository;
 
-import com.depromeet.threedays.data.entity.MemberEntity;
+import com.depromeet.threedays.data.entity.member.MemberEntity;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
