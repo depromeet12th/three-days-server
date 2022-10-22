@@ -24,18 +24,18 @@ public class MemberEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "member_id")
-	Long id;
+	private Long id;
 
-	String name;
+	private String name;
 
 	@Embedded Certification certification = new Certification();
 
 	@Column(columnDefinition = "varchar(255)")
 	@Convert(converter = ProfileAttributeConverter.class)
-	Profile profile;
+	private Profile profile;
 
-	String fcmToken;
+	private String fcmToken;
 
 	@OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST)
-	List<ObjectiveEntity> objectiveEntities = new ArrayList<>();
+	private final List<ObjectiveEntity> objectiveEntities = new ArrayList<>();
 }

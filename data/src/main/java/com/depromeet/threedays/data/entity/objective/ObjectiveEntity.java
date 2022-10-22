@@ -22,32 +22,32 @@ public class ObjectiveEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "objective_id")
-    Long id;
+    private Long id;
 
-    String title;
+    private String title;
 
-    LocalDateTime start_date;
-    LocalDateTime end_date;
-    LocalDateTime start_time;
-    LocalDateTime end_time;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
     @Enumerated(EnumType.STRING)
-    ObjectiveStatus status;
+    private ObjectiveStatus status;
 
     @CreatedDate
-    LocalDateTime created_date;
+    private LocalDateTime createdDate;
 
-    int sequence;
+    private int sequence;
 
-    LocalDateTime last_achievement_date;
+    private LocalDateTime lastAchievementDate;
 
-    int total_achievement_count;
+    private int totalAchievementCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    MemberEntity member;
+    private MemberEntity member;
 
     @OneToMany(mappedBy = "objective", cascade = CascadeType.PERSIST)
-    List<ObjectiveHistoryEntity> objectiveHistoryEntities = new ArrayList<>();
+    private final List<ObjectiveHistoryEntity> objectiveHistoryEntities = new ArrayList<>();
 
 }

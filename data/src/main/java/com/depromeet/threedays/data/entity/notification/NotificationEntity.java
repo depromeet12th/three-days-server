@@ -15,9 +15,9 @@ public class NotificationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notification_id")
-    Long id;
-    LocalDateTime notification_time;
-    String contents;
-    Long objective_id;
+    private Long id;
+    private LocalDateTime notificationTime;
+    private String contents;
+    private Long objectiveId;
 
 }

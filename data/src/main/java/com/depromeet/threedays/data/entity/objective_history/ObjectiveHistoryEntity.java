@@ -1,6 +1,5 @@
 package com.depromeet.threedays.data.entity.objective_history;
 
-import com.depromeet.threedays.data.entity.member.MemberEntity;
 import com.depromeet.threedays.data.entity.objective.ObjectiveEntity;
 import lombok.*;
 
@@ -17,10 +16,10 @@ public class ObjectiveHistoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "objective_history_id")
-    Long id;
+    private Long id;
 
-    String title;
-    LocalDateTime achievement_date;
+    private String title;
+    private LocalDateTime achievementDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "objective_id")
