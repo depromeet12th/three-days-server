@@ -23,6 +23,6 @@ public class ObjectiveHistoryEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "objective_id")
-    ObjectiveEntity objective;
+    private ObjectiveEntity objective;
 
 }
