@@ -2,17 +2,15 @@ package com.depromeet.threedays.data.entity.member;
 
 import com.depromeet.threedays.data.entity.member.certification.Certification;
 import com.depromeet.threedays.data.entity.member.converter.ProfileAttributeConverter;
-import javax.persistence.*;
-
 import com.depromeet.threedays.data.entity.objective.ObjectiveEntity;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

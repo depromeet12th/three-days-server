@@ -14,7 +14,7 @@ public class Page<T> implements Serializable {
 	private final Long totalCount;
 	private final List<T> data;
 
-	public Page(final org.springframework.data.domain.Page<T> source){
+	public Page(final org.springframework.data.domain.Page<T> source) {
 		final Pageable pageable = source.getPageable();
 		this.pageSize = pageable.getPageSize();
 		this.pageNumber = pageable.getPageNumber();
@@ -22,5 +22,4 @@ public class Page<T> implements Serializable {
 		this.totalCount = source.getTotalElements();
 		this.data = source.getContent();
 	}
-
 }

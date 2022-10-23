@@ -14,27 +14,32 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 @UtilityClass
 public class FailureBodyResolver {
 
-	public static ApiResponse.FailureBody resolveFrom(final ConstraintViolationException ex){
-		return ex.getConstraintViolations().stream().map(v->{
-			String fieldName = "";
-			for(Path.Node node: v.getPropertyPath()){
-				fieldName = node.getName();
-			}
+	public static ApiResponse.FailureBody resolveFrom(final ConstraintViolationException ex) {
+		return ex.getConstraintViolations().stream()
+				.map(
+						v -> {
+							String fieldName = "";
+							for (Path.Node node : v.getPropertyPath()) {
+								fieldName = node.getName();
+							}
 
-			return new ApiResponse.FailureBody(fieldName, v.getMessage());
-		}).findFirst().orElse(null);
+							return new ApiResponse.FailureBody(fieldName, v.getMessage());
+						})
+				.findFirst()
+				.orElse(null);
 	}
 
-	public static ApiResponse.FailureBody resolveFrom(final MissingServletRequestParameterException ex){
+	public static ApiResponse.FailureBody resolveFrom(
+			final MissingServletRequestParameterException ex) {
 		return new FailureBody(ex.getLocalizedMessage());
 	}
 
-	public static ApiResponse.FailureBody resolveFrom(final MethodArgumentTypeMismatchException ex){
+	public static ApiResponse.FailureBody resolveFrom(final MethodArgumentTypeMismatchException ex) {
 		return new FailureBody(ex.getErrorCode(), ex.getMessage());
 	}
 
-	public static ApiResponse.FailureBody resolveFrom(final BindException ex){
-		for(FieldError error : ex.getBindingResult().getFieldErrors()){
+	public static ApiResponse.FailureBody resolveFrom(final BindException ex) {
+		for (FieldError error : ex.getBindingResult().getFieldErrors()) {
 			return new ApiResponse.FailureBody(error.getCode(), error.getDefaultMessage());
 		}
 		return null;
@@ -44,9 +49,7 @@ public class FailureBodyResolver {
 		return new ApiResponse.FailureBody(ex.getMessage());
 	}
 
-
 	public static ApiResponse.FailureBody resolveFrom(final AuthorizedException ex) {
 		return new ApiResponse.FailureBody(ex.getMessage());
 	}
-
 }
