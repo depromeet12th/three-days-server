@@ -37,7 +37,7 @@ public class ObjectiveEntity {
     @CreatedDate
     private LocalDateTime createdDate;
 
-    private int sequence;
+    private Integer sequence;
 
     private LocalDateTime lastAchievementDate;
 
