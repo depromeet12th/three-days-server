@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class SaveMemberCommand {
-	@NotBlank private String nickname;
+	@NotBlank private String name;
 }

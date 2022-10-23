@@ -15,5 +15,5 @@ import lombok.ToString;
 @ToString
 public class Member {
 	private Long memberId;
-	private String nickname;
+	private String name;
 }

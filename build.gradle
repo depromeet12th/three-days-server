@@ -1,25 +1,27 @@
 buildscript {
     ext {
         springBootVersion = '2.7.4'
+        dependencyManagementVersion = '1.0.11.RELEASE'
         flywayVersion = '7.15.0'
-        queryDslVersion = '5.0.0'
-        hibernateValidatorVersion = '6.1.2.Final'
-        javaxAnnotationApiVersion = '1.3.2'
+        dependencyManagementVersion = '1.1.0'
         jsr305Version = '3.0.1'
+        spotlessVersion = '6.8.0'
+        springdocVersion = '1.6.11'
     }
     repositories {
         mavenCentral()
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-        classpath "io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE"
+        classpath "io.spring.gradle:dependency-management-plugin:${dependencyManagementVersion}"
     }
 }
 
 plugins {
     id 'java'
     id "org.flywaydb.flyway" version "${flywayVersion}"
-    id "com.diffplug.spotless" version "6.8.0"
+    id "com.diffplug.spotless" version "${spotlessVersion}"
+    id "io.spring.dependency-management" version "${dependencyManagementVersion}"
 }
 
 allprojects {
