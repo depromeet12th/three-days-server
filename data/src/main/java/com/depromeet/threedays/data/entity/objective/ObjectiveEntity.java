@@ -43,8 +43,6 @@ public class ObjectiveEntity {
 
     private LocalDateTime lastAchievementDate;
 
-    private int totalAchievementCount;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private MemberEntity member;
