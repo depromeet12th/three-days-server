@@ -36,7 +36,7 @@ CREATE TABLE threedays.objective (
                                      `end_time`	TIME	NULL,
                                      `status`	varchar(40)	NULL,
                                      `created_date`	timestamp	NULL,
-                                     `sequence`	int	NULL,
+                                     `sequence`	int	NULL DEFAULT 0,
                                      `last_achievement_date`	timestamp	NULL,
                                      `total_achievement_count`	int	NULL,
                                      `member_id`	bigint	NOT NULL
