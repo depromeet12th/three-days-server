@@ -27,7 +27,6 @@ CREATE TABLE threedays.member (
 );
 
 -- THREEDAYS.OBJECTIVE
-DROP TABLE IF EXISTS threedays.objective;
 CREATE TABLE threedays.objective (
                                      `objective_id`	bigint	NOT NULL AUTO_INCREMENT PRIMARY KEY,
                                      `title`	varchar(40)	NULL,
@@ -46,7 +45,6 @@ ALTER TABLE threedays.objective ADD CONSTRAINT FOREIGN KEY (member_id)
     REFERENCES member (member_id) ON DELETE CASCADE;
 
 -- THREEDAYS.OBJECTIVE_HISTORY
-DROP TABLE IF EXISTS threedays.objective_history;
 CREATE TABLE threedays.objective_history (
                                              `objective_history_id`	bigint	NOT NULL AUTO_INCREMENT PRIMARY KEY,
                                              `achievement_date`	timestamp	NULL,
@@ -57,7 +55,6 @@ ALTER TABLE threedays.objective_history ADD CONSTRAINT FOREIGN KEY (objective_id
     REFERENCES objective (objective_id) ON DELETE CASCADE;
 
 -- THREEDAYS.NOTIFICATION
-DROP TABLE IF EXISTS threedays.notification;
 CREATE TABLE threedays.notification (
                                         `notification_id`	bigint	NOT NULL AUTO_INCREMENT PRIMARY KEY,
                                         `notification_time`	timestamp	NULL,
