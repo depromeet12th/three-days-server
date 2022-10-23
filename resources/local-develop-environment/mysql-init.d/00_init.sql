@@ -30,10 +30,10 @@ CREATE TABLE threedays.member (
 CREATE TABLE threedays.objective (
                                      `objective_id`	bigint	NOT NULL AUTO_INCREMENT PRIMARY KEY,
                                      `title`	varchar(40)	NULL,
-                                     `start_date`	timestamp	NULL,
-                                     `end_date`	timestamp	NULL,
-                                     `start_time`	timestamp	NULL,
-                                     `end_time`	timestamp	NULL,
+                                     `start_date`	DATE	NULL,
+                                     `end_date`	DATE	NULL,
+                                     `start_time`	TIME	NULL,
+                                     `end_time`	TIME	NULL,
                                      `status`	varchar(40)	NULL,
                                      `created_date`	timestamp	NULL,
                                      `sequence`	int	NULL,
@@ -57,7 +57,7 @@ ALTER TABLE threedays.objective_history ADD CONSTRAINT FOREIGN KEY (objective_id
 -- THREEDAYS.NOTIFICATION
 CREATE TABLE threedays.notification (
                                         `notification_id`	bigint	NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                                        `notification_time`	timestamp	NULL,
+                                        `notification_time`	TIME	NULL,
                                         `contents`	varchar(100)	NULL,
                                         `objective_id`	bigint	NOT NULL
 );
