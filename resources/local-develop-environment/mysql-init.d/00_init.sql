@@ -38,7 +38,6 @@ CREATE TABLE threedays.objective (
                                      `created_date`	timestamp	NULL,
                                      `sequence`	int	NULL DEFAULT 0,
                                      `last_achievement_date`	timestamp	NULL,
-                                     `total_achievement_count`	int	NULL,
                                      `member_id`	bigint	NOT NULL
 );
 ALTER TABLE threedays.objective ADD CONSTRAINT FOREIGN KEY (member_id)
