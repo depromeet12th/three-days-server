@@ -3,7 +3,7 @@ package com.depromeet.threedays.data.entity.notification;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -16,7 +16,7 @@ public class NotificationEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notification_id")
     private Long id;
-    private LocalDateTime notificationTime;
+    private LocalTime notificationTime;
     private String contents;
     private Long objectiveId;
 
