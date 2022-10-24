@@ -8,4 +8,8 @@ dependencies {
 
     //docs
     implementation "org.springdoc:springdoc-openapi-ui:${springdocVersion}"
+
+    //WebClient
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation "org.projectreactor:reactor-spring:${reactorSpringVersion}"
 }
