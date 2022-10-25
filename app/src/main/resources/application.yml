@@ -1,7 +1,7 @@
 spring:
   web:
     resources:
-      add-mappings: false
+      add-mappings: true
   mvc:
     throw-exception-if-no-handler-found: true
   jpa:
