@@ -5,4 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public abstract class OAuthInfo {}
+public abstract class OAuthInfo {
+    private String name;
+    private String email;
+}
