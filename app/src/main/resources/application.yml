@@ -1,3 +1,4 @@
+
 spring:
   web:
     resources:
@@ -29,3 +30,5 @@ springdoc:
     doc-expansion: none
   paths-to-match:
     - /api/**
+server:
+  port: 18888
