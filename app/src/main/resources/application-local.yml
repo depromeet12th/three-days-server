@@ -10,3 +10,16 @@ spring:
     password:
     port: 16379
 
+##SOCIAL
+google:
+  access:
+    token:
+      uri: googleDummy
+  web:
+    redirect:
+      uri: googleDummy
+    client:
+      id: googleDummy
+      secret: googleDummy
+  user:
+    uri: googleDummy
