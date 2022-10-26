@@ -1,6 +1,6 @@
 package com.depromeet.threedays.front.data
 
-import com.depromeet.threedays.data.entity.MemberEntity
+import com.depromeet.threedays.data.entity.member.MemberEntity
 import net.bytebuddy.utility.RandomString
 
 class FakeMemberEntity {
@@ -12,13 +12,13 @@ class FakeMemberEntity {
 
         return MemberEntity.builder()
                 .id(id)
-                .nickname(RandomString.make())
+                .name(RandomString.make())
                 .build()
     }
 
     static MemberEntity create(){
         return MemberEntity.builder()
-                .nickname(RandomString.make())
+                .name(RandomString.make())
                 .build()
     }
 }

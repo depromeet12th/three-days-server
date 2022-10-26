@@ -47,3 +47,16 @@ threedays:
           batch_size: 500
           fetch_size: 500
           batch_versioned_data: true
+##SOCIAL
+google:
+  access:
+    token:
+      uri: https://oauth2.googleapis.com/token
+  user:
+    uri: https://www.googleapis.com/oauth2/v1/userinfo
+  web:
+    redirect:
+      uri: googleDummy
+    client:
+      id: googleDummy
+      secret: googleDummy
