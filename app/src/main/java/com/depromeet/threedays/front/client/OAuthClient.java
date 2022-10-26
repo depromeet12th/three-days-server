@@ -38,13 +38,6 @@ public abstract class OAuthClient {
 		return body;
 	}
 
-	public MultiValueMap<String, String> writeBodyDataForInfo(
-			OAuthProperty oAuthProperty, Token token) {
-		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-		// TODO: add body for get info
-		return body;
-	}
-
 	abstract Token getToken(OAuthProperty oAuthProperty, String code);
 
 	abstract OAuthInfo getOAuthInfo(OAuthProperty oAuthProperty, Token accessToken);

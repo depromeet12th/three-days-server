@@ -4,6 +4,7 @@ import com.depromeet.threedays.front.client.model.GoogleOAuthInfo;
 import com.depromeet.threedays.front.client.model.OAuthInfo;
 import com.depromeet.threedays.front.client.property.OAuthProperty;
 import com.depromeet.threedays.front.domain.model.Token;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -41,13 +42,10 @@ public class GoogleOAuthClient extends OAuthClient {
 	@Override
 	OAuthInfo getOAuthInfo(OAuthProperty oAuthProperty, Token token) {
 
-		MultiValueMap<String, String> body = writeBodyDataForInfo(oAuthProperty, token);
-
 		return webClient
-				.post()
+				.get()
 				.uri(oAuthProperty.getUserUri())
-				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				.bodyValue(body)
+				.header(HttpHeaders.AUTHORIZATION, "Bearer " + token.getAccessToken())
 				.retrieve()
 				.onStatus(
 						HttpStatus::is5xxServerError,
