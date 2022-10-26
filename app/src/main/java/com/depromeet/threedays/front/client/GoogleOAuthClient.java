@@ -4,6 +4,7 @@ import com.depromeet.threedays.front.client.model.GoogleOAuthInfo;
 import com.depromeet.threedays.front.client.model.OAuthInfo;
 import com.depromeet.threedays.front.client.property.OAuthProperty;
 import com.depromeet.threedays.front.domain.model.Token;
+import com.depromeet.threedays.front.exception.PolicyViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,13 +31,13 @@ public class GoogleOAuthClient extends OAuthClient {
 				.retrieve()
 				.onStatus(
 						HttpStatus::is5xxServerError,
-						error -> Mono.error(() -> new RuntimeException("서버가 이상해요")))
+						error -> Mono.error(() -> new PolicyViolationException("5001")))
 				.onStatus(
 						HttpStatus::is4xxClientError,
-						error -> Mono.error(() -> new RuntimeException("요청이 바르지 않아요")))
+						error -> Mono.error(() -> new PolicyViolationException("4001")))
 				.bodyToMono(Token.class)
 				.blockOptional()
-				.orElseThrow(() -> new RuntimeException("토큰이 이상헤요"));
+				.orElseThrow(() -> new PolicyViolationException("4002"));
 	}
 
 	@Override
@@ -49,12 +50,12 @@ public class GoogleOAuthClient extends OAuthClient {
 				.retrieve()
 				.onStatus(
 						HttpStatus::is5xxServerError,
-						error -> Mono.error(() -> new RuntimeException("서버가 이상해요")))
+						error -> Mono.error(() -> new PolicyViolationException("5001")))
 				.onStatus(
 						HttpStatus::is4xxClientError,
-						error -> Mono.error(() -> new RuntimeException("요청이 바르지 않아요")))
+						error -> Mono.error(() -> new PolicyViolationException("4001")))
 				.bodyToMono(GoogleOAuthInfo.class)
 				.blockOptional()
-				.orElseThrow(() -> new RuntimeException("토큰이 이상헤요"));
+				.orElseThrow(() -> new PolicyViolationException("4002"));
 	}
 }

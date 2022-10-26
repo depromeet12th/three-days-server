@@ -6,7 +6,6 @@ import com.depromeet.threedays.front.client.property.OAuthProperty;
 import com.depromeet.threedays.front.controller.command.oauth.OAuthCommand;
 import com.depromeet.threedays.front.domain.model.Token;
 import java.util.Map;
-import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -19,16 +18,6 @@ public class OAuthManager {
 
 	private static final String PROPERTY_CLASS_NAME = "OAuthProperty";
 	private static final String CLIENT_CLASS_NAME = "OAuthClient";
-
-	@PostConstruct
-	private void init() {
-		for (String i : authPropertyMap.keySet()) {
-			System.out.println("authProperty: " + authPropertyMap.get(i));
-		}
-		for (String i : authClientMap.keySet()) {
-			System.out.println("authClient: " + authClientMap.get(i));
-		}
-	}
 
 	public OAuthProperty getOAuthProperty(CertificationSubject subject) {
 		String propertyName = subject.toString().toLowerCase() + PROPERTY_CLASS_NAME;
