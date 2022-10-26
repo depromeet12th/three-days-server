@@ -6,7 +6,6 @@ import com.depromeet.threedays.front.client.model.OAuthInfo;
 import com.depromeet.threedays.front.controller.command.member.SaveMemberCommand;
 import com.depromeet.threedays.front.controller.command.oauth.OAuthCommand;
 import com.depromeet.threedays.front.domain.model.Member;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 public class MemberConverter {
 
@@ -37,8 +36,7 @@ public class MemberConverter {
 		return MemberEntity.builder().name(data.getName()).build();
 	}
 
-	public static MemberEntity to(final OAuthInfo data, OAuthCommand command)
-			throws JsonProcessingException {
+	public static MemberEntity to(final OAuthInfo data, OAuthCommand command) {
 		if (data == null) {
 			return null;
 		}

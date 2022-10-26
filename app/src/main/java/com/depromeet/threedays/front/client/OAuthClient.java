@@ -13,7 +13,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 @RequiredArgsConstructor
 public abstract class OAuthClient {
 
-	public static final String GRANT_TYPE = "authorization_code";
+	private static final String GRANT_TYPE = "authorization_code";
 
 	protected final WebClient webClient;
 
@@ -27,7 +27,7 @@ public abstract class OAuthClient {
 		return getOAuthInfo(property, getToken(property, code));
 	}
 
-	public MultiValueMap<String, String> writeBodyDataForToken(
+	protected MultiValueMap<String, String> writeBodyDataForToken(
 			OAuthProperty oAuthProperty, String code) {
 		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
 		body.add("grant_type", GRANT_TYPE);
