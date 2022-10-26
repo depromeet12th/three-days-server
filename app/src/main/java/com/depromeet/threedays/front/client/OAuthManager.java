@@ -20,12 +20,12 @@ public class OAuthManager {
 	private static final String CLIENT_CLASS_NAME = "OAuthClient";
 
 	public OAuthProperty getOAuthProperty(CertificationSubject subject) {
-		String propertyName = subject.toString().toLowerCase() + PROPERTY_CLASS_NAME;
+		String propertyName = subject.name().toLowerCase() + PROPERTY_CLASS_NAME;
 		return authPropertyMap.get(propertyName);
 	}
 
 	public OAuthClient getOAuthClient(CertificationSubject subject) {
-		String clientName = subject.toString().toLowerCase() + CLIENT_CLASS_NAME;
+		String clientName = subject.name().toLowerCase() + CLIENT_CLASS_NAME;
 		return authClientMap.get(clientName);
 	}
 
