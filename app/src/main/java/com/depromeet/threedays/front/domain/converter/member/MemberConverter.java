@@ -1,9 +1,12 @@
 package com.depromeet.threedays.front.domain.converter.member;
 
 import com.depromeet.threedays.data.entity.member.MemberEntity;
+import com.depromeet.threedays.data.entity.member.certification.Certification;
 import com.depromeet.threedays.front.client.model.OAuthInfo;
 import com.depromeet.threedays.front.controller.command.member.SaveMemberCommand;
+import com.depromeet.threedays.front.controller.command.oauth.OAuthCommand;
 import com.depromeet.threedays.front.domain.model.Member;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 public class MemberConverter {
 
@@ -34,12 +37,23 @@ public class MemberConverter {
 		return MemberEntity.builder().name(data.getName()).build();
 	}
 
-	public static MemberEntity to(final OAuthInfo data) {
+	public static MemberEntity to(final OAuthInfo data, OAuthCommand command)
+			throws JsonProcessingException {
 		if (data == null) {
 			return null;
 		}
+		Certification certification =
+				Certification.builder()
+						.certificationId(data.getId())
+						.certificationSubject(command.getCertificationSubject())
+						.build();
+
 		// TODO: OAuthInfo 이용해서 MemberEntity build
-		// 기존의 Profile을 OAuthInfo로 대체하면서, 어떻게 모듈 간의 의존성 끊을지 고민할 것
-		return MemberEntity.builder().name(data.getName()).build();
+		return MemberEntity.builder()
+				.name(data.getName())
+				.profile(OAuthInfoConverter.to(data))
+				.certification(certification)
+				.fcmToken(command.getFcmToken())
+				.build();
 	}
 }

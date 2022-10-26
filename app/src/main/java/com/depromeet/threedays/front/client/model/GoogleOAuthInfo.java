@@ -1,10 +1,15 @@
 package com.depromeet.threedays.front.client.model;
 
 import lombok.Getter;
-import org.springframework.stereotype.Component;
 
 @Getter
-@Component
 public class GoogleOAuthInfo extends OAuthInfo {
-    private String goo;
+	private String id;
+	private String email;
+	private String name;
+	private Boolean verifiedEmail;
+	private String givenName;
+	private String familyName;
+	private String picture;
+	private String locale;
 }
