@@ -23,7 +23,9 @@ public class SaveOAuthUseCase {
 		OAuthInfo info = oAuthManager.getOAuthInfo(command);
 
 		return MemberConverter.from(
-				memberRepository.findByName(info.getName()).orElseGet(() -> join(info, command)));
+				memberRepository
+						.findByCertification(info.getId(), command.getCertificationSubject())
+						.orElseGet(() -> join(info, command)));
 	}
 
 	public MemberEntity join(OAuthInfo info, OAuthCommand command) {

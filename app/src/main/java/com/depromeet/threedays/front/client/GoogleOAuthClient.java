@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
@@ -31,7 +32,9 @@ public class GoogleOAuthClient extends OAuthClient {
 				.retrieve()
 				.onStatus(
 						HttpStatus::is5xxServerError,
-						error -> Mono.error(() -> new PolicyViolationException("5001")))
+						error ->
+								Mono.error(
+										() -> new HttpClientErrorException(error.statusCode(), error.logPrefix())))
 				.onStatus(
 						HttpStatus::is4xxClientError,
 						error -> Mono.error(() -> new PolicyViolationException("4001")))
@@ -50,12 +53,13 @@ public class GoogleOAuthClient extends OAuthClient {
 				.retrieve()
 				.onStatus(
 						HttpStatus::is5xxServerError,
-						error -> Mono.error(() -> new PolicyViolationException("5001")))
+						error ->
+								Mono.error(
+										() -> new HttpClientErrorException(error.statusCode(), error.logPrefix())))
 				.onStatus(
 						HttpStatus::is4xxClientError,
 						error -> Mono.error(() -> new PolicyViolationException("4001")))
 				.bodyToMono(GoogleOAuthInfo.class)
-				.blockOptional()
-				.orElseThrow(() -> new PolicyViolationException("4002"));
+				.block();
 	}
 }
