@@ -1,4 +1,4 @@
-package com.depromeet.threedays.front.config;
+package com.depromeet.threedays.front.controller.member;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -68,10 +68,9 @@ public class JwtTokenProvider implements AuthenticationProvider {
 							.build()
 							.parseClaimsJws(parseBearerToken(jwtToken));
 
-			if (!claims.getBody().getExpiration().before(new Date())) {
-				return true;
-			}
-			return false;
+			return !claims.getBody()
+						  .getExpiration()
+						  .before(new Date());
 		}
 		return false;
 	}
