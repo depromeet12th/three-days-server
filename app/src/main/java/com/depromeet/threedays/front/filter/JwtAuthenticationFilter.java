@@ -1,6 +1,6 @@
 package com.depromeet.threedays.front.filter;
 
-import com.depromeet.threedays.front.config.JwtTokenProvider;
+import com.depromeet.threedays.front.controller.member.JwtTokenProvider;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,5 +1,6 @@
 package com.depromeet.threedays.front.config;
 
+import com.depromeet.threedays.front.controller.member.JwtTokenProvider;
 import com.depromeet.threedays.front.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
