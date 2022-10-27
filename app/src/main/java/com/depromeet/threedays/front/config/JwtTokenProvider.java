@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtTokenProvider implements AuthenticationProvider {
 	private static final String SECRET_KEY = "ThreeDaysSecretKeyThreeDaysSecretKey";
-	private static final String AUTHORIZATION_HEADER = "Authorization";
+	private static final String AUTHORIZATION_HEADER = "authorization";
 	private static final String BEARER_PREFIX = "Bearer ";
 	private static final long TOKEN_VALID_TIME = 30 * 60 * 1000L;
 	private static final String MEMBER_ID_CLAIM_KEY = "memberId";
@@ -54,8 +54,6 @@ public class JwtTokenProvider implements AuthenticationProvider {
 
 	public String resolveToken(HttpServletRequest request) {
 		String jwtToken = request.getHeader(AUTHORIZATION_HEADER);
-		System.out.println(jwtToken);
-
 		if (validateToken(jwtToken)) {
 			return parseBearerToken(jwtToken);
 		}
