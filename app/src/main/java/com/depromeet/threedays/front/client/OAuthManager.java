@@ -5,6 +5,7 @@ import com.depromeet.threedays.front.client.model.OAuthInfo;
 import com.depromeet.threedays.front.client.property.OAuthProperty;
 import com.depromeet.threedays.front.controller.command.oauth.OAuthCommand;
 import com.depromeet.threedays.front.domain.model.Token;
+import java.util.Collection;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -16,16 +17,23 @@ public class OAuthManager {
 	private final Map<String, OAuthProperty> authPropertyMap;
 	private final Map<String, OAuthClient> authClientMap;
 
-	private static final String PROPERTY_CLASS_NAME = "OAuthProperty";
-	private static final String CLIENT_CLASS_NAME = "OAuthClient";
-
 	public OAuthProperty getOAuthProperty(CertificationSubject subject) {
-		String propertyName = subject.name().toLowerCase() + PROPERTY_CLASS_NAME;
-		return authPropertyMap.get(propertyName);
+		Collection<String> oAuthProperty = authPropertyMap.keySet();
+		String clientName =
+				oAuthProperty.stream()
+						.filter((k) -> k.startsWith(subject.name().toLowerCase()))
+						.findFirst()
+						.orElseThrow(() -> new NoSuchFieldError());
+		return authPropertyMap.get(clientName);
 	}
 
 	public OAuthClient getOAuthClient(CertificationSubject subject) {
-		String clientName = subject.name().toLowerCase() + CLIENT_CLASS_NAME;
+		Collection<String> oAuthClient = authClientMap.keySet();
+		String clientName =
+				oAuthClient.stream()
+						.filter((k) -> k.startsWith(subject.name().toLowerCase()))
+						.findFirst()
+						.orElseThrow(() -> new NoSuchFieldError());
 		return authClientMap.get(clientName);
 	}
 
