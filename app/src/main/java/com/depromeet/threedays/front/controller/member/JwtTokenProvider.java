@@ -1,5 +1,7 @@
 package com.depromeet.threedays.front.controller.member;
 
+import com.depromeet.threedays.front.domain.model.Member;
+import com.depromeet.threedays.front.domain.usecase.member.GetMemberUseCase;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
@@ -33,6 +35,7 @@ public class JwtTokenProvider implements AuthenticationProvider {
 	private static final int PAYLOAD_INDEX = 1;
 	private static final int SUBSTRING_BEARER_INDEX = 7;
 	private static final String PREAUTH_TOKEN_CREDENTIAL = "";
+	private final GetMemberUseCase getMemberUseCase;
 	private Key key;
 
 	@PostConstruct
@@ -82,23 +85,25 @@ public class JwtTokenProvider implements AuthenticationProvider {
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String jwtToken = authentication.getPrincipal().toString();
+
 		Base64.Decoder decoder = Base64.getUrlDecoder();
 
 		String[] split = jwtToken.split("\\.");
 		final String payload = new String(decoder.decode(split[PAYLOAD_INDEX].getBytes()));
-
 		JSONParser jsonParser = new JSONParser();
-		Long memberId;
+
+		Member member;
 		try {
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(payload);
-			memberId = (Long) jsonObject.get(MEMBER_ID_CLAIM_KEY);
+			Long memberId = (Long) jsonObject.get(MEMBER_ID_CLAIM_KEY);
+			member = getMemberUseCase.execute(memberId);
 		} catch (ParseException e) {
 			throw new RuntimeException(e);
 		}
 
 		if (authentication instanceof PreAuthenticatedAuthenticationToken && validateToken(jwtToken)) {
 			return new PreAuthenticatedAuthenticationToken(
-					memberId, PREAUTH_TOKEN_CREDENTIAL, Collections.singleton(new SimpleGrantedAuthority(ROLE_USER)));
+					member.getMemberId(), PREAUTH_TOKEN_CREDENTIAL, Collections.singleton(new SimpleGrantedAuthority(ROLE_USER)));
 		}
 		return null;
 	}
