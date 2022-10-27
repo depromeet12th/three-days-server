@@ -2,6 +2,7 @@ package com.depromeet.threedays.front.controller.member;
 
 import com.depromeet.threedays.front.domain.model.Member;
 import com.depromeet.threedays.front.domain.usecase.member.GetMemberUseCase;
+import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
@@ -92,13 +93,13 @@ public class JwtTokenProvider implements AuthenticationProvider {
 		final String payload = new String(decoder.decode(split[PAYLOAD_INDEX].getBytes()));
 		JSONParser jsonParser = new JSONParser();
 
-		Member member;
+		Member member = null;
 		try {
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(payload);
 			Long memberId = (Long) jsonObject.get(MEMBER_ID_CLAIM_KEY);
 			member = getMemberUseCase.execute(memberId);
-		} catch (ParseException e) {
-			throw new RuntimeException(e);
+		} catch (ResourceNotFoundException | ParseException e) {
+			e.printStackTrace();
 		}
 
 		if (authentication instanceof PreAuthenticatedAuthenticationToken && validateToken(jwtToken)) {
