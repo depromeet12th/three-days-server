@@ -7,6 +7,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public abstract class OAuthInfo {
 	private String id;
-	private String email;
 	private String name;
+	private String email;
 }

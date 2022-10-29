@@ -9,11 +9,4 @@ dependencies {
     //docs
     implementation "org.springdoc:springdoc-openapi-ui:${springdocVersion}"
 
-    //WebClient
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    def isMacOS = System.getProperty("os.name").startsWith("Mac OS X")
-    def architecture = System.getProperty("os.arch").toLowerCase()
-    if (isMacOS && architecture == "aarch64") {
-        developmentOnly("io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64")
-    }
 }

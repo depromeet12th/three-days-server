@@ -18,20 +18,20 @@ public class OAuthManager {
 	private final Map<String, OAuthClient> authClientMap;
 
 	public OAuthProperty getOAuthProperty(CertificationSubject subject) {
-		Collection<String> oAuthProperty = authPropertyMap.keySet();
+		Collection<String> oAuthProperties = authPropertyMap.keySet();
 		String clientName =
-				oAuthProperty.stream()
-						.filter((k) -> k.startsWith(subject.name().toLowerCase()))
+				oAuthProperties.stream()
+						.filter((k) -> k.contains(subject.name().toLowerCase()))
 						.findFirst()
 						.orElseThrow(() -> new NoSuchFieldError());
 		return authPropertyMap.get(clientName);
 	}
 
 	public OAuthClient getOAuthClient(CertificationSubject subject) {
-		Collection<String> oAuthClient = authClientMap.keySet();
+		Collection<String> oAuthClients = authClientMap.keySet();
 		String clientName =
-				oAuthClient.stream()
-						.filter((k) -> k.startsWith(subject.name().toLowerCase()))
+				oAuthClients.stream()
+						.filter((k) -> k.contains(subject.name().toLowerCase()))
 						.findFirst()
 						.orElseThrow(() -> new NoSuchFieldError());
 		return authClientMap.get(clientName);
@@ -40,7 +40,6 @@ public class OAuthManager {
 	public OAuthInfo getOAuthInfo(OAuthCommand command) {
 		OAuthClient client = getOAuthClient(command.getCertificationSubject());
 		OAuthProperty property = getOAuthProperty(command.getCertificationSubject());
-		return client.readOAuthUserData(
-				property, new Token(command.getAccessToken(), command.getIdToken()));
+		return client.getOAuthInfo(property, new Token(command.getAccessToken(), command.getIdToken()));
 	}
 }
