@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -25,7 +26,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class JwtTokenProvider implements AuthenticationProvider {
-	private static final String SECRET_KEY = "ThreeDaysSecretKeyThreeDaysSecretKey";
+	@Value("${security.jwt.token.secretkey}")
+	private final String SECRET_KEY;
 	private static final String AUTHORIZATION_HEADER = "authorization";
 	private static final String BEARER_PREFIX = "Bearer ";
 	private static final long TOKEN_VALID_TIME = 30 * 60 * 1000L;
