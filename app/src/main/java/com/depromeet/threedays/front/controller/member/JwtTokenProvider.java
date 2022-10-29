@@ -5,11 +5,9 @@ import com.depromeet.threedays.front.domain.usecase.member.GetMemberUseCase;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
-import java.security.Key;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,23 +35,17 @@ public class JwtTokenProvider implements AuthenticationProvider {
 	private static final int SUBSTRING_BEARER_INDEX = 7;
 	private static final String PREAUTH_TOKEN_CREDENTIAL = "";
 	private final GetMemberUseCase getMemberUseCase;
-	private Key key;
-
-	@PostConstruct
-	protected void encodeSecretKey() {
-		this.key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
-	}
 
 	public String generateToken(Long memberId) {
 		Date now = new Date();
 
 		return Jwts.builder()
-				.setHeaderParam(Header.TYPE, Header.JWT_TYPE)
-				.claim(MEMBER_ID_CLAIM_KEY, memberId)
-				.setIssuedAt(now)
-				.setExpiration(new Date(now.getTime() + TOKEN_VALID_TIME))
-				.signWith(key)
-				.compact();
+				   .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
+				   .claim(MEMBER_ID_CLAIM_KEY, memberId)
+				   .setIssuedAt(now)
+				   .setExpiration(new Date(now.getTime() + TOKEN_VALID_TIME))
+				   .signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes()))
+				   .compact();
 	}
 
 	public String resolveToken(HttpServletRequest request) {
