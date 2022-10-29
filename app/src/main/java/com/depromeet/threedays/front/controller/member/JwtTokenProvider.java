@@ -30,7 +30,8 @@ public class JwtTokenProvider implements AuthenticationProvider {
 	private final String SECRET_KEY;
 	private static final String AUTHORIZATION_HEADER = "authorization";
 	private static final String BEARER_PREFIX = "Bearer ";
-	private static final long TOKEN_VALID_TIME = 30 * 60 * 1000L;
+	@Value("${security.jwt.token.validtime}")
+	private final long TOKEN_VALID_TIME = 120 * 60 * 1000L;
 	private static final String MEMBER_ID_CLAIM_KEY = "memberId";
 	private static final String ROLE_USER = "ROLE_USER";
 	private static final int PAYLOAD_INDEX = 1;
