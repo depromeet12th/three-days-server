@@ -1,6 +1,5 @@
 package com.depromeet.threedays.front.support;
 
-import com.depromeet.threedays.front.exception.AuthorizedException;
 import com.depromeet.threedays.front.support.ApiResponse.FailureBody;
 import javax.naming.AuthenticationException;
 import javax.validation.ConstraintViolationException;
@@ -46,10 +45,6 @@ public class FailureBodyResolver {
 	}
 
 	public static ApiResponse.FailureBody resolveFrom(final AuthenticationException ex) {
-		return new ApiResponse.FailureBody(ex.getMessage());
-	}
-
-	public static ApiResponse.FailureBody resolveFrom(final AuthorizedException ex) {
 		return new ApiResponse.FailureBody(ex.getMessage());
 	}
 }
