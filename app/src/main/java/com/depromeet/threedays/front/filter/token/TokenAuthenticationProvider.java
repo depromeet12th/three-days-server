@@ -1,4 +1,4 @@
-package com.depromeet.threedays.front.controller.member;
+package com.depromeet.threedays.front.filter.token;
 
 import com.depromeet.threedays.front.domain.usecase.member.GetMemberUseCase;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;

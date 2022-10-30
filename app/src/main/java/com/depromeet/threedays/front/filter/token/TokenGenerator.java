@@ -1,4 +1,4 @@
-package com.depromeet.threedays.front.controller.member;
+package com.depromeet.threedays.front.filter.token;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
