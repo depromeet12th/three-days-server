@@ -1,4 +1,3 @@
-
 spring:
   web:
     resources:
@@ -12,6 +11,12 @@ spring:
       maxFileSize: 100MB
       maxRequestSize: 100MB
   session.jdbc.initialize-schema: never
+
+security:
+  jwt:
+    token:
+      secretkey: "ThreeDaysSecretKeyThreeDaysSecretKeyThreeDaysSecretKey"
+      validtime: 120 * 60 * 1000L;
 
 
 ###SWAGGER###
