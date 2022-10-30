@@ -45,16 +45,19 @@ public class TokenGenerator {
 	}
 
 	private boolean validateToken(String jwtToken) {
-		if (jwtToken != null && jwtToken.startsWith(BEARER_PREFIX)) {
-			Jws<Claims> claims =
-					Jwts.parserBuilder()
-							.setSigningKey(SECRET_KEY.getBytes())
-							.build()
-							.parseClaimsJws(parseBearerToken(jwtToken));
-
-			return !claims.getBody().getExpiration().before(new Date());
+		if (jwtToken == null || !jwtToken.startsWith(BEARER_PREFIX)) {
+			return false;
 		}
-		return false;
+
+		Jws<Claims> claims =
+				Jwts.parserBuilder()
+					.setSigningKey(SECRET_KEY.getBytes())
+					.build()
+					.parseClaimsJws(parseBearerToken(jwtToken));
+
+		return !claims.getBody()
+					  .getExpiration()
+					  .before(new Date());
 	}
 
 	private String parseBearerToken(String jwtToken) {
