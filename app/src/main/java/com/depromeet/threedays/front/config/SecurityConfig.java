@@ -1,7 +1,8 @@
 package com.depromeet.threedays.front.config;
 
-import com.depromeet.threedays.front.controller.member.JwtTokenProvider;
-import com.depromeet.threedays.front.filter.JwtAuthenticationFilter;
+import com.depromeet.threedays.front.controller.member.TokenAuthenticationProvider;
+import com.depromeet.threedays.front.controller.member.TokenGenerator;
+import com.depromeet.threedays.front.filter.TokenAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.ProviderManager;
@@ -15,7 +16,8 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-	private final JwtTokenProvider jwtTokenProvider;
+	private final TokenGenerator tokenGenerator;
+	private final TokenAuthenticationProvider tokenAuthenticationProvider;
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -36,9 +38,11 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	public JwtAuthenticationFilter jwtAuthenticationFilter() {
-		JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtTokenProvider);
-		jwtAuthenticationFilter.setAuthenticationManager(new ProviderManager(jwtTokenProvider));
-		return jwtAuthenticationFilter;
+	public TokenAuthenticationFilter jwtAuthenticationFilter() {
+		TokenAuthenticationFilter tokenAuthenticationFilter =
+				new TokenAuthenticationFilter(tokenGenerator);
+		tokenAuthenticationFilter.setAuthenticationManager(
+				new ProviderManager(tokenAuthenticationProvider));
+		return tokenAuthenticationFilter;
 	}
 }
