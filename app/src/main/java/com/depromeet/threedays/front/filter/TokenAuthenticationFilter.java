@@ -1,6 +1,6 @@
 package com.depromeet.threedays.front.filter;
 
-import com.depromeet.threedays.front.controller.member.JwtTokenProvider;
+import com.depromeet.threedays.front.controller.member.TokenGenerator;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,16 +8,16 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
 
 @Slf4j
 @RequiredArgsConstructor
-public class JwtAuthenticationFilter extends AbstractPreAuthenticatedProcessingFilter {
-	private final JwtTokenProvider jwtTokenProvider;
+public class TokenAuthenticationFilter extends AbstractPreAuthenticatedProcessingFilter {
+	private final TokenGenerator tokenGenerator;
 
 	@Override
 	protected Object getPreAuthenticatedPrincipal(HttpServletRequest request) {
-		return jwtTokenProvider.resolveToken(request);
+		return tokenGenerator.resolveToken(request);
 	}
 
 	@Override
 	protected Object getPreAuthenticatedCredentials(HttpServletRequest request) {
-		return jwtTokenProvider.resolveToken(request);
+		return tokenGenerator.resolveToken(request);
 	}
 }
