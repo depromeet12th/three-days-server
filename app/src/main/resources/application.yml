@@ -15,8 +15,8 @@ spring:
 security:
   jwt:
     token:
-      secretkey: "ThreeDaysSecretKeyThreeDaysSecretKeyThreeDaysSecretKey"
-      validtime: 120 * 60 * 1000L;
+      secretkey: "ThisisThreeDaysServerspringsecuritysecretkey"
+      validtime: 72000000
 
 
 ###SWAGGER###

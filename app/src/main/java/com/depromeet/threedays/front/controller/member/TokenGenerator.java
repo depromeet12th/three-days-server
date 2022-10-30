@@ -14,10 +14,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class TokenGenerator {
 	@Value("${security.jwt.token.secretkey}")
-	private final String SECRET_KEY;
+	private String SECRET_KEY;
 
 	@Value("${security.jwt.token.validtime}")
-	private final long TOKEN_VALID_TIME = 120 * 60 * 1000L;
+	private Integer TOKEN_VALID_TIME;
 
 	private static final String AUTHORIZATION_HEADER = "authorization";
 	private static final String BEARER_PREFIX = "Bearer ";
