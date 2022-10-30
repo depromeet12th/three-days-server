@@ -51,13 +51,11 @@ public class TokenGenerator {
 
 		Jws<Claims> claims =
 				Jwts.parserBuilder()
-					.setSigningKey(SECRET_KEY.getBytes())
-					.build()
-					.parseClaimsJws(parseBearerToken(jwtToken));
+						.setSigningKey(SECRET_KEY.getBytes())
+						.build()
+						.parseClaimsJws(parseBearerToken(jwtToken));
 
-		return !claims.getBody()
-					  .getExpiration()
-					  .before(new Date());
+		return !claims.getBody().getExpiration().before(new Date());
 	}
 
 	private String parseBearerToken(String jwtToken) {
