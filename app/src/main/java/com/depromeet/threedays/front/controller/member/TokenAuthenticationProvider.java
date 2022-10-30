@@ -1,6 +1,5 @@
 package com.depromeet.threedays.front.controller.member;
 
-import com.depromeet.threedays.front.domain.model.Member;
 import com.depromeet.threedays.front.domain.usecase.member.GetMemberUseCase;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import java.util.Base64;
@@ -14,7 +13,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
 public class TokenAuthenticationProvider implements AuthenticationProvider {
 	private static final String ROLE_USER = "ROLE_USER";
@@ -34,18 +35,18 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
 		final String payload = new String(decoder.decode(split[PAYLOAD_INDEX].getBytes()));
 		JSONParser jsonParser = new JSONParser();
 
-		Member member = null;
+		Long memberId = null;
 		try {
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(payload);
-			Long memberId = (Long) jsonObject.get(MEMBER_ID_CLAIM_KEY);
-			member = getMemberUseCase.execute(memberId);
+			Long authenticationMemberId = (Long) jsonObject.get(MEMBER_ID_CLAIM_KEY);
+			memberId = getMemberUseCase.execute(authenticationMemberId).getMemberId();
 		} catch (ResourceNotFoundException | ParseException e) {
 			e.printStackTrace();
 		}
 
 		if (authentication instanceof PreAuthenticatedAuthenticationToken) {
 			return new PreAuthenticatedAuthenticationToken(
-					member.getMemberId(),
+					memberId,
 					PREAUTH_TOKEN_CREDENTIAL,
 					Collections.singleton(new SimpleGrantedAuthority(ROLE_USER)));
 		}
