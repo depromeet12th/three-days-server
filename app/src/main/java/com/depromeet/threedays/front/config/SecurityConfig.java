@@ -1,6 +1,5 @@
 package com.depromeet.threedays.front.config;
 
-import com.depromeet.threedays.front.filter.token.TokenGenerator;
 import com.depromeet.threedays.front.filter.token.TokenAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +16,6 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-	private final TokenGenerator tokenGenerator;
 	private final AuthenticationProvider tokenAuthenticationProvider;
 
 	@Bean
@@ -66,10 +64,10 @@ public class SecurityConfig {
 		http.httpBasic().disable();
 
 		http.authorizeRequests()
-			.antMatchers("/swagger-ui/index.html#/")
-			.permitAll()
-			.antMatchers("/api/v1/**")
-			.permitAll();
+				.antMatchers("/swagger-ui/index.html#/")
+				.permitAll()
+				.antMatchers("/api/v1/**")
+				.permitAll();
 
 		http.addFilterAt(tokenAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class);
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -79,8 +77,7 @@ public class SecurityConfig {
 
 	@Bean
 	public TokenAuthenticationFilter tokenAuthenticationFilter() {
-		TokenAuthenticationFilter tokenAuthenticationFilter =
-				new TokenAuthenticationFilter(tokenGenerator);
+		TokenAuthenticationFilter tokenAuthenticationFilter = new TokenAuthenticationFilter();
 		tokenAuthenticationFilter.setAuthenticationManager(
 				new ProviderManager(tokenAuthenticationProvider));
 		return tokenAuthenticationFilter;
