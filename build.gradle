@@ -8,6 +8,7 @@ buildscript {
         spotlessVersion = '6.8.0'
         springdocVersion = '1.6.11'
         reactorSpringVersion = '1.0.1.RELEASE'
+        set('springCloudVersion', "2021.0.1")
     }
     repositories {
         mavenCentral()
@@ -17,7 +18,6 @@ buildscript {
         classpath "io.spring.gradle:dependency-management-plugin:${dependencyManagementVersion}"
     }
 }
-
 plugins {
     id 'java'
     id "org.flywaydb.flyway" version "${flywayVersion}"

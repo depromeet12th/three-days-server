@@ -46,7 +46,6 @@ public class MemberConverter {
 						.certificationSubject(command.getCertificationSubject())
 						.build();
 
-		// TODO: OAuthInfo 이용해서 MemberEntity build
 		return MemberEntity.builder()
 				.name(data.getName())
 				.profile(OAuthInfoConverter.to(data))

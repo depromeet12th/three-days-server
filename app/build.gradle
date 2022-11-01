@@ -1,6 +1,11 @@
 apply from: '../integration-test.gradle'
-
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
 dependencies {
+
     implementation project(':data')
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -9,4 +14,5 @@ dependencies {
     //docs
     implementation "org.springdoc:springdoc-openapi-ui:${springdocVersion}"
 
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 }
