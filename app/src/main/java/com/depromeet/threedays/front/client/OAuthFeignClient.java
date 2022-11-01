@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 @FeignClient(name = "oauth-client", url = "send to parameter URI")
 public interface OAuthFeignClient {
-	static final String TOKEN_HEADER =
-			HttpHeaders.AUTHORIZATION; // "Bearer " + token.getAccessToken()
+	String TOKEN_HEADER = HttpHeaders.AUTHORIZATION;
 
 	@GetMapping(path = "/")
 	GoogleOAuthInfo getInfo(URI uri, @RequestHeader(TOKEN_HEADER) String token);

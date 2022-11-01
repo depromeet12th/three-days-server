@@ -14,7 +14,7 @@ public abstract class OAuthProperty {
 
 	protected String userUri;
 
-	public OAuthProperty(
+	protected OAuthProperty(
 			String redirectUri,
 			String clientId,
 			String clientSecret,
