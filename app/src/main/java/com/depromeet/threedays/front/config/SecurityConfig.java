@@ -50,7 +50,8 @@ public class SecurityConfig {
 				.anyRequest()
 				.authenticated();
 
-		http.addFilterAt(generateAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class);
+		http.addFilterAt(
+				generateAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class);
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 		return http.build();
