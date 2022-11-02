@@ -1,10 +1,10 @@
 package com.depromeet.threedays.front.support;
 
 import com.depromeet.threedays.front.support.ApiResponse.FailureBody;
-import javax.naming.AuthenticationException;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
 import lombok.experimental.UtilityClass;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MissingServletRequestParameterException;
