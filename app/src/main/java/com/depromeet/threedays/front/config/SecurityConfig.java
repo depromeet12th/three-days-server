@@ -46,7 +46,9 @@ public class SecurityConfig {
 				.antMatchers("/swagger-ui/index.html#/")
 				.permitAll()
 				.antMatchers("/api/v1/**")
-				.permitAll();
+				.permitAll()
+				.anyRequest()
+				.authenticated();
 
 		http.addFilterAt(tokenAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class);
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
