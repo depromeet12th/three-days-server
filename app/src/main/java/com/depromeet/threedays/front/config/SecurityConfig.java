@@ -1,7 +1,7 @@
 package com.depromeet.threedays.front.config;
 
 import com.depromeet.threedays.front.filter.token.AuthProvider;
-import com.depromeet.threedays.front.filter.token.TokenAuthenticationFilter;
+import com.depromeet.threedays.front.filter.token.AuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
@@ -50,15 +50,15 @@ public class SecurityConfig {
 				.anyRequest()
 				.authenticated();
 
-		http.addFilterAt(tokenAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class);
+		http.addFilterAt(generateAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class);
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 		return http.build();
 	}
 
-	public TokenAuthenticationFilter tokenAuthenticationFilter() {
-		TokenAuthenticationFilter tokenAuthenticationFilter = new TokenAuthenticationFilter();
-		tokenAuthenticationFilter.setAuthenticationManager(new ProviderManager(authProvider));
-		return tokenAuthenticationFilter;
+	public AuthenticationFilter generateAuthenticationFilter() {
+		AuthenticationFilter authenticationFilter = new AuthenticationFilter();
+		authenticationFilter.setAuthenticationManager(new ProviderManager(authProvider));
+		return authenticationFilter;
 	}
 }
