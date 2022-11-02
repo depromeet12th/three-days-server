@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class TokenAuthenticationProvider implements AuthenticationProvider {
+public class AuthProvider implements AuthenticationProvider {
 	private static final String ROLE_USER = "ROLE_USER";
 	private static final int PAYLOAD_INDEX = 1;
 	private static final String PREAUTH_TOKEN_CREDENTIAL = "";
