@@ -56,7 +56,6 @@ public class SecurityConfig {
 		return http.build();
 	}
 
-	@Bean
 	public TokenAuthenticationFilter tokenAuthenticationFilter() {
 		TokenAuthenticationFilter tokenAuthenticationFilter = new TokenAuthenticationFilter();
 		tokenAuthenticationFilter.setAuthenticationManager(new ProviderManager(authProvider));
