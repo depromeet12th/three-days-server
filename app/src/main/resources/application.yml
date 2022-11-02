@@ -12,11 +12,7 @@ spring:
       maxRequestSize: 100MB
   session.jdbc.initialize-schema: never
 
-security:
-  jwt:
-    token:
-      secretkey: "ThisisThreeDaysServerspringsecuritysecretkey"
-      validtime: 72000000
+
 
 
 ###SWAGGER###

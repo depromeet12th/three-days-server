@@ -10,3 +10,7 @@ spring:
     password:
     port: 16379
 
+security:
+  jwt:
+    token:
+      validtime: 72000000
