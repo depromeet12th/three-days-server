@@ -31,14 +31,14 @@ public class SecurityConfig {
 		http.formLogin().disable();
 		http.httpBasic().disable();
 		http.authorizeRequests()
-			.antMatchers("/swagger-ui/index.html#/")
-			.permitAll()
-			.antMatchers("/api/v1/**")
-			.permitAll();
+				.antMatchers("/swagger-ui/index.html#/")
+				.permitAll()
+				.antMatchers("/api/v1/**")
+				.permitAll();
 
 		http.exceptionHandling()
-			.authenticationEntryPoint(unAuthorizedHandler)
-			.accessDeniedHandler(tokenAccessDeniedHandler);
+				.authenticationEntryPoint(unAuthorizedHandler)
+				.accessDeniedHandler(tokenAccessDeniedHandler);
 
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		return http.build();
