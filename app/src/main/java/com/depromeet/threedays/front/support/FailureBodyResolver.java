@@ -4,6 +4,7 @@ import com.depromeet.threedays.front.support.ApiResponse.FailureBody;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
 import lombok.experimental.UtilityClass;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -45,6 +46,10 @@ public class FailureBodyResolver {
 	}
 
 	public static ApiResponse.FailureBody resolveFrom(final AuthenticationException ex) {
+		return new ApiResponse.FailureBody(ex.getMessage());
+	}
+
+	public static ApiResponse.FailureBody resolveFrom(final AccessDeniedException ex) {
 		return new ApiResponse.FailureBody(ex.getMessage());
 	}
 }
