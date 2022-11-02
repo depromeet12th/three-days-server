@@ -38,25 +38,6 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	@Profile(value = "dev")
-	public SecurityFilterChain devSecurityFilterChain(HttpSecurity http) throws Exception {
-		http.csrf().disable();
-		http.formLogin().disable();
-		http.httpBasic().disable();
-
-		http.authorizeRequests()
-				.antMatchers("/swagger-ui/index.html#/")
-				.permitAll()
-				.antMatchers("/api/v1/**")
-				.permitAll();
-
-		http.addFilterAt(tokenAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class);
-		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-		return http.build();
-	}
-
-	@Bean
 	@Profile(value = "prod")
 	public SecurityFilterChain prodSecurityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable();
