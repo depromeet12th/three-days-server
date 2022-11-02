@@ -31,9 +31,7 @@ public class SecurityConfig {
 				.antMatchers("/api/v1/**")
 				.permitAll();
 
-		http.addFilterAt(tokenAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class);
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
 		return http.build();
 	}
 
@@ -59,8 +57,7 @@ public class SecurityConfig {
 	@Bean
 	public TokenAuthenticationFilter tokenAuthenticationFilter() {
 		TokenAuthenticationFilter tokenAuthenticationFilter = new TokenAuthenticationFilter();
-		tokenAuthenticationFilter.setAuthenticationManager(
-				new ProviderManager(authProvider));
+		tokenAuthenticationFilter.setAuthenticationManager(new ProviderManager(authProvider));
 		return tokenAuthenticationFilter;
 	}
 }
