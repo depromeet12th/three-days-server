@@ -1,5 +1,7 @@
 package com.depromeet.threedays.front.config;
 
+import com.depromeet.threedays.front.filter.TokenAccessDeniedHandler;
+import com.depromeet.threedays.front.filter.UnAuthorizedHandler;
 import com.depromeet.threedays.front.filter.token.AuthProvider;
 import com.depromeet.threedays.front.filter.token.AuthenticationFilter;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,8 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+	private final UnAuthorizedHandler unAuthorizedHandler;
+	private final TokenAccessDeniedHandler tokenAccessDeniedHandler;
 	private final AuthProvider authProvider;
 
 	@Bean
@@ -30,6 +34,10 @@ public class SecurityConfig {
 				.permitAll()
 				.antMatchers("/api/v1/**")
 				.permitAll();
+
+		http.exceptionHandling()
+			.authenticationEntryPoint(unAuthorizedHandler)
+			.accessDeniedHandler(tokenAccessDeniedHandler);
 
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		return http.build();
