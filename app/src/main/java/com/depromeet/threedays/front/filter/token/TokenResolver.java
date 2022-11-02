@@ -8,7 +8,9 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TokenResolver {
 	@Value("${security.jwt.token.secretkey}")
 	private String SECRET_KEY;

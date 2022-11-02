@@ -9,15 +9,14 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
 @RequiredArgsConstructor
 public class AuthenticationFilter extends AbstractPreAuthenticatedProcessingFilter {
 
+	private final TokenResolver tokenResolver;
 	@Override
 	protected Object getPreAuthenticatedPrincipal(HttpServletRequest request) {
-		TokenResolver tokenResolver = new TokenResolver();
 		return tokenResolver.resolveToken(request);
 	}
 
 	@Override
 	protected Object getPreAuthenticatedCredentials(HttpServletRequest request) {
-		TokenResolver tokenResolver = new TokenResolver();
 		return tokenResolver.resolveToken(request);
 	}
 }

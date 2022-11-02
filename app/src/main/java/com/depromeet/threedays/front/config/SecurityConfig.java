@@ -4,6 +4,7 @@ import com.depromeet.threedays.front.filter.TokenAccessDeniedHandler;
 import com.depromeet.threedays.front.filter.UnAuthorizedHandler;
 import com.depromeet.threedays.front.filter.token.AuthProvider;
 import com.depromeet.threedays.front.filter.token.AuthenticationFilter;
+import com.depromeet.threedays.front.filter.token.TokenResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
@@ -21,6 +22,7 @@ public class SecurityConfig {
 	private final UnAuthorizedHandler unAuthorizedHandler;
 	private final TokenAccessDeniedHandler tokenAccessDeniedHandler;
 	private final AuthProvider authProvider;
+	private final TokenResolver tokenResolver;
 
 	@Bean
 	@Profile(value = "local")
@@ -28,12 +30,11 @@ public class SecurityConfig {
 		http.csrf().disable();
 		http.formLogin().disable();
 		http.httpBasic().disable();
-
 		http.authorizeRequests()
-				.antMatchers("/swagger-ui/index.html#/")
-				.permitAll()
-				.antMatchers("/api/v1/**")
-				.permitAll();
+			.antMatchers("/swagger-ui/index.html#/")
+			.permitAll()
+			.antMatchers("/api/v1/**")
+			.permitAll();
 
 		http.exceptionHandling()
 			.authenticationEntryPoint(unAuthorizedHandler)
@@ -66,7 +67,7 @@ public class SecurityConfig {
 	}
 
 	public AuthenticationFilter generateAuthenticationFilter() {
-		AuthenticationFilter authenticationFilter = new AuthenticationFilter();
+		AuthenticationFilter authenticationFilter = new AuthenticationFilter(tokenResolver);
 		authenticationFilter.setAuthenticationManager(new ProviderManager(authProvider));
 		return authenticationFilter;
 	}
