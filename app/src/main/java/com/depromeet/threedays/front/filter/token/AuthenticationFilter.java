@@ -12,7 +12,7 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
 
 @Slf4j
 @RequiredArgsConstructor
-public class TokenAuthenticationFilter extends AbstractPreAuthenticatedProcessingFilter {
+public class AuthenticationFilter extends AbstractPreAuthenticatedProcessingFilter {
 
 	@Value("${security.jwt.token.secretkey}")
 	private String SECRET_KEY;
