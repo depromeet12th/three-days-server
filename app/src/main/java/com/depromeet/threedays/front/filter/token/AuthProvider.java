@@ -2,7 +2,6 @@ package com.depromeet.threedays.front.filter.token;
 
 import com.depromeet.threedays.front.domain.usecase.member.GetMemberUseCase;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
-import java.util.Base64;
 import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
@@ -19,20 +18,15 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AuthProvider implements AuthenticationProvider {
 	private static final String ROLE_USER = "ROLE_USER";
-	private static final int PAYLOAD_INDEX = 1;
 	private static final String PREAUTH_TOKEN_CREDENTIAL = "";
 	private static final String MEMBER_ID_CLAIM_KEY = "memberId";
 
+	private final TokenResolver tokenResolver;
 	private final GetMemberUseCase getMemberUseCase;
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		String jwtToken = authentication.getPrincipal().toString();
-
-		Base64.Decoder decoder = Base64.getUrlDecoder();
-
-		String[] split = jwtToken.split("\\.");
-		final String payload = new String(decoder.decode(split[PAYLOAD_INDEX].getBytes()));
+		final String payload = tokenResolver.decodeTokenPayload(authentication);
 		JSONParser jsonParser = new JSONParser();
 
 		Long memberId = null;
