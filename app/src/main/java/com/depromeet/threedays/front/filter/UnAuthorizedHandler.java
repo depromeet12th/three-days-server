@@ -1,34 +1,25 @@
 package com.depromeet.threedays.front.filter;
 
-import com.depromeet.threedays.front.support.ApiResponseGenerator;
-import com.depromeet.threedays.front.support.FailureBodyResolver;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 @Component
 @RequiredArgsConstructor
 public class UnAuthorizedHandler implements AuthenticationEntryPoint {
-	private final ObjectMapper objectMapper;
+	private final HandlerExceptionResolver handlerExceptionResolver;
 
 	@Override
 	public void commence(
 			HttpServletRequest request,
 			HttpServletResponse response,
-			AuthenticationException authException)
-			throws IOException, ServletException {
-		response.setStatus(HttpStatus.UNAUTHORIZED.value());
-		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-		objectMapper.writeValue(
-				response.getOutputStream(),
-				ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(authException)));
+			AuthenticationException authException) {
+		handlerExceptionResolver.resolveException(request, response, null, authException);
 	}
 }
