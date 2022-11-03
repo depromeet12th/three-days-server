@@ -10,6 +10,7 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
 public class AuthenticationFilter extends AbstractPreAuthenticatedProcessingFilter {
 
 	private final TokenResolver tokenResolver;
+
 	@Override
 	protected Object getPreAuthenticatedPrincipal(HttpServletRequest request) {
 		return tokenResolver.resolveToken(request);
