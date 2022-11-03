@@ -1,12 +1,12 @@
 package com.depromeet.threedays.front.filter.token;
 
 import com.depromeet.threedays.front.domain.usecase.member.GetMemberUseCase;
-import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -25,7 +25,8 @@ public class AuthProvider implements AuthenticationProvider {
 	private final GetMemberUseCase getMemberUseCase;
 
 	@Override
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+	public Authentication authenticate(Authentication authentication)
+			throws AuthenticationException, AccessDeniedException {
 		final String payload = tokenResolver.decodeTokenPayload(authentication);
 		JSONParser jsonParser = new JSONParser();
 
@@ -34,8 +35,8 @@ public class AuthProvider implements AuthenticationProvider {
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(payload);
 			Long authenticationMemberId = (Long) jsonObject.get(MEMBER_ID_CLAIM_KEY);
 			memberId = getMemberUseCase.execute(authenticationMemberId).getMemberId();
-		} catch (ResourceNotFoundException | ParseException e) {
-			e.printStackTrace();
+		} catch (ParseException e) {
+			throw new AccessDeniedException(e.getMessage());
 		}
 
 		if (authentication instanceof PreAuthenticatedAuthenticationToken) {
