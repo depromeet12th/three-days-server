@@ -1,6 +1,5 @@
 package com.depromeet.threedays.front.filter.token;
 
-import com.depromeet.threedays.front.domain.usecase.member.GetMemberUseCase;
 import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
@@ -22,7 +21,6 @@ public class AuthProvider implements AuthenticationProvider {
 	private static final String MEMBER_ID_CLAIM_KEY = "memberId";
 
 	private final TokenResolver tokenResolver;
-	private final GetMemberUseCase getMemberUseCase;
 
 	@Override
 	public Authentication authenticate(Authentication authentication)
@@ -33,8 +31,7 @@ public class AuthProvider implements AuthenticationProvider {
 		Long memberId = null;
 		try {
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(payload);
-			Long authenticationMemberId = (Long) jsonObject.get(MEMBER_ID_CLAIM_KEY);
-			memberId = getMemberUseCase.execute(authenticationMemberId).getMemberId();
+			memberId = (Long) jsonObject.get(MEMBER_ID_CLAIM_KEY);
 		} catch (ParseException e) {
 			throw new AccessDeniedException(e.getMessage());
 		}
