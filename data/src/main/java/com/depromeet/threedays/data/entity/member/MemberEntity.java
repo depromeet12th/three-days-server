@@ -1,7 +1,6 @@
 package com.depromeet.threedays.data.entity.member;
 
 import com.depromeet.threedays.data.entity.member.certification.Certification;
-import com.depromeet.threedays.data.entity.member.converter.ProfileAttributeConverter;
 import com.depromeet.threedays.data.entity.objective.ObjectiveEntity;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +28,7 @@ public class MemberEntity {
 	@Embedded Certification certification = new Certification();
 
 	@Column(columnDefinition = "varchar(255)")
-	@Convert(converter = ProfileAttributeConverter.class)
-	private Profile profile;
+	private String profile;
 
 	private String fcmToken;
 

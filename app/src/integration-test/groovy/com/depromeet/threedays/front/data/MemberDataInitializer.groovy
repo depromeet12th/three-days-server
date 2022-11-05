@@ -1,6 +1,6 @@
 package com.depromeet.threedays.front.data
 
-import com.depromeet.threedays.data.entity.MemberEntity
+import com.depromeet.threedays.data.entity.member.MemberEntity
 import com.depromeet.threedays.front.repository.MemberRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
