@@ -1,11 +1,11 @@
 package com.depromeet.threedays.front.support;
 
-import com.depromeet.threedays.front.exception.AuthorizedException;
 import com.depromeet.threedays.front.support.ApiResponse.FailureBody;
-import javax.naming.AuthenticationException;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
 import lombok.experimental.UtilityClass;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -49,7 +49,7 @@ public class FailureBodyResolver {
 		return new ApiResponse.FailureBody(ex.getMessage());
 	}
 
-	public static ApiResponse.FailureBody resolveFrom(final AuthorizedException ex) {
+	public static ApiResponse.FailureBody resolveFrom(final AccessDeniedException ex) {
 		return new ApiResponse.FailureBody(ex.getMessage());
 	}
 }

@@ -10,7 +10,13 @@ spring:
     password:
     port: 16379
 
-##SOCIAL
+
+security:
+  jwt:
+    token:
+      validtime: 72000000
+
 google:
   user:
     uri: https://www.googleapis.com/oauth2/v1/userinfo#profile
+

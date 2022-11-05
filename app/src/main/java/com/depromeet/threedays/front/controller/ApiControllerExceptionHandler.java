@@ -1,16 +1,16 @@
 package com.depromeet.threedays.front.controller;
 
-import com.depromeet.threedays.front.exception.AuthorizedException;
 import com.depromeet.threedays.front.exception.PolicyViolationException;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import com.depromeet.threedays.front.support.ApiResponse;
 import com.depromeet.threedays.front.support.ApiResponseGenerator;
 import com.depromeet.threedays.front.support.FailureBodyResolver;
-import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -88,18 +88,18 @@ public class ApiControllerExceptionHandler {
 
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
 	@ExceptionHandler(AuthenticationException.class)
-	public final ApiResponse<ApiResponse.FailureBody> handleUnAuthorized(
+	public final ApiResponse<Void> handleUnAuthorized(
 			final AuthenticationException ex, final WebRequest request) {
 		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex));
+		return ApiResponseGenerator.fail();
 	}
 
 	@ResponseStatus(HttpStatus.FORBIDDEN)
-	@ExceptionHandler(AuthorizedException.class)
-	public final ApiResponse<ApiResponse.FailureBody> handleForbidden(
-			final AuthorizedException ex, final WebRequest request) {
+	@ExceptionHandler(AccessDeniedException.class)
+	public final ApiResponse<Void> handleForbidden(
+			final AccessDeniedException ex, final WebRequest request) {
 		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex));
+		return ApiResponseGenerator.fail();
 	}
 
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
