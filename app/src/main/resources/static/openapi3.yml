@@ -8,20 +8,24 @@ servers:
     description: local
 tags:
   - name: Objective
-    description: 목표
+    description: 목표(습관)
+  - name: Member
+    description: 유저
+  - name : Objective Achievement
+    description: 목표 성취
 paths:
   /api/v1/objectives:
     post:
       tags:
         - Objective
-      summary: save objective
+      summary: 목표(습관) 생성 시 사용되는 API
       description: saveObjectiveAPI
       operationId: saveObjective
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostObjectiveCommand'
+              $ref: '#/components/schemas/SaveObjectiveRequest'
         required: true
       responses:
         '200':
@@ -35,13 +39,20 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/400ApiFailureResponse'
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "invalid.id"
+                  message: "id는 숫자여야만 합니다."
+
         '500':
           description: INTERNAL SERVER ERROR
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/500ApiFailureResponse'
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
     get:
       tags:
         - Objective
@@ -56,13 +67,16 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Objective'
+                  $ref: '#/components/schemas/ObjectiveProjection'
         '500':
           description: INTERNAL SERVER ERROR
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/500ApiFailureResponse'
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
   /api/v1/objectives/{objectiveId}:
     get:
       tags:
@@ -88,7 +102,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/500ApiFailureResponse'
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
     put:
       tags:
         - Objective
@@ -105,7 +122,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PutObjectiveCommand'
+              $ref: '#/components/schemas/EditObjectiveRequest'
         required: true
       responses:
         '200':
@@ -119,44 +136,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/400ApiFailureResponse'
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "invalid.id"
+                  message: "id는 숫자여야만 합니다."
         '500':
           description: INTERNAL SERVER ERROR
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/500ApiFailureResponse'
-    patch:
-      tags:
-        - Objective
-      summary: update objective last achievement date
-      description: 목표 달성시 클라이언트 기준 오늘 날짜, 취소시 null 전송
-      operationId: updateLastAchievementDate
-      parameters:
-        - name: objectiveId
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PatchObjectiveCommand'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Objective'
-        '500':
-          description: INTERNAL SERVER ERROR
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/500ApiFailureResponse'
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
     delete:
       tags:
         - Objective
@@ -181,10 +173,201 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/500ApiFailureResponse'
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
+  /api/v1/members:
+    post:
+      tags:
+        - Member
+      summary: 사용자의 소셜 회원가입/로그인을 진행한다.
+      description: login/join
+      operationId: saveMember
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Authorization:
+              description: accessToken
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "invalid.id"
+                  message: "id는 숫자여야만 합니다."
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
+  /api/v1/members/{memberId}:
+    get:
+      tags:
+        - Member
+      summary: get member info
+      operationId: getMember
+      parameters:
+        - name: memberId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
+  /api/v1/members/tokens:
+    post:
+      tags:
+        - Member
+      summary: refresh accesstoken
+      operationId: refreshToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Token'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
+  /api/v1/objectives/{objectiveId}/achievements:
+    post:
+      tags:
+        - Objective Achievement
+      summary: 목표 성취(체크)시 사용하는 API
+      operationId: saveObjectiveAchievement
+      parameters:
+        - name: objectiveId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ObjectiveAchievementRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Objective'
+        '400':
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "invalid.id"
+                  message: "id는 숫자여야만 합니다."
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
+
+  /api/v1/objectives/{objectiveId}/achievements/{objectiveAchievementId}:
+    delete:
+      tags:
+        - Objective Achievement
+      summary: 목표 성취 취소(체크 해제)시 사용하는 API
+      operationId: deleteObjectiveAchievement
+      parameters:
+        - name: objectiveId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: objectiveAchievementId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
+security:
+  - bearerAuth: [token]
+
 components:
+  securitySchemes:
+    token:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
   schemas:
     Objective:
+      required: [ objectiveId, memberId, title, imojiPath, dayOfWeek, level, characterType, createdDate, reward, notification ]
       type: object
       properties:
         objectiveId:
@@ -193,49 +376,30 @@ components:
           example: 1
         memberId:
           type: integer
-          format: int64
           example: 1
         title:
           type: string
           example: "물을 마시자"
-        startDate:
+        imojiPath:
           type: string
-          format: date
-          example: "2022-10-15"
-        endDate:
+          example: "imojiString"
+        dayOfWeek:
+          type: array
+          example: ["MON", "TUE"]
+        level:
+          type: integer
+          example: 0
+        characterType:
           type: string
-          format: date
-          example: "2022-10-17"
-        startTime:
-          type: string
-          format: time
-          example: "10:30:00"
-        endTime:
-          type: string
-          format: time
-          example: "10:30:00"
-        status:
-          type: string
-          enum:
-            - ACTIVATE
-            - DEACTIVATE
-            - DONE
-          example: "ACTIVATE"
-        createDate:
+          example: "characterType"
+        reward:
+          type: integer
+          example: 3
+        createdDate:
           type: string
           example: "2022-10-15T10:30:00.000"
-        sequence:
-          type: integer
-          format: int64
-          example: 0
-        lastAchievementDate:
-          type: string
-          format: date
-          example: "2022-10-15"
-        achievementCount:
-          type: integer
-          format: int64
-          example: 5
+        objectiveAchievement:
+            $ref: '#/components/schemas/ObjectiveAchievement'
         notification:
           type: object
           properties:
@@ -243,57 +407,20 @@ components:
               type: integer
               format: int64
               example: 1
-            objectiveId:
-              type: integer
-              format: int64
-              example: 1
-            memberId:
-              type: integer
-              format: int64
-              example: 1
-            notificationTime:
-              type: string
-              format: time
-              example: "10:30:00"
-    PostObjectiveCommand:
-      required: [ title, startDate, endDate, startTime, endTime, notification ]
-      type: object
-      properties:
-        title:
-          type: string
-          example: "물을 마시자"
-        startDate:
-          type: string
-          format: date
-          example: "2022-10-14"
-        endDate:
-          type: string
-          format: date
-          example: "2022-10-15"
-        startTime:
-          type: string
-          format: time
-          example: "10:00:00"
-        endTime:
-          type: string
-          format: time
-          example: "10:30:00"
-        notification:
-          type: object
-          properties:
             notificationTime:
               type: string
               format: time
               example: "10:30:00"
             contents:
               type: string
-              example: "일어났니? 양치하고 얼른 물 마셔"
-    PutObjectiveCommand:
-      required: [ objectiveId, memberId, title, startDate, endDate, startTime, endTime, notification  ]
+              example: "아침 9시면 일어나야해요"
+    ObjectiveProjection:
+      required: [ objectiveId, memberId, title, imojiPath, dayOfWeek, level, characterType, createdDate, reward ]
       type: object
       properties:
         objectiveId:
           type: integer
+          format: int64
           example: 1
         memberId:
           type: integer
@@ -301,34 +428,51 @@ components:
         title:
           type: string
           example: "물을 마시자"
-        startDate:
+        imojiPath:
           type: string
-          format: date
-          example: "2022-10-14"
-        endDate:
+          example: "imojiString"
+        dayOfWeek:
+          type: array
+          example: [ "MON", "TUE" ]
+        level:
+          type: integer
+          example: 0
+        characterType:
           type: string
-          format: date
-          example: "2022-10-15"
-        startTime:
+          example: "characterType"
+        createdDate:
           type: string
-          format: time
-          example: "10:00:00"
-        endTime:
+          example: "2022-10-15T10:30:00.000"
+        reward:
+          type: integer
+          example: 0
+        objectiveAchievement:
+          type: object
+          properties:
+            objectiveAchievementId:
+              type: integer
+              format: int64
+              example: 1
+            sequence:
+              type: integer
+              format: int64
+              example: 0
+    SaveObjectiveRequest:
+      required: [ title, imojiPath, dayOfWeek, notification ]
+      type: object
+      properties:
+        title:
           type: string
-          format: time
-          example: "10:30:00"
+          example: "물을 마시자"
+        imojiPath:
+          type: string
+          example: "imojiString"
+        dayOfWeek:
+          type: array
+          example: ["MON", "TUE"]
         notification:
           type: object
           properties:
-            notificationId:
-              type: integer
-              example: 1
-            objectiveId:
-              type: integer
-              example: 1
-            memberId:
-              type: integer
-              example: 1
             notificationTime:
               type: string
               format: time
@@ -336,19 +480,106 @@ components:
             contents:
               type: string
               example: "일어났니? 양치하고 얼른 물 마셔"
-    PatchObjectiveCommand:
-      required: [lastAchievementDate]
+    EditObjectiveRequest:
+      required:  [ objectiveId, title, imojiPath, dayOfWeek, notification ]
       type: object
       properties:
-        lastAchievementDate:
+        objectiveId:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: "물을 마시자"
+        imojiPath:
+          type: string
+          example: "imojiString"
+        dayOfWeek:
+          type: array
+          example: ["MON", "TUE"]
+        notification:
+          type: object
+          properties:
+            notificationTime:
+              type: string
+              format: time
+              example: "10:30:00"
+            contents:
+              type: string
+              example: "일어났니? 양치하고 얼른 물 마셔"
+    MemberRequest:
+      required: [ certificationSubject, accessToken, fcmToken ]
+      type: object
+      properties:
+        certificationSubject:
+          type: string
+          enum: [ "GOOGLE", "KAKAO", "APPLE" ]
+        oAuthAccessToken:
+          type: string
+          example: "oAuthAccessToken"
+        fcmToken:
+          type: string
+          example: "fcmToken"
+    ObjectiveAchievementRequest:
+      type: object
+      properties:
+        achievementDate:
           type: string
           format: date
-          example: "2022-10-15"
+          example: "2022-11-09"
+    ObjectiveAchievement:
+      required: [ objectiveAchievementId, sequence, achievementDate, nextAchievementDate ]
+      type: object
+      properties:
+        objectiveAchievementId:
+          type: integer
+          example: 1
+        sequence:
+          type: integer
+          example: 1
+        achievementDate:
+          type: string
+          format: date
+          example: "2022-11-07"
+        nextAchievementDate:
+          type: string
+          format: date
+          example: "2022-11-08"
+    LoginResponse:
+      type: object
+      properties:
+        memberId:
+          type: integer
+          example: "1"
+        name:
+          type: string
+          example: "depromeet8manager"
+        isNew:
+          type: boolean
+          example: true
+        token:
+          $ref: '#/components/schemas/Token'
+
+    Member:
+      type: object
+      properties:
+        memberId:
+          type: integer
+          example: "1"
+        name:
+          type: string
+          example: "depromeet8manager"
+        fcmToken:
+          type: array
+          example:
+            - [ "fcmToken1", "fcmToken2" ]
+        agreements:
+          $ref: '#/components/schemas/Agreement'
+
     ApiResponse:
       type: object
       xml:
         name: '##default'
-    400ApiFailureResponse:
+    ApiFailureResponse:
       type: object
       properties:
         code:
@@ -357,14 +588,20 @@ components:
         message:
           type: string
           example: "id 컬럼은 숫자여야만 합니다."
-    500ApiFailureResponse:
-      type: object
-      properties:
-        code:
-          type: string
-          example: invalid.objective
-        message:
-          type: string
-          example: "서버 에러"
       xml:
         name: '##default'
+    Token:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          example: accessToken
+        refreshToken:
+          type: string
+          example: refreshToken
+    Agreement:
+      type: object
+      properties:
+        notificationConsent:
+          type: boolean
+          example: true
