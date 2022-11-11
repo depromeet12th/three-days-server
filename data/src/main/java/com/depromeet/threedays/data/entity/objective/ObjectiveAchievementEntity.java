@@ -1,11 +1,7 @@
 package com.depromeet.threedays.data.entity.objective;
 
-import com.depromeet.threedays.data.converter.DayOfWeekConverter;
-import com.depromeet.threedays.data.enums.DayOfWeek;
-import java.time.LocalDateTime;
-import java.util.EnumSet;
+import java.time.LocalDate;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,36 +18,26 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 @Builder(toBuilder = true)
-@Table(name = "objective")
-public class ObjectiveEntity {
+@Table(name = "objective_achievement")
+public class ObjectiveAchievementEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "objective_id")
+	@Column(name = "objective_achievement_id")
 	private Long id;
+
+	@Column(nullable = false)
+	private Long objectiveId;
 
 	@Column(nullable = false)
 	private Long memberId;
 
-	@Column private String title;
-
-	@Column private String imojiPath;
-
-	@Convert(converter = DayOfWeekConverter.class)
 	@Column(nullable = false)
-	private EnumSet<DayOfWeek> dayOfWeeks;
+	private Integer sequence;
 
 	@Column(nullable = false)
-	private Integer level;
+	private LocalDate achievementDate;
 
 	@Column(nullable = false)
-	private String characterType;
-
-	@Column(nullable = false, updatable = false)
-	@Builder.Default
-	private LocalDateTime createDate = LocalDateTime.now();
-
-	@Column(nullable = false)
-	@Builder.Default
-	private Boolean deleted = false;
+	private LocalDate nextAchievementDate;
 }

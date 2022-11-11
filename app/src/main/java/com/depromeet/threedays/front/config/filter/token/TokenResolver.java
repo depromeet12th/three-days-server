@@ -1,4 +1,4 @@
-package com.depromeet.threedays.front.filter.token;
+package com.depromeet.threedays.front.config.filter.token;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

@@ -16,4 +16,6 @@ import lombok.ToString;
 public class Member {
 	private Long memberId;
 	private String name;
+	private Boolean isNew;
+	private Token token;
 }

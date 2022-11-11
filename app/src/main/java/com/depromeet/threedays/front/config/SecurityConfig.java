@@ -1,10 +1,10 @@
 package com.depromeet.threedays.front.config;
 
-import com.depromeet.threedays.front.filter.TokenAccessDeniedHandler;
-import com.depromeet.threedays.front.filter.UnAuthorizedHandler;
-import com.depromeet.threedays.front.filter.token.AuthProvider;
-import com.depromeet.threedays.front.filter.token.AuthenticationFilter;
-import com.depromeet.threedays.front.filter.token.TokenResolver;
+import com.depromeet.threedays.front.config.filter.DelegatedAccessDeniedHandler;
+import com.depromeet.threedays.front.config.filter.DelegatedAuthenticationEntryPoint;
+import com.depromeet.threedays.front.config.filter.token.AuthProvider;
+import com.depromeet.threedays.front.config.filter.token.AuthenticationFilter;
+import com.depromeet.threedays.front.config.filter.token.TokenResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
@@ -19,8 +19,8 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-	private final UnAuthorizedHandler unAuthorizedHandler;
-	private final TokenAccessDeniedHandler tokenAccessDeniedHandler;
+	private final DelegatedAuthenticationEntryPoint authenticationEntryPoint;
+	private final DelegatedAccessDeniedHandler accessDeniedHandler;
 	private final AuthProvider authProvider;
 	private final TokenResolver tokenResolver;
 
@@ -37,8 +37,8 @@ public class SecurityConfig {
 				.permitAll();
 
 		http.exceptionHandling()
-				.authenticationEntryPoint(unAuthorizedHandler)
-				.accessDeniedHandler(tokenAccessDeniedHandler);
+				.authenticationEntryPoint(authenticationEntryPoint)
+				.accessDeniedHandler(accessDeniedHandler);
 
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		return http.build();

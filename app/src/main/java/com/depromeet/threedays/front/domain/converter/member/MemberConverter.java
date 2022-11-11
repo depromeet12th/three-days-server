@@ -1,10 +1,8 @@
 package com.depromeet.threedays.front.domain.converter.member;
 
 import com.depromeet.threedays.data.entity.member.MemberEntity;
-import com.depromeet.threedays.data.entity.member.certification.Certification;
-import com.depromeet.threedays.front.client.model.OAuthInfo;
-import com.depromeet.threedays.front.controller.command.member.SaveMemberCommand;
-import com.depromeet.threedays.front.controller.command.oauth.OAuthCommand;
+import com.depromeet.threedays.front.client.model.MemberInfo;
+import com.depromeet.threedays.front.controller.command.oauth.SignMemberRequest;
 import com.depromeet.threedays.front.domain.model.Member;
 
 public class MemberConverter {
@@ -13,44 +11,25 @@ public class MemberConverter {
 		throw new UnsupportedOperationException();
 	}
 
-	public static Member from(final MemberEntity entity) {
+	public static Member from(final MemberEntity entity, boolean isNew) {
 		if (entity == null) {
 			return null;
 		}
 
-		return Member.builder().memberId(entity.getId()).name(entity.getName()).build();
+		// TODO: 토큰 생성하여 넣어주는 로직 추가
+
+		return Member.builder().memberId(entity.getId()).name(entity.getName()).isNew(isNew).build();
 	}
 
-	public static MemberEntity to(final Member data) {
+	public static MemberEntity to(final MemberInfo data, SignMemberRequest request) {
 		if (data == null) {
 			return null;
 		}
-
-		return MemberEntity.builder().id(data.getMemberId()).name(data.getName()).build();
-	}
-
-	public static MemberEntity to(final SaveMemberCommand data) {
-		if (data == null) {
-			return null;
-		}
-		return MemberEntity.builder().name(data.getName()).build();
-	}
-
-	public static MemberEntity to(final OAuthInfo data, OAuthCommand command) {
-		if (data == null) {
-			return null;
-		}
-		Certification certification =
-				Certification.builder()
-						.certificationId(data.getId())
-						.certificationSubject(command.getCertificationSubject())
-						.build();
 
 		return MemberEntity.builder()
 				.name(data.getName())
-				.profile(OAuthInfoConverter.to(data))
-				.certification(certification)
-				.fcmToken(command.getFcmToken())
+				.profile(MemberInfoConverter.convert(data))
+				.certificationSubject(request.getCertificationSubject())
 				.build();
 	}
 }
