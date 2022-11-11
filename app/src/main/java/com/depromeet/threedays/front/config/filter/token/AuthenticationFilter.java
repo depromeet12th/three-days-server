@@ -1,4 +1,4 @@
-package com.depromeet.threedays.front.filter.token;
+package com.depromeet.threedays.front.config.filter.token;
 
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

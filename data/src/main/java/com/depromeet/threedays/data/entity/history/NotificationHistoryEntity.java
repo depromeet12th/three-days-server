@@ -1,12 +1,13 @@
-package com.depromeet.threedays.data.entity.objective;
+package com.depromeet.threedays.data.entity.history;
 
-import com.depromeet.threedays.data.converter.DayOfWeekConverter;
-import com.depromeet.threedays.data.enums.DayOfWeek;
+import com.depromeet.threedays.data.enums.NotificationStatus;
+import com.depromeet.threedays.data.enums.NotificationType;
 import java.time.LocalDateTime;
-import java.util.EnumSet;
+import java.time.LocalTime;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,36 +23,32 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 @Builder(toBuilder = true)
-@Table(name = "objective")
-public class ObjectiveEntity {
+@Table(name = "notification_history")
+public class NotificationHistoryEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "objective_id")
+	@Column(name = "notification_history_id")
 	private Long id;
 
 	@Column(nullable = false)
-	private Long memberId;
-
-	@Column private String title;
-
-	@Column private String imojiPath;
-
-	@Convert(converter = DayOfWeekConverter.class)
-	@Column(nullable = false)
-	private EnumSet<DayOfWeek> dayOfWeeks;
+	private LocalTime memberId;
 
 	@Column(nullable = false)
-	private Integer level;
+	private Long notificationId;
 
-	@Column(nullable = false)
-	private String characterType;
+	@Column(length = 100)
+	private String contents;
 
 	@Column(nullable = false, updatable = false)
 	@Builder.Default
 	private LocalDateTime createDate = LocalDateTime.now();
 
-	@Column(nullable = false)
-	@Builder.Default
-	private Boolean deleted = false;
+	@Column(name = "status", length = 100, nullable = false)
+	@Enumerated(EnumType.STRING)
+	private NotificationStatus status;
+
+	@Column(name = "type")
+	@Enumerated(EnumType.STRING)
+	private NotificationType type;
 }

@@ -1,4 +1,4 @@
-package com.depromeet.threedays.front.filter;
+package com.depromeet.threedays.front.config.filter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,7 +10,7 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 
 @Component
 @RequiredArgsConstructor
-public class TokenAccessDeniedHandler implements AccessDeniedHandler {
+public class DelegatedAccessDeniedHandler implements AccessDeniedHandler {
 	private final HandlerExceptionResolver handlerExceptionResolver;
 
 	@Override
