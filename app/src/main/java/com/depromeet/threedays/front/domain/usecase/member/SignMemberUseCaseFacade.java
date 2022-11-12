@@ -1,30 +1,30 @@
 package com.depromeet.threedays.front.domain.usecase.member;
 
-import com.depromeet.threedays.data.entity.member.MemberEntity;
 import com.depromeet.threedays.data.enums.CertificationSubject;
 import com.depromeet.threedays.front.client.AuthClient;
 import com.depromeet.threedays.front.client.model.MemberInfo;
 import com.depromeet.threedays.front.client.property.AuthRequestProperty;
-import com.depromeet.threedays.front.controller.command.oauth.SignMemberRequest;
-import com.depromeet.threedays.front.domain.converter.member.MemberConverter;
+import com.depromeet.threedays.front.controller.request.member.SignMemberRequest;
+import com.depromeet.threedays.front.domain.converter.member.MemberCommandConverter;
+import com.depromeet.threedays.front.domain.converter.member.MemberQueryConverter;
 import com.depromeet.threedays.front.domain.model.Member;
 import com.depromeet.threedays.front.exception.ExternalIntegrationException;
-import com.depromeet.threedays.front.repository.MemberRepository;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
+
 @RequiredArgsConstructor
 @Service
-public class SignMemberUseCase {
+public class SignMemberUseCaseFacade {
 
 	private final Map<String, AuthRequestProperty> authRequestPropertyMap;
-	private final MemberRepository memberRepository;
+
+	private final GetMemberUseCase getUseCase;
+	private final SaveMemberUseCase saveUseCase;
 	private final AuthClient authClient;
 
 	public Member execute(SignMemberRequest request) {
@@ -34,20 +34,14 @@ public class SignMemberUseCase {
 
 		MemberInfo info = getInfo(request.getCertificationSubject(), request.getAccessToken());
 
-		MemberEntity entity =
-				memberRepository
-						.findByIdAndAndCertificationSubject(
-								Long.parseLong(info.getId()), request.getCertificationSubject())
-						.orElse(null);
+		Member member = getUseCase.execute(
+				MemberQueryConverter.from(Long.parseLong(info.getId()), request));
 
-		if (entity == null) {
-			// TODO: fcmToken 저장 로직 추가
-			return MemberConverter.from(memberRepository.save(MemberConverter.to(info, request)), true);
+		if (member == null) {
+			return saveUseCase.execute(MemberCommandConverter.from(info, request));
 		}
 
-		// TODO: fcmToken 조회 로직 추가
-
-		return MemberConverter.from(entity, false);
+		return member;
 	}
 
 	public MemberInfo getInfo(CertificationSubject subject, String accessToken) {

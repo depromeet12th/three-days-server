@@ -41,11 +41,8 @@ public class ObjectiveEntity {
 	@Column(nullable = false)
 	private EnumSet<DayOfWeek> dayOfWeeks;
 
-	@Column(nullable = false)
-	private Integer level;
-
-	@Column(nullable = false)
-	private String characterType;
+	@Column(length = 40, nullable = false)
+	private String color;
 
 	@Column(nullable = false, updatable = false)
 	@Builder.Default

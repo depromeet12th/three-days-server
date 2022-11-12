@@ -1,11 +1,8 @@
-package com.depromeet.threedays.data.entity.notification;
+package com.depromeet.threedays.data.partner;
 
-import com.depromeet.threedays.data.enums.DayOfWeek;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,12 +18,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 @Builder(toBuilder = true)
-@Table(name = "objective_notification")
-public class ObjectiveNotificationEntity {
+@Table(name = "partner")
+public class PartnerEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "objective_notification_id")
+	@Column(name = "partner_id")
 	private Long id;
 
 	@Column(nullable = false)
@@ -36,12 +33,16 @@ public class ObjectiveNotificationEntity {
 	private Long objectiveId;
 
 	@Column(nullable = false)
-	private LocalTime notificationTime;
+	private Integer level;
 
-	@Column(name = "contents", length = 100)
-	private String contents;
+	@Column(nullable = false)
+	private String characterType;
 
-	@Column(name = "day_of_week", nullable = false)
-	@Enumerated(EnumType.STRING)
-	private DayOfWeek dayOfWeek;
+	@Column(nullable = false, updatable = false)
+	@Builder.Default
+	private LocalDateTime createDate = LocalDateTime.now();
+
+	@Column(nullable = false)
+	@Builder.Default
+	private Boolean deleted = false;
 }

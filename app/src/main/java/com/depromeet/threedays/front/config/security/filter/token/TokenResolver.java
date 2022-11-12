@@ -1,4 +1,4 @@
-package com.depromeet.threedays.front.config.filter.token;
+package com.depromeet.threedays.front.config.security.filter.token;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -12,14 +12,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TokenResolver {
-	@Value("${security.jwt.token.secretkey}")
-	private String SECRET_KEY;
 
 	private static final int PAYLOAD_INDEX = 1;
-
 	private static final String BEARER_PREFIX = "Bearer ";
 	private static final int SUBSTRING_BEARER_INDEX = 7;
 	private static final String AUTHORIZATION_HEADER = "authorization";
+	@Value("${security.jwt.token.secretkey}")
+	private String SECRET_KEY;
 
 	public String resolveToken(HttpServletRequest request) {
 		String jwtToken = request.getHeader(AUTHORIZATION_HEADER);

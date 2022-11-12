@@ -1,4 +1,4 @@
-package com.depromeet.threedays.front.config.filter.token;
+package com.depromeet.threedays.front.config.security.filter.token;
 
 import java.util.Collections;
 import lombok.RequiredArgsConstructor;
@@ -10,12 +10,14 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class AuthProvider implements AuthenticationProvider {
+
 	private static final String ROLE_USER = "ROLE_USER";
 	private static final String PREAUTH_TOKEN_CREDENTIAL = "";
 	private static final String MEMBER_ID_CLAIM_KEY = "memberId";
@@ -28,13 +30,15 @@ public class AuthProvider implements AuthenticationProvider {
 		final String payload = tokenResolver.decodeTokenPayload(authentication);
 		JSONParser jsonParser = new JSONParser();
 
-		Long memberId = null;
+		Long memberId;
 		try {
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(payload);
 			memberId = (Long) jsonObject.get(MEMBER_ID_CLAIM_KEY);
 		} catch (ParseException e) {
 			throw new AccessDeniedException(e.getMessage());
 		}
+
+		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		if (authentication instanceof PreAuthenticatedAuthenticationToken) {
 			return new PreAuthenticatedAuthenticationToken(

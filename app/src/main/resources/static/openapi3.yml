@@ -11,7 +11,7 @@ tags:
     description: 목표(습관)
   - name: Member
     description: 유저
-  - name : Objective Achievement
+  - name: Objective Achievement
     description: 목표 성취
 paths:
   /api/v1/objectives:
@@ -356,7 +356,7 @@ paths:
                 - code: "uncaught error"
                   message: "서버 에러"
 security:
-  - bearerAuth: [token]
+  - bearerAuth: [ token ]
 
 components:
   securitySchemes:
@@ -367,7 +367,7 @@ components:
 
   schemas:
     Objective:
-      required: [ objectiveId, memberId, title, imojiPath, dayOfWeek, level, characterType, createdDate, reward, notification ]
+      required: [ objectiveId, memberId, title, imojiPath, dayOfWeeks, level, characterType, createdDate, reward, notification ]
       type: object
       properties:
         objectiveId:
@@ -383,15 +383,9 @@ components:
         imojiPath:
           type: string
           example: "imojiString"
-        dayOfWeek:
+        dayOfWeeks:
           type: array
-          example: ["MON", "TUE"]
-        level:
-          type: integer
-          example: 0
-        characterType:
-          type: string
-          example: "characterType"
+          example: [ "MON", "TUE", "FRI" ]
         reward:
           type: integer
           example: 3
@@ -399,7 +393,16 @@ components:
           type: string
           example: "2022-10-15T10:30:00.000"
         objectiveAchievement:
-            $ref: '#/components/schemas/ObjectiveAchievement'
+          $ref: '#/components/schemas/ObjectiveAchievement'
+        partner:
+          type: object
+          properties:
+            level:
+              type: integer
+              example: 0
+            characterType:
+              type: string
+              example: "characterType"
         notification:
           type: object
           properties:
@@ -415,7 +418,7 @@ components:
               type: string
               example: "아침 9시면 일어나야해요"
     ObjectiveProjection:
-      required: [ objectiveId, memberId, title, imojiPath, dayOfWeek, level, characterType, createdDate, reward ]
+      required: [ objectiveId, memberId, title, imojiPath, dayOfWeeks, level, characterType, createdDate, reward ]
       type: object
       properties:
         objectiveId:
@@ -431,21 +434,24 @@ components:
         imojiPath:
           type: string
           example: "imojiString"
-        dayOfWeek:
+        dayOfWeeks:
           type: array
-          example: [ "MON", "TUE" ]
-        level:
-          type: integer
-          example: 0
-        characterType:
-          type: string
-          example: "characterType"
+          example: [ "MON", "TUE", "FRI" ]
         createdDate:
           type: string
           example: "2022-10-15T10:30:00.000"
         reward:
           type: integer
           example: 0
+        partner:
+          type: object
+          properties:
+            level:
+              type: integer
+              example: 0
+            characterType:
+              type: string
+              example: "characterType"
         objectiveAchievement:
           type: object
           properties:
@@ -458,7 +464,7 @@ components:
               format: int64
               example: 0
     SaveObjectiveRequest:
-      required: [ title, imojiPath, dayOfWeek, notification ]
+      required: [ title, imojiPath, dayOfWeeks, notification, color ]
       type: object
       properties:
         title:
@@ -467,9 +473,12 @@ components:
         imojiPath:
           type: string
           example: "imojiString"
-        dayOfWeek:
+        color:
+          type: string
+          example: "pink"
+        dayOfWeeks:
           type: array
-          example: ["MON", "TUE"]
+          example: [ "MON", "TUE", "FRI" ]
         notification:
           type: object
           properties:
@@ -481,7 +490,7 @@ components:
               type: string
               example: "일어났니? 양치하고 얼른 물 마셔"
     EditObjectiveRequest:
-      required:  [ objectiveId, title, imojiPath, dayOfWeek, notification ]
+      required: [ objectiveId, title, imojiPath, dayOfWeek, notification ]
       type: object
       properties:
         objectiveId:
@@ -495,7 +504,7 @@ components:
           example: "imojiString"
         dayOfWeek:
           type: array
-          example: ["MON", "TUE"]
+          example: [ "MON", "TUE" ]
         notification:
           type: object
           properties:
@@ -507,7 +516,7 @@ components:
               type: string
               example: "일어났니? 양치하고 얼른 물 마셔"
     MemberRequest:
-      required: [ certificationSubject, accessToken, fcmToken ]
+      required: [ certificationSubject, accessToken ]
       type: object
       properties:
         certificationSubject:
@@ -516,9 +525,6 @@ components:
         oAuthAccessToken:
           type: string
           example: "oAuthAccessToken"
-        fcmToken:
-          type: string
-          example: "fcmToken"
     ObjectiveAchievementRequest:
       type: object
       properties:
@@ -568,7 +574,7 @@ components:
         name:
           type: string
           example: "depromeet8manager"
-        fcmToken:
+        fcmTokens:
           type: array
           example:
             - [ "fcmToken1", "fcmToken2" ]

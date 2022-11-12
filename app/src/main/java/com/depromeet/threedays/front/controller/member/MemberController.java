@@ -1,8 +1,8 @@
 package com.depromeet.threedays.front.controller.member;
 
-import com.depromeet.threedays.front.controller.command.oauth.SignMemberRequest;
+import com.depromeet.threedays.front.controller.request.member.SignMemberRequest;
 import com.depromeet.threedays.front.domain.model.Member;
-import com.depromeet.threedays.front.domain.usecase.member.SignMemberUseCase;
+import com.depromeet.threedays.front.domain.usecase.member.SignMemberUseCaseFacade;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MemberController {
 
-	private final SignMemberUseCase signUseCase;
+	private final SignMemberUseCaseFacade signUseCase;
 
 	@PostMapping
 	public ResponseEntity<Member> sign(@RequestBody @Valid SignMemberRequest request) {

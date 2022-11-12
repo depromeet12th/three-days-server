@@ -1,10 +1,10 @@
-package com.depromeet.threedays.front.config;
+package com.depromeet.threedays.front.config.security;
 
-import com.depromeet.threedays.front.config.filter.DelegatedAccessDeniedHandler;
-import com.depromeet.threedays.front.config.filter.DelegatedAuthenticationEntryPoint;
-import com.depromeet.threedays.front.config.filter.token.AuthProvider;
-import com.depromeet.threedays.front.config.filter.token.AuthenticationFilter;
-import com.depromeet.threedays.front.config.filter.token.TokenResolver;
+import com.depromeet.threedays.front.config.security.filter.DelegatedAccessDeniedHandler;
+import com.depromeet.threedays.front.config.security.filter.DelegatedAuthenticationEntryPoint;
+import com.depromeet.threedays.front.config.security.filter.token.AuthProvider;
+import com.depromeet.threedays.front.config.security.filter.token.AuthenticationFilter;
+import com.depromeet.threedays.front.config.security.filter.token.TokenResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;

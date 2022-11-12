@@ -9,6 +9,6 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
 
 	Optional<MemberEntity> findById(final Long memberId);
 
-	Optional<MemberEntity> findByIdAndAndCertificationSubject(
-			final Long memberId, final CertificationSubject certificationSubject);
+	Optional<MemberEntity> findByCertificationIdAndCertificationSubject(
+			final Long certificationId, final CertificationSubject certificationSubject);
 }

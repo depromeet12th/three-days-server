@@ -1,4 +1,4 @@
-package com.depromeet.threedays.front.controller.command.oauth;
+package com.depromeet.threedays.front.controller.request.member;
 
 import com.depromeet.threedays.data.enums.CertificationSubject;
 import javax.validation.constraints.NotBlank;
