@@ -3,7 +3,6 @@ package com.depromeet.threedays.data.entity.history;
 import com.depromeet.threedays.data.enums.NotificationStatus;
 import com.depromeet.threedays.data.enums.NotificationType;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -32,7 +31,7 @@ public class NotificationHistoryEntity {
 	private Long id;
 
 	@Column(nullable = false)
-	private LocalTime memberId;
+	private Long memberId;
 
 	@Column(nullable = false)
 	private Long notificationId;

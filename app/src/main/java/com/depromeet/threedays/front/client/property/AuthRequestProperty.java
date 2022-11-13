@@ -7,7 +7,7 @@ public abstract class AuthRequestProperty {
 
 	protected String uri;
 
-	protected AuthRequestProperty(String userUri) {
-		this.uri = userUri;
+	protected AuthRequestProperty(String uri) {
+		this.uri = uri;
 	}
 }
