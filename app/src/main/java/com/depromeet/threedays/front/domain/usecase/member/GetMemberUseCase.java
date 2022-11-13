@@ -16,10 +16,11 @@ public class GetMemberUseCase {
 	private final MemberRepository memberRepository;
 
 	public Member execute(GetMemberQuery query) {
-		return MemberConverter.from(memberRepository
-				.findByCertificationIdAndCertificationSubject(query.getCertificationId(),
-						query.getCertificationSubject())
-				.orElse(null), false);
+		return MemberConverter.from(
+				memberRepository
+						.findByCertificationIdAndCertificationSubject(
+								query.getCertificationId(), query.getCertificationSubject())
+						.orElse(null),
+				false);
 	}
-
 }

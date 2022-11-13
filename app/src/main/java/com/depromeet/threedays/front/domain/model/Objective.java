@@ -24,11 +24,9 @@ public class Objective {
 	private String imojiPath;
 	private String color;
 	private EnumSet<DayOfWeek> dayOfWeeks;
-	@Builder.Default
-	private Integer reward = 0;
+	@Builder.Default private Integer reward = 0;
 	private LocalDateTime createDate;
 	private ObjectiveAchievement objectiveAchievement;
 	private Partner partner;
 	private Notification notification;
-
 }

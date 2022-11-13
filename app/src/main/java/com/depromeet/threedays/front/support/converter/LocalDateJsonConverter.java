@@ -20,8 +20,7 @@ public class LocalDateJsonConverter {
 
 		@Override
 		public void serialize(
-				LocalDate localDate, JsonGenerator jsonGenerator,
-				SerializerProvider serializerProvider)
+				LocalDate localDate, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
 				throws IOException {
 			jsonGenerator.writeString(LocalDateConverter.to(localDate));
 		}
@@ -31,8 +30,7 @@ public class LocalDateJsonConverter {
 
 		@Override
 		public LocalDate deserialize(
-				JsonParser jsonParser, DeserializationContext deserializationContext)
-				throws IOException {
+				JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
 			return LocalDateConverter.from(jsonParser.getText());
 		}
 	}

@@ -9,8 +9,8 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class ObjectiveNotificationConverter {
 
-	public static ObjectiveNotificationEntity to(Notification data,
-			Long objectiveId, DayOfWeek dayOfWeek) {
+	public static ObjectiveNotificationEntity to(
+			Notification data, Long objectiveId, DayOfWeek dayOfWeek) {
 		return ObjectiveNotificationEntity.builder()
 				.objectiveId(objectiveId)
 				.memberId(AuditorHolder.get())

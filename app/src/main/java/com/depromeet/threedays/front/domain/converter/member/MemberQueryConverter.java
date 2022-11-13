@@ -13,5 +13,4 @@ public class MemberQueryConverter {
 				.certificationSubject(request.getCertificationSubject())
 				.build();
 	}
-
 }

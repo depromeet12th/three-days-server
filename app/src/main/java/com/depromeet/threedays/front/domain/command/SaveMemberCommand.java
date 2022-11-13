@@ -21,5 +21,4 @@ public class SaveMemberCommand {
 	private String name;
 	private CertificationSubject certificationSubject;
 	private MemberInfo memberInfo;
-
 }

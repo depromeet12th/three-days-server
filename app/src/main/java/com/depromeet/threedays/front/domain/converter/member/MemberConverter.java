@@ -17,8 +17,7 @@ public class MemberConverter {
 
 		// TODO: 토큰 생성하여 넣어주는 로직 추가
 
-		return Member.builder().memberId(entity.getId()).name(entity.getName()).isNew(isNew)
-				.build();
+		return Member.builder().memberId(entity.getId()).name(entity.getName()).isNew(isNew).build();
 	}
 
 	public static MemberEntity to(final SaveMemberCommand command) {

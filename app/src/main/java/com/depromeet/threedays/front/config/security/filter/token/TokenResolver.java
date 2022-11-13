@@ -17,6 +17,7 @@ public class TokenResolver {
 	private static final String BEARER_PREFIX = "Bearer ";
 	private static final int SUBSTRING_BEARER_INDEX = 7;
 	private static final String AUTHORIZATION_HEADER = "authorization";
+
 	@Value("${security.jwt.token.secretkey}")
 	private String SECRET_KEY;
 

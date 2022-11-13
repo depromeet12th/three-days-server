@@ -20,5 +20,4 @@ public class ObjectiveAchievement {
 	private Integer sequence;
 	private LocalDate achievementDate;
 	private LocalDate nextAchievementDate;
-
 }

@@ -15,18 +15,13 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 public class SaveObjectiveRequest {
 
-	@NotNull
-	private String title;
+	@NotNull private String title;
 
-	@NotNull
-	private String imojiPath;
+	@NotNull private String imojiPath;
 
-	@NotNull
-	private String color;
+	@NotNull private String color;
 
-	@NotNull
-	private EnumSet<DayOfWeek> dayOfWeeks;
+	@NotNull private EnumSet<DayOfWeek> dayOfWeeks;
 
-	@NotNull
-	private Notification notification;
+	@NotNull private Notification notification;
 }

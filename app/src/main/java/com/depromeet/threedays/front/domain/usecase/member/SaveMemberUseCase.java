@@ -16,7 +16,6 @@ public class SaveMemberUseCase {
 	private final MemberRepository memberRepository;
 
 	public Member execute(SaveMemberCommand command) {
-		return MemberConverter.from(memberRepository.save(MemberConverter.to(command)),
-				true);
+		return MemberConverter.from(memberRepository.save(MemberConverter.to(command)), true);
 	}
 }

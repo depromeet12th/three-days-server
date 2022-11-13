@@ -7,6 +7,7 @@ import com.depromeet.threedays.front.domain.converter.objective.ObjectiveConvert
 import com.depromeet.threedays.front.domain.converter.objective.ObjectiveNotificationConverter;
 import com.depromeet.threedays.front.domain.model.Notification;
 import com.depromeet.threedays.front.domain.model.Objective;
+import com.depromeet.threedays.front.domain.validation.ObjectiveValidator;
 import com.depromeet.threedays.front.repository.ObjectiveNotificationRepository;
 import com.depromeet.threedays.front.repository.ObjectiveRepository;
 import java.util.EnumSet;
@@ -22,8 +23,11 @@ public class SaveObjectiveUseCase {
 	private final ObjectiveRepository repository;
 	private final ObjectiveNotificationRepository objectiveNotificationRepository;
 
+	private final ObjectiveValidator validator;
+
 	public Objective execute(final SaveObjectiveRequest request) {
 		Objective data = ObjectiveConverter.from(request);
+		validator.validateCreateConstraints(data);
 
 		return this.save(data);
 	}
@@ -35,13 +39,10 @@ public class SaveObjectiveUseCase {
 		return ObjectiveConverter.from(entity, data.getNotification());
 	}
 
-	private void saveAssociation(Long objectiveId, Notification data,
-			EnumSet<DayOfWeek> dayOfWeeks) {
+	private void saveAssociation(Long objectiveId, Notification data, EnumSet<DayOfWeek> dayOfWeeks) {
 		for (DayOfWeek dayOfWeek : dayOfWeeks) {
 			objectiveNotificationRepository.save(
 					ObjectiveNotificationConverter.to(data, objectiveId, dayOfWeek));
 		}
 	}
-
-
 }

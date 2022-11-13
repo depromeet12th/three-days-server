@@ -13,8 +13,8 @@ public class ObjectiveConverter {
 
 	public static Objective from(SaveObjectiveRequest request) {
 
-		Notification notification = Optional.ofNullable(request.getNotification())
-				.orElseGet(Notification::new);
+		Notification notification =
+				Optional.ofNullable(request.getNotification()).orElseGet(Notification::new);
 
 		return Objective.builder()
 				.title(request.getTitle())
@@ -36,8 +36,7 @@ public class ObjectiveConverter {
 				.build();
 	}
 
-	public static Objective from(ObjectiveEntity entity,
-			Notification notification) {
+	public static Objective from(ObjectiveEntity entity, Notification notification) {
 
 		return Objective.builder()
 				.objectiveId(entity.getId())
