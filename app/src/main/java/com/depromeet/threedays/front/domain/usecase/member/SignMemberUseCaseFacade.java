@@ -7,7 +7,7 @@ import com.depromeet.threedays.front.client.property.AuthRequestProperty;
 import com.depromeet.threedays.front.controller.request.member.SignMemberRequest;
 import com.depromeet.threedays.front.domain.converter.member.MemberCommandConverter;
 import com.depromeet.threedays.front.domain.converter.member.MemberQueryConverter;
-import com.depromeet.threedays.front.domain.model.Member;
+import com.depromeet.threedays.front.domain.model.member.Member;
 import com.depromeet.threedays.front.exception.ExternalIntegrationException;
 import java.net.URI;
 import java.net.URISyntaxException;

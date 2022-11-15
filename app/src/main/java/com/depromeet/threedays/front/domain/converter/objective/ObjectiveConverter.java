@@ -3,8 +3,11 @@ package com.depromeet.threedays.front.domain.converter.objective;
 import com.depromeet.threedays.data.entity.objective.ObjectiveEntity;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.controller.request.objective.SaveObjectiveRequest;
-import com.depromeet.threedays.front.domain.model.Notification;
-import com.depromeet.threedays.front.domain.model.Objective;
+import com.depromeet.threedays.front.domain.model.notification.Notification;
+import com.depromeet.threedays.front.domain.model.objective.Objective;
+import com.depromeet.threedays.front.domain.model.objective.ObjectiveAchievement;
+import com.depromeet.threedays.front.domain.model.objective.ObjectiveOverview;
+import com.depromeet.threedays.front.domain.model.partner.Partner;
 import java.util.Optional;
 import lombok.experimental.UtilityClass;
 
@@ -47,6 +50,26 @@ public class ObjectiveConverter {
 				.color(entity.getColor())
 				.notification(notification)
 				.createDate(entity.getCreateDate())
+				.build();
+	}
+
+	public static ObjectiveOverview from(
+			ObjectiveEntity entity,
+			ObjectiveAchievement achievementData,
+			Long rewardCount,
+			Partner partner) {
+
+		return ObjectiveOverview.builder()
+				.objectiveId(entity.getId())
+				.memberId(entity.getMemberId())
+				.title(entity.getTitle())
+				.imojiPath(entity.getImojiPath())
+				.dayOfWeeks(entity.getDayOfWeeks())
+				.color(entity.getColor())
+				.createDate(entity.getCreateDate())
+				.reward(rewardCount)
+				.objectiveAchievement(achievementData)
+				.partner(partner)
 				.build();
 	}
 }

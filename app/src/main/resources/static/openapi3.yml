@@ -443,6 +443,9 @@ components:
         reward:
           type: integer
           example: 0
+        color:
+          type: string
+          example: pink
         partner:
           type: object
           properties:
