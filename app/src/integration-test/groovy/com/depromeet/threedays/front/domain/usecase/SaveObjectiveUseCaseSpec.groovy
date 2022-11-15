@@ -3,7 +3,7 @@ package com.depromeet.threedays.front.domain.usecase
 import com.depromeet.threedays.data.enums.DayOfWeek
 import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.controller.request.objective.SaveObjectiveRequest
-import com.depromeet.threedays.front.domain.model.Notification
+import com.depromeet.threedays.front.domain.model.notification.Notification
 import com.depromeet.threedays.front.domain.usecase.objective.SaveObjectiveUseCase
 import com.depromeet.threedays.front.exception.PolicyViolationException
 import org.springframework.beans.factory.annotation.Autowired

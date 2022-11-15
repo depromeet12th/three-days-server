@@ -1,7 +1,7 @@
 package com.depromeet.threedays.front.controller.member;
 
 import com.depromeet.threedays.front.controller.request.member.SignMemberRequest;
-import com.depromeet.threedays.front.domain.model.Member;
+import com.depromeet.threedays.front.domain.model.member.Member;
 import com.depromeet.threedays.front.domain.usecase.member.SignMemberUseCaseFacade;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;

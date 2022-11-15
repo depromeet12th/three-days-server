@@ -1,6 +1,5 @@
-package com.depromeet.threedays.front.domain.model;
+package com.depromeet.threedays.front.domain.model.member;
 
-import java.time.LocalTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -14,8 +13,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Notification {
+public class Member {
 
-	private LocalTime notificationTime;
-	private String contents;
+	private Long memberId;
+	private String name;
+	private Boolean isNew;
+	private Token token;
 }

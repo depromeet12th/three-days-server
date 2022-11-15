@@ -1,7 +1,7 @@
 package com.depromeet.threedays.front.domain.validation;
 
 import com.depromeet.threedays.data.enums.DayOfWeek;
-import com.depromeet.threedays.front.domain.model.Objective;
+import com.depromeet.threedays.front.domain.model.objective.Objective;
 import com.depromeet.threedays.front.exception.PolicyViolationException;
 import java.util.EnumSet;
 import lombok.RequiredArgsConstructor;

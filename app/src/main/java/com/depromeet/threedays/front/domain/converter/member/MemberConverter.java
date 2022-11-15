@@ -2,7 +2,7 @@ package com.depromeet.threedays.front.domain.converter.member;
 
 import com.depromeet.threedays.data.entity.member.MemberEntity;
 import com.depromeet.threedays.front.domain.command.SaveMemberCommand;
-import com.depromeet.threedays.front.domain.model.Member;
+import com.depromeet.threedays.front.domain.model.member.Member;
 
 public class MemberConverter {
 

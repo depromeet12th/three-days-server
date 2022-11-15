@@ -1,9 +1,9 @@
-package com.depromeet.threedays.front.domain.converter.objective;
+package com.depromeet.threedays.front.domain.converter.notification;
 
 import com.depromeet.threedays.data.entity.notification.ObjectiveNotificationEntity;
 import com.depromeet.threedays.data.enums.DayOfWeek;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
-import com.depromeet.threedays.front.domain.model.Notification;
+import com.depromeet.threedays.front.domain.model.notification.Notification;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

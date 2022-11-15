@@ -1,23 +1,26 @@
-package com.depromeet.threedays.front.domain.model;
+package com.depromeet.threedays.front.domain.model.objective;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import java.io.Serializable;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
-@ToString
-public class ObjectiveAchievement {
+public class ObjectiveAchievement implements Serializable {
 
 	private Long objectiveAchievementId;
 	private Integer sequence;
+
+	@JsonInclude(Include.NON_NULL)
 	private LocalDate achievementDate;
+
+	@JsonInclude(Include.NON_NULL)
 	private LocalDate nextAchievementDate;
 }

@@ -1,4 +1,4 @@
-package com.depromeet.threedays.front.repository;
+package com.depromeet.threedays.front.repository.member;
 
 import com.depromeet.threedays.data.entity.member.MemberEntity;
 import com.depromeet.threedays.data.enums.CertificationSubject;
