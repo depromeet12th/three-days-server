@@ -1,8 +1,11 @@
-package com.depromeet.threedays.data.entity.history;
+package com.depromeet.threedays.data.entity.notification;
 
-import java.time.LocalDateTime;
+import com.depromeet.threedays.data.enums.DayOfWeek;
+import java.time.LocalTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,21 +21,27 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 @Builder(toBuilder = true)
-@Table(name = "reward_history")
-public class RewardHistoryEntity {
+@Table(name = "habit_notification")
+public class HabitNotificationEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "reward_history_id")
+	@Column(name = "habit_notification_id")
 	private Long id;
+
+	@Column(nullable = false)
+	private Long memberId;
 
 	@Column(nullable = false)
 	private Long habitId;
 
 	@Column(nullable = false)
-	private Long memberId;
+	private LocalTime notificationTime;
 
-	@Column(nullable = false, updatable = false)
-	@Builder.Default
-	private LocalDateTime createDate = LocalDateTime.now();
+	@Column(name = "contents", length = 100)
+	private String contents;
+
+	@Column(name = "day_of_week", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private DayOfWeek dayOfWeek;
 }

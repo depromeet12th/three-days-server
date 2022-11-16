@@ -7,25 +7,27 @@ servers:
   - url: http://localhost:8085
     description: local
 tags:
-  - name: Objective
-    description: 목표(습관)
+  - name: Habit
+    description: 습관
   - name: Member
     description: 유저
-  - name: Objective Achievement
-    description: 목표 성취
+  - name: Habit Achievement
+    description: 습관 성취
+  - name: Mate
+    description: 짝꿍
 paths:
-  /api/v1/objectives:
+  /api/v1/Habits:
     post:
       tags:
-        - Objective
-      summary: 목표(습관) 생성 시 사용되는 API
-      description: saveObjectiveAPI
-      operationId: saveObjective
+        - Habit
+      summary: 습관 생성 시 사용되는 API
+      description: saveHabitAPI
+      operationId: saveHabit
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SaveObjectiveRequest'
+              $ref: '#/components/schemas/SaveHabitRequest'
         required: true
       responses:
         '200':
@@ -33,7 +35,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Objective'
+                $ref: '#/components/schemas/Habit'
         '400':
           description: BAD REQUEST
           content:
@@ -55,10 +57,10 @@ paths:
                   message: "서버 에러"
     get:
       tags:
-        - Objective
-      summary: get objective list
-      description: 모든 objective list를 반환한다
-      operationId: getObjectives
+        - Habit
+      summary: 모든 습관 목록을 가져오는 API
+      description: 모든 habit list를 반환한다
+      operationId: getHabits
       responses:
         '200':
           description: OK
@@ -67,7 +69,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ObjectiveProjection'
+                  $ref: '#/components/schemas/HabitProjection'
         '500':
           description: INTERNAL SERVER ERROR
           content:
@@ -77,14 +79,14 @@ paths:
               example:
                 - code: "uncaught error"
                   message: "서버 에러"
-  /api/v1/objectives/{objectiveId}:
+  /api/v1/habits/{habitId}:
     get:
       tags:
-        - Objective
-      summary: get single objective
-      operationId: getSingleObjective
+        - Habit
+      summary: 습관 상세정보 API
+      operationId: getSingleHabit
       parameters:
-        - name: objectiveId
+        - name: habitId
           in: path
           required: true
           schema:
@@ -96,7 +98,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Objective'
+                $ref: '#/components/schemas/Habit'
         '500':
           description: INTERNAL SERVER ERROR
           content:
@@ -108,11 +110,11 @@ paths:
                   message: "서버 에러"
     put:
       tags:
-        - Objective
-      summary: update objective
-      operationId: updateObjective
+        - Habit
+      summary: 습관 수정 API
+      operationId: updateHabit
       parameters:
-        - name: objectiveId
+        - name: habitId
           in: path
           required: true
           schema:
@@ -122,7 +124,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EditObjectiveRequest'
+              $ref: '#/components/schemas/EditHabitRequest'
         required: true
       responses:
         '200':
@@ -130,7 +132,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Objective'
+                $ref: '#/components/schemas/Habit'
         '400':
           description: BAD REQUEST
           content:
@@ -151,11 +153,110 @@ paths:
                   message: "서버 에러"
     delete:
       tags:
-        - Objective
-      summary: delete objective
-      operationId: deleteObjective
+        - Habit
+      summary: 습관 삭제 API
+      operationId: deleteHabit
       parameters:
-        - name: objectiveId
+        - name: habitId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
+  /api/v1/habits/{habitId}/mates:
+    get:
+      tags:
+        - Mate
+      summary: 짝궁 상세조회 API
+      operationId: getMate
+      parameters:
+        - name: habitId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mate'
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
+    post:
+      tags:
+        - Mate
+      summary: 짝궁 생성 API
+      description: 짝궁 생성 API
+      operationId: saveMate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MateRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Authorization:
+              description: accessToken
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mate'
+        '400':
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "invalid.id"
+                  message: "id는 숫자여야만 합니다."
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
+    delete:
+      tags:
+        - Mate
+      summary: 짝꿍 삭제 API
+      operationId: deleteMate
+      parameters:
+        - name: habitId
           in: path
           required: true
           schema:
@@ -224,7 +325,7 @@ paths:
     get:
       tags:
         - Member
-      summary: get member info
+      summary: 회원 상세 정보 API
       operationId: getMember
       parameters:
         - name: memberId
@@ -249,11 +350,149 @@ paths:
               example:
                 - code: "uncaught error"
                   message: "서버 에러"
+    delete:
+      tags:
+        - Member
+      summary: 회원 탈퇴 API
+      operationId: deleteMember
+      parameters:
+        - name: memberId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
+    patch:
+      tags:
+        - Member
+      summary: 닉네임 수정 API
+      operationId: patchMemberName
+      parameters:
+        - name: memberId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberNameUpdateRequest'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Authorization:
+              description: accessToken
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+        '400':
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "invalid.id"
+                  message: "id는 숫자여야만 합니다."
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
+  /api/v1/members/{memberId}/clients:
+    post:
+      tags:
+        - Member
+      summary: 클라이언트 정보 추가시 사용하는 API. fcm-token 추가 등록시 해당 API 사용
+      operationId: postClients
+      parameters:
+        - name: memberId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Client'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
+    delete:
+      tags:
+        - Member
+      summary: 로그아웃시 사용하는 API 해당 기기에 대한 정보를 삭제합니다.
+      operationId: deleteClients
+      parameters:
+        - name: memberId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
   /api/v1/members/tokens:
     post:
       tags:
         - Member
-      summary: refresh accesstoken
+      summary: 토큰 만료시 재발급을 위한 API
       operationId: refreshToken
       requestBody:
         content:
@@ -276,14 +515,14 @@ paths:
               example:
                 - code: "uncaught error"
                   message: "서버 에러"
-  /api/v1/objectives/{objectiveId}/achievements:
+  /api/v1/habits/{habitId}/achievements:
     post:
       tags:
-        - Objective Achievement
-      summary: 목표 성취(체크)시 사용하는 API
-      operationId: saveObjectiveAchievement
+        - Habit Achievement
+      summary: 습관 성취(체크)시 사용하는 API
+      operationId: saveHabitAchievement
       parameters:
-        - name: objectiveId
+        - name: habitId
           in: path
           required: true
           schema:
@@ -293,14 +532,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ObjectiveAchievementRequest'
+              $ref: '#/components/schemas/HabitAchievementRequest'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Objective'
+                $ref: '#/components/schemas/Habit'
         '400':
           description: BAD REQUEST
           content:
@@ -320,20 +559,20 @@ paths:
                 - code: "uncaught error"
                   message: "서버 에러"
 
-  /api/v1/objectives/{objectiveId}/achievements/{objectiveAchievementId}:
+  /api/v1/habits/{habitId}/achievements/{habitAchievementId}:
     delete:
       tags:
-        - Objective Achievement
-      summary: 목표 성취 취소(체크 해제)시 사용하는 API
-      operationId: deleteObjectiveAchievement
+        - Habit Achievement
+      summary: 습관 성취 취소(체크 해제)시 사용하는 API
+      operationId: deleteHabitAchievement
       parameters:
-        - name: objectiveId
+        - name: habitId
           in: path
           required: true
           schema:
             type: integer
             format: int64
-        - name: objectiveAchievementId
+        - name: habitAchievementId
           in: path
           required: true
           schema:
@@ -366,11 +605,11 @@ components:
       bearerFormat: JWT
 
   schemas:
-    Objective:
-      required: [ objectiveId, memberId, title, imojiPath, dayOfWeeks, level, characterType, createdDate, reward, notification ]
+    Habit:
+      required: [ habitId, memberId, title, imojiPath, dayOfWeeks, level, characterType, createdDate, reward, notification ]
       type: object
       properties:
-        objectiveId:
+        habitId:
           type: integer
           format: int64
           example: 1
@@ -392,17 +631,10 @@ components:
         createdDate:
           type: string
           example: "2022-10-15T10:30:00.000"
-        objectiveAchievement:
-          $ref: '#/components/schemas/ObjectiveAchievement'
-        partner:
-          type: object
-          properties:
-            level:
-              type: integer
-              example: 0
-            characterType:
-              type: string
-              example: "characterType"
+        habitAchievement:
+          $ref: '#/components/schemas/HabitAchievement'
+        mate:
+          $ref: '#/components/schemas/Mate'
         notification:
           type: object
           properties:
@@ -417,11 +649,11 @@ components:
             contents:
               type: string
               example: "아침 9시면 일어나야해요"
-    ObjectiveProjection:
-      required: [ objectiveId, memberId, title, imojiPath, dayOfWeeks, level, characterType, createdDate, reward ]
+    HabitProjection:
+      required: [ habitId, memberId, title, imojiPath, dayOfWeeks, level, characterType, createdDate, reward ]
       type: object
       properties:
-        objectiveId:
+        habitId:
           type: integer
           format: int64
           example: 1
@@ -446,19 +678,12 @@ components:
         color:
           type: string
           example: pink
-        partner:
+        mate:
+          $ref: '#/components/schemas/Mate'
+        habitAchievement:
           type: object
           properties:
-            level:
-              type: integer
-              example: 0
-            characterType:
-              type: string
-              example: "characterType"
-        objectiveAchievement:
-          type: object
-          properties:
-            objectiveAchievementId:
+            habitAchievementId:
               type: integer
               format: int64
               example: 1
@@ -466,7 +691,7 @@ components:
               type: integer
               format: int64
               example: 0
-    SaveObjectiveRequest:
+    SaveHabitRequest:
       required: [ title, imojiPath, dayOfWeeks, notification, color ]
       type: object
       properties:
@@ -492,11 +717,11 @@ components:
             contents:
               type: string
               example: "일어났니? 양치하고 얼른 물 마셔"
-    EditObjectiveRequest:
-      required: [ objectiveId, title, imojiPath, dayOfWeek, notification ]
+    EditHabitRequest:
+      required: [ habitId, title, imojiPath, dayOfWeek, notification ]
       type: object
       properties:
-        objectiveId:
+        habitId:
           type: integer
           example: 1
         title:
@@ -528,18 +753,30 @@ components:
         oAuthAccessToken:
           type: string
           example: "oAuthAccessToken"
-    ObjectiveAchievementRequest:
+    MemberNameUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: depromeet8manager
+    MateRequest:
+      type: object
+      properties:
+        characterType:
+          type: string
+          example: pig
+    HabitAchievementRequest:
       type: object
       properties:
         achievementDate:
           type: string
           format: date
           example: "2022-11-09"
-    ObjectiveAchievement:
-      required: [ objectiveAchievementId, sequence, achievementDate, nextAchievementDate ]
+    HabitAchievement:
+      required: [ habitAchievementId, sequence, achievementDate, nextAchievementDate ]
       type: object
       properties:
-        objectiveAchievementId:
+        habitAchievementId:
           type: integer
           example: 1
         sequence:
@@ -577,13 +814,31 @@ components:
         name:
           type: string
           example: "depromeet8manager"
+        certificationSubject:
+          type: string
+          enum: [ "GOOGLE", "KAKAO", "APPLE" ]
         fcmTokens:
           type: array
           example:
             - [ "fcmToken1", "fcmToken2" ]
         agreements:
           $ref: '#/components/schemas/Agreement'
-
+    Mate:
+      type: object
+      properties:
+        mateId:
+          type: integer
+          example: 1
+        level:
+          type: integer
+          example: 1
+        characterType:
+          type: string
+          example: pig
+        createDate:
+          type: string
+          format: date-time
+          example: 2022-10-10 12:34:56.789789
     ApiResponse:
       type: object
       xml:
@@ -608,6 +863,15 @@ components:
         refreshToken:
           type: string
           example: refreshToken
+    Client:
+      type: object
+      properties:
+        fcmToken:
+          type: string
+          example: fcmToken
+        identifyKey:
+          type: string
+          example: identifyKey
     Agreement:
       type: object
       properties:

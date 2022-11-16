@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RewardHistoryRepository extends JpaRepository<RewardHistoryEntity, Long> {
 
-	Long countByObjectiveId(Long objectiveId);
+	Long countByHabitId(Long habitId);
 }

@@ -1,4 +1,4 @@
-package com.depromeet.threedays.data.entity.history;
+package com.depromeet.threedays.data.entity.mate;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -18,21 +18,31 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Entity
 @Builder(toBuilder = true)
-@Table(name = "reward_history")
-public class RewardHistoryEntity {
+@Table(name = "mate")
+public class MateEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "reward_history_id")
+	@Column(name = "mate_id")
 	private Long id;
+
+	@Column(nullable = false)
+	private Long memberId;
 
 	@Column(nullable = false)
 	private Long habitId;
 
 	@Column(nullable = false)
-	private Long memberId;
+	private Integer level;
+
+	@Column(nullable = false)
+	private String characterType;
 
 	@Column(nullable = false, updatable = false)
 	@Builder.Default
 	private LocalDateTime createDate = LocalDateTime.now();
+
+	@Column(nullable = false)
+	@Builder.Default
+	private Boolean deleted = false;
 }

@@ -50,60 +50,60 @@ CREATE TABLE `notification_history`
   COLLATE = utf8mb4_unicode_ci;
 
 
-CREATE TABLE `objective`
+CREATE TABLE habit
 (
-    `objective_id` bigint                                  NOT NULL AUTO_INCREMENT,
-    `create_date`  datetime(6)                             NOT NULL,
-    `day_of_weeks` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-    `deleted`      bit(1)                                  NOT NULL,
+    `habit_id`     bigint                                          NOT NULL AUTO_INCREMENT,
+    `create_date`  datetime(6)                                     NOT NULL,
+    `day_of_weeks` SET ('MON','TUE','WED','THU','FRI','SAT','SUN') NOT NULL,
+    `deleted`      bit(1)                                          NOT NULL,
     `imoji_path`   varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
     `color`        varchar(40) COLLATE utf8mb4_unicode_ci  DEFAULT NULL,
-    `member_id`    bigint                                  NOT NULL,
+    `member_id`    bigint                                          NOT NULL,
     `title`        varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-    PRIMARY KEY (`objective_id`)
+    PRIMARY KEY (habit_id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-CREATE TABLE `partner`
+CREATE TABLE `mate`
 (
-    `partner_id`     bigint                                  NOT NULL AUTO_INCREMENT,
+    `mate_id`        bigint                                  NOT NULL AUTO_INCREMENT,
     `member_id`      bigint                                  NOT NULL,
-    `objective_id`   bigint                                  NOT NULL,
+    `habit_id`       bigint                                  NOT NULL,
     `character_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
     `create_date`    datetime(6)                             NOT NULL,
     `deleted`        bit(1)                                  NOT NULL,
     `level`          int                                     NOT NULL,
     `title`          varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-    PRIMARY KEY (`partner_id`)
+    PRIMARY KEY (`mate_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
 
-CREATE TABLE `objective_achievement`
+CREATE TABLE habit_achievement
 (
-    `objective_achievement_id` bigint NOT NULL AUTO_INCREMENT,
-    `achievement_date`         date   NOT NULL,
-    `member_id`                bigint NOT NULL,
-    `next_achievement_date`    date   NOT NULL,
-    `objective_id`             bigint NOT NULL,
-    `sequence`                 int    NOT NULL,
-    PRIMARY KEY (`objective_achievement_id`)
+    `habit_achievement_id`  bigint NOT NULL AUTO_INCREMENT,
+    `achievement_date`      date   NOT NULL,
+    `member_id`             bigint NOT NULL,
+    `next_achievement_date` date   NOT NULL,
+    `habit_id`              bigint NOT NULL,
+    `sequence`              int    NOT NULL,
+    PRIMARY KEY (habit_achievement_id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
 
-CREATE TABLE `objective_notification`
+CREATE TABLE `habit_notification`
 (
-    `objective_notification_id` bigint                                  NOT NULL AUTO_INCREMENT,
-    `contents`                  varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-    `day_of_week`               varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-    `member_id`                 bigint                                  NOT NULL,
-    `notification_time`         time                                    NOT NULL,
-    `objective_id`              bigint                                  NOT NULL,
-    PRIMARY KEY (`objective_notification_id`)
+    `habit_notification_id` bigint                                  NOT NULL AUTO_INCREMENT,
+    `contents`              varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+    `day_of_week`           varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+    `member_id`             bigint                                  NOT NULL,
+    `notification_time`     time                                    NOT NULL,
+    `habit_id`              bigint                                  NOT NULL,
+    PRIMARY KEY (`habit_notification_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -114,7 +114,7 @@ CREATE TABLE `reward_history`
     `reward_history_id` bigint      NOT NULL AUTO_INCREMENT,
     `create_date`       datetime(6) NOT NULL,
     `member_id`         bigint      NOT NULL,
-    `objective_id`      bigint      NOT NULL,
+    `habit_id`          bigint      NOT NULL,
     PRIMARY KEY (`reward_history_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
