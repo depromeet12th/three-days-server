@@ -16,7 +16,7 @@ tags:
   - name: Mate
     description: 짝꿍
 paths:
-  /api/v1/Habits:
+  /api/v1/habits:
     post:
       tags:
         - Habit
