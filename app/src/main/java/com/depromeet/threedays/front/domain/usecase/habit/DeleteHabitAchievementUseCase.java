@@ -6,6 +6,7 @@ import com.depromeet.threedays.front.domain.converter.habit.HabitAchievementConv
 import com.depromeet.threedays.front.domain.converter.habit.HabitConverter;
 import com.depromeet.threedays.front.domain.model.habit.Habit;
 import com.depromeet.threedays.front.domain.model.habit.HabitAchievement;
+import com.depromeet.threedays.front.domain.validation.HabitAchievementValidator;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import com.depromeet.threedays.front.repository.RewardHistoryRepository;
 import com.depromeet.threedays.front.repository.habit.HabitAchievementRepository;
@@ -13,8 +14,6 @@ import com.depromeet.threedays.front.repository.habit.HabitRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
 
 @Component
 @Transactional
@@ -24,17 +23,15 @@ public class DeleteHabitAchievementUseCase {
     private final HabitAchievementRepository habitAchievementRepository;
     private final RewardHistoryRepository rewardHistoryRepository;
 
+    private final HabitAchievementValidator validator;
+
     public Habit execute(Long habitId, Long habitAchievementId) {
         HabitEntity habitEntity = habitRepository.findById(habitId)
                                                  .orElseThrow(ResourceNotFoundException::new);
         HabitAchievementEntity habitAchievementEntity = habitAchievementRepository.findById(habitAchievementId)
                                                                                   .orElseThrow(ResourceNotFoundException::new);
-        LocalDate achievementDate = habitAchievementEntity.getAchievementDate();
-        LocalDate requestDate = LocalDate.now();
 
-        if(!achievementDate.isEqual(requestDate)) {
-            return null;
-        }
+        validator.validateCancelDateConstraints(habitAchievementEntity);
 
         habitAchievementRepository.deleteById(habitAchievementId);
         HabitAchievementEntity beforeHabitAchievementEntity = habitAchievementRepository.findFirstByHabitIdOrderByAchievementDateDesc(habitId)
