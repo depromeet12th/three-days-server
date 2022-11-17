@@ -1,20 +1,19 @@
 package com.depromeet.threedays.front.domain.usecase.habit;
 
 import com.depromeet.threedays.data.entity.habit.HabitAchievementEntity;
-import com.depromeet.threedays.data.entity.habit.HabitEntity;
-import com.depromeet.threedays.data.enums.DayOfWeek;
 import com.depromeet.threedays.front.controller.request.habit.SaveHabitAchievementRequest;
+import com.depromeet.threedays.front.domain.converter.RewardHistoryConverter;
 import com.depromeet.threedays.front.domain.converter.habit.HabitAchievementConverter;
 import com.depromeet.threedays.front.domain.converter.habit.HabitConverter;
-import com.depromeet.threedays.front.domain.converter.RewardHistoryConverter;
 import com.depromeet.threedays.front.domain.model.habit.Habit;
 import com.depromeet.threedays.front.domain.model.habit.HabitAchievement;
+import com.depromeet.threedays.front.domain.validation.HabitAchievementValidator;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import com.depromeet.threedays.front.repository.RewardHistoryRepository;
 import com.depromeet.threedays.front.repository.habit.HabitAchievementRepository;
 import com.depromeet.threedays.front.repository.habit.HabitRepository;
+import com.depromeet.threedays.front.support.DateCalculator;
 import java.time.LocalDate;
-import java.util.EnumSet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,107 +22,56 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class SaveHabitAchievementUseCase {
+
 	private static final int PROVIDE_REWARD_COUNT = 3;
+	private final HabitAchievementRepository repository;
 	private final HabitRepository habitRepository;
-	private final HabitAchievementRepository habitAchievementRepository;
 	private final RewardHistoryRepository rewardHistoryRepository;
+	private final HabitAchievementValidator validator;
 
 	public Habit execute(Long habitId, final SaveHabitAchievementRequest request) {
-		LocalDate achievementDate = request.getAchievementDate();
-		HabitEntity habitEntity =
-				habitRepository.findById(habitId).orElseThrow(ResourceNotFoundException::new);
 
-		int dayDifference = calculateDayDifference(habitEntity, achievementDate);
+		validator.validateCreateConstraints(HabitAchievementConverter.from(request));
 
-		HabitAchievementEntity habitAchievementEntity;
-		try {
-			habitAchievementEntity =
-					habitAchievementRepository
-							.findFirstByHabitIdOrderByAchievementDateDesc(habitId)
-							.orElseThrow(ResourceNotFoundException::new);
-		} catch (ResourceNotFoundException e) {
-			HabitAchievementEntity savedHabitAchievementEntity =
-					habitAchievementRepository.save(
-							HabitAchievementConverter.to(habitEntity, request, dayDifference));
+		Habit habit = HabitConverter.from(
+				habitRepository.findById(habitId).orElseThrow(ResourceNotFoundException::new));
 
-			HabitAchievement habitAchievement =
-					HabitAchievementConverter.from(savedHabitAchievementEntity);
+		HabitAchievement lastHabitAchievement = HabitAchievementConverter.to(repository
+				.findFirstByHabitIdOrderByAchievementDateDesc(habitId)
+				.orElse(null));
 
-			Long totalReward = calculateTotalReward(habitEntity, habitAchievement);
-			return HabitConverter.from(habitEntity, habitAchievement, totalReward);
+		if (lastHabitAchievement == null) {
+			return HabitConverter.from(habit, this.save(habit, request,
+					DateCalculator.findNextDate(habit.getDayOfWeeks(),
+							request.getAchievementDate()), 1), 0L);
 		}
 
-		LocalDate nextAchievementDate = habitAchievementEntity.getNextAchievementDate();
-
-		if (achievementDate.isBefore(nextAchievementDate)) {
-			HabitAchievementEntity savedHabitAchievementEntity =
-					habitAchievementRepository.save(
-							HabitAchievementConverter.to(habitEntity, habitAchievementEntity, request));
-
-			HabitAchievement habitAchievement =
-					HabitAchievementConverter.from(savedHabitAchievementEntity);
-
-			Long totalReward = calculateTotalReward(habitEntity, habitAchievement);
-			return HabitConverter.from(habitEntity, habitAchievement, totalReward);
+		if (request.getAchievementDate()
+				.isAfter(lastHabitAchievement.getNextAchievementDate())) {
+			return HabitConverter.from(habit, this.save(habit, request,
+					lastHabitAchievement.getNextAchievementDate(),
+					0), getTotalRewardCount(habit, lastHabitAchievement));
 		}
 
-		if (achievementDate.isEqual(nextAchievementDate)) {
-			HabitAchievementEntity savedHabitAchievementEntity =
-					habitAchievementRepository.save(
-							HabitAchievementConverter.to(
-									habitEntity, habitAchievementEntity, request, dayDifference));
-
-			HabitAchievement habitAchievement =
-					HabitAchievementConverter.from(savedHabitAchievementEntity);
-
-			Long totalReward = calculateTotalReward(habitEntity, habitAchievement);
-			return HabitConverter.from(habitEntity, habitAchievement, totalReward);
-		}
-
-		if (achievementDate.isAfter(nextAchievementDate)) {
-			HabitAchievementEntity savedHabitAchievementEntity =
-					habitAchievementRepository.save(
-							HabitAchievementConverter.to(habitEntity, request, dayDifference));
-
-			HabitAchievement habitAchievement =
-					HabitAchievementConverter.from(savedHabitAchievementEntity);
-
-			Long totalReward = calculateTotalReward(habitEntity, habitAchievement);
-			return HabitConverter.from(habitEntity, habitAchievement, totalReward);
-		}
-		return null;
+		return HabitConverter.from(habit, this.save(habit, request,
+						lastHabitAchievement.getNextAchievementDate(),
+						lastHabitAchievement.getSequence() + 1),
+				getTotalRewardCount(habit, lastHabitAchievement));
 	}
 
-	private Long calculateTotalReward(HabitEntity habitEntity, HabitAchievement habitAchievement) {
-		if(habitAchievement.getSequence() % PROVIDE_REWARD_COUNT == 0) {
-			rewardHistoryRepository.save(RewardHistoryConverter.to(habitEntity, habitAchievement));
-		}
-		return rewardHistoryRepository.countByHabitId(habitEntity.getId());
+	private HabitAchievement save(Habit habit, SaveHabitAchievementRequest request,
+			LocalDate nextAchievementDate, int sequence) {
+		HabitAchievementEntity entity = repository.save(
+				HabitAchievementConverter.to(habit, request, nextAchievementDate, sequence));
+		return HabitAchievementConverter.from(entity);
 	}
 
-	private int calculateDayDifference(HabitEntity habitEntity, LocalDate achievementDate) {
-		EnumSet<DayOfWeek> dayOfWeeks = habitEntity.getDayOfWeeks();
-		int achievementDayOfWeek = achievementDate.getDayOfWeek().getValue();
-
-		int count = 0;
-		int dayDifference = 0;
-
-		for (DayOfWeek dayOfWeek : dayOfWeeks) {
-			int habitDayOfWeek = dayOfWeek.getValue();
-			if (achievementDayOfWeek < habitDayOfWeek) {
-				dayDifference = habitDayOfWeek - achievementDayOfWeek;
-				break;
-			}
-			count++;
+	private Long getTotalRewardCount(Habit habit, HabitAchievement habitAchievement) {
+		if (habitAchievement.getSequence() % PROVIDE_REWARD_COUNT == 0) {
+			rewardHistoryRepository.save(RewardHistoryConverter.to(habit));
 		}
-
-		if (count == dayOfWeeks.size()) {
-			for (DayOfWeek dayOfWeek : dayOfWeeks) {
-				int habitDayOfWeek = dayOfWeek.getValue();
-				dayDifference = (habitDayOfWeek + 7) - achievementDayOfWeek;
-				break;
-			}
-		}
-		return dayDifference;
+		return rewardHistoryRepository.countByHabitId(habit.getHabitId());
 	}
+
+
 }

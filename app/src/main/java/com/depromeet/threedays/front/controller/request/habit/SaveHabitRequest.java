@@ -1,7 +1,7 @@
 package com.depromeet.threedays.front.controller.request.habit;
 
-import com.depromeet.threedays.data.enums.DayOfWeek;
 import com.depromeet.threedays.front.domain.model.notification.Notification;
+import java.time.DayOfWeek;
 import java.util.EnumSet;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

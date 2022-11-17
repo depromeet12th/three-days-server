@@ -1,0 +1,1 @@
+ALTER TABLE `client` ADD `identification_key` varchar(1000);

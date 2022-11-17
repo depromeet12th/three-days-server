@@ -1,6 +1,6 @@
 package com.depromeet.threedays.data.entity.notification;
 
-import com.depromeet.threedays.data.enums.DayOfWeek;
+import java.time.DayOfWeek;
 import java.time.LocalTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
