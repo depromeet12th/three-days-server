@@ -1,4 +1,3 @@
 rootProject.name = 'three-days'
 include 'app'
-include 'batch'
 include 'data'
