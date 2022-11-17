@@ -48,6 +48,18 @@ public class SaveHabitAchievementUseCase {
 			return HabitConverter.from(habitEntity, habitAchievement, 3L);
 		}
 
+		LocalDate nextAchievementDate = habitAchievementEntity.getNextAchievementDate();
+
+		if (achievementDate.isBefore(nextAchievementDate)) {
+			HabitAchievementEntity savedHabitAchievementEntity =
+					habitAchievementRepository.save(
+							HabitAchievementConverter.to(habitEntity, habitAchievementEntity, request));
+
+			HabitAchievement habitAchievement =
+					HabitAchievementConverter.from(savedHabitAchievementEntity);
+			return HabitConverter.from(habitEntity, habitAchievement, 3L);
+		}
+
 		return null;
 	}
 
