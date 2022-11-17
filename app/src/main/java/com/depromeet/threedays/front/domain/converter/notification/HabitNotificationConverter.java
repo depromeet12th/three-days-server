@@ -1,9 +1,9 @@
 package com.depromeet.threedays.front.domain.converter.notification;
 
 import com.depromeet.threedays.data.entity.notification.HabitNotificationEntity;
-import com.depromeet.threedays.data.enums.DayOfWeek;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.model.notification.Notification;
+import java.time.DayOfWeek;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

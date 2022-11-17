@@ -1,6 +1,6 @@
 package com.depromeet.threedays.data.converter;
 
-import com.depromeet.threedays.data.enums.DayOfWeek;
+import java.time.DayOfWeek;
 import java.util.Arrays;
 import java.util.EnumSet;
 import javax.persistence.AttributeConverter;
@@ -15,8 +15,9 @@ public class DayOfWeekConverter implements AttributeConverter<EnumSet<DayOfWeek>
 		StringBuilder sb = new StringBuilder();
 		attribute.forEach(e -> sb.append(e.name()).append(","));
 		String result = sb.toString();
-		if (result.charAt(result.length() - 1) == ',')
+		if (result.charAt(result.length() - 1) == ',') {
 			result = result.substring(0, result.length() - 1);
+		}
 		return result;
 	}
 

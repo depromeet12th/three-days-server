@@ -1,20 +1,18 @@
 package com.depromeet.threedays.front.domain.converter;
 
-import com.depromeet.threedays.data.entity.habit.HabitEntity;
 import com.depromeet.threedays.data.entity.history.RewardHistoryEntity;
-import com.depromeet.threedays.front.domain.model.habit.HabitAchievement;
-import lombok.experimental.UtilityClass;
-
+import com.depromeet.threedays.front.domain.model.habit.Habit;
 import java.time.LocalDateTime;
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class RewardHistoryConverter {
 
-    public static RewardHistoryEntity to(HabitEntity habitEntity, HabitAchievement habitAchievement) {
-        return RewardHistoryEntity.builder()
-                                  .habitId(habitEntity.getId())
-                                  .memberId(habitEntity.getMemberId())
-                                  .createDate(LocalDateTime.now())
-                                  .build();
-    }
+	public static RewardHistoryEntity to(Habit habit) {
+		return RewardHistoryEntity.builder()
+				.habitId(habit.getHabitId())
+				.memberId(habit.getMemberId())
+				.createDate(LocalDateTime.now())
+				.build();
+	}
 }
