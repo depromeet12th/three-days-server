@@ -41,27 +41,27 @@ public class HabitConverter {
 
 	public static Habit from(HabitEntity entity, HabitAchievement data) {
 		return Habit.builder()
-					.habitId(entity.getId())
-					.memberId(entity.getMemberId())
-					.title(entity.getTitle())
-					.imojiPath(entity.getImojiPath())
-					.dayOfWeeks(entity.getDayOfWeeks())
-					.createDate(entity.getCreateDate())
-					.habitAchievement(data)
-					.build();
+				.habitId(entity.getId())
+				.memberId(entity.getMemberId())
+				.title(entity.getTitle())
+				.imojiPath(entity.getImojiPath())
+				.dayOfWeeks(entity.getDayOfWeeks())
+				.createDate(entity.getCreateDate())
+				.habitAchievement(data)
+				.build();
 	}
 
 	public static Habit from(Habit data, Long reward) {
 		return Habit.builder()
-					.habitId(data.getHabitId())
-					.memberId(data.getMemberId())
-					.title(data.getTitle())
-					.imojiPath(data.getImojiPath())
-					.dayOfWeeks(data.getDayOfWeeks())
-					.reward(reward)
-					.createDate(data.getCreateDate())
-					.habitAchievement(data.getHabitAchievement())
-					.build();
+				.habitId(data.getHabitId())
+				.memberId(data.getMemberId())
+				.title(data.getTitle())
+				.imojiPath(data.getImojiPath())
+				.dayOfWeeks(data.getDayOfWeeks())
+				.reward(reward)
+				.createDate(data.getCreateDate())
+				.habitAchievement(data.getHabitAchievement())
+				.build();
 	}
 
 	public static Habit from(HabitEntity entity, Notification notification) {
@@ -79,10 +79,7 @@ public class HabitConverter {
 	}
 
 	public static HabitOverview from(
-			HabitEntity entity,
-			HabitAchievement achievementData,
-			Long rewardCount,
-			Mate mate) {
+			HabitEntity entity, HabitAchievement achievementData, Long rewardCount, Mate mate) {
 
 		return HabitOverview.builder()
 				.habitId(entity.getId())

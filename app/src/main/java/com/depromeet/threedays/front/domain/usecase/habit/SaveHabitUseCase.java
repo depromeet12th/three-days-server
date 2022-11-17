@@ -39,11 +39,9 @@ public class SaveHabitUseCase {
 		return HabitConverter.from(entity, data.getNotification());
 	}
 
-	private void saveAssociation(Long habitId, Notification data,
-			EnumSet<DayOfWeek> dayOfWeeks) {
+	private void saveAssociation(Long habitId, Notification data, EnumSet<DayOfWeek> dayOfWeeks) {
 		for (DayOfWeek dayOfWeek : dayOfWeeks) {
-			habitNotificationRepository.save(
-					HabitNotificationConverter.to(data, habitId, dayOfWeek));
+			habitNotificationRepository.save(HabitNotificationConverter.to(data, habitId, dayOfWeek));
 		}
 	}
 }
