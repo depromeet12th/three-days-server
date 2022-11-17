@@ -38,4 +38,14 @@ public class HabitAchievementConverter {
 									 .sequence(habitAchievementEntity.getSequence() + 1)
 									 .build();
 	}
+
+	public static HabitAchievementEntity to(HabitEntity habitEntity, HabitAchievementEntity habitAchievementEntity, SaveHabitAchievementRequest request, int dayDifference) {
+		return HabitAchievementEntity.builder()
+									 .habitId(habitEntity.getId())
+									 .memberId(habitEntity.getMemberId())
+									 .achievementDate(request.getAchievementDate())
+									 .nextAchievementDate(habitAchievementEntity.getNextAchievementDate().plusDays(dayDifference))
+									 .sequence(habitAchievementEntity.getSequence() + 1)
+									 .build();
+	}
 }
