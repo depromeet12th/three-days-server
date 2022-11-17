@@ -109,9 +109,9 @@ public class SaveHabitAchievementUseCase {
 		int dayDifference = 0;
 
 		for (DayOfWeek dayOfWeek : dayOfWeeks) {
-			int objectiveDayOfWeek = dayOfWeek.getValue();
-			if (achievementDayOfWeek < objectiveDayOfWeek) {
-				dayDifference = objectiveDayOfWeek - achievementDayOfWeek;
+			int habitDayOfWeek = dayOfWeek.getValue();
+			if (achievementDayOfWeek < habitDayOfWeek) {
+				dayDifference = habitDayOfWeek - achievementDayOfWeek;
 				break;
 			}
 			count++;
