@@ -25,24 +25,39 @@ public class DeleteHabitAchievementUseCase {
 
     private final HabitAchievementValidator validator;
 
-    public Habit execute(Long habitId, Long habitAchievementId) {
+    public Habit execute(final Long habitId, final Long habitAchievementId) {
         HabitEntity habitEntity = habitRepository.findById(habitId)
                                                  .orElseThrow(ResourceNotFoundException::new);
         HabitAchievementEntity habitAchievementEntity = habitAchievementRepository.findById(habitAchievementId)
                                                                                   .orElseThrow(ResourceNotFoundException::new);
 
-        validator.validateCancelDateConstraints(habitAchievementEntity);
+        HabitAchievement habitAchievement = HabitAchievementConverter.from(habitAchievementEntity);
+        Habit data = HabitConverter.from(habitEntity, habitAchievement);
+
+        validator.validateCancelDateConstraints(data);
+
+        return this.delete(habitEntity, data);
+    }
+    private Habit delete(HabitEntity entity, Habit data) {
+        Long habitId = data.getHabitId();
+        Long habitAchievementId = data.getHabitAchievement()
+                                      .getHabitAchievementId();
 
         habitAchievementRepository.deleteById(habitAchievementId);
         HabitAchievementEntity beforeHabitAchievementEntity = habitAchievementRepository.findFirstByHabitIdOrderByAchievementDateDesc(habitId)
-                                                                             .orElseThrow(ResourceNotFoundException::new);
-        HabitAchievement habitAchievement = HabitAchievementConverter.from(beforeHabitAchievementEntity);
+                                                                                        .orElseThrow(ResourceNotFoundException::new);
+        HabitAchievement beforeHabitAchievement = HabitAchievementConverter.from(beforeHabitAchievementEntity);
+        Habit beforeData = HabitConverter.from(entity, beforeHabitAchievement);
 
+        return this.deleteAssociation(habitId, data, beforeData);
+    }
+
+    private Habit deleteAssociation(Long habitId, Habit data, Habit beforeData) {
         Long totalReward = rewardHistoryRepository.countByHabitId(habitId);
-        if (habitAchievementEntity.getSequence() % 3 == 0) {
+        if (data.getHabitAchievement().getSequence() % 3 == 0) {
             rewardHistoryRepository.deleteFirstByHabitIdOrderByCreateDateDesc(habitId);
-            return HabitConverter.from(habitEntity, habitAchievement, totalReward - 1);
+            return HabitConverter.from(beforeData, totalReward - 1);
         }
-        return HabitConverter.from(habitEntity, habitAchievement, totalReward);
+        return HabitConverter.from(beforeData, totalReward);
     }
 }
