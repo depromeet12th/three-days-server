@@ -28,4 +28,14 @@ public class HabitAchievementConverter {
 									 .sequence(1)
 									 .build();
 	}
+
+	public static HabitAchievementEntity to(HabitEntity habitEntity, HabitAchievementEntity habitAchievementEntity, SaveHabitAchievementRequest request) {
+		return HabitAchievementEntity.builder()
+									 .habitId(habitEntity.getId())
+									 .memberId(habitEntity.getMemberId())
+									 .achievementDate(request.getAchievementDate())
+									 .nextAchievementDate(habitAchievementEntity.getNextAchievementDate())
+									 .sequence(habitAchievementEntity.getSequence() + 1)
+									 .build();
+	}
 }
