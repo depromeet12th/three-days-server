@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface RewardHistoryRepository extends JpaRepository<RewardHistoryEntity, Long> {
 
 	Long countByHabitId(Long habitId);
+
+	void deleteFirstByHabitIdOrderByCreateDateDesc(final Long habitId);
 }
