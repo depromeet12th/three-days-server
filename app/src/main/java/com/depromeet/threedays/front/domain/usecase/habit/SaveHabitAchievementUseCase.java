@@ -72,6 +72,16 @@ public class SaveHabitAchievementUseCase {
 			return HabitConverter.from(habitEntity, habitAchievement, 3L);
 		}
 
+		if (achievementDate.isAfter(nextAchievementDate)) {
+			int dayDifference = calculateDayDifference(habitEntity, achievementDate);
+			HabitAchievementEntity savedHabitAchievementEntity =
+					habitAchievementRepository.save(
+							HabitAchievementConverter.to(habitEntity, request, dayDifference));
+
+			HabitAchievement habitAchievement =
+					HabitAchievementConverter.from(savedHabitAchievementEntity);
+			return HabitConverter.from(habitEntity, habitAchievement, 3L);
+		}
 		return null;
 	}
 
