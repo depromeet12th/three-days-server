@@ -4,6 +4,9 @@ buildscript {
     }
 }
 
+bootJar { enabled = false }
+
+
 sourceSets {
     main.java.srcDirs += [generatedSourcesDir]
 }
