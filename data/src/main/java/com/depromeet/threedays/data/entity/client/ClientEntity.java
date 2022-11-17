@@ -30,4 +30,7 @@ public class ClientEntity {
 
 	@Column(name = "fcm_token", length = 1000, nullable = false)
 	private String fcmToken;
+
+	@Column(name = "identification_key", length = 1000, nullable = false)
+	private String identification_key;
 }
