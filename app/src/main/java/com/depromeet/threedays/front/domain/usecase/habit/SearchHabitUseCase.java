@@ -52,10 +52,7 @@ public class SearchHabitUseCase {
 		HabitAchievement achievementData = this.calculateSequence(achievementEntity);
 		Long rewardCount = rewardHistoryRepository.countByHabitId(entity.getId());
 		Mate mateData =
-				mateRepository
-						.findByHabitId(entity.getId())
-						.map(MateConverter::from)
-						.orElse(null);
+				mateRepository.findByHabitId(entity.getId()).map(MateConverter::from).orElse(null);
 
 		return HabitConverter.from(entity, achievementData, rewardCount, mateData);
 	}

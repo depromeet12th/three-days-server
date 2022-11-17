@@ -9,8 +9,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class HabitNotificationConverter {
 
-	public static HabitNotificationEntity to(
-			Notification data, Long habitId, DayOfWeek dayOfWeek) {
+	public static HabitNotificationEntity to(Notification data, Long habitId, DayOfWeek dayOfWeek) {
 		return HabitNotificationEntity.builder()
 				.habitId(habitId)
 				.memberId(AuditorHolder.get())

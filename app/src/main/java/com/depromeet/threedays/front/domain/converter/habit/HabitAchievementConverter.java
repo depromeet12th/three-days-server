@@ -18,34 +18,42 @@ public class HabitAchievementConverter {
 				.build();
 	}
 
-	public static HabitAchievementEntity to(HabitEntity habitEntity, SaveHabitAchievementRequest request, int dayDifference) {
+	public static HabitAchievementEntity to(
+			HabitEntity habitEntity, SaveHabitAchievementRequest request, int dayDifference) {
 		return HabitAchievementEntity.builder()
-									 .habitId(habitEntity.getId())
-									 .memberId(habitEntity.getMemberId())
-									 .achievementDate(request.getAchievementDate())
-									 .nextAchievementDate(request.getAchievementDate()
-																 .plusDays(dayDifference))
-									 .sequence(1)
-									 .build();
+				.habitId(habitEntity.getId())
+				.memberId(habitEntity.getMemberId())
+				.achievementDate(request.getAchievementDate())
+				.nextAchievementDate(request.getAchievementDate().plusDays(dayDifference))
+				.sequence(1)
+				.build();
 	}
 
-	public static HabitAchievementEntity to(HabitEntity habitEntity, HabitAchievementEntity habitAchievementEntity, SaveHabitAchievementRequest request) {
+	public static HabitAchievementEntity to(
+			HabitEntity habitEntity,
+			HabitAchievementEntity habitAchievementEntity,
+			SaveHabitAchievementRequest request) {
 		return HabitAchievementEntity.builder()
-									 .habitId(habitEntity.getId())
-									 .memberId(habitEntity.getMemberId())
-									 .achievementDate(request.getAchievementDate())
-									 .nextAchievementDate(habitAchievementEntity.getNextAchievementDate())
-									 .sequence(habitAchievementEntity.getSequence() + 1)
-									 .build();
+				.habitId(habitEntity.getId())
+				.memberId(habitEntity.getMemberId())
+				.achievementDate(request.getAchievementDate())
+				.nextAchievementDate(habitAchievementEntity.getNextAchievementDate())
+				.sequence(habitAchievementEntity.getSequence() + 1)
+				.build();
 	}
 
-	public static HabitAchievementEntity to(HabitEntity habitEntity, HabitAchievementEntity habitAchievementEntity, SaveHabitAchievementRequest request, int dayDifference) {
+	public static HabitAchievementEntity to(
+			HabitEntity habitEntity,
+			HabitAchievementEntity habitAchievementEntity,
+			SaveHabitAchievementRequest request,
+			int dayDifference) {
 		return HabitAchievementEntity.builder()
-									 .habitId(habitEntity.getId())
-									 .memberId(habitEntity.getMemberId())
-									 .achievementDate(request.getAchievementDate())
-									 .nextAchievementDate(habitAchievementEntity.getNextAchievementDate().plusDays(dayDifference))
-									 .sequence(habitAchievementEntity.getSequence() + 1)
-									 .build();
+				.habitId(habitEntity.getId())
+				.memberId(habitEntity.getMemberId())
+				.achievementDate(request.getAchievementDate())
+				.nextAchievementDate(
+						habitAchievementEntity.getNextAchievementDate().plusDays(dayDifference))
+				.sequence(habitAchievementEntity.getSequence() + 1)
+				.build();
 	}
 }
