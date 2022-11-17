@@ -1,6 +1,6 @@
 package com.depromeet.threedays.front.domain.validation;
 
-import com.depromeet.threedays.data.entity.habit.HabitAchievementEntity;
+import com.depromeet.threedays.front.domain.model.habit.Habit;
 import com.depromeet.threedays.front.exception.PolicyViolationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -11,8 +11,9 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class HabitAchievementValidator {
 
-    public void validateCancelDateConstraints(final HabitAchievementEntity entity) {
-        this.throwIfNotEqualToday(entity.getAchievementDate());
+    public void validateCancelDateConstraints(final Habit data) {
+        this.throwIfNotEqualToday(data.getHabitAchievement()
+                                      .getAchievementDate());
     }
 
     private void throwIfNotEqualToday(final LocalDate achievementDate) {
