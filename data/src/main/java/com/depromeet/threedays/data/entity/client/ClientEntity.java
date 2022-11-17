@@ -32,5 +32,9 @@ public class ClientEntity {
 	private String fcmToken;
 
 	@Column(name = "identification_key", length = 1000, nullable = false)
-	private String identification_key;
+	private String identificationKey;
+
+	public void updateFcmToken(String fcmToken) {
+		this.fcmToken = fcmToken;
+	}
 }
