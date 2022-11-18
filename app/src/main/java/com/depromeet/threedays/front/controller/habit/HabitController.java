@@ -25,7 +25,6 @@ public class HabitController {
 
 	private final SearchHabitUseCase searchUseCase;
 
-
 	@PostMapping
 	public ApiResponse<Habit> add(@RequestBody @Valid final SaveHabitRequest request) {
 		return ApiResponseGenerator.success(saveUseCase.execute(request));
@@ -35,6 +34,4 @@ public class HabitController {
 	public ApiResponse<List<HabitOverview>> browse() {
 		return ApiResponseGenerator.success(searchUseCase.execute());
 	}
-
-
 }

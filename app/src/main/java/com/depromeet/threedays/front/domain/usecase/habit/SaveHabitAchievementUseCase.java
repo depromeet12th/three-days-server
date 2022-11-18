@@ -33,36 +33,50 @@ public class SaveHabitAchievementUseCase {
 
 		validator.validateCreateConstraints(HabitAchievementConverter.from(request));
 
-		Habit habit = HabitConverter.from(
-				habitRepository.findById(habitId).orElseThrow(ResourceNotFoundException::new));
+		Habit habit =
+				HabitConverter.from(
+						habitRepository.findById(habitId).orElseThrow(ResourceNotFoundException::new));
 
-		HabitAchievement lastHabitAchievement = HabitAchievementConverter.to(repository
-				.findFirstByHabitIdOrderByAchievementDateDesc(habitId)
-				.orElse(null));
+		HabitAchievement lastHabitAchievement =
+				HabitAchievementConverter.to(
+						repository.findFirstByHabitIdOrderByAchievementDateDesc(habitId).orElse(null));
 
 		if (lastHabitAchievement == null) {
-			return HabitConverter.from(habit, this.save(habit, request,
-					DateCalculator.findNextDate(habit.getDayOfWeeks(),
-							request.getAchievementDate()), 1), 0L);
+			return HabitConverter.from(
+					habit,
+					this.save(
+							habit,
+							request,
+							DateCalculator.findNextDate(habit.getDayOfWeeks(), request.getAchievementDate()),
+							1),
+					0L);
 		}
 
-		if (request.getAchievementDate()
-				.isAfter(lastHabitAchievement.getNextAchievementDate())) {
-			return HabitConverter.from(habit, this.save(habit, request,
-					lastHabitAchievement.getNextAchievementDate(),
-					0), getTotalRewardCount(habit, lastHabitAchievement));
+		if (request.getAchievementDate().isAfter(lastHabitAchievement.getNextAchievementDate())) {
+			return HabitConverter.from(
+					habit,
+					this.save(habit, request, lastHabitAchievement.getNextAchievementDate(), 0),
+					getTotalRewardCount(habit, lastHabitAchievement));
 		}
 
-		return HabitConverter.from(habit, this.save(habit, request,
+		return HabitConverter.from(
+				habit,
+				this.save(
+						habit,
+						request,
 						lastHabitAchievement.getNextAchievementDate(),
 						lastHabitAchievement.getSequence() + 1),
 				getTotalRewardCount(habit, lastHabitAchievement));
 	}
 
-	private HabitAchievement save(Habit habit, SaveHabitAchievementRequest request,
-			LocalDate nextAchievementDate, int sequence) {
-		HabitAchievementEntity entity = repository.save(
-				HabitAchievementConverter.to(habit, request, nextAchievementDate, sequence));
+	private HabitAchievement save(
+			Habit habit,
+			SaveHabitAchievementRequest request,
+			LocalDate nextAchievementDate,
+			int sequence) {
+		HabitAchievementEntity entity =
+				repository.save(
+						HabitAchievementConverter.to(habit, request, nextAchievementDate, sequence));
 		return HabitAchievementConverter.from(entity);
 	}
 
@@ -72,6 +86,4 @@ public class SaveHabitAchievementUseCase {
 		}
 		return rewardHistoryRepository.countByHabitId(habit.getHabitId());
 	}
-
-
 }
