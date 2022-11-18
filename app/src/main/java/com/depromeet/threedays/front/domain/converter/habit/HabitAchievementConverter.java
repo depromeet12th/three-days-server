@@ -20,8 +20,10 @@ public class HabitAchievementConverter {
 	}
 
 	public static HabitAchievementEntity to(
-			Habit habit, SaveHabitAchievementRequest request,
-			LocalDate nextAchievementDate, int sequence) {
+			Habit habit,
+			SaveHabitAchievementRequest request,
+			LocalDate nextAchievementDate,
+			int sequence) {
 		return HabitAchievementEntity.builder()
 				.habitId(habit.getHabitId())
 				.memberId(habit.getMemberId())
@@ -32,9 +34,7 @@ public class HabitAchievementConverter {
 	}
 
 	public static HabitAchievement from(SaveHabitAchievementRequest request) {
-		return HabitAchievement.builder()
-				.achievementDate(request.getAchievementDate())
-				.build();
+		return HabitAchievement.builder().achievementDate(request.getAchievementDate()).build();
 	}
 
 	public static HabitAchievement to(HabitAchievementEntity entity) {

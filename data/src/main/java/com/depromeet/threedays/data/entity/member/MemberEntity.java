@@ -40,4 +40,8 @@ public class MemberEntity implements Serializable {
 	@Column private String profile;
 
 	@Column private Boolean notificationConsent;
+
+	public void updateName(String name) {
+		this.name = name;
+	}
 }

@@ -29,8 +29,7 @@ public class HabitConverter {
 				.build();
 	}
 
-	public static Habit from(
-			Habit habit, HabitAchievement habitAchievement, Long reward) {
+	public static Habit from(Habit habit, HabitAchievement habitAchievement, Long reward) {
 		return Habit.builder()
 				.habitId(habit.getHabitId())
 				.memberId(habit.getMemberId())
