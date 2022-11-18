@@ -54,7 +54,7 @@ CREATE TABLE habit
 (
     `habit_id`     bigint                                          NOT NULL AUTO_INCREMENT,
     `create_date`  datetime(6)                                     NOT NULL,
-    `day_of_weeks` SET ('MON','TUE','WED','THU','FRI','SAT','SUN') NOT NULL,
+    `day_of_weeks` SET ('MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY','SUNDAY') NOT NULL,
     `deleted`      bit(1)                                          NOT NULL,
     `imoji_path`   varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
     `color`        varchar(40) COLLATE utf8mb4_unicode_ci  DEFAULT NULL,
