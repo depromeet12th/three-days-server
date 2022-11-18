@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/habits")
 public class HabitAchievementController {
 
-    private final DeleteHabitAchievementUseCase deleteHabitAchievementUseCase;
+	private final DeleteHabitAchievementUseCase deleteHabitAchievementUseCase;
 
-    @DeleteMapping("/{habitId}/achievements/{habitAchievementId}")
-    public ApiResponse<Habit> cancelAchievement(@PathVariable("habitId") Long habitId, @PathVariable("habitAchievementId") Long habitAchievementId) {
-        return ApiResponseGenerator.success(deleteHabitAchievementUseCase.execute(habitId, habitAchievementId));
-    }
+	@DeleteMapping("/{habitId}/achievements/{habitAchievementId}")
+	public ApiResponse<Habit> cancelAchievement(
+			@PathVariable("habitId") Long habitId,
+			@PathVariable("habitAchievementId") Long habitAchievementId) {
+		return ApiResponseGenerator.success(deleteHabitAchievementUseCase.execute(habitId, habitAchievementId));
+	}
 }
