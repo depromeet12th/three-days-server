@@ -8,9 +8,9 @@ import com.depromeet.threedays.front.domain.model.habit.Habit;
 import com.depromeet.threedays.front.domain.model.habit.HabitAchievement;
 import com.depromeet.threedays.front.domain.validation.HabitAchievementValidator;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
-import com.depromeet.threedays.front.repository.RewardHistoryRepository;
-import com.depromeet.threedays.front.repository.habit.HabitAchievementRepository;
-import com.depromeet.threedays.front.repository.habit.HabitRepository;
+import com.depromeet.threedays.front.persistence.repository.RewardHistoryRepository;
+import com.depromeet.threedays.front.persistence.repository.habit.HabitAchievementRepository;
+import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class DeleteHabitAchievementUseCase {
+
 	private final HabitRepository habitRepository;
-	private final HabitAchievementRepository habitAchievementRepository;
+	private final HabitAchievementRepository repository;
 	private final RewardHistoryRepository rewardHistoryRepository;
 
 	private final HabitAchievementValidator validator;
@@ -28,41 +29,33 @@ public class DeleteHabitAchievementUseCase {
 	public Habit execute(final Long habitId, final Long habitAchievementId) {
 		HabitEntity habitEntity =
 				habitRepository.findById(habitId).orElseThrow(ResourceNotFoundException::new);
-		HabitAchievementEntity habitAchievementEntity =
-				habitAchievementRepository
-						.findById(habitAchievementId)
-						.orElseThrow(ResourceNotFoundException::new);
+		HabitAchievementEntity entity =
+				repository.findById(habitAchievementId).orElseThrow(ResourceNotFoundException::new);
 
-		HabitAchievement habitAchievement = HabitAchievementConverter.from(habitAchievementEntity);
-		Habit data = HabitConverter.from(habitEntity, habitAchievement);
+		HabitAchievement target = HabitAchievementConverter.from(entity);
 
-		validator.validateCancelDateConstraints(data);
+		validator.validateDeleteConstraints(habitEntity, target);
+		Habit habit = HabitConverter.from(habitEntity, this.delete(target));
 
-		return this.delete(habitEntity, data);
+		return HabitConverter.from(habit, rewardHistoryRepository.countByHabitId(target.getHabitId()));
 	}
 
-	private Habit delete(HabitEntity entity, Habit data) {
-		Long habitId = data.getHabitId();
-		Long habitAchievementId = data.getHabitAchievement().getHabitAchievementId();
+	private HabitAchievement delete(final HabitAchievement target) {
+		this.deleteAssociations(target);
 
-		habitAchievementRepository.deleteById(habitAchievementId);
-		HabitAchievementEntity beforeHabitAchievementEntity =
-				habitAchievementRepository
-						.findFirstByHabitIdOrderByAchievementDateDesc(habitId)
-						.orElseThrow(ResourceNotFoundException::new);
-		HabitAchievement beforeHabitAchievement =
-				HabitAchievementConverter.from(beforeHabitAchievementEntity);
-		Habit beforeData = HabitConverter.from(entity, beforeHabitAchievement);
+		repository.deleteById(target.getHabitAchievementId());
 
-		return this.deleteAssociation(habitId, data, beforeData);
+		return repository
+				.findFirstByHabitIdOrderByAchievementDateDesc(target.getHabitId())
+				.map(HabitAchievementConverter::from)
+				.orElse(null);
 	}
 
-	private Habit deleteAssociation(Long habitId, Habit data, Habit beforeData) {
-		Long totalReward = rewardHistoryRepository.countByHabitId(habitId);
-		if (data.getHabitAchievement().getSequence() % 3 == 0) {
-			rewardHistoryRepository.deleteFirstByHabitIdOrderByCreateDateDesc(habitId);
-			return HabitConverter.from(beforeData, totalReward - 1);
+	private void deleteAssociations(final HabitAchievement target) {
+		if (target.getSequence() % 3 != 0) {
+			return;
 		}
-		return HabitConverter.from(beforeData, totalReward);
+
+		rewardHistoryRepository.deleteFirstByHabitIdOrderByCreateDateDesc(target.getHabitId());
 	}
 }

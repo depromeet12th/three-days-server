@@ -1,11 +1,10 @@
 package com.depromeet.threedays.front.domain.usecase
 
-
 import com.depromeet.threedays.front.IntegrationTestSpecification
-import com.depromeet.threedays.front.controller.request.habit.SaveHabitRequest
 import com.depromeet.threedays.front.domain.model.notification.Notification
 import com.depromeet.threedays.front.domain.usecase.habit.SaveHabitUseCase
 import com.depromeet.threedays.front.exception.PolicyViolationException
+import com.depromeet.threedays.front.web.request.habit.SaveHabitRequest
 import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.Subject
 

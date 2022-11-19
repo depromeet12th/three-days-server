@@ -1,7 +1,6 @@
 package com.depromeet.threedays.front.domain.usecase.habit;
 
 import com.depromeet.threedays.data.entity.habit.HabitAchievementEntity;
-import com.depromeet.threedays.front.controller.request.habit.SaveHabitAchievementRequest;
 import com.depromeet.threedays.front.domain.converter.RewardHistoryConverter;
 import com.depromeet.threedays.front.domain.converter.habit.HabitAchievementConverter;
 import com.depromeet.threedays.front.domain.converter.habit.HabitConverter;
@@ -9,10 +8,11 @@ import com.depromeet.threedays.front.domain.model.habit.Habit;
 import com.depromeet.threedays.front.domain.model.habit.HabitAchievement;
 import com.depromeet.threedays.front.domain.validation.HabitAchievementValidator;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
-import com.depromeet.threedays.front.repository.RewardHistoryRepository;
-import com.depromeet.threedays.front.repository.habit.HabitAchievementRepository;
-import com.depromeet.threedays.front.repository.habit.HabitRepository;
+import com.depromeet.threedays.front.persistence.repository.RewardHistoryRepository;
+import com.depromeet.threedays.front.persistence.repository.habit.HabitAchievementRepository;
+import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository;
 import com.depromeet.threedays.front.support.DateCalculator;
+import com.depromeet.threedays.front.web.request.habit.SaveHabitAchievementRequest;
 import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

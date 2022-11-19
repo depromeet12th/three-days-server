@@ -1,12 +1,13 @@
 package com.depromeet.threedays.front.domain.converter.client;
 
-import com.depromeet.threedays.front.controller.request.member.ClientRequest;
 import com.depromeet.threedays.front.domain.command.client.SaveClientCommand;
 import com.depromeet.threedays.front.domain.command.client.UpdateClientCommand;
+import com.depromeet.threedays.front.web.request.member.ClientRequest;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class ClientCommandConverter {
+
 	public static SaveClientCommand from(final Long memberId, final ClientRequest request) {
 		if (memberId == null || request == null) {
 			return null;

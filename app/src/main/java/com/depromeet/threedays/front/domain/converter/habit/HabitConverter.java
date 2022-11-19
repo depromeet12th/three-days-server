@@ -2,12 +2,12 @@ package com.depromeet.threedays.front.domain.converter.habit;
 
 import com.depromeet.threedays.data.entity.habit.HabitEntity;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
-import com.depromeet.threedays.front.controller.request.habit.SaveHabitRequest;
 import com.depromeet.threedays.front.domain.model.habit.Habit;
 import com.depromeet.threedays.front.domain.model.habit.HabitAchievement;
 import com.depromeet.threedays.front.domain.model.habit.HabitOverview;
 import com.depromeet.threedays.front.domain.model.mate.Mate;
 import com.depromeet.threedays.front.domain.model.notification.Notification;
+import com.depromeet.threedays.front.web.request.habit.SaveHabitRequest;
 import java.util.Optional;
 import lombok.experimental.UtilityClass;
 

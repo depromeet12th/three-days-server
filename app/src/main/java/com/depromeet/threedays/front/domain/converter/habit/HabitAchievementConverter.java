@@ -1,9 +1,9 @@
 package com.depromeet.threedays.front.domain.converter.habit;
 
 import com.depromeet.threedays.data.entity.habit.HabitAchievementEntity;
-import com.depromeet.threedays.front.controller.request.habit.SaveHabitAchievementRequest;
 import com.depromeet.threedays.front.domain.model.habit.Habit;
 import com.depromeet.threedays.front.domain.model.habit.HabitAchievement;
+import com.depromeet.threedays.front.web.request.habit.SaveHabitAchievementRequest;
 import java.time.LocalDate;
 import lombok.experimental.UtilityClass;
 
@@ -11,7 +11,12 @@ import lombok.experimental.UtilityClass;
 public class HabitAchievementConverter {
 
 	public static HabitAchievement from(HabitAchievementEntity entity) {
+		if (entity == null) {
+			return null;
+		}
+
 		return HabitAchievement.builder()
+				.habitId(entity.getHabitId())
 				.achievementDate(entity.getAchievementDate())
 				.nextAchievementDate(entity.getNextAchievementDate())
 				.habitAchievementId(entity.getId())
@@ -42,6 +47,7 @@ public class HabitAchievementConverter {
 			return null;
 		}
 		return HabitAchievement.builder()
+				.habitId(entity.getHabitId())
 				.sequence(entity.getSequence())
 				.habitAchievementId(entity.getId())
 				.nextAchievementDate(entity.getNextAchievementDate())

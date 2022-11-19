@@ -1,14 +1,14 @@
 package com.depromeet.threedays.front.domain.usecase.habit;
 
 import com.depromeet.threedays.data.entity.habit.HabitEntity;
-import com.depromeet.threedays.front.controller.request.habit.SaveHabitRequest;
 import com.depromeet.threedays.front.domain.converter.habit.HabitConverter;
 import com.depromeet.threedays.front.domain.converter.notification.HabitNotificationConverter;
 import com.depromeet.threedays.front.domain.model.habit.Habit;
 import com.depromeet.threedays.front.domain.model.notification.Notification;
 import com.depromeet.threedays.front.domain.validation.HabitValidator;
-import com.depromeet.threedays.front.repository.habit.HabitRepository;
-import com.depromeet.threedays.front.repository.notification.HabitNotificationRepository;
+import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository;
+import com.depromeet.threedays.front.persistence.repository.notification.HabitNotificationRepository;
+import com.depromeet.threedays.front.web.request.habit.SaveHabitRequest;
 import java.time.DayOfWeek;
 import java.util.EnumSet;
 import lombok.RequiredArgsConstructor;

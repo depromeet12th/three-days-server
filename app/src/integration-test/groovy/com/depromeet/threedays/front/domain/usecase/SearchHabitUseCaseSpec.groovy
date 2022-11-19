@@ -1,7 +1,7 @@
 package com.depromeet.threedays.front.domain.usecase
 
 import com.depromeet.threedays.front.IntegrationTestSpecification
-import com.depromeet.threedays.front.data.objectvie.HabitDataInitializer
+import com.depromeet.threedays.front.data.habit.HabitDataInitializer
 import com.depromeet.threedays.front.domain.usecase.habit.SearchHabitUseCase
 import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.Subject
