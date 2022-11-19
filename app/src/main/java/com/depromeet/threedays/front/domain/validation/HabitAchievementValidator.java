@@ -25,5 +25,4 @@ public class HabitAchievementValidator {
 			throw new PolicyViolationException(MESSAGE_CODE_PREFIX + messageCodeSuffix);
 		}
 	}
-
 }
