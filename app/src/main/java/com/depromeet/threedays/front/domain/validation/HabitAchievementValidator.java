@@ -15,7 +15,7 @@ public class HabitAchievementValidator {
 	}
 
 	private void throwIfDateInThePast(HabitAchievement target) {
-		this.throwIf(LocalDate.now().isEqual(target.getAchievementDate()), "date.is.not.equal");
+		this.throwIf(!LocalDate.now().isEqual(target.getAchievementDate()), "date.is.not.equal");
 	}
 
 	private void throwIf(final boolean condition, final String messageCodeSuffix) {

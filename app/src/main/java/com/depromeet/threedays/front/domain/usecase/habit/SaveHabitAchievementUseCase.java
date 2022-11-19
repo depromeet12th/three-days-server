@@ -55,7 +55,22 @@ public class SaveHabitAchievementUseCase {
 		if (request.getAchievementDate().isAfter(lastHabitAchievement.getNextAchievementDate())) {
 			return HabitConverter.from(
 					habit,
-					this.save(habit, request, lastHabitAchievement.getNextAchievementDate(), 0),
+					this.save(
+							habit,
+							request,
+							DateCalculator.findNextDate(habit.getDayOfWeeks(), request.getAchievementDate()),
+							1),
+					getTotalRewardCount(habit, lastHabitAchievement));
+		}
+
+		if (request.getAchievementDate().isEqual(lastHabitAchievement.getNextAchievementDate())) {
+			return HabitConverter.from(
+					habit,
+					this.save(
+							habit,
+							request,
+							DateCalculator.findNextDate(habit.getDayOfWeeks(), request.getAchievementDate()),
+							lastHabitAchievement.getSequence() + 1),
 					getTotalRewardCount(habit, lastHabitAchievement));
 		}
 

@@ -13,8 +13,8 @@ public class DateCalculator {
 		LocalDate nextDate = LocalDate.MAX;
 
 		for (DayOfWeek dayOfWeek : dayOfWeeks) {
-			LocalDate nextDayOfWeekDate = date.with(TemporalAdjusters.nextOrSame(dayOfWeek));
-			if (nextDate.isBefore(nextDayOfWeekDate)) {
+			LocalDate nextDayOfWeekDate = date.with(TemporalAdjusters.next(dayOfWeek));
+			if (nextDate.isAfter(nextDayOfWeekDate)) {
 				nextDate = nextDayOfWeekDate;
 			}
 		}
