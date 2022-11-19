@@ -52,6 +52,11 @@ public class SaveHabitAchievementUseCase {
 					0L);
 		}
 
+		if (lastHabitAchievement.getAchievementDate().isEqual(request.getAchievementDate())) {
+			return HabitConverter.from(
+					habit, lastHabitAchievement, getTotalRewardCount(habit, lastHabitAchievement));
+		}
+
 		if (request.getAchievementDate().isAfter(lastHabitAchievement.getNextAchievementDate())) {
 			return HabitConverter.from(
 					habit,

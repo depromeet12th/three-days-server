@@ -23,7 +23,7 @@ public class HabitOverview implements Serializable {
 	private EnumSet<DayOfWeek> dayOfWeeks;
 	private Long reward;
 	private String color;
-	private LocalDateTime createDate;
-	private HabitAchievement habitAchievement;
+	private LocalDateTime createAt;
+	private HabitAchievement todayHabitAchievement;
 	private Mate mate;
 }

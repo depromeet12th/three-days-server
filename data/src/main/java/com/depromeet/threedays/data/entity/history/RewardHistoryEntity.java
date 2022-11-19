@@ -34,5 +34,5 @@ public class RewardHistoryEntity {
 
 	@Column(nullable = false, updatable = false)
 	@Builder.Default
-	private LocalDateTime createDate = LocalDateTime.now();
+	private LocalDateTime createAt = LocalDateTime.now();
 }

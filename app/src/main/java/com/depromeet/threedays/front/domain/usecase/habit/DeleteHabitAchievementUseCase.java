@@ -29,18 +29,20 @@ public class DeleteHabitAchievementUseCase {
 	public Habit execute(final Long habitId, final Long habitAchievementId) {
 		HabitEntity habitEntity =
 				habitRepository.findById(habitId).orElseThrow(ResourceNotFoundException::new);
-		HabitAchievementEntity entity =
-				repository.findById(habitAchievementId).orElseThrow(ResourceNotFoundException::new);
+		HabitAchievementEntity entity = repository.findById(habitAchievementId).orElse(null);
 
 		HabitAchievement target = HabitAchievementConverter.from(entity);
 
 		validator.validateDeleteConstraints(habitEntity, target);
 		Habit habit = HabitConverter.from(habitEntity, this.delete(target));
 
-		return HabitConverter.from(habit, rewardHistoryRepository.countByHabitId(target.getHabitId()));
+		return HabitConverter.from(habit, rewardHistoryRepository.countByHabitId(habitId));
 	}
 
 	private HabitAchievement delete(final HabitAchievement target) {
+		if (target == null) {
+			return null;
+		}
 		this.deleteAssociations(target);
 
 		repository.deleteById(target.getHabitAchievementId());
@@ -56,6 +58,6 @@ public class DeleteHabitAchievementUseCase {
 			return;
 		}
 
-		rewardHistoryRepository.deleteFirstByHabitIdOrderByCreateDateDesc(target.getHabitId());
+		rewardHistoryRepository.deleteFirstByHabitIdOrderByCreateAtDesc(target.getHabitId());
 	}
 }

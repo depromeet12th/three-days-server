@@ -17,13 +17,17 @@ public class HabitAchievementValidator {
 
 	public void validateDeleteConstraints(
 			final HabitEntity habitEntity, final HabitAchievement target) {
+		if (target == null) {
+			return;
+		}
+
 		this.throwIfInvalidHabit(habitEntity, target);
 		this.throwIfNotEqualToday(target.getAchievementDate());
 	}
 
 	private void throwIfInvalidHabit(final HabitEntity habitEntity, final HabitAchievement target) {
 		final String INVALID_HABIT = "invalid.habit";
-		this.throwIf(habitEntity.getId().equals(target.getHabitId()), INVALID_HABIT);
+		this.throwIf(!habitEntity.getId().equals(target.getHabitId()), INVALID_HABIT);
 	}
 
 	private void throwIfDateInThePast(final HabitAchievement target) {
@@ -37,7 +41,7 @@ public class HabitAchievementValidator {
 		}
 
 		final String INVALID_REQUEST_DATE = "invalid.achievement.date";
-		this.throwIf(achievementDate.isEqual(LocalDate.now()), INVALID_REQUEST_DATE);
+		this.throwIf(!achievementDate.isEqual(LocalDate.now()), INVALID_REQUEST_DATE);
 	}
 
 	private void throwIf(final boolean condition, final String messageCodeSuffix) {

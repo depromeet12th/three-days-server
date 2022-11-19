@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 @Component
 class HabitAchievementDataInitializer {
 
-    private static final int DEFAULT_DATA_SIZE = 9
+    public static final int DEFAULT_DATA_SIZE = 9
 
     @Autowired
     private HabitAchievementRepository repository
@@ -47,7 +47,7 @@ class HabitAchievementDataInitializer {
         rewardHistoryRepository.save(RewardHistoryEntity.builder()
                 .habitId(entity.getHabitId())
                 .memberId(0L)
-                .createDate(entity.getAchievementDate().atStartOfDay())
+                .createAt(entity.getAchievementDate().atStartOfDay())
                 .build())
     }
 

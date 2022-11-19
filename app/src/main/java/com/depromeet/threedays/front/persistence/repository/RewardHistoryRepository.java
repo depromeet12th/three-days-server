@@ -7,5 +7,5 @@ public interface RewardHistoryRepository extends JpaRepository<RewardHistoryEnti
 
 	Long countByHabitId(Long habitId);
 
-	void deleteFirstByHabitIdOrderByCreateDateDesc(final Long habitId);
+	void deleteFirstByHabitIdOrderByCreateAtDesc(final Long habitId);
 }

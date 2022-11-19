@@ -39,7 +39,7 @@ CREATE TABLE `notification_history`
 (
     `notification_history_id` bigint                                  NOT NULL AUTO_INCREMENT,
     `contents`                varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-    `create_date`             datetime(6)                             NOT NULL,
+    `create_at`             datetime(6)                             NOT NULL,
     `member_id`               bigint                                  NOT NULL,
     `notification_id`         bigint                                  NOT NULL,
     `status`                  varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE `notification_history`
 CREATE TABLE habit
 (
     `habit_id`     bigint                                          NOT NULL AUTO_INCREMENT,
-    `create_date`  datetime(6)                                     NOT NULL,
+    `create_at`  datetime(6)                                     NOT NULL,
     `day_of_weeks` SET ('MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY','SUNDAY') NOT NULL,
     `deleted`      bit(1)                                          NOT NULL,
     `imoji_path`   varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -71,7 +71,7 @@ CREATE TABLE `mate`
     `member_id`      bigint                                  NOT NULL,
     `habit_id`       bigint                                  NOT NULL,
     `character_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-    `create_date`    datetime(6)                             NOT NULL,
+    `create_at`    datetime(6)                             NOT NULL,
     `deleted`        bit(1)                                  NOT NULL,
     `level`          int                                     NOT NULL,
     `title`          varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -112,7 +112,7 @@ CREATE TABLE `habit_notification`
 CREATE TABLE `reward_history`
 (
     `reward_history_id` bigint      NOT NULL AUTO_INCREMENT,
-    `create_date`       datetime(6) NOT NULL,
+    `create_at`       datetime(6) NOT NULL,
     `member_id`         bigint      NOT NULL,
     `habit_id`          bigint      NOT NULL,
     PRIMARY KEY (`reward_history_id`)

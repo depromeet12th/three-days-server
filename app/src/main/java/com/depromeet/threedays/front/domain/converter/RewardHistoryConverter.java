@@ -12,7 +12,7 @@ public class RewardHistoryConverter {
 		return RewardHistoryEntity.builder()
 				.habitId(habit.getHabitId())
 				.memberId(habit.getMemberId())
-				.createDate(LocalDateTime.now())
+				.createAt(LocalDateTime.now())
 				.build();
 	}
 }
