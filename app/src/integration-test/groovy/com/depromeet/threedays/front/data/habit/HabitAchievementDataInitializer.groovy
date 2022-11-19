@@ -26,6 +26,13 @@ class HabitAchievementDataInitializer {
         this.setData(habitId)
     }
 
+    void setSpecificData(HabitAchievementEntity entity){
+        repository.deleteAll()
+
+        repository.save(entity)
+    }
+
+
     Collection<HabitAchievementEntity> getData() {
         return this.data
     }

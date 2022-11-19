@@ -1,4 +1,4 @@
-package com.depromeet.threedays.front.domain.usecase
+package com.depromeet.threedays.front.domain.usecase.habit
 
 import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.data.habit.HabitAchievementDataInitializer
@@ -39,7 +39,7 @@ class DeleteHabitAchievementUseCaseSpec extends IntegrationTestSpecification {
 
     }
 
-    def "사용자는 오늘의 습관 달성 여부 취소는 멱등하게 동작한다"() {
+    def "오늘의 습관 달성 여부 취소는 멱등하게 동작한다"() {
         given:
         def criterionHabit = habitDataInitializer.data.first()
         def criterionHabitAchievement = dataInitializer.data.first()
