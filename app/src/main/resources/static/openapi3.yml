@@ -430,7 +430,7 @@ paths:
     post:
       tags:
         - Member
-      summary: 클라이언트 정보 추가시 사용하는 API. fcm-token 추가 등록시 해당 API 사용
+      summary: 클라이언트 정보 추가시 사용하는 API. fcm-token 추가 등록/갱신 시 해당 API 사용
       operationId: postClients
       parameters:
         - name: memberId
@@ -869,9 +869,9 @@ components:
         fcmToken:
           type: string
           example: fcmToken
-        identifyKey:
+        identificationKey:
           type: string
-          example: identifyKey
+          example: identificationKey
     Agreement:
       type: object
       properties:

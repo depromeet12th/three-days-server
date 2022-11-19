@@ -1,13 +1,15 @@
 package com.depromeet.threedays.front.domain.usecase
 
-import com.depromeet.threedays.data.enums.DayOfWeek
+
 import com.depromeet.threedays.front.IntegrationTestSpecification
+import com.depromeet.threedays.front.controller.request.habit.SaveHabitRequest
 import com.depromeet.threedays.front.domain.model.notification.Notification
 import com.depromeet.threedays.front.domain.usecase.habit.SaveHabitUseCase
 import com.depromeet.threedays.front.exception.PolicyViolationException
 import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.Subject
 
+import java.time.DayOfWeek
 import java.time.LocalTime
 
 class SaveHabitUseCaseSpec extends IntegrationTestSpecification {
@@ -25,7 +27,7 @@ class SaveHabitUseCaseSpec extends IntegrationTestSpecification {
                 .title("title")
                 .imojiPath("imoji")
                 .color("color")
-                .dayOfWeeks(EnumSet.of(DayOfWeek.MON, DayOfWeek.TUE, DayOfWeek.FRI))
+                .dayOfWeeks(EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.FRIDAY))
                 .notification(Notification.builder()
                         .contents("contents")
                         .notificationTime(LocalTime.now())
@@ -47,7 +49,7 @@ class SaveHabitUseCaseSpec extends IntegrationTestSpecification {
                 .title("title")
                 .imojiPath("imoji")
                 .color("color")
-                .dayOfWeeks(EnumSet.of(DayOfWeek.MON, DayOfWeek.TUE))
+                .dayOfWeeks(EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY))
                 .notification(Notification.builder()
                         .contents("contents")
                         .notificationTime(LocalTime.now())

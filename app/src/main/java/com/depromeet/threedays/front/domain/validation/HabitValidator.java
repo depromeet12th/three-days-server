@@ -1,8 +1,8 @@
 package com.depromeet.threedays.front.domain.validation;
 
-import com.depromeet.threedays.data.enums.DayOfWeek;
 import com.depromeet.threedays.front.domain.model.habit.Habit;
 import com.depromeet.threedays.front.exception.PolicyViolationException;
+import java.time.DayOfWeek;
 import java.util.EnumSet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

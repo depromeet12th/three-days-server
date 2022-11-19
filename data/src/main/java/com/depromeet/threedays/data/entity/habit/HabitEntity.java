@@ -1,7 +1,7 @@
 package com.depromeet.threedays.data.entity.habit;
 
 import com.depromeet.threedays.data.converter.DayOfWeekConverter;
-import com.depromeet.threedays.data.enums.DayOfWeek;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.EnumSet;
 import javax.persistence.Column;

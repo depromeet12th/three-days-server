@@ -20,6 +20,13 @@ public class MemberConverter {
 		return Member.builder().memberId(entity.getId()).name(entity.getName()).isNew(isNew).build();
 	}
 
+	public static Member from(final MemberEntity entity) {
+		if (entity == null) {
+			return null;
+		}
+		return Member.builder().memberId(entity.getId()).name(entity.getName()).isNew(false).build();
+	}
+
 	public static MemberEntity to(final SaveMemberCommand command) {
 		if (command == null) {
 			return null;

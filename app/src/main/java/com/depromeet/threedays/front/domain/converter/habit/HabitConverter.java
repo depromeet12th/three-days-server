@@ -29,6 +29,19 @@ public class HabitConverter {
 				.build();
 	}
 
+	public static Habit from(Habit habit, HabitAchievement habitAchievement, Long reward) {
+		return Habit.builder()
+				.habitId(habit.getHabitId())
+				.memberId(habit.getMemberId())
+				.title(habit.getTitle())
+				.imojiPath(habit.getImojiPath())
+				.dayOfWeeks(habit.getDayOfWeeks())
+				.reward(reward)
+				.createDate(habit.getCreateDate())
+				.habitAchievement(habitAchievement)
+				.build();
+	}
+
 	public static HabitEntity to(Habit data) {
 		return HabitEntity.builder()
 				.memberId(data.getMemberId())
@@ -92,6 +105,18 @@ public class HabitConverter {
 				.reward(rewardCount)
 				.habitAchievement(achievementData)
 				.mate(mate)
+				.build();
+	}
+
+	public static Habit from(HabitEntity entity) {
+		return Habit.builder()
+				.habitId(entity.getId())
+				.memberId(entity.getMemberId())
+				.title(entity.getTitle())
+				.imojiPath(entity.getImojiPath())
+				.dayOfWeeks(entity.getDayOfWeeks())
+				.color(entity.getColor())
+				.createDate(entity.getCreateDate())
 				.build();
 	}
 }
