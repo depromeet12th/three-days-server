@@ -27,8 +27,8 @@ public class Habit {
 	private String color;
 	private EnumSet<DayOfWeek> dayOfWeeks;
 	@Builder.Default private Long reward = 0L;
-	private LocalDateTime createDate;
-	private HabitAchievement habitAchievement;
+	private LocalDateTime createAt;
+	private HabitAchievement todayHabitAchievement;
 	private Mate mate;
 	private Notification notification;
 }

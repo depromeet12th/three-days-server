@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class HabitAchievement implements Serializable {
 
+	private Long habitId;
+
 	private Long habitAchievementId;
 	private Integer sequence;
 

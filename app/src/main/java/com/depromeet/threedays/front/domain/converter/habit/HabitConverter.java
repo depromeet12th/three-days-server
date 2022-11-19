@@ -2,12 +2,12 @@ package com.depromeet.threedays.front.domain.converter.habit;
 
 import com.depromeet.threedays.data.entity.habit.HabitEntity;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
-import com.depromeet.threedays.front.controller.request.habit.SaveHabitRequest;
 import com.depromeet.threedays.front.domain.model.habit.Habit;
 import com.depromeet.threedays.front.domain.model.habit.HabitAchievement;
 import com.depromeet.threedays.front.domain.model.habit.HabitOverview;
 import com.depromeet.threedays.front.domain.model.mate.Mate;
 import com.depromeet.threedays.front.domain.model.notification.Notification;
+import com.depromeet.threedays.front.web.request.habit.SaveHabitRequest;
 import java.util.Optional;
 import lombok.experimental.UtilityClass;
 
@@ -37,8 +37,8 @@ public class HabitConverter {
 				.imojiPath(habit.getImojiPath())
 				.dayOfWeeks(habit.getDayOfWeeks())
 				.reward(reward)
-				.createDate(habit.getCreateDate())
-				.habitAchievement(habitAchievement)
+				.createAt(habit.getCreateAt())
+				.todayHabitAchievement(habitAchievement)
 				.build();
 	}
 
@@ -52,6 +52,31 @@ public class HabitConverter {
 				.build();
 	}
 
+	public static Habit from(HabitEntity entity, HabitAchievement data) {
+		return Habit.builder()
+				.habitId(entity.getId())
+				.memberId(entity.getMemberId())
+				.title(entity.getTitle())
+				.imojiPath(entity.getImojiPath())
+				.dayOfWeeks(entity.getDayOfWeeks())
+				.createAt(entity.getCreateAt())
+				.todayHabitAchievement(data)
+				.build();
+	}
+
+	public static Habit from(Habit data, Long reward) {
+		return Habit.builder()
+				.habitId(data.getHabitId())
+				.memberId(data.getMemberId())
+				.title(data.getTitle())
+				.imojiPath(data.getImojiPath())
+				.dayOfWeeks(data.getDayOfWeeks())
+				.reward(reward)
+				.createAt(data.getCreateAt())
+				.todayHabitAchievement(data.getTodayHabitAchievement())
+				.build();
+	}
+
 	public static Habit from(HabitEntity entity, Notification notification) {
 
 		return Habit.builder()
@@ -62,7 +87,7 @@ public class HabitConverter {
 				.dayOfWeeks(entity.getDayOfWeeks())
 				.color(entity.getColor())
 				.notification(notification)
-				.createDate(entity.getCreateDate())
+				.createAt(entity.getCreateAt())
 				.build();
 	}
 
@@ -76,9 +101,9 @@ public class HabitConverter {
 				.imojiPath(entity.getImojiPath())
 				.dayOfWeeks(entity.getDayOfWeeks())
 				.color(entity.getColor())
-				.createDate(entity.getCreateDate())
+				.createAt(entity.getCreateAt())
 				.reward(rewardCount)
-				.habitAchievement(achievementData)
+				.todayHabitAchievement(achievementData)
 				.mate(mate)
 				.build();
 	}
@@ -91,7 +116,7 @@ public class HabitConverter {
 				.imojiPath(entity.getImojiPath())
 				.dayOfWeeks(entity.getDayOfWeeks())
 				.color(entity.getColor())
-				.createDate(entity.getCreateDate())
+				.createAt(entity.getCreateAt())
 				.build();
 	}
 }

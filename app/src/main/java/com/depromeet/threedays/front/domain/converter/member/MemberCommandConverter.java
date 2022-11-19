@@ -1,8 +1,8 @@
 package com.depromeet.threedays.front.domain.converter.member;
 
 import com.depromeet.threedays.front.client.model.MemberInfo;
-import com.depromeet.threedays.front.controller.request.member.SignMemberRequest;
 import com.depromeet.threedays.front.domain.command.SaveMemberCommand;
+import com.depromeet.threedays.front.web.request.member.SignMemberRequest;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

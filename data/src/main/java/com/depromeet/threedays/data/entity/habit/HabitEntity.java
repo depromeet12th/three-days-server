@@ -46,7 +46,7 @@ public class HabitEntity {
 
 	@Column(nullable = false, updatable = false)
 	@Builder.Default
-	private LocalDateTime createDate = LocalDateTime.now();
+	private LocalDateTime createAt = LocalDateTime.now();
 
 	@Column(nullable = false)
 	@Builder.Default

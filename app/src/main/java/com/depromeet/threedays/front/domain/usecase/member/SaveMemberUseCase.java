@@ -3,7 +3,7 @@ package com.depromeet.threedays.front.domain.usecase.member;
 import com.depromeet.threedays.front.domain.command.SaveMemberCommand;
 import com.depromeet.threedays.front.domain.converter.member.MemberConverter;
 import com.depromeet.threedays.front.domain.model.member.Member;
-import com.depromeet.threedays.front.repository.member.MemberRepository;
+import com.depromeet.threedays.front.persistence.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

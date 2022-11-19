@@ -41,7 +41,7 @@ public class NotificationHistoryEntity {
 
 	@Column(nullable = false, updatable = false)
 	@Builder.Default
-	private LocalDateTime createDate = LocalDateTime.now();
+	private LocalDateTime createAt = LocalDateTime.now();
 
 	@Column(name = "status", length = 100, nullable = false)
 	@Enumerated(EnumType.STRING)
