@@ -15,6 +15,8 @@ tags:
     description: 습관 성취
   - name: Mate
     description: 짝꿍
+  - name: Client
+    description: 단말 정보
 paths:
   /api/v1/habits:
     post:
@@ -426,68 +428,6 @@ paths:
               example:
                 - code: "uncaught error"
                   message: "서버 에러"
-  /api/v1/members/{memberId}/clients:
-    post:
-      tags:
-        - Member
-      summary: 클라이언트 정보 추가시 사용하는 API. fcm-token 추가 등록/갱신 시 해당 API 사용
-      operationId: postClients
-      parameters:
-        - name: memberId
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Client'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Member'
-        '500':
-          description: INTERNAL SERVER ERROR
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
-              example:
-                - code: "uncaught error"
-                  message: "서버 에러"
-    delete:
-      tags:
-        - Member
-      summary: 로그아웃시 사용하는 API 해당 기기에 대한 정보를 삭제합니다.
-      operationId: deleteClients
-      parameters:
-        - name: memberId
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-        '500':
-          description: INTERNAL SERVER ERROR
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
-              example:
-                - code: "uncaught error"
-                  message: "서버 에러"
   /api/v1/members/tokens:
     post:
       tags:
@@ -573,6 +513,61 @@ paths:
             type: integer
             format: int64
         - name: habitAchievementId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
+  /api/v1/clients:
+    post:
+      tags:
+        - Client
+      summary: 단말 정보 등록/갱신을 위한 API
+      operationId: addClients
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Client'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
+    delete:
+      tags:
+        - Member
+      summary: 로그아웃시 사용하는 API 해당 기기에 대한 정보를 삭제합니다.
+      operationId: deleteClients
+      parameters:
+        - name: memberId
           in: path
           required: true
           schema:
