@@ -1,4 +1,4 @@
-package com.depromeet.threedays.front.web.request.member;
+package com.depromeet.threedays.front.web.request.client;
 
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

@@ -3,7 +3,7 @@ package com.depromeet.threedays.front.domain.usecase
 import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.domain.usecase.client.AddClientUseCaseFacade
 import com.depromeet.threedays.front.persistence.repository.client.ClientRepository
-import com.depromeet.threedays.front.web.request.member.ClientRequest
+import com.depromeet.threedays.front.web.request.client.ClientRequest
 import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.Subject
 
