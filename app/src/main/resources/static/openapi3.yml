@@ -69,7 +69,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/HabitProjection'
+                  $ref: '#/components/schemas/HabitOverview'
         '500':
           description: INTERNAL SERVER ERROR
           content:
@@ -624,15 +624,22 @@ components:
           example: "imojiString"
         dayOfWeeks:
           type: array
-          example: [ "MONDAY", "TUESDAY", "FRIDAY" ]
+          example: [ "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY" ]
         reward:
           type: integer
           example: 3
         createAt:
           type: string
           example: "2022-10-15T10:30:00.000"
-        todayHabitAchievement:
-          $ref: '#/components/schemas/HabitAchievement'
+        sequence:
+          type: integer
+          example: 0
+        todayHabitAchievementId:
+          type: integer
+          example: 81
+        totalAchievementCount:
+          type: integer
+          example: 0
         mate:
           $ref: '#/components/schemas/Mate'
         notification:
@@ -649,7 +656,7 @@ components:
             contents:
               type: string
               example: "아침 9시면 일어나야해요"
-    HabitProjection:
+    HabitOverview:
       required: [ habitId, memberId, title, imojiPath, dayOfWeeks, level, characterType, createAt, reward ]
       type: object
       properties:
@@ -669,9 +676,6 @@ components:
         dayOfWeeks:
           type: array
           example: [ "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY" ]
-        createAt:
-          type: string
-          example: "2022-10-15T10:30:00.000"
         reward:
           type: integer
           example: 0
@@ -680,17 +684,15 @@ components:
           example: pink
         mate:
           $ref: '#/components/schemas/Mate'
-        todayHabitAchievement:
-          type: object
-          properties:
-            habitAchievementId:
-              type: integer
-              format: int64
-              example: 1
-            sequence:
-              type: integer
-              format: int64
-              example: 0
+        todayHabitAchievementId:
+          type: integer
+          example: 81
+        sequence:
+          type: integer
+          example: 1
+        createAt:
+          type: string
+          example: "2022-10-15T10:30:00.000"
     SaveHabitRequest:
       required: [ title, imojiPath, dayOfWeeks, notification, color ]
       type: object
@@ -706,7 +708,7 @@ components:
           example: "pink"
         dayOfWeeks:
           type: array
-          example: [ "MON", "TUE", "FRI" ]
+          example: [ "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY" ]
         notification:
           type: object
           properties:
@@ -732,7 +734,7 @@ components:
           example: "imojiString"
         dayOfWeek:
           type: array
-          example: [ "MON", "TUE" ]
+          example: [ "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY" ]
         notification:
           type: object
           properties:
@@ -772,24 +774,6 @@ components:
           type: string
           format: date
           example: "2022-11-09"
-    HabitAchievement:
-      required: [ habitAchievementId, sequence, achievementDate, nextAchievementDate ]
-      type: object
-      properties:
-        habitAchievementId:
-          type: integer
-          example: 1
-        sequence:
-          type: integer
-          example: 1
-        achievementDate:
-          type: string
-          format: date
-          example: "2022-11-07"
-        nextAchievementDate:
-          type: string
-          format: date
-          example: "2022-11-08"
     LoginResponse:
       type: object
       properties:

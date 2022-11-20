@@ -39,7 +39,7 @@ class SaveHabitAchievementUseCaseSpec extends IntegrationTestSpecification{
                         .build())
 
         then:
-        actual.todayHabitAchievement.achievementDate == LocalDate.now()
+        actual.habitAchievement.achievementDate == LocalDate.now()
     }
 
     def "사용자는 과거의 날짜로 습관 달성 여부를 체크할 수 없다"(){
@@ -71,7 +71,7 @@ class SaveHabitAchievementUseCaseSpec extends IntegrationTestSpecification{
                         .build())
 
         then:
-        first.todayHabitAchievement.habitAchievementId == second.todayHabitAchievement.habitAchievementId
+        first.habitAchievement.habitAchievementId == second.habitAchievement.habitAchievementId
     }
 
     def "습관 달성 여부를 목표 수행일 이후에 체크하는 경우 연속일 수가 1이 된다"(){
@@ -92,6 +92,6 @@ class SaveHabitAchievementUseCaseSpec extends IntegrationTestSpecification{
                         .build())
 
         then:
-        actual.todayHabitAchievement.sequence == 1
+        actual.habitAchievement.sequence == 1
     }
 }

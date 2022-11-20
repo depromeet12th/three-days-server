@@ -1,12 +1,13 @@
 package com.depromeet.threedays.front.web.controller;
 
-import com.depromeet.threedays.front.domain.model.habit.Habit;
 import com.depromeet.threedays.front.domain.model.habit.HabitOverview;
 import com.depromeet.threedays.front.domain.usecase.habit.SaveHabitUseCase;
 import com.depromeet.threedays.front.domain.usecase.habit.SearchHabitUseCase;
 import com.depromeet.threedays.front.support.ApiResponse;
 import com.depromeet.threedays.front.support.ApiResponseGenerator;
 import com.depromeet.threedays.front.web.request.habit.SaveHabitRequest;
+import com.depromeet.threedays.front.web.response.HabitResponse;
+import com.depromeet.threedays.front.web.response.converter.HabitResponseConverter;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +27,8 @@ public class HabitController {
 	private final SearchHabitUseCase searchUseCase;
 
 	@PostMapping
-	public ApiResponse<Habit> add(@RequestBody @Valid final SaveHabitRequest request) {
-		return ApiResponseGenerator.success(saveUseCase.execute(request));
+	public ApiResponse<HabitResponse> add(@RequestBody @Valid final SaveHabitRequest request) {
+		return ApiResponseGenerator.success(HabitResponseConverter.from(saveUseCase.execute(request)));
 	}
 
 	@GetMapping

@@ -54,7 +54,9 @@ public class SaveHabitAchievementUseCase {
 
 		if (lastHabitAchievement.getAchievementDate().isEqual(request.getAchievementDate())) {
 			return HabitConverter.from(
-					habit, lastHabitAchievement, getTotalRewardCount(habit, lastHabitAchievement));
+					habit,
+					lastHabitAchievement,
+					getTotalRewardCount(habit, lastHabitAchievement.getSequence()));
 		}
 
 		if (request.getAchievementDate().isAfter(lastHabitAchievement.getNextAchievementDate())) {
@@ -65,7 +67,7 @@ public class SaveHabitAchievementUseCase {
 							request,
 							DateCalculator.findNextDate(habit.getDayOfWeeks(), request.getAchievementDate()),
 							1),
-					getTotalRewardCount(habit, lastHabitAchievement));
+					getTotalRewardCount(habit, 1));
 		}
 
 		if (request.getAchievementDate().isEqual(lastHabitAchievement.getNextAchievementDate())) {
@@ -76,7 +78,7 @@ public class SaveHabitAchievementUseCase {
 							request,
 							DateCalculator.findNextDate(habit.getDayOfWeeks(), request.getAchievementDate()),
 							lastHabitAchievement.getSequence() + 1),
-					getTotalRewardCount(habit, lastHabitAchievement));
+					getTotalRewardCount(habit, lastHabitAchievement.getSequence() + 1));
 		}
 
 		return HabitConverter.from(
@@ -86,7 +88,7 @@ public class SaveHabitAchievementUseCase {
 						request,
 						lastHabitAchievement.getNextAchievementDate(),
 						lastHabitAchievement.getSequence() + 1),
-				getTotalRewardCount(habit, lastHabitAchievement));
+				getTotalRewardCount(habit, lastHabitAchievement.getSequence() + 1));
 	}
 
 	private HabitAchievement save(
@@ -100,8 +102,8 @@ public class SaveHabitAchievementUseCase {
 		return HabitAchievementConverter.from(entity);
 	}
 
-	private Long getTotalRewardCount(Habit habit, HabitAchievement habitAchievement) {
-		if (habitAchievement.getSequence() % PROVIDE_REWARD_COUNT == 0) {
+	private Long getTotalRewardCount(Habit habit, Integer sequence) {
+		if (sequence % PROVIDE_REWARD_COUNT == 0) {
 			rewardHistoryRepository.save(RewardHistoryConverter.to(habit));
 		}
 		return rewardHistoryRepository.countByHabitId(habit.getHabitId());

@@ -59,11 +59,11 @@ public class SearchHabitUseCase {
 
 	private HabitAchievement calculateSequence(HabitAchievementEntity achievementEntity) {
 		if (achievementEntity == null
-				|| achievementEntity.getNextAchievementDate().isAfter(LocalDate.now())) {
+				|| achievementEntity.getNextAchievementDate().isBefore(LocalDate.now())) {
 			return HabitAchievement.builder().sequence(0).build();
 		}
 
-		if (achievementEntity.getNextAchievementDate().isEqual(LocalDate.now())) {
+		if (achievementEntity.getAchievementDate().isEqual(LocalDate.now())) {
 			return HabitAchievement.builder()
 					.habitAchievementId(achievementEntity.getId())
 					.sequence(achievementEntity.getSequence())

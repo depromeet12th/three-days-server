@@ -1,5 +1,6 @@
 package com.depromeet.threedays.front.domain.model.habit;
 
+import com.depromeet.threedays.data.enums.HabitStatus;
 import com.depromeet.threedays.front.domain.model.mate.Mate;
 import com.depromeet.threedays.front.domain.model.notification.Notification;
 import java.time.DayOfWeek;
@@ -27,8 +28,12 @@ public class Habit {
 	private String color;
 	private EnumSet<DayOfWeek> dayOfWeeks;
 	@Builder.Default private Long reward = 0L;
+	private Integer archiveNumberOfDate;
+	private Long totalAchievementCount;
+	private HabitStatus status;
+	private HabitAchievement habitAchievement;
 	private LocalDateTime createAt;
-	private HabitAchievement todayHabitAchievement;
+	private Boolean deleted;
 	private Mate mate;
 	private Notification notification;
 }
