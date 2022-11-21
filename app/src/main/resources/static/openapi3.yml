@@ -596,7 +596,7 @@ paths:
               example:
                 - code: "uncaught error"
                   message: "서버 에러"
-  /api/v1/records/monthly/{month}/{objectId}:
+  /api/v1/records/me/monthly/{month}/{objectId}:
     get:
       tags:
         - Record
@@ -633,7 +633,7 @@ paths:
               example:
                 - code: "uncaught error"
                   message: "서버 에러"
-  /api/v1/me/records/{objectiveId}:
+  /api/v1/records/me/{objectiveId}:
     get:
       tags:
         - Record
