@@ -3,7 +3,7 @@ package com.depromeet.threedays.front.domain.usecase.client;
 import com.depromeet.threedays.front.domain.converter.client.ClientCommandConverter;
 import com.depromeet.threedays.front.domain.converter.client.ClientQueryConverter;
 import com.depromeet.threedays.front.domain.model.client.Client;
-import com.depromeet.threedays.front.web.request.member.ClientRequest;
+import com.depromeet.threedays.front.web.request.client.ClientRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
