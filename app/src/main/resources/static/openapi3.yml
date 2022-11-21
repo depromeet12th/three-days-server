@@ -780,7 +780,7 @@ components:
         createAt:
           type: string
           example: "2022-10-15T10:30:00.000"
-            todayHabitAchievement:
+        todayHabitAchievement:
           type: object
           properties:
             habitAchievementId:
