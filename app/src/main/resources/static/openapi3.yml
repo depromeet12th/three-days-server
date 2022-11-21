@@ -633,9 +633,6 @@ paths:
               example:
                 - code: "uncaught error"
                   message: "서버 에러"
-
-#                  RECORD
-
   /api/v1/me/records/{objectiveId}:
     get:
       tags:
