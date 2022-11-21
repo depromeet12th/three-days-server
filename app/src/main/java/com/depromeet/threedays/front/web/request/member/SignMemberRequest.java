@@ -14,6 +14,5 @@ public class SignMemberRequest {
 
 	@NotNull private CertificationSubject certificationSubject;
 	@NotBlank private String accessToken;
-	@NotBlank private String idToken;
 	@NotBlank private String fcmToken;
 }

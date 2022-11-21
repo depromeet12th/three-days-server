@@ -7,7 +7,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class MemberQueryConverter {
 
-	public static GetMemberQuery from(final Long certificationId, final SignMemberRequest request) {
+	public static GetMemberQuery from(final String certificationId, final SignMemberRequest request) {
 		return GetMemberQuery.builder()
 				.certificationId(certificationId)
 				.certificationSubject(request.getCertificationSubject())
