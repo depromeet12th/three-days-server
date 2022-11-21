@@ -35,7 +35,7 @@ public class SignMemberUseCaseFacade {
 			return null;
 		}
 
-		MemberInfo info = getInfo(request.getCertificationSubject(), request.getAccessToken());
+		MemberInfo info = getInfo(request.getCertificationSubject(), request.getOAuthToken());
 
 		Member member = getUseCase.execute(MemberQueryConverter.from(info.getId(), request));
 
@@ -48,10 +48,10 @@ public class SignMemberUseCaseFacade {
 		return member;
 	}
 
-	public MemberInfo getInfo(CertificationSubject subject, String accessToken) {
+	public MemberInfo getInfo(CertificationSubject subject, String oAuthToken) {
 		try {
 			AuthRequestProperty property = getMemberProperty(subject);
-			final String bearerToken = "Bearer " + accessToken;
+			final String bearerToken = "Bearer " + oAuthToken;
 
 			return authClient.getInfo(new URI(property.getUri()), bearerToken);
 		} catch (URISyntaxException e) {
