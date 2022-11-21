@@ -1,6 +1,7 @@
 package com.depromeet.threedays.front.domain.converter.habit;
 
 import com.depromeet.threedays.data.entity.habit.HabitEntity;
+import com.depromeet.threedays.data.enums.HabitStatus;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.model.habit.Habit;
 import com.depromeet.threedays.front.domain.model.habit.HabitAchievement;
@@ -26,6 +27,9 @@ public class HabitConverter {
 				.memberId(AuditorHolder.get())
 				.notification(notification)
 				.dayOfWeeks(request.getDayOfWeeks())
+				.archiveNumberOfDate(0)
+				.status(HabitStatus.ACTIVE)
+				.deleted(false)
 				.build();
 	}
 
@@ -38,7 +42,7 @@ public class HabitConverter {
 				.dayOfWeeks(habit.getDayOfWeeks())
 				.reward(reward)
 				.createAt(habit.getCreateAt())
-				.todayHabitAchievement(habitAchievement)
+				.habitAchievement(habitAchievement)
 				.build();
 	}
 
@@ -49,6 +53,9 @@ public class HabitConverter {
 				.imojiPath(data.getImojiPath())
 				.dayOfWeeks(data.getDayOfWeeks())
 				.color(data.getColor())
+				.archiveNumberOfDate(data.getArchiveNumberOfDate())
+				.status(data.getStatus())
+				.deleted(data.getDeleted())
 				.build();
 	}
 
@@ -60,7 +67,7 @@ public class HabitConverter {
 				.imojiPath(entity.getImojiPath())
 				.dayOfWeeks(entity.getDayOfWeeks())
 				.createAt(entity.getCreateAt())
-				.todayHabitAchievement(data)
+				.habitAchievement(data)
 				.build();
 	}
 
@@ -73,7 +80,7 @@ public class HabitConverter {
 				.dayOfWeeks(data.getDayOfWeeks())
 				.reward(reward)
 				.createAt(data.getCreateAt())
-				.todayHabitAchievement(data.getTodayHabitAchievement())
+				.habitAchievement(data.getHabitAchievement())
 				.build();
 	}
 
@@ -86,6 +93,8 @@ public class HabitConverter {
 				.imojiPath(entity.getImojiPath())
 				.dayOfWeeks(entity.getDayOfWeeks())
 				.color(entity.getColor())
+				.status(entity.getStatus())
+				.archiveNumberOfDate(entity.getArchiveNumberOfDate())
 				.notification(notification)
 				.createAt(entity.getCreateAt())
 				.build();
@@ -103,7 +112,8 @@ public class HabitConverter {
 				.color(entity.getColor())
 				.createAt(entity.getCreateAt())
 				.reward(rewardCount)
-				.todayHabitAchievement(achievementData)
+				.todayHabitAchievementId(achievementData.getHabitAchievementId())
+				.sequence(achievementData.getSequence())
 				.mate(mate)
 				.build();
 	}

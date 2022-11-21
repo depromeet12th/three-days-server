@@ -36,7 +36,9 @@ public class SaveHabitUseCase {
 		HabitEntity entity = repository.save(HabitConverter.to(data));
 
 		this.saveAssociation(entity.getId(), data.getNotification(), data.getDayOfWeeks());
-		return HabitConverter.from(entity, data.getNotification());
+		return HabitConverter.from(entity, data.getNotification()).toBuilder()
+				.totalAchievementCount(0L)
+				.build();
 	}
 
 	private void saveAssociation(Long habitId, Notification data, EnumSet<DayOfWeek> dayOfWeeks) {

@@ -1,12 +1,15 @@
 package com.depromeet.threedays.data.entity.habit;
 
 import com.depromeet.threedays.data.converter.DayOfWeekConverter;
+import com.depromeet.threedays.data.enums.HabitStatus;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.EnumSet;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,6 +46,13 @@ public class HabitEntity {
 
 	@Column(length = 40, nullable = false)
 	private String color;
+
+	@Column(nullable = false)
+	private Integer archiveNumberOfDate;
+
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	private HabitStatus status;
 
 	@Column(nullable = false, updatable = false)
 	@Builder.Default

@@ -18,7 +18,7 @@ public class HabitAchievement implements Serializable {
 	private Long habitId;
 
 	private Long habitAchievementId;
-	private Integer sequence;
+	private Integer sequence = 0;
 
 	@JsonInclude(Include.NON_NULL)
 	private LocalDate achievementDate;

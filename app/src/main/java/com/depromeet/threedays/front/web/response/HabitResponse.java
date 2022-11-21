@@ -1,7 +1,7 @@
-package com.depromeet.threedays.front.domain.model.habit;
+package com.depromeet.threedays.front.web.response;
 
 import com.depromeet.threedays.front.domain.model.mate.Mate;
-import java.io.Serializable;
+import com.depromeet.threedays.front.domain.model.notification.Notification;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.EnumSet;
@@ -11,20 +11,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder(toBuilder = true)
-public class HabitOverview implements Serializable {
+@AllArgsConstructor
+@NoArgsConstructor
+public class HabitResponse {
 
 	private Long habitId;
 	private Long memberId;
 	private String title;
 	private String imojiPath;
+	private String color;
 	private EnumSet<DayOfWeek> dayOfWeeks;
 	private Long reward;
-	private String color;
-	private LocalDateTime createAt;
-	private Long todayHabitAchievementId;
 	private Integer sequence;
+	private Long totalAchievementCount;
+	private Long todayHabitAchievementId;
 	private Mate mate;
+	private Notification notification;
+	private LocalDateTime createAt;
 }
