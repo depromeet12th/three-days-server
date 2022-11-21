@@ -16,8 +16,8 @@ public class ClientController {
 	private final AddClientUseCaseFacade addClientUseCase;
 
 	@PostMapping("members/{memberId}")
-	public ApiResponse<Void> addClient(
-			@PathVariable("memberId") Long memberId, @RequestBody @Valid ClientRequest request) {
+	public ApiResponse<Void> add(
+			@PathVariable Long memberId, @RequestBody @Valid ClientRequest request) {
 		addClientUseCase.execute(memberId, request);
 		return ApiResponseGenerator.success();
 	}

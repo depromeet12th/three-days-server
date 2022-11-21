@@ -26,13 +26,13 @@ public class MemberController {
 	private final UpdateMemberUseCase updateUseCase;
 
 	@PostMapping
-	public ApiResponse<Member> addMember(@RequestBody @Valid SignMemberRequest request) {
+	public ApiResponse<Member> add(@RequestBody @Valid SignMemberRequest request) {
 		return ApiResponseGenerator.success(signUseCase.execute(request));
 	}
 
 	@PatchMapping("/{memberId}")
 	public ApiResponse<Member> updateName(
-			@PathVariable("memberId") Long memberId, @RequestBody @Valid UpdateNameRequest request) {
+			@PathVariable Long memberId, @RequestBody @Valid UpdateNameRequest request) {
 		return ApiResponseGenerator.success(updateUseCase.execute(memberId, request));
 	}
 }
