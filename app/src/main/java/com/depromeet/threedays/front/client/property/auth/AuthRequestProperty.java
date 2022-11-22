@@ -1,4 +1,4 @@
-package com.depromeet.threedays.front.client.property;
+package com.depromeet.threedays.front.client.property.auth;
 
 import lombok.Getter;
 

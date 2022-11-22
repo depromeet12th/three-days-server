@@ -3,7 +3,7 @@ package com.depromeet.threedays.front.domain.usecase.member;
 import com.depromeet.threedays.data.enums.CertificationSubject;
 import com.depromeet.threedays.front.client.AuthClient;
 import com.depromeet.threedays.front.client.model.MemberInfo;
-import com.depromeet.threedays.front.client.property.AuthRequestProperty;
+import com.depromeet.threedays.front.client.property.auth.AuthRequestProperty;
 import com.depromeet.threedays.front.domain.converter.member.MemberCommandConverter;
 import com.depromeet.threedays.front.domain.converter.member.MemberQueryConverter;
 import com.depromeet.threedays.front.domain.model.member.Member;
