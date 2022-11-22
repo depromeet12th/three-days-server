@@ -13,6 +13,7 @@ CREATE TABLE `client`
 CREATE TABLE `global_notification`
 (
     `global_notification_id` bigint                                  NOT NULL AUTO_INCREMENT,
+    `title`               varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
     `contents`               varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
     `day_of_week`            varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
     `notification_time`      time                                    NOT NULL,
