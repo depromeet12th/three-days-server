@@ -17,7 +17,7 @@ import lombok.ToString;
 @ToString
 public class SaveMemberCommand {
 
-	private Long certificationId;
+	private String certificationId;
 	private String name;
 	private CertificationSubject certificationSubject;
 	private MemberInfo memberInfo;

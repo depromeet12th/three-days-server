@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class SignMemberRequest {
 
 	@NotNull private CertificationSubject certificationSubject;
-	@NotBlank private String accessToken;
-	@NotBlank private String idToken;
+	@NotBlank private String oAuthToken;
 	@NotBlank private String fcmToken;
+	@NotBlank private String identificationKey;
 }

@@ -3,6 +3,7 @@ CREATE TABLE `client`
     `client_id` bigint                                   NOT NULL AUTO_INCREMENT,
     `member_id` bigint                                   NOT NULL,
     `fcm_token` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
+    `identification_key` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
     PRIMARY KEY (`client_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
@@ -24,7 +25,7 @@ CREATE TABLE `global_notification`
 CREATE TABLE `member`
 (
     `member_id`             bigint NOT NULL AUTO_INCREMENT,
-    `certification_id`      bigint NOT NULL,
+    `certification_id`      varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
     `certification_subject` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
     `name`                  varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
     `notification_consent`  bit(1)                                  DEFAULT NULL,
