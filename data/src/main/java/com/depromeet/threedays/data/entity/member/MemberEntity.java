@@ -29,7 +29,7 @@ public class MemberEntity implements Serializable {
 	@Column(name = "member_id")
 	private Long id;
 
-	@Column private Long certificationId;
+	@Column private String certificationId;
 
 	@Column private String name;
 

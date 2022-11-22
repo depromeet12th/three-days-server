@@ -748,15 +748,21 @@ components:
               type: string
               example: "일어났니? 양치하고 얼른 물 마셔"
     MemberRequest:
-      required: [ certificationSubject, accessToken ]
+      required: [ certificationSubject, oAuthToken, fcmToken, identificationKey ]
       type: object
       properties:
         certificationSubject:
           type: string
           enum: [ "GOOGLE", "KAKAO", "APPLE" ]
-        oAuthAccessToken:
+        oAuthToken:
           type: string
-          example: "oAuthAccessToken"
+          example: "oAuthToken"
+        fcmToken:
+          type: string
+          example: "fcmToken"
+        identificationKey:
+          type: string
+          example: "단말을 식별할 수 있는 키를 넣어주세요"
     MemberNameUpdateRequest:
       type: object
       properties:

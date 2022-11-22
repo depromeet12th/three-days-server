@@ -7,7 +7,9 @@ import com.depromeet.threedays.front.client.property.AuthRequestProperty;
 import com.depromeet.threedays.front.domain.converter.member.MemberCommandConverter;
 import com.depromeet.threedays.front.domain.converter.member.MemberQueryConverter;
 import com.depromeet.threedays.front.domain.model.member.Member;
+import com.depromeet.threedays.front.domain.usecase.client.AddClientUseCaseFacade;
 import com.depromeet.threedays.front.exception.ExternalIntegrationException;
+import com.depromeet.threedays.front.web.request.client.ClientRequest;
 import com.depromeet.threedays.front.web.request.member.SignMemberRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -26,27 +28,30 @@ public class SignMemberUseCaseFacade {
 	private final SaveMemberUseCase saveUseCase;
 	private final AuthClient authClient;
 
+	private final AddClientUseCaseFacade addClientUseCase;
+
 	public Member execute(SignMemberRequest request) {
 		if (request == null) {
 			return null;
 		}
 
-		MemberInfo info = getInfo(request.getCertificationSubject(), request.getAccessToken());
+		MemberInfo info = getInfo(request.getCertificationSubject(), request.getOAuthToken());
 
-		Member member =
-				getUseCase.execute(MemberQueryConverter.from(Long.parseLong(info.getId()), request));
+		Member member = getUseCase.execute(MemberQueryConverter.from(info.getId(), request));
 
 		if (member == null) {
 			return saveUseCase.execute(MemberCommandConverter.from(info, request));
 		}
-
+		addClientUseCase.execute(
+				member.getMemberId(),
+				new ClientRequest(request.getFcmToken(), request.getIdentificationKey()));
 		return member;
 	}
 
-	public MemberInfo getInfo(CertificationSubject subject, String accessToken) {
+	public MemberInfo getInfo(CertificationSubject subject, String oAuthToken) {
 		try {
 			AuthRequestProperty property = getMemberProperty(subject);
-			final String bearerToken = "Bearer " + accessToken;
+			final String bearerToken = "Bearer " + oAuthToken;
 
 			return authClient.getInfo(new URI(property.getUri()), bearerToken);
 		} catch (URISyntaxException e) {

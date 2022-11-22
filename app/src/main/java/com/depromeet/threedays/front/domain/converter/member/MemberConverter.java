@@ -35,6 +35,7 @@ public class MemberConverter {
 		return MemberEntity.builder()
 				.name(command.getName())
 				.profile(MemberInfoConverter.convert(command.getMemberInfo()))
+				.certificationId(command.getCertificationId())
 				.certificationSubject(command.getCertificationSubject())
 				.build();
 	}
