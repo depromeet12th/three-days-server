@@ -26,4 +26,7 @@ dependencies {
 
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
+    //fcm push notification
+    implementation 'com.google.firebase:firebase-admin:9.1.1'
+
 }
