@@ -32,10 +32,6 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build with Gradle
-        run: |
-          ./gradlew clean bootJar
-
       - name: Docker build & push to prod
         run: |
           GIT_HASH=$(git rev-parse --short HEAD)
