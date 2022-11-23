@@ -32,4 +32,11 @@ springdoc:
   paths-to-match:
     - /api/**
 server:
-  port: 18888
+  port: 8080
+
+
+security:
+  jwt:
+    token:
+      validtime: ${TOKEN_VALIDTIME}
+      secretkey: ${TOKEN_SECRETKEY}
