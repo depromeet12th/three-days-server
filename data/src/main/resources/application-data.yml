@@ -1,16 +1,16 @@
 threedays:
   datasource:
     write:
-      jdbc-url: ${DB_HOSTNAME}
+      jdbc-url: jdbc:mysql://three-days-rds.clciaemdlw4i.ap-northeast-2.rds.amazonaws.com:3306/threedays?allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
       driver-class-name: com.mysql.cj.jdbc.Driver
-      username: ${DB_USERNAME}
-      password: ${DB_PASSWORD}
+      username: depromeet
+      password: depromeet
       pool-name: threedays-pool-write
     read:
-      jdbc-url: ${DB_HOSTNAME}
+      jdbc-url: jdbc:mysql://three-days-rds.clciaemdlw4i.ap-northeast-2.rds.amazonaws.com:3306/threedays?allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
       driver-class-name: com.mysql.cj.jdbc.Driver
-      username: ${DB_USERNAME}
-      password: ${DB_PASSWORD}
+      username: depromeet
+      password: depromeet
       pool-name: threedays-pool-read
       readOnly: true
   jpa:

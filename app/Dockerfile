@@ -16,7 +16,4 @@ ENTRYPOINT ["java", \
 			"-XX:MaxGCPauseMillis=100", \
 			"-XX:InitialRAMPercentage=50.0", \
 			"-XX:MaxRAMPercentage=80.0", \
-			"-DDB_HOSTNAME=${DB_HOSTNAME}", \
-			"-DDB_USERNAME=${DB_USERNAME}", \
-			"-DDB_PASSWORD=${DB_PASSWORD}", \
 			"-jar", "app.jar"]
