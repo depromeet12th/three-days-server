@@ -1,13 +1,13 @@
 threedays:
   datasource:
     write:
-      jdbcUrl: ${DB_HOSTNAME}
+      jdbc-url: ${DB_HOSTNAME}
       driver-class-name: com.mysql.cj.jdbc.Driver
       username: ${DB_USERNAME}
       password: ${DB_PASSWORD}
       pool-name: threedays-pool-write
     read:
-      jdbcUrl: ${DB_HOSTNAME}
+      jdbc-url: ${DB_HOSTNAME}
       driver-class-name: com.mysql.cj.jdbc.Driver
       username: ${DB_USERNAME}
       password: ${DB_PASSWORD}
