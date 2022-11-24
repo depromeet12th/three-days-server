@@ -36,7 +36,7 @@ jobs:
         run: |
           GIT_HASH=$(git rev-parse --short HEAD)
           ./gradlew bootJar
-          docker build -t "app" --build-arg DB_HOSTNAME=${{ secrets.DB_HOSTNAME }} --build-arg DB_USERNAME=${{ secrets.DB_USERNAME }} --build-arg DB_PASSWORD=${{ secrets.DB_PASSWORD }} .
+          docker build -t "app" --build-arg DB_HOSTNAME=${{ secrets.DB_HOSTNAME }} --build-arg DB_USERNAME=${{ secrets.DB_USERNAME }} --build-arg DB_PASSWORD=${{ secrets.DB_PASSWORD }}  .
           docker tag ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:${GIT_HASH}
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }} --all-tags
