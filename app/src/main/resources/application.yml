@@ -41,9 +41,9 @@ server:
 security:
   jwt:
     token:
-      validtime: ${TOKEN_VALIDTIME}
-      secretkey: ${TOKEN_SECRETKEY}
-      
+      validtime: 72000000
+      secretkey: prodkeyyyyyyayayayayayayayayayayayayyayayayay
+
 google:
   user:
     uri: https://www.googleapis.com/oauth2/v1/userinfo#profile
