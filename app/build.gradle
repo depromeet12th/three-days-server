@@ -30,6 +30,10 @@ dependencies {
 
 def imageName = project.hasProperty('imageName') ? imageName : "app:local"
 def releaseVersion = project.hasProperty('releaseVersion') ? releaseVersion : null
+def DB_HOSTNAME = project.hasProperty('DB_HOSTNAME') ? DB_HOSTNAME : null
+def DB_USERNAME = project.hasProperty('DB_USERNAME') ? DB_USERNAME : null
+def DB_PASSWORD = project.hasProperty('DB_PASSWORD') ? DB_PASSWORD : null
+
 
 task buildDockerImage {
     dependsOn bootJar
@@ -37,7 +41,7 @@ task buildDockerImage {
     doLast {
         exec {
             workingDir '.'
-            commandLine 'docker', 'build', '-t', "${imageName}", '--build-arg', "RELEASE_VERSION=${releaseVersion}", '.'
+            commandLine 'docker', 'build', '-t', "${imageName}", '--build-arg', "RELEASE_VERSION=${releaseVersion}", '--build-arg', "DB_HOSTNAME=${DB_HOSTNAME}", '--build-arg', "DB_USERNAME=${DB_USERNAME}", '--build-arg', "DB_PASSWORD=${DB_PASSWORD}", '.'
         }
     }
 }
