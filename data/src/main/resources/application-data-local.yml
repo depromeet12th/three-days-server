@@ -1,7 +1,7 @@
 threedays:
   datasource:
     write:
-      jdbc-url: jdbc:mysql://localhost:13306/threedays?allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
+      jdbcUrl: jdbc:mysql://localhost:13306/threedays?allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
       driver-class-name: com.mysql.cj.jdbc.Driver
       username: root
       password: root
@@ -10,7 +10,7 @@ threedays:
       max-lifetime: 55000
       pool-name: threedays-pool-write
     read:
-      jdbc-url: jdbc:mysql://localhost:13306/threedays?allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
+      jdbcUrl: jdbc:mysql://localhost:13306/threedays?allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
       driver-class-name: com.mysql.cj.jdbc.Driver
       username: root
       password: root
