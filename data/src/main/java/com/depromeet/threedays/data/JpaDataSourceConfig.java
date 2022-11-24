@@ -5,7 +5,6 @@ import java.util.Map;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateSettings;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
@@ -38,19 +37,14 @@ public class JpaDataSourceConfig {
 	public static final String TRANSACTION_MANAGER_NAME = SERVICE_NAME + "DomainTransactionManager";
 	public static final String PERSIST_UNIT = SERVICE_NAME + "Domain";
 
-	@Value("${threedays.datasource.write.jdbc-url}")
-	private String jdbcUrl;
-
 	@Bean(name = ENTITY_MANAGER_FACTORY_NAME)
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(
 			@Qualifier(INTEGRATION_DATA_SOURCE_NAME) DataSource integrationDataSource) {
 		Map<String, String> jpaPropertyMap = jpaProperties().getProperties();
 		Map<String, Object> hibernatePropertyMap =
-				hibernateProperties().determineHibernateProperties(jpaPropertyMap,
-						new HibernateSettings());
+				hibernateProperties().determineHibernateProperties(jpaPropertyMap, new HibernateSettings());
 
-		return new EntityManagerFactoryBuilder(new HibernateJpaVendorAdapter(), jpaPropertyMap,
-				null)
+		return new EntityManagerFactoryBuilder(new HibernateJpaVendorAdapter(), jpaPropertyMap, null)
 				.dataSource(integrationDataSource)
 				.properties(hibernatePropertyMap)
 				.persistenceUnit(PERSIST_UNIT)
@@ -67,7 +61,6 @@ public class JpaDataSourceConfig {
 	@Bean
 	@ConfigurationProperties(prefix = SERVICE_NAME + ".datasource.write")
 	public DataSource integrationWriteDataSource() {
-		System.out.println(jdbcUrl);
 		return DataSourceBuilder.create().build();
 	}
 
