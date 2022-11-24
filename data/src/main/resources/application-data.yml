@@ -7,7 +7,7 @@ threedays:
       password: ${DB_PASSWORD}
       pool-name: threedays-pool-write
     read:
-      jdbc-url: ${DB_HOSTNAME}/threedays?allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
+      jdbc-url: ${DB_HOSTNAME}
       driver-class-name: com.mysql.cj.jdbc.Driver
       username: ${DB_USERNAME}
       password: ${DB_PASSWORD}
