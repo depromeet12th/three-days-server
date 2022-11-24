@@ -35,6 +35,9 @@ public class MateEntity {
 	@Column(nullable = false)
 	private Integer level;
 
+	@Column(nullable = false, length = 20)
+	private String title;
+
 	@Column(nullable = false)
 	private String characterType;
 
@@ -45,4 +48,8 @@ public class MateEntity {
 	@Column(nullable = false)
 	@Builder.Default
 	private Boolean deleted = false;
+
+	public void deleteMate() {
+		this.deleted = true;
+	}
 }
