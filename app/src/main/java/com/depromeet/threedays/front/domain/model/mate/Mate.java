@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Mate implements Serializable {
 
+	private String title;
 	private Integer level;
 	private String characterType;
+	private Boolean deleted;
 }
