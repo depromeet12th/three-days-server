@@ -35,7 +35,7 @@ jobs:
       - name: Docker build & push to prod
         run: |
           GIT_HASH=$(git rev-parse --short HEAD)
-          ./gradlew :app:buildDockerImage -PimageName=${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest -PdbHostName=${{ secrets.DB_HOSTNAME }} -PdbUserName=${{ secrets.DB_USERNAME }} -PdbPassword=${{ secrets.DB_PASSWORD }}
+          ./gradlew :app:buildDockerImage -PimageName=${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest
           docker tag ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:${GIT_HASH}
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }} --all-tags
