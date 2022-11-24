@@ -34,11 +34,13 @@ jobs:
 
       - name: Docker build & push to prod
         run: |
-          GIT_HASH=$(git rev-parse --short HEAD)
-          ./gradlew :app:buildDockerImage -PimageName=${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest
-          docker tag ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:${GIT_HASH}
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }} --all-tags
+               GIT_HASH=$(git rev-parse --short HEAD)
+               ./gradlew bootJar
+               docker build -t --build-arg DB_HOSTNAME=${{ secrets.DB_HOSTNAME }} --build-arg DB_USERNAME=${{ secrets.DB_USERNAME }} --build-arg DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+          #          ./gradlew :app:buildDockerImage -PimageName=${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest
+               docker tag ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:${GIT_HASH}
+               docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+               docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }} --all-tags
 
       - name: Deploy to prod
         uses: appleboy/ssh-action@master
@@ -50,7 +52,6 @@ jobs:
           envs: GITHUB_SHA
           script: |
             sudo docker rm -f $(sudo docker ps -qa)
-            echo ${{ secrets.DOCKER_USERNAME }}
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
             sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
             sudo docker run -d ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest -e DB_HOSTNAME=${{ secrets.DB_HOSTNAME }} -e DB_USERNAME=${{ secrets.DB_USERNAME }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }}
