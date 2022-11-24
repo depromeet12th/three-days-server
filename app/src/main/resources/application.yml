@@ -11,7 +11,10 @@ spring:
       maxFileSize: 100MB
       maxRequestSize: 100MB
   session.jdbc.initialize-schema: never
-
+  profiles:
+    active: default
+    include:
+      - data
 
 
 
@@ -40,3 +43,7 @@ security:
     token:
       validtime: ${TOKEN_VALIDTIME}
       secretkey: ${TOKEN_SECRETKEY}
+      
+google:
+  user:
+    uri: https://www.googleapis.com/oauth2/v1/userinfo#profile
