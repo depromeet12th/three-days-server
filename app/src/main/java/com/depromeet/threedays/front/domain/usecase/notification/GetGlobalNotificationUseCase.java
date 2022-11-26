@@ -10,6 +10,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class GetGlobalNotificationUseCase {
 
 	private final GlobalNotificationRepository repository;
+
+	@Value("batch.global.time-section")
+	private int section;
 
 	public List<NotificationMessage> execute() {
 		DayOfWeek day = LocalDate.now().getDayOfWeek();
@@ -31,7 +35,7 @@ public class GetGlobalNotificationUseCase {
 
 	private LocalTime getTimeSection() {
 		LocalDateTime now = LocalDateTime.now();
-		int timeSection = (now.getMinute() / 15) * 15;
+		int timeSection = (now.getMinute() / section) * section;
 		return LocalTime.of(now.getHour(), timeSection);
 	}
 }
