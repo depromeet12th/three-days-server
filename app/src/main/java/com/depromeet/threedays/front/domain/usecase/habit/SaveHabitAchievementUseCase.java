@@ -38,7 +38,7 @@ public class SaveHabitAchievementUseCase {
 						habitRepository.findById(habitId).orElseThrow(ResourceNotFoundException::new));
 
 		HabitAchievement lastHabitAchievement =
-				HabitAchievementConverter.to(
+				HabitAchievementConverter.from(
 						repository.findFirstByHabitIdOrderByAchievementDateDesc(habitId).orElse(null));
 
 		if (lastHabitAchievement == null) {
