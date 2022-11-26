@@ -1,24 +1,30 @@
 package com.depromeet.threedays.front.web.controller;
 
-import com.depromeet.threedays.front.domain.model.notification.NotificationBatchResponse;
 import com.depromeet.threedays.front.domain.usecase.notification.SendGlobalNotificationUseCase;
+import com.depromeet.threedays.front.domain.usecase.notification.SendHabitNotificationUseCase;
 import com.depromeet.threedays.front.support.ApiResponse;
 import com.depromeet.threedays.front.support.ApiResponseGenerator;
-import com.depromeet.threedays.front.web.request.notification.NotificationRequest;
+import com.depromeet.threedays.front.web.response.NotificationBatchResponse;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/api/v1/notification")
+@RequestMapping("/api/v1/notifications")
 @RequiredArgsConstructor
 @RestController
 public class NotificationController {
 
-	private final SendGlobalNotificationUseCase useCase;
+	private final SendGlobalNotificationUseCase globalUseCase;
+	private final SendHabitNotificationUseCase habitUseCase;
 
-	@PostMapping
-	public ApiResponse<NotificationBatchResponse> sendGlobalNotification(
-			@RequestBody NotificationRequest request) {
+	@PostMapping("/global")
+	public ApiResponse<List<NotificationBatchResponse>> sendGlobalNotification() {
+		return ApiResponseGenerator.success(globalUseCase.execute());
+	}
 
-		return ApiResponseGenerator.success(useCase.execute(request));
+	@PostMapping("/habit")
+	public ApiResponse<Void> sendHabitNotification() {
+		habitUseCase.execute();
+		return ApiResponseGenerator.success();
 	}
 }

@@ -3,9 +3,9 @@ package com.depromeet.threedays.front.domain.usecase.notification;
 import com.depromeet.threedays.data.entity.client.ClientEntity;
 import com.depromeet.threedays.front.client.MessageClient;
 import com.depromeet.threedays.front.client.property.FirebaseProperty;
-import com.depromeet.threedays.front.domain.model.notification.NotificationBatchResponse;
+import com.depromeet.threedays.front.domain.model.notification.NotificationMessage;
 import com.depromeet.threedays.front.persistence.repository.client.ClientRepository;
-import com.depromeet.threedays.front.web.request.notification.NotificationRequest;
+import com.depromeet.threedays.front.web.response.NotificationBatchResponse;
 import com.google.firebase.messaging.BatchResponse;
 import com.google.firebase.messaging.MulticastMessage;
 import com.google.firebase.messaging.Notification;
@@ -25,19 +25,38 @@ public class SendGlobalNotificationUseCase {
 
 	private final ClientRepository clientRepository;
 
+	private final GetGlobalNotificationUseCase getUseCase;
 	private final MessageClient messageClient;
 	private final FirebaseProperty fireBaseProperty;
 
-	public NotificationBatchResponse execute(NotificationRequest request) {
-		Collection<List<ClientEntity>> sendGroups = makeGroups();
+	public List<NotificationBatchResponse> execute() {
+		List<NotificationMessage> messages = getUseCase.execute();
+
+		List<NotificationBatchResponse> result = new ArrayList<>();
+		for (NotificationMessage message : messages) {
+			List<BatchResponse> responses = sendMessage(message);
+			result.add(
+					NotificationBatchResponse.builder()
+							.title(message.getTitle())
+							.content(message.getContents())
+							.messageResponse(responses)
+							.build());
+		}
+		return result;
+	}
+
+	private List<BatchResponse> sendMessage(NotificationMessage message) {
+
+		Collection<List<ClientEntity>> clientGroups = makeGroups();
 
 		List<BatchResponse> responses = new ArrayList<>();
-		for (List<ClientEntity> group : sendGroups) {
+		for (List<ClientEntity> group : clientGroups) {
 			responses.add(
 					messageClient.send(
-							makeMulticastMessage(group, request.getTitle(), request.getContents())));
+							makeMulticastMessage(group, message.getTitle(), message.getContents())));
 		}
-		return NotificationBatchResponse.builder().messageResponse(responses).build();
+
+		return responses;
 	}
 
 	private Collection<List<ClientEntity>> makeGroups() {
