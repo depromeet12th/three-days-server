@@ -3,6 +3,9 @@ buildscript {
         generatedSourcesDir = "src/main/generated"
     }
 }
+plugins {
+    id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
+}
 
 bootJar { enabled = false }
 
@@ -53,4 +56,20 @@ flyway {
     encoding = 'UTF-8'
     outOfOrder = true
     validateOnMigrate = true
+}
+
+def querydslDir = "$buildDir/generated/querydsl"
+querydsl {
+    library = "com.querydsl:querydsl-apt"
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+sourceSets {
+    main.java.srcDir querydslDir
+}
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
 }
