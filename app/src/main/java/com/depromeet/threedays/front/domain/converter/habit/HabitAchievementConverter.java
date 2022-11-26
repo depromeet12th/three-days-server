@@ -41,17 +41,4 @@ public class HabitAchievementConverter {
 	public static HabitAchievement from(SaveHabitAchievementRequest request) {
 		return HabitAchievement.builder().achievementDate(request.getAchievementDate()).build();
 	}
-
-	public static HabitAchievement to(HabitAchievementEntity entity) {
-		if (entity == null) {
-			return null;
-		}
-		return HabitAchievement.builder()
-				.habitId(entity.getHabitId())
-				.sequence(entity.getSequence())
-				.habitAchievementId(entity.getId())
-				.nextAchievementDate(entity.getNextAchievementDate())
-				.achievementDate(entity.getAchievementDate())
-				.build();
-	}
 }
