@@ -596,7 +596,7 @@ paths:
               example:
                 - code: "uncaught error"
                   message: "서버 에러"
-  /api/v1/records/me/summary/monthly/{month}/{habitId}:
+  /api/v1/habits/{habitId}/records/summary:
     get:
       tags:
         - Record
@@ -604,12 +604,18 @@ paths:
       operationId: getRecordFactsMonthly
       description: 나의기록(전체)와 나의기록(상세)에서 모두 쓰입니다. 나의기록(전체)에서는 totalRewards와 totalAchievement가 null로 내려갑니다.
       parameters:
-        - name: month
-          in: path
+        - name: to
+          in: query
           required: true
           schema:
-            type: integer
-            enum: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ]
+            type: string
+            format: date
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
         - name: habitId
           in: path
           required: true
@@ -632,19 +638,25 @@ paths:
               example:
                 - code: "uncaught error"
                   message: "서버 에러"
-  /api/v1/records/me/monthly/{month}/{habitId}:
+  /api/v1/habits/{habitId}/records:
     get:
       tags:
         - Record
       summary: 특정 목표의 상세 기록을 조회한다.
       operationId: getRecordSingleObjective
       parameters:
-        - name: month
-          in: path
+        - name: to
+          in: query
           required: true
           schema:
-            type: integer
-            enum: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ]
+            type: string
+            format: date
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
         - name: habitId
           in: path
           required: true
@@ -957,7 +969,7 @@ components:
       type: object
       properties:
         habit:
-          $ref: '#/components/schemas/HabitProjection'
+          $ref: '#/components/schemas/HabitOverview'
         habitAchievementDate:
           type: array
           example: [ "2022-11-01", "2022-11-02", "2022-11-04", "2022-11-05", "2022-11-06" ]
