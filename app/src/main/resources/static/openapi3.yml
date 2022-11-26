@@ -610,12 +610,14 @@ paths:
           schema:
             type: string
             format: date
+            example: 2022-11-01
         - name: from
           in: query
           required: true
           schema:
             type: string
             format: date
+            example: 2022-11-30
         - name: habitId
           in: path
           required: true
@@ -651,12 +653,14 @@ paths:
           schema:
             type: string
             format: date
+            example: 2022-11-01
         - name: from
           in: query
           required: true
           schema:
             type: string
             format: date
+            example: 2022-11-30
         - name: habitId
           in: path
           required: true
