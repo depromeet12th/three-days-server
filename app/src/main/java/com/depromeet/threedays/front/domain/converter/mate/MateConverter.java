@@ -9,10 +9,10 @@ public class MateConverter {
 
 	public static Mate from(MateEntity entity) {
 		return Mate.builder()
-				   .title(entity.getTitle())
-				   .level(entity.getLevel())
-				   .characterType(entity.getCharacterType())
-				   .deleted(entity.getDeleted())
-				   .build();
+				.title(entity.getTitle())
+				.level(entity.getLevel())
+				.characterType(entity.getCharacterType())
+				.deleted(entity.getDeleted())
+				.build();
 	}
 }

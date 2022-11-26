@@ -132,15 +132,15 @@ public class HabitConverter {
 
 	public static Habit from(HabitEntity entity, Mate data) {
 		return Habit.builder()
-					.habitId(entity.getId())
-					.memberId(entity.getMemberId())
-					.title(entity.getTitle())
-					.imojiPath(entity.getImojiPath())
-					.dayOfWeeks(entity.getDayOfWeeks())
-					.color(entity.getColor())
-					.createAt(entity.getCreateAt())
-					.mate(data)
-					.status(entity.getStatus())
-					.build();
+				.habitId(entity.getId())
+				.memberId(entity.getMemberId())
+				.title(entity.getTitle())
+				.imojiPath(entity.getImojiPath())
+				.dayOfWeeks(entity.getDayOfWeeks())
+				.color(entity.getColor())
+				.createAt(entity.getCreateAt())
+				.mate(data)
+				.status(entity.getStatus())
+				.build();
 	}
 }
