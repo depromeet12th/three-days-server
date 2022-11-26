@@ -1,6 +1,5 @@
 package com.depromeet.threedays.front.domain.usecase.habit
 
-
 import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.data.habit.HabitAchievementDataInitializer
 import com.depromeet.threedays.front.data.habit.HabitDataInitializer
@@ -47,5 +46,18 @@ class DeleteHabitUseCaseSpec extends IntegrationTestSpecification {
 
         then:
         result.deleted == true
+    }
+
+    def "습관 달성 이력이 없는 습관에 삭제 요청이 들어왔을 때 습관이 완전 삭제 되는지 테스트"() {
+        given:
+        def habitData = habitDataInitializer.data.first()
+
+        when:
+        deleteUseCase.execute(habitData.id)
+        def result = repository.findById(habitData.id).get()
+
+        then:
+        result.deleted == true
+
     }
 }
