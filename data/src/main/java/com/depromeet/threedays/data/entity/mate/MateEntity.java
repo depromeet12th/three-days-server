@@ -49,7 +49,4 @@ public class MateEntity {
 	@Builder.Default
 	private Boolean deleted = false;
 
-	public void deleteMate() {
-		this.deleted = true;
-	}
 }

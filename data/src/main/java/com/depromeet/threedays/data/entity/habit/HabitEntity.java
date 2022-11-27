@@ -61,12 +61,4 @@ public class HabitEntity {
 	@Column(nullable = false)
 	@Builder.Default
 	private Boolean deleted = false;
-
-	public void changeStatusToArchived() {
-		this.status = HabitStatus.ARCHIVED;
-	}
-
-	public void deleteHabit() {
-		this.deleted = true;
-	}
 }
