@@ -48,5 +48,4 @@ public class MateEntity {
 	@Column(nullable = false)
 	@Builder.Default
 	private Boolean deleted = false;
-
 }
