@@ -35,7 +35,7 @@ class DeleteHabitUseCaseSpec extends IntegrationTestSpecification {
         habitDataInitializer.initialize()
     }
 
-    def "짝꿍과 연결되어 있는 습관에 삭제 요청이 들어왔을 때 짝꿍이 완전삭제 되고, 습관은 보관함으로 이동되는지 테스트"() {
+    def "사용자가 짝꿍과 연결된 습관에 삭제를 요청한 경우, 습관은 보관함으로 이동하고 짝꿍은 완전 삭제된다."() {
         given:
         def habitData = habitDataInitializer.data.first()
         mateDataInitializer.initialize(habitData.id)
@@ -51,7 +51,7 @@ class DeleteHabitUseCaseSpec extends IntegrationTestSpecification {
         mateResult.deleted == true
     }
 
-    def "습관 달성 이력이 없는 습관에 삭제 요청이 들어왔을 때 습관이 완전 삭제 되는지 테스트"() {
+    def "사용자가 습관 달성 이력이 없는 습관에 삭제를 요청한 경우, 습관은 완전 삭제 된다."() {
         given:
         def habitData = habitDataInitializer.data.first()
 
@@ -63,7 +63,7 @@ class DeleteHabitUseCaseSpec extends IntegrationTestSpecification {
         result.deleted == true
     }
 
-    def "습관 달성 이력이 있고 활성화 상태에 있는 습관에 삭제 요청이 들어왔을 때 습관이 보관함으로 이동 되는지 테스트"() {
+    def "사용자가 습관 달성 이력이 있고 활성화 상태에 있는 습관에 삭제를 요청을 한 경우, 습관은 보관함으로 이동한다."() {
         given:
         def habitData = habitDataInitializer.data.first()
         habitAchievementDataInitializer.initialize(habitData.id)
@@ -77,10 +77,10 @@ class DeleteHabitUseCaseSpec extends IntegrationTestSpecification {
         result.status == HabitStatus.ARCHIVED
     }
 
-    def "습관이 보관함에 있는 상태에 삭제 요청이 들어왔을 때 습관이 완전 삭제 되는지 테스트"() {
+    def "사용자가 이미 보관함에 있는 습관에 삭제를 요청한 경우, 습관은 완전 삭제 된다."() {
         given:
         def habitData = habitDataInitializer.data.first()
-        habitData.changeStatusToArchived()
+        repository.updateStatusById(habitData.id, HabitStatus.ARCHIVED)
 
         when:
         deleteUseCase.execute(habitData.id)
