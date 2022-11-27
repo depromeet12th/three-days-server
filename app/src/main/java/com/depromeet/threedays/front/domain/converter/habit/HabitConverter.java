@@ -79,6 +79,7 @@ public class HabitConverter {
 					.imojiPath(entity.getImojiPath())
 					.dayOfWeeks(entity.getDayOfWeeks())
 					.createAt(entity.getCreateAt())
+					.status(entity.getStatus())
 					.habitAchievement(habitAchievementData)
 					.mate(mateData)
 					.build();
