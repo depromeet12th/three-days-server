@@ -46,8 +46,8 @@ public class DeleteHabitUseCase {
 
 			if (target.getMate() != null) {
 				this.deleteAssociation(target);
+				return;
 			}
-			return;
 		}
 
 		if (target.getHabitAchievement() == null || target.getStatus().equals(HabitStatus.ARCHIVED)) {
