@@ -5,7 +5,11 @@ import com.depromeet.threedays.data.entity.habit.HabitEntity;
 import com.depromeet.threedays.data.entity.mate.MateEntity;
 import com.depromeet.threedays.data.enums.HabitStatus;
 import com.depromeet.threedays.front.domain.converter.habit.HabitAchievementConverter;
+import com.depromeet.threedays.front.domain.converter.habit.HabitConverter;
+import com.depromeet.threedays.front.domain.converter.mate.MateConverter;
+import com.depromeet.threedays.front.domain.model.habit.Habit;
 import com.depromeet.threedays.front.domain.model.habit.HabitAchievement;
+import com.depromeet.threedays.front.domain.model.mate.Mate;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import com.depromeet.threedays.front.persistence.repository.habit.HabitAchievementRepository;
 import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository;
@@ -23,41 +27,43 @@ public class DeleteHabitUseCase {
 	private final MateRepository mateRepository;
 
 	public void execute(Long habitId) {
-		HabitEntity entity = repository.findById(habitId).orElseThrow(ResourceNotFoundException::new);
+		HabitEntity entity = repository.findById(habitId)
+									   .orElseThrow(ResourceNotFoundException::new);
 		MateEntity mateEntity = mateRepository.findByHabitId(habitId).orElse(null);
 		HabitAchievementEntity habitAchievementEntity =
 				habitAchievementRepository
 						.findFirstByHabitIdOrderByAchievementDateDesc(habitId)
 						.orElse(null);
 
+		Mate mate = MateConverter.from(mateEntity);
 		HabitAchievement habitAchievement = HabitAchievementConverter.from(habitAchievementEntity);
 
-		this.delete(entity, mateEntity, habitAchievement);
+		this.delete(HabitConverter.from(entity, habitAchievement, mate));
 	}
 
-	private void delete(
-			HabitEntity entity, MateEntity mateEntity, HabitAchievement habitAchievement) {
-		if (habitAchievement == null) {
-			entity.deleteHabit();
-		}
+	private void delete(Habit target) {
 
-		if (mateEntity != null) {
-			entity.changeStatusToArchived();
-			this.deleteAssociation(mateEntity);
+		if (target.getMate() != null) {
+			repository.updateStatusById(target.getHabitId(), HabitStatus.ARCHIVED);
+			this.deleteAssociation(target);
 			return;
 		}
 
-		if (entity.getStatus().equals(HabitStatus.ACTIVE)) {
-			entity.changeStatusToArchived();
+		if (target.getHabitAchievement() == null) {
+			repository.updateDeletedById(target.getHabitId(), true);
+		}
+
+		if (target.getStatus().equals(HabitStatus.ACTIVE)) {
+			repository.updateStatusById(target.getHabitId(), HabitStatus.ARCHIVED);
 			return;
 		}
 
-		if (entity.getStatus().equals(HabitStatus.ARCHIVED)) {
-			entity.deleteHabit();
+		if (target.getStatus().equals(HabitStatus.ARCHIVED)) {
+			repository.updateDeletedById(target.getHabitId(), true);
 		}
 	}
 
-	private void deleteAssociation(MateEntity mateEntity) {
-		mateEntity.deleteMate();
+	private void deleteAssociation(Habit target) {
+		mateRepository.updateDeletedById(target.getHabitId(), true);
 	}
 }
