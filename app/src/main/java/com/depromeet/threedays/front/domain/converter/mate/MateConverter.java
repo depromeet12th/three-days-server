@@ -8,6 +8,10 @@ import lombok.experimental.UtilityClass;
 public class MateConverter {
 
 	public static Mate from(MateEntity entity) {
+		if (entity == null) {
+			return null;
+		}
+
 		return Mate.builder()
 				.title(entity.getTitle())
 				.level(entity.getLevel())
