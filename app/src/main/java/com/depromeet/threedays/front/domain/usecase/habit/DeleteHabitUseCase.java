@@ -43,10 +43,11 @@ public class DeleteHabitUseCase {
 	private void delete(Habit target) {
 		if (target.getStatus().equals(HabitStatus.ACTIVE)) {
 			this.archiveHabit(target);
-			return;
 		}
 
-		repository.updateDeletedById(target.getHabitId(), true);
+		if (target.getHabitAchievement() == null) {
+			repository.updateDeletedById(target.getHabitId(), true);
+		}
 	}
 
 	private void archiveHabit(Habit target) {
