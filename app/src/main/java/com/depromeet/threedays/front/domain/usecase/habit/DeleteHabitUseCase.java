@@ -42,20 +42,22 @@ public class DeleteHabitUseCase {
 
 	private void delete(Habit target) {
 		if (target.getStatus().equals(HabitStatus.ACTIVE)) {
-			repository.updateStatusById(target.getHabitId(), HabitStatus.ARCHIVED);
-
-			if (target.getMate() != null) {
-				this.deleteAssociation(target);
-				return;
-			}
+			this.archiveHabit(target);
+			return;
 		}
 
-		if (target.getHabitAchievement() == null || target.getStatus().equals(HabitStatus.ARCHIVED)) {
-			repository.updateDeletedById(target.getHabitId(), true);
-		}
+		repository.updateDeletedById(target.getHabitId(), true);
 	}
 
-	private void deleteAssociation(Habit target) {
+	private void archiveHabit(Habit target) {
+		repository.updateStatusById(target.getHabitId(), HabitStatus.ARCHIVED);
+		this.deleteMate(target);
+	}
+
+	private void deleteMate(Habit target) {
+		if (target.getMate() == null) {
+			return;
+		}
 		mateRepository.updateDeletedById(target.getHabitId(), true);
 	}
 }
