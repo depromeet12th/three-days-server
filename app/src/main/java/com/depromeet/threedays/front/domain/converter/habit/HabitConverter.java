@@ -71,6 +71,19 @@ public class HabitConverter {
 				.build();
 	}
 
+	public static Habit from(HabitEntity entity, HabitAchievement habitAchievementData, Mate mateData) {
+		return Habit.builder()
+					.habitId(entity.getId())
+					.memberId(entity.getMemberId())
+					.title(entity.getTitle())
+					.imojiPath(entity.getImojiPath())
+					.dayOfWeeks(entity.getDayOfWeeks())
+					.createAt(entity.getCreateAt())
+					.habitAchievement(habitAchievementData)
+					.mate(mateData)
+					.build();
+	}
+
 	public static Habit from(Habit data, Long reward) {
 		return Habit.builder()
 				.habitId(data.getHabitId())
