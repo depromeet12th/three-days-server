@@ -13,10 +13,31 @@ public class MateConverter {
 		}
 
 		return Mate.builder()
+				.mateId(entity.getId())
+				.memberId(entity.getMemberId())
+				.habitId(entity.getHabitId())
 				.title(entity.getTitle())
 				.level(entity.getLevel())
 				.characterType(entity.getCharacterType())
 				.deleted(entity.getDeleted())
+				.createAt(entity.getCreateAt())
+				.build();
+	}
+
+	public static MateEntity to(Mate mate, Boolean deleted) {
+		if (mate == null) {
+			return null;
+		}
+
+		return MateEntity.builder()
+				.id(mate.getMateId())
+				.memberId(mate.getMemberId())
+				.habitId(mate.getHabitId())
+				.title(mate.getTitle())
+				.level(mate.getLevel())
+				.characterType(mate.getCharacterType())
+				.deleted(deleted)
+				.createAt(mate.getCreateAt())
 				.build();
 	}
 }
