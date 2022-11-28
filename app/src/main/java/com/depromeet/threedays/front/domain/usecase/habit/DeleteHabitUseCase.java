@@ -25,7 +25,7 @@ public class DeleteHabitUseCase {
 	private final MateRepository mateRepository;
 
 	public void execute(Long habitId) {
-		HabitEntity entity = repository.findById(habitId).orElseThrow(ResourceNotFoundException::new);
+		HabitEntity entity = repository.findById(habitId).orElse(null);
 		Mate mate = mateRepository.findByHabitId(habitId).map(MateConverter::from).orElse(null);
 		HabitAchievement habitAchievement =
 				habitAchievementRepository
@@ -37,6 +37,10 @@ public class DeleteHabitUseCase {
 	}
 
 	private void delete(Habit target) {
+		if (target == null) {
+			return;
+		}
+
 		if (target.getMate() != null || target.getHabitAchievement() != null) {
 			this.archiveHabit(target);
 			return;

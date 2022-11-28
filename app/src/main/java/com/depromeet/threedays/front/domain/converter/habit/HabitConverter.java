@@ -102,6 +102,10 @@ public class HabitConverter {
 
 	public static Habit from(
 			HabitEntity entity, HabitAchievement habitAchievementData, Mate mateData) {
+		if (entity == null) {
+			return null;
+		}
+
 		return Habit.builder()
 				.habitId(entity.getId())
 				.memberId(entity.getMemberId())
