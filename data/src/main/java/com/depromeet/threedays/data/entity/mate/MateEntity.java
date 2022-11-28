@@ -36,8 +36,7 @@ public class MateEntity {
 	@Column(nullable = false)
 	private Integer level;
 
-	@Column(nullable = false)
-	@Size(max = 20)
+	@Column(nullable = false, length = 20)
 	private String title;
 
 	@Column(nullable = false)
