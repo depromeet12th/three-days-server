@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface MateRepository extends JpaRepository<MateEntity, Long> {
 
 	Optional<MateEntity> findByHabitId(final Long habitId);
+
+	void deleteByHabitId(final Long habitId);
 }
