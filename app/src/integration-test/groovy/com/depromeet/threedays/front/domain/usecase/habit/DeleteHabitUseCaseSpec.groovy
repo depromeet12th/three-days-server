@@ -61,6 +61,7 @@ class DeleteHabitUseCaseSpec extends IntegrationTestSpecification {
 
         then:
         result.deleted == true
+        result.status == HabitStatus.ACTIVE
     }
 
     def "사용자가 습관 달성 이력이 있고 활성화 상태에 있는 습관에 삭제를 요청을 한 경우, 습관은 보관함으로 이동한다."() {
