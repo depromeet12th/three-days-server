@@ -48,6 +48,7 @@ public class HabitConverter {
 
 	public static HabitEntity to(Habit data) {
 		return HabitEntity.builder()
+				.id(data.getHabitId())
 				.memberId(data.getMemberId())
 				.title(data.getTitle())
 				.imojiPath(data.getImojiPath())
@@ -56,6 +57,34 @@ public class HabitConverter {
 				.archiveNumberOfDate(data.getArchiveNumberOfDate())
 				.status(data.getStatus())
 				.deleted(data.getDeleted())
+				.build();
+	}
+
+	public static HabitEntity to(Habit data, HabitStatus status) {
+		return HabitEntity.builder()
+				.id(data.getHabitId())
+				.memberId(data.getMemberId())
+				.title(data.getTitle())
+				.imojiPath(data.getImojiPath())
+				.dayOfWeeks(data.getDayOfWeeks())
+				.color(data.getColor())
+				.archiveNumberOfDate(data.getArchiveNumberOfDate())
+				.status(status)
+				.deleted(data.getDeleted())
+				.build();
+	}
+
+	public static HabitEntity to(Habit data, Boolean deleted) {
+		return HabitEntity.builder()
+				.id(data.getHabitId())
+				.memberId(data.getMemberId())
+				.title(data.getTitle())
+				.imojiPath(data.getImojiPath())
+				.dayOfWeeks(data.getDayOfWeeks())
+				.color(data.getColor())
+				.archiveNumberOfDate(data.getArchiveNumberOfDate())
+				.status(data.getStatus())
+				.deleted(deleted)
 				.build();
 	}
 
