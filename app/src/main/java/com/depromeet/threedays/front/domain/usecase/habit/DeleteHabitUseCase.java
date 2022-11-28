@@ -1,8 +1,6 @@
 package com.depromeet.threedays.front.domain.usecase.habit;
 
-import com.depromeet.threedays.data.entity.habit.HabitAchievementEntity;
 import com.depromeet.threedays.data.entity.habit.HabitEntity;
-import com.depromeet.threedays.data.entity.mate.MateEntity;
 import com.depromeet.threedays.data.enums.HabitStatus;
 import com.depromeet.threedays.front.domain.converter.habit.HabitAchievementConverter;
 import com.depromeet.threedays.front.domain.converter.habit.HabitConverter;
@@ -28,14 +26,12 @@ public class DeleteHabitUseCase {
 
 	public void execute(Long habitId) {
 		HabitEntity entity = repository.findById(habitId).orElseThrow(ResourceNotFoundException::new);
-		MateEntity mateEntity = mateRepository.findByHabitId(habitId).orElse(null);
-		HabitAchievementEntity habitAchievementEntity =
+		Mate mate = mateRepository.findByHabitId(habitId).map(MateConverter::from).orElse(null);
+		HabitAchievement habitAchievement =
 				habitAchievementRepository
 						.findFirstByHabitIdOrderByAchievementDateDesc(habitId)
+						.map(HabitAchievementConverter::from)
 						.orElse(null);
-
-		Mate mate = MateConverter.from(mateEntity);
-		HabitAchievement habitAchievement = HabitAchievementConverter.from(habitAchievementEntity);
 
 		this.delete(HabitConverter.from(entity, habitAchievement, mate));
 	}
