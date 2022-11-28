@@ -52,5 +52,5 @@ jobs:
             sudo docker rm -f $(sudo docker ps -qa)
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
             sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-            sudo docker run -e DB_HOSTNAME=${{ secrets.DB_HOSTNAME }} -e DB_USERNAME=${{ secrets.DB_USERNAME }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -e TOKEN_VALIDTIME=${{ secrets.TOKEN_VALIDTIME }} -e TOKEN_SECRETKEY=${{ secrets.TOKEN_SECRETKEY }} -d ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest -p 80:8080 
+            sudo docker run -e DB_HOSTNAME=${{ secrets.DB_HOSTNAME }} -e DB_USERNAME=${{ secrets.DB_USERNAME }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -e TOKEN_VALIDTIME=${{ secrets.TOKEN_VALIDTIME }} -e TOKEN_SECRETKEY=${{ secrets.TOKEN_SECRETKEY }} ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest -p 80:8080 -d
             sudo docker image prune -f
