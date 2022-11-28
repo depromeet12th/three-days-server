@@ -28,7 +28,6 @@ public class SecurityConfig {
 	@Profile({"local", "integration-test", "default"})
 	public SecurityFilterChain localSecurityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable();
-		http.cors().disable();
 		http.formLogin().disable();
 		http.httpBasic().disable();
 		http.authorizeRequests()

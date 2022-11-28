@@ -16,4 +16,4 @@ ENTRYPOINT ["java", \
 			"-XX:MaxGCPauseMillis=100", \
 			"-XX:InitialRAMPercentage=50.0", \
 			"-XX:MaxRAMPercentage=80.0", \
-			"-jar", "app.jar"]
+			"-jar", "app.jar" ]
