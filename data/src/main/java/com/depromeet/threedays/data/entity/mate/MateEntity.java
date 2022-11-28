@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,7 +37,8 @@ public class MateEntity {
 	@Column(nullable = false)
 	private Integer level;
 
-	@Column(nullable = false, length = 20)
+	@Column(nullable = false)
+	@Size(max = 20)
 	private String title;
 
 	@Column(nullable = false)
