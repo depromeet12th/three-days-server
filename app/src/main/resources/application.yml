@@ -41,8 +41,8 @@ server:
 security:
   jwt:
     token:
-      validtime: 72000000
-      secretkey: prodkeyyyyyyayayayayayayayayayayayayyayayayay
+      validtime: ${TOKEN_VALIDTIME}
+      secretkey: ${TOKEN_SECRETKEY}
 
 google:
   user:
