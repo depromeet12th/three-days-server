@@ -1,12 +1,9 @@
 name: Deploy to Amazon EC2
 
 on:
-  pull_request:
-    branches: [ "develop" ]
-#on:
-#  push:
-#    branches:
-#      - develop
+  push:
+    branches:
+      - develop
 
 permissions:
   contents: read
