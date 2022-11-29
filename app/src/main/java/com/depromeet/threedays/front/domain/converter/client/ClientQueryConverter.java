@@ -1,7 +1,7 @@
 package com.depromeet.threedays.front.domain.converter.client;
 
 import com.depromeet.threedays.front.domain.query.client.GetClientQuery;
-import com.depromeet.threedays.front.web.request.member.ClientRequest;
+import com.depromeet.threedays.front.web.request.client.ClientRequest;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

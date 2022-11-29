@@ -17,7 +17,7 @@ public class MemberCommandConverter {
 				.name(data.getName())
 				.certificationSubject(request.getCertificationSubject())
 				.memberInfo(data)
-				.certificationId(Long.parseLong(data.getId()))
+				.certificationId(data.getId())
 				.build();
 	}
 }

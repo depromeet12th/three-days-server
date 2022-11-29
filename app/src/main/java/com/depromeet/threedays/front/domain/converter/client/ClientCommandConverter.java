@@ -2,7 +2,7 @@ package com.depromeet.threedays.front.domain.converter.client;
 
 import com.depromeet.threedays.front.domain.command.client.SaveClientCommand;
 import com.depromeet.threedays.front.domain.command.client.UpdateClientCommand;
-import com.depromeet.threedays.front.web.request.member.ClientRequest;
+import com.depromeet.threedays.front.web.request.client.ClientRequest;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

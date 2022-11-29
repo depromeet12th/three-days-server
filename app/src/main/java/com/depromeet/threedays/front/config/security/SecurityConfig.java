@@ -25,7 +25,7 @@ public class SecurityConfig {
 	private final TokenResolver tokenResolver;
 
 	@Bean
-	@Profile({"local", "integration-test"})
+	@Profile({"local", "integration-test", "default"})
 	public SecurityFilterChain localSecurityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 		http.formLogin().disable();
