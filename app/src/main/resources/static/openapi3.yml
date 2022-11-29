@@ -15,6 +15,8 @@ tags:
     description: 습관 성취
   - name: Mate
     description: 짝꿍
+  - name: Record
+    description: 기록
   - name: Client
     description: 사용자의 단말 정보
 paths:
@@ -596,6 +598,107 @@ paths:
               example:
                 - code: "uncaught error"
                   message: "서버 에러"
+  /api/v1/habits/{habitId}/records/summary:
+    get:
+      tags:
+        - Record
+      summary: 박수, 수행일, 최다달성습관조회
+      operationId: getRecordFactsMonthly
+      description: 나의기록(전체)와 나의기록(상세)에서 모두 쓰입니다. 나의기록(전체)에서는 totalRewards와 totalAchievement가 null로 내려갑니다.
+      parameters:
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+            example: 2022-11-01
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+            example: 2022-11-30
+        - name: habitId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordFacts'
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
+  /api/v1/habits/{habitId}/records:
+    get:
+      tags:
+        - Record
+      summary: 특정 목표의 상세 기록을 조회한다.
+      operationId: getRecordSingleObjective
+      parameters:
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+            example: 2022-11-01
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+            example: 2022-11-30
+        - name: habitId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/RecordDetailResponse'
+        '400':
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "invalid.id"
+                  message: "id는 숫자여야만 합니다."
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
+
+
+
+
 security:
   - bearerAuth: [ token ]
 
@@ -695,6 +798,28 @@ components:
         createAt:
           type: string
           example: "2022-10-15T10:30:00.000"
+        todayHabitAchievement:
+          type: object
+          properties:
+            habitAchievementId:
+              type: integer
+              format: int64
+              example: 1
+            sequence:
+              type: integer
+              format: int64
+              example: 0
+    HabitLabel:
+      required: [habitId, title]
+      type: object
+      properties:
+        habitId:
+          type: integer
+          format: int64
+          example: 1
+        title:
+          type: string
+          example: "일어났니? 양치하고 얼른 물 마셔"
     SaveHabitRequest:
       required: [ title, imojiPath, dayOfWeeks, notification, color ]
       type: object
@@ -796,7 +921,6 @@ components:
           example: true
         token:
           $ref: '#/components/schemas/Token'
-
     Member:
       type: object
       properties:
@@ -831,6 +955,36 @@ components:
           type: string
           format: date-time
           example: 2022-10-10 12:34:56.789789
+    RecordFacts:
+      required: [ totalRewards, totalAchievements, monthlyRewards, monthlyAchievements, frequentHabit ]
+      properties:
+        totalRewards:
+          type: integer
+          format: int64
+          example: 4
+        totalAchievements:
+          type: integer
+          format: int64
+          example: 36
+        monthlyRewards:
+          type: integer
+          format: int64
+          example: 4
+        monthlyAchievements:
+          type: integer
+          format: int64
+          example: 36
+        frequentHabit:
+          $ref: '#/components/schemas/HabitLabel'
+    RecordDetailResponse:
+      required: [ habit, habitAchievementDate ]
+      type: object
+      properties:
+        habit:
+          $ref: '#/components/schemas/HabitOverview'
+        habitAchievementDate:
+          type: array
+          example: [ "2022-11-01", "2022-11-02", "2022-11-04", "2022-11-05", "2022-11-06" ]
     ApiResponse:
       type: object
       xml:
