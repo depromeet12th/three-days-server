@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 @Service
-public class UpdateMemberUseCase {
+public class SaveNameUseCase {
 
 	private final MemberRepository memberRepository;
 
