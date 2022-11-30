@@ -27,7 +27,7 @@ class AddClientUseCaseSpec extends IntegrationTestSpecification {
                 .build()
 
         when:
-        addUseCase.execute(0L, expected)
+        addUseCase.execute(expected)
 
         then:
         repository.findAll().size() > 0
@@ -39,7 +39,7 @@ class AddClientUseCaseSpec extends IntegrationTestSpecification {
                 .fcmToken("fcmToken")
                 .identificationKey("ikey")
                 .build()
-        addUseCase.execute(0L, request)
+        addUseCase.execute(request)
 
         when:
         def newToken = "newToken"
@@ -47,7 +47,7 @@ class AddClientUseCaseSpec extends IntegrationTestSpecification {
                 .fcmToken(newToken)
                 .identificationKey("ikey")
                 .build()
-        addUseCase.execute(0L, actual)
+        addUseCase.execute(actual)
 
         then:
         repository.findAll().get(0).getFcmToken() == newToken
