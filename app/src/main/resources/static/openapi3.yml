@@ -27,6 +27,14 @@ paths:
       summary: 습관 생성 시 사용되는 API
       description: saveHabitAPI
       operationId: saveHabit
+      parameters:
+        - in: header
+          name: Authorization
+          schema:
+            type: string
+            format: uuid
+            example: "Bearer {{accesstoken}}"
+          required: true
       requestBody:
         content:
           application/json:
@@ -325,19 +333,19 @@ paths:
               example:
                 - code: "uncaught error"
                   message: "서버 에러"
-  /api/v1/members/{memberId}:
     get:
       tags:
         - Member
       summary: 회원 상세 정보 API
       operationId: getMember
       parameters:
-        - name: memberId
-          in: path
-          required: true
+        - name: Authorization
+          in: header
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
+            example: "Bearer {{accesstoken}}"
+          required: true
       responses:
         '200':
           description: OK
@@ -360,12 +368,13 @@ paths:
       summary: 회원 탈퇴 API
       operationId: deleteMember
       parameters:
-        - name: memberId
-          in: path
-          required: true
+        - name: Authorization
+          in: header
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
+            example: "Bearer {{accesstoken}}"
+          required: true
       responses:
         '200':
           description: OK
@@ -382,18 +391,20 @@ paths:
               example:
                 - code: "uncaught error"
                   message: "서버 에러"
+  /api/v1/members/name:
     patch:
       tags:
         - Member
       summary: 닉네임 수정 API
       operationId: patchMemberName
       parameters:
-        - name: memberId
-          in: path
-          required: true
+        - name: Authorization
+          in: header
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: uuid
+            example: "Bearer {{accesstoken}}"
+          required: true
       requestBody:
         required: true
         content:
@@ -536,7 +547,7 @@ paths:
               example:
                 - code: "uncaught error"
                   message: "서버 에러"
-  /api/v1/clients/members/{memberId}:
+  /api/v1/clients/members:
     post:
       tags:
         - Client
@@ -549,6 +560,13 @@ paths:
           schema:
             type: integer
             format: int64
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+            format: uuid
+            example: "Bearer {{accesstoken}}"
+          required: true
       requestBody:
         content:
           application/json:

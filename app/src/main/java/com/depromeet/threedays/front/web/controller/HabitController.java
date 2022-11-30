@@ -11,6 +11,7 @@ import com.depromeet.threedays.front.web.response.converter.HabitResponseConvert
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +28,8 @@ public class HabitController {
 	private final SearchHabitUseCase searchUseCase;
 
 	@PostMapping
-	public ApiResponse<HabitResponse> add(@RequestBody @Valid final SaveHabitRequest request) {
+	public ApiResponse<HabitResponse> add(
+			@AuthenticationPrincipal Long memberId, @RequestBody @Valid final SaveHabitRequest request) {
 		return ApiResponseGenerator.success(HabitResponseConverter.from(saveUseCase.execute(request)));
 	}
 
