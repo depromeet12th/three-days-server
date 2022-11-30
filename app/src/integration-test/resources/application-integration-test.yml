@@ -60,6 +60,9 @@ google:
     client:
       id: googleDummy
       secret: googleDummy
+kakao:
+  user:
+    uri: https://kapi.kakao.com/v2/user/me
 
 security:
   jwt:
