@@ -48,3 +48,6 @@ security:
 google:
   user:
     uri: https://www.googleapis.com/oauth2/v1/userinfo#profile
+kakao:
+  user:
+    uri: https://kapi.kakao.com/v2/user/me
