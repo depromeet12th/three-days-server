@@ -15,7 +15,7 @@ security:
   jwt:
     token:
       validtime: 72000000
-      secretkey: localkey
+      secretkey: localkeyyyyyyyyyyyyyyyyyyyyyyyyy
 
 google:
   user:
