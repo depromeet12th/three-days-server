@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
-public class UpdateNameRequest {
+public class MemberNotificationConsentUpdateRequest {
 
-	private String name;
+	private boolean isOn;
 }
