@@ -35,8 +35,10 @@ public class HabitController {
 		return ApiResponseGenerator.success(searchUseCase.execute());
 	}
 
-	@DeleteMapping("/{habitId}")
-	public void delete(@PathVariable Long habitId) {
-		deleteUseCase.execute(habitId);
+	@DeleteMapping("/{habitIds}")
+	public void delete(@PathVariable List<Long> habitIds) {
+		for (Long habitId: habitIds) {
+			deleteUseCase.execute(habitId);
+		}
 	}
 }
