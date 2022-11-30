@@ -19,7 +19,6 @@ public class TokenGenerator {
 	@Value("${security.jwt.token.validtime}")
 	private Long tokenValidTime;
 
-
 	private static final String MEMBER_ID_CLAIM_KEY = "memberId";
 
 	public String generateAccessToken(Long memberId) {
