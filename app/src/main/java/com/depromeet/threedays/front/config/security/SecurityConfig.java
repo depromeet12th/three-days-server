@@ -25,7 +25,7 @@ public class SecurityConfig {
 	private final TokenResolver tokenResolver;
 
 	@Bean
-	@Profile({"local", "integration-test", "default"})
+	@Profile({"local", "integration-test"})
 	public SecurityFilterChain localSecurityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 		http.formLogin().disable();
@@ -36,6 +36,9 @@ public class SecurityConfig {
 				.antMatchers("/api/v1/**")
 				.permitAll();
 
+		http.addFilterAt(
+				generateAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class);
+
 		http.exceptionHandling()
 				.authenticationEntryPoint(authenticationEntryPoint)
 				.accessDeniedHandler(accessDeniedHandler);
@@ -45,7 +48,7 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	@Profile(value = "prod")
+	@Profile(value = "default")
 	public SecurityFilterChain prodSecurityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 		http.formLogin().disable();
@@ -54,7 +57,7 @@ public class SecurityConfig {
 		http.authorizeRequests()
 				.antMatchers("/swagger-ui/index.html#/")
 				.permitAll()
-				.antMatchers("/api/v1/**")
+				.antMatchers("/api/v1/members")
 				.permitAll()
 				.anyRequest()
 				.authenticated();
