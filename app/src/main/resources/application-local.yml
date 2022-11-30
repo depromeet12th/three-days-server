@@ -15,7 +15,7 @@ security:
   jwt:
     token:
       validtime: 72000000
-      secretkey: 974AE3E91F2972E1BF2951CE1F651974AE3E91F2972E1BF2951CE1F651974AE3E91F2972E1BF2951CE1F651
+      secretkey: localkeyyyyyyyyyyyyyyyyyyyyyyyyy
 
 google:
   user:
