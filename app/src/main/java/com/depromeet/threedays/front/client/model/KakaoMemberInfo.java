@@ -1,10 +1,14 @@
 package com.depromeet.threedays.front.client.model;
 
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,14 +23,19 @@ public class KakaoMemberInfo extends MemberInfo {
 	@NoArgsConstructor
 	private static class Properties {
 		private String nickname;
+		private String profileImage;
+		private String thumbnailImage;
 	}
 
 	@Getter
 	@AllArgsConstructor
 	@NoArgsConstructor
 	private static class KakaoAccount {
-		private boolean profileNicknameNeedsAgreement;
+		private boolean profileNeedsAgreement;
 		private Profile profile;
+		private boolean hasEmail;
+		private boolean emailNeedsAgreement;
+		private String email;
 	}
 
 	@Getter
