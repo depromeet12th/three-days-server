@@ -28,7 +28,7 @@ paths:
       description: saveHabitAPI
       operationId: saveHabit
       security:
-        - jwt: []
+        - jwt: [ ]
       requestBody:
         content:
           application/json:
@@ -68,7 +68,7 @@ paths:
       description: 모든 habit list를 반환한다
       operationId: getHabits
       security:
-        - jwt: []
+        - jwt: [ ]
       responses:
         '200':
           description: OK
@@ -740,7 +740,7 @@ paths:
                   message: "서버 에러"
 
 security:
-  - jwt: []
+  - jwt: [ ]
 
 components:
   securitySchemes:
@@ -773,6 +773,9 @@ components:
         reward:
           type: integer
           example: 3
+        color:
+          type: string
+          example: pink
         createAt:
           type: string
           example: "2022-10-15T10:30:00.000"
@@ -790,10 +793,6 @@ components:
         notification:
           type: object
           properties:
-            notificationId:
-              type: integer
-              format: int64
-              example: 1
             notificationTime:
               type: string
               format: time
@@ -850,7 +849,7 @@ components:
               format: int64
               example: 0
     HabitLabel:
-      required: [habitId, title]
+      required: [ habitId, title ]
       type: object
       properties:
         habitId:
