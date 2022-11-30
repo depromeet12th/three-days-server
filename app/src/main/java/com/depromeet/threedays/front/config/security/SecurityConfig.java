@@ -55,7 +55,7 @@ public class SecurityConfig {
 				.permitAll()
 				.antMatchers("/api/v1/members")
 				.permitAll()
-				.anyRequest()
+				.antMatchers("/api/v1/**")
 				.authenticated();
 
 		http.addFilterAt(
