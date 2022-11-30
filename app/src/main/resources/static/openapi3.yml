@@ -27,6 +27,8 @@ paths:
       summary: 습관 생성 시 사용되는 API
       description: saveHabitAPI
       operationId: saveHabit
+      security:
+        - jwt: []
       requestBody:
         content:
           application/json:
@@ -65,6 +67,8 @@ paths:
       summary: 모든 습관 목록을 가져오는 API
       description: 모든 habit list를 반환한다
       operationId: getHabits
+      security:
+        - jwt: []
       responses:
         '200':
           description: OK
@@ -89,6 +93,8 @@ paths:
         - Habit
       summary: 습관 상세정보 API
       operationId: getSingleHabit
+      security:
+        - jwt: [ ]
       parameters:
         - name: habitId
           in: path
@@ -117,6 +123,8 @@ paths:
         - Habit
       summary: 습관 수정 API
       operationId: updateHabit
+      security:
+        - jwt: [ ]
       parameters:
         - name: habitId
           in: path
@@ -160,6 +168,8 @@ paths:
         - Habit
       summary: 습관 삭제 API
       operationId: deleteHabit
+      security:
+        - jwt: [ ]
       parameters:
         - name: habitId
           in: path
@@ -189,6 +199,8 @@ paths:
         - Mate
       summary: 짝궁 상세조회 API
       operationId: getMate
+      security:
+        - jwt: [ ]
       parameters:
         - name: habitId
           in: path
@@ -218,6 +230,8 @@ paths:
       summary: 짝궁 생성 API
       description: 짝궁 생성 API
       operationId: saveMate
+      security:
+        - jwt: [ ]
       requestBody:
         content:
           application/json:
@@ -259,6 +273,8 @@ paths:
         - Mate
       summary: 짝꿍 삭제 API
       operationId: deleteMate
+      security:
+        - jwt: [ ]
       parameters:
         - name: habitId
           in: path
@@ -325,19 +341,13 @@ paths:
               example:
                 - code: "uncaught error"
                   message: "서버 에러"
-  /api/v1/members/{memberId}:
     get:
       tags:
         - Member
       summary: 회원 상세 정보 API
       operationId: getMember
-      parameters:
-        - name: memberId
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+      security:
+        - jwt: [ ]
       responses:
         '200':
           description: OK
@@ -359,13 +369,8 @@ paths:
         - Member
       summary: 회원 탈퇴 API
       operationId: deleteMember
-      parameters:
-        - name: memberId
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+      security:
+        - jwt: [ ]
       responses:
         '200':
           description: OK
@@ -382,18 +387,14 @@ paths:
               example:
                 - code: "uncaught error"
                   message: "서버 에러"
+  /api/v1/members/name:
     patch:
       tags:
         - Member
       summary: 닉네임 수정 API
       operationId: patchMemberName
-      parameters:
-        - name: memberId
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+      security:
+        - jwt: [ ]
       requestBody:
         required: true
         content:
@@ -463,6 +464,8 @@ paths:
         - Habit Achievement
       summary: 습관 성취(체크)시 사용하는 API
       operationId: saveHabitAchievement
+      security:
+        - jwt: [ ]
       parameters:
         - name: habitId
           in: path
@@ -507,6 +510,8 @@ paths:
         - Habit Achievement
       summary: 습관 성취 취소(체크 해제)시 사용하는 API
       operationId: deleteHabitAchievement
+      security:
+        - jwt: [ ]
       parameters:
         - name: habitId
           in: path
@@ -536,19 +541,14 @@ paths:
               example:
                 - code: "uncaught error"
                   message: "서버 에러"
-  /api/v1/clients/members/{memberId}:
+  /api/v1/clients/members:
     post:
       tags:
         - Client
       summary: 클라이언트 정보 추가시 사용하는 API. fcm-token 추가 등록/갱신 시 해당 API 사용
       operationId: postClients
-      parameters:
-        - name: memberId
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+      security:
+        - jwt: [ ]
       requestBody:
         content:
           application/json:
@@ -575,13 +575,8 @@ paths:
         - Client
       summary: 로그아웃시 사용하는 API 해당 기기에 대한 정보를 삭제합니다.
       operationId: deleteClients
-      parameters:
-        - name: memberId
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+      security:
+        - jwt: [ ]
       responses:
         '200':
           description: OK
@@ -605,6 +600,8 @@ paths:
       summary: 박수, 수행일, 최다달성습관조회
       operationId: getRecordFactsMonthly
       description: 나의기록(전체)와 나의기록(상세)에서 모두 쓰입니다. 나의기록(전체)에서는 totalRewards와 totalAchievement가 null로 내려갑니다.
+      security:
+        - jwt: [ ]
       parameters:
         - name: to
           in: query
@@ -648,6 +645,8 @@ paths:
         - Record
       summary: 특정 목표의 상세 기록을 조회한다.
       operationId: getRecordSingleObjective
+      security:
+        - jwt: [ ]
       parameters:
         - name: to
           in: query
@@ -696,15 +695,12 @@ paths:
                 - code: "uncaught error"
                   message: "서버 에러"
 
-
-
-
 security:
-  - bearerAuth: [ token ]
+  - jwt: []
 
 components:
   securitySchemes:
-    token:
+    jwt:
       type: http
       scheme: bearer
       bearerFormat: JWT

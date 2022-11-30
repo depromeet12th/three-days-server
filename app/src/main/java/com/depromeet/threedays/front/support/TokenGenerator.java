@@ -1,5 +1,6 @@
 package com.depromeet.threedays.front.support;
 
+import com.depromeet.threedays.front.domain.model.member.Token;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import java.util.Date;
@@ -18,9 +19,10 @@ public class TokenGenerator {
 	@Value("${security.jwt.token.validtime}")
 	private Long tokenValidTime;
 
+
 	private static final String MEMBER_ID_CLAIM_KEY = "memberId";
 
-	public String generateToken(Long memberId) {
+	public String generateAccessToken(Long memberId) {
 		Date now = new Date();
 
 		return Jwts.builder()
@@ -30,5 +32,24 @@ public class TokenGenerator {
 				.setExpiration(new Date(now.getTime() + tokenValidTime))
 				.signWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
 				.compact();
+	}
+
+	public String generateRefreshToken(Long memberId) {
+		Date now = new Date();
+
+		return Jwts.builder()
+				.setHeaderParam(Header.TYPE, Header.JWT_TYPE)
+				.claim(MEMBER_ID_CLAIM_KEY, memberId)
+				.setIssuedAt(now)
+				.setExpiration(new Date(now.getTime() + tokenValidTime * 10))
+				.signWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
+				.compact();
+	}
+
+	public Token generateToken(Long memberId) {
+		return Token.builder()
+				.accessToken(generateAccessToken(memberId))
+				.refreshToken(generateRefreshToken(memberId))
+				.build();
 	}
 }
