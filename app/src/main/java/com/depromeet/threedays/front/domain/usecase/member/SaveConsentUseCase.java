@@ -23,7 +23,8 @@ public class SaveConsentUseCase {
 		return MemberConverter.from(this.updateNotificationConsent(memberId, request));
 	}
 
-	public MemberEntity updateNotificationConsent(final Long memberId, final UpdateNotificationConsentRequest request) {
+	public MemberEntity updateNotificationConsent(
+			final Long memberId, final UpdateNotificationConsentRequest request) {
 		MemberEntity member =
 				memberRepository
 						.findById(memberId)

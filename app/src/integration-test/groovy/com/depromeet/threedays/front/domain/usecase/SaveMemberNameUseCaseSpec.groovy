@@ -7,10 +7,10 @@ import com.depromeet.threedays.front.persistence.repository.member.MemberReposit
 import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.Subject
 
-class UpdateMemberUseCaseSpec extends IntegrationTestSpecification {
+class SaveMemberNameUseCaseSpec extends IntegrationTestSpecification {
     @Subject
     @Autowired
-    SaveNameUseCase updateUseCase
+    SaveNameUseCase saveUseCase
 
     @Autowired
     MemberDataInitializer initializer
@@ -29,7 +29,7 @@ class UpdateMemberUseCaseSpec extends IntegrationTestSpecification {
 //                .name(expected)
 //                .build()
 //        when:
-//        updateUseCase.execute(request)
+//        saveUseCase.execute(request)
 //        then:
 //        repository.findById(0L).get().getName() == expected
 //

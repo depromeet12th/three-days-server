@@ -45,7 +45,7 @@ public class MemberEntity implements Serializable {
 		this.name = name;
 	}
 
-	public void updateNotificationConsent(Boolean consent){
+	public void updateNotificationConsent(Boolean consent) {
 		this.notificationConsent = consent;
 	}
 }
