@@ -27,14 +27,6 @@ paths:
       summary: 습관 생성 시 사용되는 API
       description: saveHabitAPI
       operationId: saveHabit
-      parameters:
-        - in: header
-          name: Authorization
-          schema:
-            type: string
-            format: uuid
-            example: "Bearer {{accesstoken}}"
-          required: true
       requestBody:
         content:
           application/json:
@@ -338,14 +330,6 @@ paths:
         - Member
       summary: 회원 상세 정보 API
       operationId: getMember
-      parameters:
-        - name: Authorization
-          in: header
-          schema:
-            type: string
-            format: uuid
-            example: "Bearer {{accesstoken}}"
-          required: true
       responses:
         '200':
           description: OK
@@ -367,14 +351,6 @@ paths:
         - Member
       summary: 회원 탈퇴 API
       operationId: deleteMember
-      parameters:
-        - name: Authorization
-          in: header
-          schema:
-            type: string
-            format: uuid
-            example: "Bearer {{accesstoken}}"
-          required: true
       responses:
         '200':
           description: OK
@@ -397,14 +373,6 @@ paths:
         - Member
       summary: 닉네임 수정 API
       operationId: patchMemberName
-      parameters:
-        - name: Authorization
-          in: header
-          schema:
-            type: string
-            format: uuid
-            example: "Bearer {{accesstoken}}"
-          required: true
       requestBody:
         required: true
         content:
@@ -553,14 +521,6 @@ paths:
         - Client
       summary: 클라이언트 정보 추가시 사용하는 API. fcm-token 추가 등록/갱신 시 해당 API 사용
       operationId: postClients
-      parameters:
-        - name: Authorization
-          in: header
-          schema:
-            type: string
-            format: uuid
-            example: "Bearer {{accesstoken}}"
-          required: true
       requestBody:
         content:
           application/json:
