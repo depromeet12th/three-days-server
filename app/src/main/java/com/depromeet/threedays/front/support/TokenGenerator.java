@@ -16,7 +16,7 @@ public class TokenGenerator {
 	private String SECRET_KEY;
 
 	@Value("${security.jwt.token.validtime}")
-	private Integer TOKEN_VALID_TIME;
+	private Long TOKEN_VALID_TIME;
 
 	private static final String MEMBER_ID_CLAIM_KEY = "memberId";
 
