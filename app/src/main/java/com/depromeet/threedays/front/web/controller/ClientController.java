@@ -6,6 +6,7 @@ import com.depromeet.threedays.front.support.ApiResponseGenerator;
 import com.depromeet.threedays.front.web.request.client.ClientRequest;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/v1/clients")
@@ -15,9 +16,9 @@ public class ClientController {
 
 	private final AddClientUseCaseFacade addClientUseCase;
 
-	@PostMapping("members/{memberId}")
+	@PostMapping("/members")
 	public ApiResponse<Void> add(
-			@PathVariable Long memberId, @RequestBody @Valid ClientRequest request) {
+			@AuthenticationPrincipal Long memberId, @RequestBody @Valid ClientRequest request) {
 		addClientUseCase.execute(memberId, request);
 		return ApiResponseGenerator.success();
 	}
