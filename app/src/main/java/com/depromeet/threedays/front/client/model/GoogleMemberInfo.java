@@ -4,6 +4,8 @@ import lombok.Getter;
 
 @Getter
 public class GoogleMemberInfo extends MemberInfo {
+	private String name;
+	private String email;
 	private Boolean verifiedEmail;
 	private String givenName;
 	private String familyName;
