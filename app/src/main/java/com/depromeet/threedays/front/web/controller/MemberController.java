@@ -9,8 +9,8 @@ import com.depromeet.threedays.front.domain.usecase.member.SignMemberUseCaseFaca
 import com.depromeet.threedays.front.support.ApiResponse;
 import com.depromeet.threedays.front.support.ApiResponseGenerator;
 import com.depromeet.threedays.front.web.request.member.SignMemberRequest;
-import com.depromeet.threedays.front.web.request.member.UpdateNameRequest;
-import com.depromeet.threedays.front.web.request.member.UpdateNotificationConsentRequest;
+import com.depromeet.threedays.front.web.request.member.MemberNameUpdateRequest;
+import com.depromeet.threedays.front.web.request.member.MemberNotificationConsentUpdateRequest;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -32,13 +32,13 @@ public class MemberController {
 	}
 
 	@PatchMapping("/name")
-	public ApiResponse<Member> updateName(@RequestBody @Valid UpdateNameRequest request) {
+	public ApiResponse<Member> updateName(@RequestBody @Valid MemberNameUpdateRequest request) {
 		return ApiResponseGenerator.success(saveNameUseCase.execute(request));
 	}
 
 	@PatchMapping("/consents")
 	public ApiResponse<Member> updateConsent(
-			@RequestBody @Valid UpdateNotificationConsentRequest request) {
+			@RequestBody @Valid MemberNotificationConsentUpdateRequest request) {
 		return ApiResponseGenerator.success(saveConsentUseCase.execute(request));
 	}
 

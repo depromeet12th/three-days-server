@@ -6,7 +6,7 @@ import com.depromeet.threedays.front.domain.converter.member.MemberConverter;
 import com.depromeet.threedays.front.domain.model.member.Member;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository;
-import com.depromeet.threedays.front.web.request.member.UpdateNameRequest;
+import com.depromeet.threedays.front.web.request.member.MemberNameUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,12 +18,12 @@ public class SaveNameUseCase {
 
 	private final MemberRepository memberRepository;
 
-	public Member execute(final UpdateNameRequest request) {
+	public Member execute(final MemberNameUpdateRequest request) {
 		Long memberId = AuditorHolder.get();
 		return MemberConverter.from(this.updateName(memberId, request));
 	}
 
-	public MemberEntity updateName(final Long memberId, final UpdateNameRequest request) {
+	public MemberEntity updateName(final Long memberId, final MemberNameUpdateRequest request) {
 		MemberEntity member =
 				memberRepository
 						.findById(memberId)
