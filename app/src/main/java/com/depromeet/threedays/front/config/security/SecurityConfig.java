@@ -30,9 +30,7 @@ public class SecurityConfig {
 		http.csrf().disable();
 		http.formLogin().disable();
 		http.httpBasic().disable();
-		http.authorizeRequests()
-				.anyRequest()
-				.permitAll();
+		http.authorizeRequests().anyRequest().permitAll();
 
 		http.addFilterAt(
 				generateAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class);
