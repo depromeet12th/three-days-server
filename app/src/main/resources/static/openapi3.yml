@@ -554,12 +554,6 @@ paths:
       summary: 클라이언트 정보 추가시 사용하는 API. fcm-token 추가 등록/갱신 시 해당 API 사용
       operationId: postClients
       parameters:
-        - name: memberId
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
         - name: Authorization
           in: header
           schema:
@@ -593,13 +587,6 @@ paths:
         - Client
       summary: 로그아웃시 사용하는 API 해당 기기에 대한 정보를 삭제합니다.
       operationId: deleteClients
-      parameters:
-        - name: memberId
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
       responses:
         '200':
           description: OK
