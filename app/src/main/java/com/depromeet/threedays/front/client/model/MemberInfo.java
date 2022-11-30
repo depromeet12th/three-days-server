@@ -7,6 +7,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public abstract class MemberInfo {
 	private String id;
-	private String name;
-	private String email;
+
+	public abstract String getName();
 }
