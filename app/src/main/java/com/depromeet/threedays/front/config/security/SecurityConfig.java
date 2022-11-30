@@ -31,9 +31,7 @@ public class SecurityConfig {
 		http.formLogin().disable();
 		http.httpBasic().disable();
 		http.authorizeRequests()
-				.antMatchers("/swagger-ui/index.html#/")
-				.permitAll()
-				.antMatchers("/api/v1/**")
+				.anyRequest()
 				.permitAll();
 
 		http.addFilterAt(
