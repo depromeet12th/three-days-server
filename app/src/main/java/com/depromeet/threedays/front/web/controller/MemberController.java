@@ -11,6 +11,7 @@ import com.depromeet.threedays.front.web.request.member.SignMemberRequest;
 import com.depromeet.threedays.front.web.request.member.UpdateNameRequest;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/v1/members")
@@ -28,9 +29,9 @@ public class MemberController {
 		return ApiResponseGenerator.success(signUseCase.execute(request));
 	}
 
-	@PatchMapping("/{memberId}")
+	@PatchMapping("/name")
 	public ApiResponse<Member> updateName(
-			@PathVariable Long memberId, @RequestBody @Valid UpdateNameRequest request) {
+			@AuthenticationPrincipal Long memberId, @RequestBody @Valid UpdateNameRequest request) {
 		return ApiResponseGenerator.success(updateUseCase.execute(memberId, request));
 	}
 
