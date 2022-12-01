@@ -942,6 +942,9 @@ components:
     MateRequest:
       type: object
       properties:
+        title:
+          type: string
+          example: 짝꿍이
         characterType:
           type: string
           example: pig
