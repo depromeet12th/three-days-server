@@ -412,7 +412,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Member'
+                $ref: '#/components/schemas/LoginResponse'
         '400':
           description: BAD REQUEST
           content:
@@ -456,7 +456,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Member'
+                $ref: '#/components/schemas/LoginResponse'
         '400':
           description: BAD REQUEST
           content:
@@ -521,7 +521,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/HabitAchievementRequest'
+              $ref: '#/components/schemas/SaveHabitAchievementRequest'
       responses:
         '200':
           description: OK
@@ -597,7 +597,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Client'
+              $ref: '#/components/schemas/ClientRequest'
       responses:
         '200':
           description: OK
@@ -791,17 +791,9 @@ components:
         mate:
           $ref: '#/components/schemas/Mate'
         notification:
-          type: object
-          properties:
-            notificationTime:
-              type: string
-              format: time
-              example: "10:30:00"
-            contents:
-              type: string
-              example: "아침 9시면 일어나야해요"
+          $ref: '#/components/schemas/Notification'
     HabitOverview:
-      required: [ habitId, memberId, title, imojiPath, dayOfWeeks, level, characterType, createAt, reward ]
+      required: [ habitId, memberId, title, imojiPath, dayOfWeeks, reward, color, createAt, todayHabitAchievementId, sequence, mate ]
       type: object
       properties:
         habitId:
@@ -826,28 +818,17 @@ components:
         color:
           type: string
           example: pink
-        mate:
-          $ref: '#/components/schemas/Mate'
+        createAt:
+          type: string
+          example: "2022-10-15T10:30:00.000"
         todayHabitAchievementId:
           type: integer
           example: 81
         sequence:
           type: integer
           example: 1
-        createAt:
-          type: string
-          example: "2022-10-15T10:30:00.000"
-        todayHabitAchievement:
-          type: object
-          properties:
-            habitAchievementId:
-              type: integer
-              format: int64
-              example: 1
-            sequence:
-              type: integer
-              format: int64
-              example: 0
+        mate:
+          $ref: '#/components/schemas/Mate'
     HabitLabel:
       required: [ habitId, title ]
       type: object
@@ -876,15 +857,7 @@ components:
           type: array
           example: [ "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY" ]
         notification:
-          type: object
-          properties:
-            notificationTime:
-              type: string
-              format: time
-              example: "10:30:00"
-            contents:
-              type: string
-              example: "일어났니? 양치하고 얼른 물 마셔"
+          $ref: '#/components/schemas/Notification'
     EditHabitRequest:
       required: [ habitId, title, imojiPath, dayOfWeek, notification ]
       type: object
@@ -902,15 +875,7 @@ components:
           type: array
           example: [ "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY" ]
         notification:
-          type: object
-          properties:
-            notificationTime:
-              type: string
-              format: time
-              example: "10:30:00"
-            contents:
-              type: string
-              example: "일어났니? 양치하고 얼른 물 마셔"
+          $ref: '#/components/schemas/Notification'
     MemberRequest:
       required: [ certificationSubject, oAuthToken, fcmToken, identificationKey ]
       type: object
@@ -936,7 +901,7 @@ components:
     MemberNotificationConsentUpdateRequest:
       type: object
       properties:
-        name:
+        isOn:
           type: boolean
           example: true
     MateRequest:
@@ -948,7 +913,7 @@ components:
         characterType:
           type: string
           example: pig
-    HabitAchievementRequest:
+    SaveHabitAchievementRequest:
       type: object
       properties:
         achievementDate:
@@ -995,17 +960,17 @@ components:
           example: 1
         title:
           type: string
-          example: 짝꿍이
+          example: "짝꿍이"
         level:
           type: integer
           example: 1
         characterType:
           type: string
-          example: pig
+          example: "pig"
         createAt:
           type: string
           format: date-time
-          example: 2022-10-10 12:34:56.789789
+          example: "2022-10-15T10:30:00.000"
     RecordFacts:
       required: [ totalRewards, totalAchievements, monthlyRewards, monthlyAchievements, frequentHabit ]
       properties:
@@ -1036,6 +1001,55 @@ components:
         habitAchievementDate:
           type: array
           example: [ "2022-11-01", "2022-11-02", "2022-11-04", "2022-11-05", "2022-11-06" ]
+    HabitResponse:
+      type: object
+      properties:
+        habitId:
+          type: integer
+          example: 1
+        memberId:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: "물 마시기"
+        imojiPath:
+          type: string
+          example: "exampleImoji"
+        color:
+          type: string
+          example: "pink"
+        dayOfWeeks:
+          type: array
+          example: [ "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY" ]
+        reward:
+          type: integer
+          example: 0
+        sequence:
+          type: integer
+          example: 2
+        todayAchievementCount:
+          type: integer
+          example: 2
+        todayAchievementId:
+          type: integer
+          example: 1
+        mate:
+          $ref: '#/components/schemas/Mate'
+        notification:
+          $ref: '#/components/schemas/Notification'
+        createAt:
+          type: string
+          example: "2022-10-15T10:30:00.000"
+    Notification:
+      type: object
+      properties:
+        notificationTime:
+          type: string
+          example: "2022-10-15T10:30:00.000"
+        contents:
+          type: string
+          example: "빨리 물 마셔!"
     ApiResponse:
       type: object
       xml:
@@ -1060,7 +1074,7 @@ components:
         refreshToken:
           type: string
           example: refreshToken
-    Client:
+    ClientRequest:
       type: object
       properties:
         fcmToken:
