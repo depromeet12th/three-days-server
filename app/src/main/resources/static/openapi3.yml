@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: depromeet
   description: description
-  version: '1.0.0'
+  version: '1.0.1'
 servers:
   - url: http://localhost:8085
     description: local
@@ -990,6 +990,9 @@ components:
         mateId:
           type: integer
           example: 1
+        title:
+          type: string
+          example: 짝꿍이
         level:
           type: integer
           example: 1
