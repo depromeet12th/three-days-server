@@ -1,10 +1,12 @@
 package com.depromeet.threedays.front.domain.usecase.notification;
 
 import com.depromeet.threedays.data.entity.client.ClientEntity;
+import com.depromeet.threedays.data.entity.member.MemberEntity;
 import com.depromeet.threedays.front.client.MessageClient;
 import com.depromeet.threedays.front.client.property.FirebaseProperty;
 import com.depromeet.threedays.front.domain.model.notification.NotificationMessage;
 import com.depromeet.threedays.front.persistence.repository.client.ClientRepository;
+import com.depromeet.threedays.front.persistence.repository.member.MemberRepository;
 import com.depromeet.threedays.front.web.request.habit.NotificationRequest;
 import com.depromeet.threedays.front.web.response.NotificationBatchResponse;
 import com.google.firebase.messaging.BatchResponse;
@@ -12,6 +14,7 @@ import com.google.firebase.messaging.MulticastMessage;
 import com.google.firebase.messaging.Notification;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -25,7 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class SendGlobalNotificationUseCase {
 
 	private final ClientRepository clientRepository;
-
+	private final MemberRepository memberRepository;
 	private final GetGlobalNotificationUseCase getUseCase;
 	private final MessageClient messageClient;
 	private final FirebaseProperty fireBaseProperty;
@@ -60,11 +63,22 @@ public class SendGlobalNotificationUseCase {
 		return responses;
 	}
 
+	private List<Long> getMemberIds() {
+		List<MemberEntity> members = memberRepository.findAllByNotificationConsent(true).orElse(null);
+		return members.stream().map(MemberEntity::getId).collect(Collectors.toList());
+	}
+
 	private Collection<List<ClientEntity>> makeGroups() {
 		List<ClientEntity> clients = clientRepository.findAll();
+		List<Long> memberIds = getMemberIds();
+		if (memberIds == null) {
+			return Collections.emptyList();
+		}
+
 		AtomicInteger counter = new AtomicInteger();
 
 		return clients.stream()
+				.filter(m -> memberIds.contains(m.getMemberId()))
 				.collect(
 						Collectors.groupingBy(
 								it -> counter.getAndIncrement() / fireBaseProperty.getMulticastMessageSize()))
