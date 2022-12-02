@@ -31,8 +31,7 @@ public class HabitController {
 
 	@PostMapping
 	public ApiResponse<HabitResponse> add(@RequestBody @Valid final SaveHabitRequest request) {
-		return ApiResponseGenerator.success(
-				HabitResponseConverter.from(saveUseCase.execute(request)));
+		return ApiResponseGenerator.success(HabitResponseConverter.from(saveUseCase.execute(request)));
 	}
 
 	@GetMapping

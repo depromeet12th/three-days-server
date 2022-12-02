@@ -2,6 +2,8 @@ package com.depromeet.threedays.front.support;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Set;
 import lombok.experimental.UtilityClass;
@@ -20,5 +22,10 @@ public class DateCalculator {
 		}
 
 		return nextDate;
+	}
+
+	public static LocalTime getTimeSection(LocalDateTime notificationTime, int section) {
+		int timeSection = (notificationTime.getMinute() / section) * section;
+		return LocalTime.of(notificationTime.getHour(), timeSection);
 	}
 }

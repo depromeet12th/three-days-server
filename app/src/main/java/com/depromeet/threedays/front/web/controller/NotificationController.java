@@ -6,6 +6,7 @@ import com.depromeet.threedays.front.support.ApiResponse;
 import com.depromeet.threedays.front.support.ApiResponseGenerator;
 import com.depromeet.threedays.front.web.request.habit.NotificationRequest;
 import com.depromeet.threedays.front.web.response.NotificationBatchResponse;
+import com.google.firebase.messaging.BatchResponse;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +27,8 @@ public class NotificationController {
 	}
 
 	@PostMapping("/habit")
-	public ApiResponse<Void> sendHabitNotification(@RequestBody @Valid NotificationRequest request) {
-		habitUseCase.execute(request);
-		return ApiResponseGenerator.success();
+	public ApiResponse<List<BatchResponse>> sendHabitNotification(
+			@RequestBody @Valid NotificationRequest request) {
+		return ApiResponseGenerator.success(habitUseCase.execute(request));
 	}
 }

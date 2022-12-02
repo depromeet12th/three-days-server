@@ -1,8 +1,7 @@
 package com.depromeet.threedays.front.domain.usecase.notification;
 
-import com.depromeet.threedays.front.domain.converter.notification.GlobalNotificationConverter;
-import com.depromeet.threedays.front.domain.model.notification.NotificationMessage;
-import com.depromeet.threedays.front.persistence.repository.notification.GlobalNotificationRepository;
+import com.depromeet.threedays.data.entity.notification.HabitNotificationEntity;
+import com.depromeet.threedays.front.persistence.repository.notification.HabitNotificationRepository;
 import com.depromeet.threedays.front.support.DateCalculator;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
@@ -17,19 +16,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 @Service
-public class GetGlobalNotificationUseCase {
+public class GetHabitNotificationUseCase {
+	private final HabitNotificationRepository repository;
 
-	private final GlobalNotificationRepository repository;
-
-	@Value("batch.global.time-section")
+	@Value("batch.habit.time-section")
 	private int section;
 
-	public List<NotificationMessage> execute(LocalDateTime notificationTime) {
+	public List<HabitNotificationEntity> execute(LocalDateTime notificationTime) {
 		DayOfWeek day = notificationTime.getDayOfWeek();
 		LocalTime timeSection = DateCalculator.getTimeSection(notificationTime, section);
 
 		return repository.findAllByNotificationTimeAndDayOfWeek(timeSection, day).stream()
-				.map(GlobalNotificationConverter::from)
 				.collect(Collectors.toList());
 	}
 }

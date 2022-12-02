@@ -1,6 +1,22 @@
 package com.depromeet.threedays.front.domain.usecase.notification;
 
+import com.depromeet.threedays.data.entity.client.ClientEntity;
+import com.depromeet.threedays.data.entity.member.MemberEntity;
+import com.depromeet.threedays.data.entity.notification.HabitNotificationEntity;
+import com.depromeet.threedays.front.client.MessageClient;
+import com.depromeet.threedays.front.client.builder.FireBaseMessageBuilder;
+import com.depromeet.threedays.front.domain.converter.client.ClientConverter;
+import com.depromeet.threedays.front.domain.converter.notification.HabitNotificationConverter;
+import com.depromeet.threedays.front.domain.model.client.Client;
+import com.depromeet.threedays.front.domain.model.notification.HabitNotificationMessage;
+import com.depromeet.threedays.front.persistence.repository.client.ClientRepository;
+import com.depromeet.threedays.front.persistence.repository.member.MemberRepository;
 import com.depromeet.threedays.front.web.request.habit.NotificationRequest;
+import com.google.firebase.messaging.BatchResponse;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,12 +25,60 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 public class SendHabitNotificationUseCase {
-	public void execute(NotificationRequest request) {
-		/*
-		 * TODO
-		 *  1. habit notification을 읽어오면서
-		 *  2. 요일이 오늘이고, 시간대가 지금인 것들을 뽑아온다
-		 *  3. client랑 memberId로 on join해서 client fcm토큰도 뽑아와정야 함
-		 */
+
+	private final GetHabitNotificationUseCase getUseCase;
+	private final MemberRepository memberRepository;
+	private final ClientRepository clientRepository;
+
+	private final MessageClient messageClient;
+
+	public List<BatchResponse> execute(NotificationRequest request) {
+		List<HabitNotificationMessage> messages =
+				makeHabitNotificationMessage(request.getNotificationTime());
+		return sendMessage(messages);
+	}
+
+	private List<HabitNotificationMessage> makeHabitNotificationMessage(
+			LocalDateTime notificationTime) {
+		List<HabitNotificationEntity> list = getUseCase.execute(notificationTime);
+
+		List<Long> memberIds = this.getMemberIds();
+		List<ClientEntity> clientEntities = clientRepository.findAll();
+
+		// message 구성
+		List<HabitNotificationMessage> messages =
+				list.stream()
+						.filter(m -> memberIds.contains(m.getMemberId()))
+						.map(HabitNotificationConverter::habitMessagefrom)
+						.collect(Collectors.toList());
+
+		// 같은 멤버출신끼리 리스트화 한 Client 리스트 리스트
+		List<List<Client>> groupedClient =
+				new ArrayList<>(
+						clientEntities.stream()
+								.map(ClientConverter::from)
+								.collect(Collectors.groupingBy(Client::getMemberId))
+								.values());
+
+		for (HabitNotificationMessage message : messages) { // 습관 알림
+			for (List<Client> client : groupedClient) { // 같은 멤버를 가지는 클라이언트들
+				if (message.getMemberId().equals(client.get(0).getMemberId())) {
+					message.setClients(client);
+				}
+			}
+		}
+
+		return messages;
+	}
+	private List<Long> getMemberIds() {
+		List<MemberEntity> members = memberRepository.findAllByNotificationConsent(true).orElse(null);
+		return members.stream().map(MemberEntity::getId).collect(Collectors.toList());
+	}
+	private List<BatchResponse> sendMessage(List<HabitNotificationMessage> messages) {
+		List<BatchResponse> responses = new ArrayList<>();
+		for (HabitNotificationMessage message : messages) {
+			responses.add(messageClient.send(FireBaseMessageBuilder.makeMulticastMessage(message)));
+		}
+		return responses;
 	}
 }
