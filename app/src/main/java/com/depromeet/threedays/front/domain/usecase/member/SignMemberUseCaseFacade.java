@@ -7,9 +7,7 @@ import com.depromeet.threedays.front.client.property.auth.AuthRequestProperty;
 import com.depromeet.threedays.front.domain.converter.member.MemberCommandConverter;
 import com.depromeet.threedays.front.domain.converter.member.MemberQueryConverter;
 import com.depromeet.threedays.front.domain.model.member.Member;
-import com.depromeet.threedays.front.domain.usecase.client.AddClientUseCaseFacade;
 import com.depromeet.threedays.front.exception.ExternalIntegrationException;
-import com.depromeet.threedays.front.web.request.client.ClientRequest;
 import com.depromeet.threedays.front.web.request.member.SignMemberRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -28,7 +26,7 @@ public class SignMemberUseCaseFacade {
 	private final SaveMemberUseCase saveUseCase;
 	private final AuthClient authClient;
 
-	private final AddClientUseCaseFacade addClientUseCase;
+	//	private final AddClientUseCaseFacade addClientUseCase;
 
 	public Member execute(SignMemberRequest request) {
 		if (request == null) {
@@ -42,9 +40,9 @@ public class SignMemberUseCaseFacade {
 		if (member == null) {
 			return saveUseCase.execute(MemberCommandConverter.from(info, request));
 		}
-		addClientUseCase.execute(
-				member.getMemberId(),
-				new ClientRequest(request.getFcmToken(), request.getIdentificationKey()));
+		//		addClientUseCase.execute(
+		//				member.getMemberId(),
+		//				new ClientRequest(request.getFcmToken(), request.getIdentificationKey()));
 		return member;
 	}
 

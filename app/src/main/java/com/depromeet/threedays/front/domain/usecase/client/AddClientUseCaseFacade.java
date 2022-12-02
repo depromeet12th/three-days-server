@@ -1,5 +1,6 @@
 package com.depromeet.threedays.front.domain.usecase.client;
 
+import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.converter.client.ClientCommandConverter;
 import com.depromeet.threedays.front.domain.converter.client.ClientQueryConverter;
 import com.depromeet.threedays.front.domain.model.client.Client;
@@ -15,8 +16,9 @@ public class AddClientUseCaseFacade {
 	private final SaveClientUseCase saveUseCase;
 	private final UpdateClientUseCase updateUseCase;
 
-	public void execute(Long memberId, ClientRequest request) {
-		if (request == null || memberId == null) {
+	public void execute(ClientRequest request) {
+		Long memberId = AuditorHolder.get();
+		if (request == null) {
 			return;
 		}
 		Client client = getUseCase.execute(ClientQueryConverter.from(memberId, request));

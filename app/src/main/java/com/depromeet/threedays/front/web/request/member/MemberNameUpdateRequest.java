@@ -1,4 +1,4 @@
-package com.depromeet.threedays.front.domain.model.member;
+package com.depromeet.threedays.front.web.request.member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,11 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Token {
+@Builder(toBuilder = true)
+public class MemberNameUpdateRequest {
 
-	private String accessToken;
-	private String refreshToken;
+	private String name;
 }

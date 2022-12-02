@@ -11,6 +11,10 @@ spring:
       maxFileSize: 100MB
       maxRequestSize: 100MB
   session.jdbc.initialize-schema: never
+  profiles:
+    active: default
+    include:
+      - data
 
 
 
@@ -32,4 +36,18 @@ springdoc:
   paths-to-match:
     - /api/**
 server:
-  port: 18888
+  port: 8080
+
+
+security:
+  jwt:
+    token:
+      validtime: ${TOKEN_VALIDTIME}
+      secretkey: ${TOKEN_SECRETKEY}
+
+google:
+  user:
+    uri: https://www.googleapis.com/oauth2/v1/userinfo#profile
+kakao:
+  user:
+    uri: https://kapi.kakao.com/v2/user/me
