@@ -9,6 +9,7 @@ import com.depromeet.threedays.front.web.response.HabitResponse;
 import com.depromeet.threedays.front.web.response.converter.HabitResponseConverter;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,15 +28,18 @@ public class HabitAchievementController {
 
 	@PostMapping
 	public ApiResponse<HabitResponse> addAchievement(
-			@PathVariable Long habitId, @RequestBody @Valid final SaveHabitAchievementRequest request) {
+			@PathVariable Long habitId,
+			@RequestBody @Valid final SaveHabitAchievementRequest request) {
 		return ApiResponseGenerator.success(
-				HabitResponseConverter.from(saveUseCase.execute(habitId, request)));
+				HabitResponseConverter.from(saveUseCase.execute(habitId, request)),
+				HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/{habitAchievementId}")
-	public ApiResponse<HabitResponse> cancelAchievement(
+	public ApiResponse<HabitResponse> deleteAchievement(
 			@PathVariable Long habitId, @PathVariable Long habitAchievementId) {
 		return ApiResponseGenerator.success(
-				HabitResponseConverter.from(deleteUseCase.execute(habitId, habitAchievementId)));
+				HabitResponseConverter.from(deleteUseCase.execute(habitId, habitAchievementId)),
+				HttpStatus.OK);
 	}
 }

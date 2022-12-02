@@ -33,7 +33,8 @@ public class GetHabitUseCase {
 	public Habit execute(final Long id) {
 		HabitEntity source = repository.findById(id).orElseThrow(ResourceNotFoundException::new);
 
-		MateEntity mateEntity = mateRepository.findByHabitId(id).orElse(null);
+		MateEntity mateEntity = mateRepository.findFirstByHabitIdOrderByCreateAtDesc(id)
+				.orElse(null);
 
 		Long totalAchievementCount = habitAchievementRepository.countByHabitId(id);
 

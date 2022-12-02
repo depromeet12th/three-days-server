@@ -1,35 +1,35 @@
 package com.depromeet.threedays.front.support;
 
-import com.depromeet.threedays.front.support.ApiResponse.FailureBody;
+import lombok.experimental.UtilityClass;
+import org.springframework.http.HttpStatus;
 
+@UtilityClass
 public class ApiResponseGenerator {
 
-	private ApiResponseGenerator() {
-		throw new UnsupportedOperationException();
+	public static ApiResponse<Void> success(final HttpStatus status) {
+		return new ApiResponse<>(status);
 	}
 
-	public static ApiResponse<Void> success() {
-		return new ApiResponse<>();
-	}
-
-	public static <D> ApiResponse<D> success(final D data) {
-		return new ApiResponse<>(data);
+	public static <D> ApiResponse<D> success(final D data, final HttpStatus status) {
+		return new ApiResponse<>(data, status);
 	}
 
 	public static <D> ApiResponse<Page<D>> success(
-			final org.springframework.data.domain.Page<D> data) {
-		return new ApiResponse<>(new Page<>(data));
+			final org.springframework.data.domain.Page<D> data, final HttpStatus status) {
+		return new ApiResponse<>(new Page<>(data), status);
 	}
 
-	public static ApiResponse<Void> fail() {
-		return new ApiResponse<>();
+	public static ApiResponse<Void> fail(final HttpStatus status) {
+		return new ApiResponse<>(status);
 	}
 
-	public static ApiResponse<ApiResponse.FailureBody> fail(final ApiResponse.FailureBody body) {
-		return new ApiResponse<>(body);
+	public static ApiResponse<ApiResponse.FailureBody> fail(
+			final ApiResponse.FailureBody body, final HttpStatus status) {
+		return new ApiResponse<>(body, status);
 	}
 
-	public static ApiResponse<ApiResponse.FailureBody> fail(final String code, final String message) {
-		return new ApiResponse<>(new FailureBody(code, message));
+	public static ApiResponse<ApiResponse.FailureBody> fail(
+			final String code, final String message, final HttpStatus status) {
+		return new ApiResponse<>(new ApiResponse.FailureBody(code, message), status);
 	}
 }
