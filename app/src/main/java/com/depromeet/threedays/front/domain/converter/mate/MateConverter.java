@@ -8,6 +8,15 @@ import lombok.experimental.UtilityClass;
 public class MateConverter {
 
 	public static Mate from(MateEntity entity) {
-		return Mate.builder().level(entity.getLevel()).characterType(entity.getCharacterType()).build();
+		if (entity == null) {
+			return null;
+		}
+		
+		return Mate.builder()
+				.id(entity.getId())
+				.createAt(entity.getCreateAt())
+				.level(entity.getLevel())
+				.characterType(entity.getCharacterType())
+				.build();
 	}
 }

@@ -18,4 +18,15 @@ public class HabitNotificationConverter {
 				.dayOfWeek(dayOfWeek)
 				.build();
 	}
+
+	public static Notification from(HabitNotificationEntity entity) {
+		if (entity == null) {
+			return null;
+		}
+
+		return Notification.builder()
+				.notificationTime(entity.getNotificationTime())
+				.contents(entity.getContents())
+				.build();
+	}
 }

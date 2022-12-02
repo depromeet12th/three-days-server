@@ -1,6 +1,7 @@
 package com.depromeet.threedays.front.web.controller;
 
 import com.depromeet.threedays.front.domain.model.habit.HabitOverview;
+import com.depromeet.threedays.front.domain.usecase.habit.GetHabitUseCase;
 import com.depromeet.threedays.front.domain.usecase.habit.SaveHabitUseCase;
 import com.depromeet.threedays.front.domain.usecase.habit.SearchHabitUseCase;
 import com.depromeet.threedays.front.support.ApiResponse;
@@ -12,6 +13,7 @@ import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,16 +25,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class HabitController {
 
 	private final SaveHabitUseCase saveUseCase;
+	private final GetHabitUseCase getUseCase;
 
 	private final SearchHabitUseCase searchUseCase;
 
 	@PostMapping
 	public ApiResponse<HabitResponse> add(@RequestBody @Valid final SaveHabitRequest request) {
-		return ApiResponseGenerator.success(HabitResponseConverter.from(saveUseCase.execute(request)));
+		return ApiResponseGenerator.success(
+				HabitResponseConverter.from(saveUseCase.execute(request)));
 	}
 
 	@GetMapping
 	public ApiResponse<List<HabitOverview>> browse() {
 		return ApiResponseGenerator.success(searchUseCase.execute());
+	}
+
+	@GetMapping("/{id}")
+	public ApiResponse<HabitResponse> read(@PathVariable final Long id) {
+		return ApiResponseGenerator.success(HabitResponseConverter.from(getUseCase.execute(id)));
 	}
 }
