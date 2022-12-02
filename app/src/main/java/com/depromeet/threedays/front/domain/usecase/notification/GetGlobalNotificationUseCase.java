@@ -24,18 +24,17 @@ public class GetGlobalNotificationUseCase {
 	@Value("batch.global.time-section")
 	private int section;
 
-	public List<NotificationMessage> execute() {
+	public List<NotificationMessage> execute(LocalDateTime notificationTime) {
 		DayOfWeek day = LocalDate.now().getDayOfWeek();
-		LocalTime notificationTime = getTimeSection();
+		LocalTime timeSection = getTimeSection(notificationTime);
 
-		return repository.findAllByNotificationTimeAndDayOfWeek(notificationTime, day).stream()
+		return repository.findAllByNotificationTimeAndDayOfWeek(timeSection, day).stream()
 				.map(GlobalNotificationConverter::from)
 				.collect(Collectors.toList());
 	}
 
-	private LocalTime getTimeSection() {
-		LocalDateTime now = LocalDateTime.now();
-		int timeSection = (now.getMinute() / section) * section;
-		return LocalTime.of(now.getHour(), timeSection);
+	private LocalTime getTimeSection(LocalDateTime notificationTime) {
+		int timeSection = (notificationTime.getMinute() / section) * section;
+		return LocalTime.of(notificationTime.getHour(), timeSection);
 	}
 }

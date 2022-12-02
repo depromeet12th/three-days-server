@@ -5,6 +5,7 @@ import com.depromeet.threedays.front.client.MessageClient;
 import com.depromeet.threedays.front.client.property.FirebaseProperty;
 import com.depromeet.threedays.front.domain.model.notification.NotificationMessage;
 import com.depromeet.threedays.front.persistence.repository.client.ClientRepository;
+import com.depromeet.threedays.front.web.request.habit.NotificationRequest;
 import com.depromeet.threedays.front.web.response.NotificationBatchResponse;
 import com.google.firebase.messaging.BatchResponse;
 import com.google.firebase.messaging.MulticastMessage;
@@ -29,8 +30,8 @@ public class SendGlobalNotificationUseCase {
 	private final MessageClient messageClient;
 	private final FirebaseProperty fireBaseProperty;
 
-	public List<NotificationBatchResponse> execute() {
-		List<NotificationMessage> messages = getUseCase.execute();
+	public List<NotificationBatchResponse> execute(NotificationRequest request) {
+		List<NotificationMessage> messages = getUseCase.execute(request.getNotificationTime());
 
 		List<NotificationBatchResponse> result = new ArrayList<>();
 		for (NotificationMessage message : messages) {
