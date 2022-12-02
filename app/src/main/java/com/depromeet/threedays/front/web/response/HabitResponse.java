@@ -1,5 +1,6 @@
 package com.depromeet.threedays.front.web.response;
 
+import com.depromeet.threedays.data.enums.HabitStatus;
 import com.depromeet.threedays.front.domain.model.mate.Mate;
 import com.depromeet.threedays.front.domain.model.notification.Notification;
 import java.time.DayOfWeek;
@@ -24,6 +25,7 @@ public class HabitResponse {
 	private EnumSet<DayOfWeek> dayOfWeeks;
 	private Long reward;
 	private Integer sequence;
+	private HabitStatus status;
 	private Long totalAchievementCount;
 	private Long todayHabitAchievementId;
 	private Mate mate;

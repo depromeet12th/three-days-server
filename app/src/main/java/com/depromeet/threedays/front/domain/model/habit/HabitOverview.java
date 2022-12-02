@@ -1,5 +1,6 @@
 package com.depromeet.threedays.front.domain.model.habit;
 
+import com.depromeet.threedays.data.enums.HabitStatus;
 import com.depromeet.threedays.front.domain.model.mate.Mate;
 import java.io.Serializable;
 import java.time.DayOfWeek;
@@ -23,6 +24,7 @@ public class HabitOverview implements Serializable {
 	private EnumSet<DayOfWeek> dayOfWeeks;
 	private Long reward;
 	private String color;
+	private HabitStatus status;
 	private LocalDateTime createAt;
 	private Long todayHabitAchievementId;
 	private Integer sequence;

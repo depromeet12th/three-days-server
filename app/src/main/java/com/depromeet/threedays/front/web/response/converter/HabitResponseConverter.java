@@ -22,6 +22,7 @@ public class HabitResponseConverter {
 				.color(habit.getColor())
 				.dayOfWeeks(habit.getDayOfWeeks())
 				.reward(habit.getReward())
+				.status(habit.getStatus())
 				.totalAchievementCount(habit.getTotalAchievementCount())
 				.sequence(habitAchievement.getSequence())
 				.todayHabitAchievementId(habitAchievement.getHabitAchievementId())

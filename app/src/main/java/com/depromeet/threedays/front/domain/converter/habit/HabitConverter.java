@@ -147,6 +147,7 @@ public class HabitConverter {
 				.color(entity.getColor())
 				.createAt(entity.getCreateAt())
 				.reward(rewardCount)
+				.status(entity.getStatus())
 				.todayHabitAchievementId(achievementData.getHabitAchievementId())
 				.sequence(achievementData.getSequence())
 				.mate(mate)

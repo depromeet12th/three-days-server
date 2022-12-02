@@ -739,6 +739,10 @@ components:
         color:
           type: string
           example: pink
+        status:
+          type: string
+          enum: [ "ACTIVE", "ARCHIVED" ]
+          example: "ACTIVE"
         createAt:
           type: string
           example: "2022-11-30 21:40:18.668458"
@@ -803,6 +807,10 @@ components:
         color:
           type: string
           example: pink
+        status:
+          type: string
+          enum: [ "ACTIVE", "ARCHIVED" ]
+          example: "ACTIVE"
         createAt:
           type: string
           example: "2022-11-30 21:40:18.668458"
