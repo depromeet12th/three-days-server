@@ -2,7 +2,6 @@ package com.depromeet.threedays.front.domain.usecase.habit
 
 import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.domain.model.notification.Notification
-import com.depromeet.threedays.front.domain.usecase.habit.SaveHabitUseCase
 import com.depromeet.threedays.front.exception.PolicyViolationException
 import com.depromeet.threedays.front.web.request.habit.SaveHabitRequest
 import org.springframework.beans.factory.annotation.Autowired
@@ -39,7 +38,7 @@ class SaveHabitUseCaseSpec extends IntegrationTestSpecification {
         then:
         acutal != null
 
-        acutal.habitId > 0L
+        acutal.id > 0L
     }
 
     def "사용자는 세 개 이하의 요일을 습관 수행일자로 선택했을 경우 습관을 생성할 수 없다."() {

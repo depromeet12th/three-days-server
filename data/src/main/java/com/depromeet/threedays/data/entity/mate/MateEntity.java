@@ -30,10 +30,16 @@ public class MateEntity {
 	private Long memberId;
 
 	@Column(nullable = false)
+	private String title;
+
+	@Column(nullable = false)
 	private Long habitId;
 
 	@Column(nullable = false)
 	private Integer level;
+
+	@Column
+	private LocalDateTime levelUpAt;
 
 	@Column(nullable = false)
 	private String characterType;

@@ -12,6 +12,7 @@ import com.depromeet.threedays.front.persistence.repository.RewardHistoryReposit
 import com.depromeet.threedays.front.persistence.repository.habit.HabitAchievementRepository;
 import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository;
 import com.depromeet.threedays.front.persistence.repository.mate.MateRepository;
+import com.depromeet.threedays.front.web.request.habit.SearchHabitRequest;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +32,11 @@ public class SearchHabitUseCase {
 	private final RewardHistoryRepository rewardHistoryRepository;
 	private final MateRepository mateRepository;
 
-	public List<HabitOverview> execute() {
+	public List<HabitOverview> execute(
+			final SearchHabitRequest request) {
 		List<HabitEntity> habitEntities =
-				repository.findAllByMemberIdAndDeletedFalse(AuditorHolder.get());
+				repository.findAllByMemberIdAndDeletedFalseAndStatus(AuditorHolder.get(),
+						request.getStatus());
 
 		List<HabitOverview> habitOverviews = new ArrayList<>();
 
@@ -51,10 +54,11 @@ public class SearchHabitUseCase {
 						.orElse(null);
 		HabitAchievement achievementData = this.calculateSequence(achievementEntity);
 		Long rewardCount = rewardHistoryRepository.countByHabitId(entity.getId());
-		Mate mateData =
-				mateRepository.findByHabitId(entity.getId()).map(MateConverter::from).orElse(null);
+		Mate mate =
+				mateRepository.findFirstByHabitIdOrderByCreateAtDesc(entity.getId())
+						.map(MateConverter::from).orElse(null);
 
-		return HabitConverter.from(entity, achievementData, rewardCount, mateData);
+		return HabitConverter.from(entity, achievementData, rewardCount, mate);
 	}
 
 	private HabitAchievement calculateSequence(HabitAchievementEntity achievementEntity) {
@@ -65,7 +69,7 @@ public class SearchHabitUseCase {
 
 		if (achievementEntity.getAchievementDate().isEqual(LocalDate.now())) {
 			return HabitAchievement.builder()
-					.habitAchievementId(achievementEntity.getId())
+					.id(achievementEntity.getId())
 					.sequence(achievementEntity.getSequence())
 					.build();
 		}

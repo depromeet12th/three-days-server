@@ -45,7 +45,7 @@ public class DeleteHabitAchievementUseCase {
 		}
 		this.deleteAssociations(target);
 
-		repository.deleteById(target.getHabitAchievementId());
+		repository.deleteById(target.getId());
 
 		return repository
 				.findFirstByHabitIdOrderByAchievementDateDesc(target.getHabitId())

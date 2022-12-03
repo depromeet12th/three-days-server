@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Builder
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 public class Mate implements Serializable {
@@ -17,5 +17,6 @@ public class Mate implements Serializable {
 	private String title;
 	private LocalDateTime createAt;
 	private Integer level;
+	private LocalDateTime levelUpAt;
 	private String characterType;
 }
