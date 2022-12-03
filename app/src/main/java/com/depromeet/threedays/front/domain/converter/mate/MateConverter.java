@@ -30,12 +30,12 @@ public class MateConverter {
 		}
 
 		return MateEntity.builder()
-				.id(habit.getHabitId())
+				.id(habit.getId())
 				.characterType(data.getCharacterType())
 				.level(data.getLevel())
 				.title(data.getTitle())
 				.memberId(habit.getMemberId())
-				.habitId(habit.getHabitId())
+				.habitId(habit.getId())
 				.levelUpAt(data.getLevelUpAt())
 				.build();
 	}

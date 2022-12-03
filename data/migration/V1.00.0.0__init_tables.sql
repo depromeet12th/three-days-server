@@ -29,7 +29,7 @@ CREATE TABLE `member`
     `certification_subject` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
     `name`                  varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
     `notification_consent`  bit(1)                                  DEFAULT NULL,
-    `profile`               varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+    `resource`              json COLLATE utf8mb4_unicode_ci         DEFAULT NULL,
     PRIMARY KEY (`member_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4

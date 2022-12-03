@@ -69,7 +69,7 @@ public class SearchHabitUseCase {
 
 		if (achievementEntity.getAchievementDate().isEqual(LocalDate.now())) {
 			return HabitAchievement.builder()
-					.habitAchievementId(achievementEntity.getId())
+					.id(achievementEntity.getId())
 					.sequence(achievementEntity.getSequence())
 					.build();
 		}

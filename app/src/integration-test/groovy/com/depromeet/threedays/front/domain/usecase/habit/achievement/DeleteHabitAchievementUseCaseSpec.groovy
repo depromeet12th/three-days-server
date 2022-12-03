@@ -1,4 +1,4 @@
-package com.depromeet.threedays.front.domain.usecase.habit
+package com.depromeet.threedays.front.domain.usecase.habit.achievement
 
 import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.data.habit.HabitAchievementDataInitializer

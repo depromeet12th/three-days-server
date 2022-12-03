@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class HabitResponse {
 
-	private Long habitId;
+	private Long id;
 	private Long memberId;
 	private String title;
 	private String imojiPath;

@@ -17,7 +17,7 @@ public class MemberConverter {
 		}
 
 		return Member.builder()
-				.memberId(entity.getId())
+				.id(entity.getId())
 				.name(entity.getName())
 				.isNew(isNew)
 				.token(token)
@@ -28,7 +28,7 @@ public class MemberConverter {
 		if (entity == null) {
 			return null;
 		}
-		return Member.builder().memberId(entity.getId()).name(entity.getName()).isNew(false).build();
+		return Member.builder().id(entity.getId()).name(entity.getName()).isNew(false).build();
 	}
 
 	public static MemberEntity to(final SaveMemberCommand command) {

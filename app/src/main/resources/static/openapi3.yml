@@ -311,13 +311,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LoginResponse'
+                allOf:
+                  - $ref: '#/components/schemas/Member'
+                  - type: object
+                    properties:
+                      token:
+                        $ref: '#/components/schemas/Token'
         '201':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LoginResponse'
+                $ref: '#/components/schemas/Member'
         '400':
           description: BAD REQUEST
           content:
@@ -755,7 +760,7 @@ components:
       required: [ habitId, memberId, title, imojiPath, dayOfWeeks, level, characterType, createAt, reward, notification ]
       type: object
       properties:
-        habitId:
+        id:
           type: integer
           format: int64
           example: 1
@@ -798,10 +803,10 @@ components:
         notification:
           $ref: '#/components/schemas/Notification'
     HabitAchievement:
-      required: [ habitId, memberId, title, imojiPath, dayOfWeeks, reward, color, createAt, todayHabitAchievementId, sequence, mate ]
+      required: [ id, habitId, memberId, title, imojiPath, dayOfWeeks, reward, color, createAt, todayHabitAchievementId, sequence, mate ]
       type: object
       properties:
-        habitAchievementId:
+        id:
           type: integer
           format: int64
           example: 1
@@ -949,7 +954,7 @@ components:
     LoginResponse:
       type: object
       properties:
-        memberId:
+        id:
           type: integer
           example: "1"
         name:
@@ -975,7 +980,7 @@ components:
     Member:
       type: object
       properties:
-        memberId:
+        id:
           type: integer
           example: "1"
         name:
@@ -984,14 +989,15 @@ components:
         certificationSubject:
           type: string
           enum: [ "GOOGLE", "KAKAO", "APPLE" ]
-        agreements:
-          $ref: '#/components/schemas/Agreement'
+        notificationConsent:
+          type: boolean
+          example: true
         resource:
           type: object
     Mate:
       type: object
       properties:
-        mateId:
+        id:
           type: integer
           example: 1
         title:
@@ -1125,9 +1131,3 @@ components:
               type: string
               format: date
               example: 2022-11-01
-    Agreement:
-      type: object
-      properties:
-        notificationConsent:
-          type: boolean
-          example: true

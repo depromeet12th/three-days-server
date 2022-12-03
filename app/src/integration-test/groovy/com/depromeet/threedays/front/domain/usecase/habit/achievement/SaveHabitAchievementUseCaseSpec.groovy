@@ -1,9 +1,10 @@
-package com.depromeet.threedays.front.domain.usecase.habit
+package com.depromeet.threedays.front.domain.usecase.habit.achievement
 
 import com.depromeet.threedays.data.entity.habit.HabitAchievementEntity
 import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.data.habit.HabitAchievementDataInitializer
 import com.depromeet.threedays.front.data.habit.HabitDataInitializer
+import com.depromeet.threedays.front.domain.usecase.habit.SaveHabitAchievementUseCase
 import com.depromeet.threedays.front.exception.PolicyViolationException
 import com.depromeet.threedays.front.web.request.habit.SaveHabitAchievementRequest
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,7 +12,7 @@ import spock.lang.Subject
 
 import java.time.LocalDate
 
-class SaveHabitAchievementUseCaseSpec extends IntegrationTestSpecification{
+class SaveHabitAchievementUseCaseSpec extends IntegrationTestSpecification {
 
     @Subject
     @Autowired
@@ -23,12 +24,12 @@ class SaveHabitAchievementUseCaseSpec extends IntegrationTestSpecification{
     @Autowired
     private HabitAchievementDataInitializer dataInitializer
 
-    def setup(){
+    def setup() {
         habitDataInitializer.initialize()
         dataInitializer.initialize(habitDataInitializer.data.first().id)
     }
 
-    def "사용자는 오늘의 습관 달성 여부를 체크할 수 있다"(){
+    def "사용자는 오늘의 습관 달성 여부를 체크할 수 있다"() {
         given:
         def criterionHabit = habitDataInitializer.data.first()
 
@@ -42,7 +43,7 @@ class SaveHabitAchievementUseCaseSpec extends IntegrationTestSpecification{
         actual.habitAchievement.achievementDate == LocalDate.now()
     }
 
-    def "사용자는 과거의 날짜로 습관 달성 여부를 체크할 수 없다"(){
+    def "사용자는 과거의 날짜로 습관 달성 여부를 체크할 수 없다"() {
         given:
         def criterionHabit = habitDataInitializer.data.first()
 
@@ -56,7 +57,7 @@ class SaveHabitAchievementUseCaseSpec extends IntegrationTestSpecification{
         thrown(PolicyViolationException)
     }
 
-    def "습관 달성 여부 체크는 멱등하게 동작한다"(){
+    def "습관 달성 여부 체크는 멱등하게 동작한다"() {
         given:
         def criterionHabit = habitDataInitializer.data.first()
 
@@ -71,10 +72,10 @@ class SaveHabitAchievementUseCaseSpec extends IntegrationTestSpecification{
                         .build())
 
         then:
-        first.habitAchievement.habitAchievementId == second.habitAchievement.habitAchievementId
+        first.habitAchievement.id == second.habitAchievement.id
     }
 
-    def "습관 달성 여부를 목표 수행일 이후에 체크하는 경우 연속일 수가 1이 된다"(){
+    def "습관 달성 여부를 목표 수행일 이후에 체크하는 경우 연속일 수가 1이 된다"() {
         given:
         def criterionHabit = habitDataInitializer.data.first()
         dataInitializer.setSpecificData(HabitAchievementEntity.builder()

@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 public class HabitOverview implements Serializable {
 
-	private Long habitId;
+	private Long id;
 	private Long memberId;
 	private String title;
 	private String imojiPath;

@@ -15,7 +15,7 @@ public class HabitResponseConverter {
 				Optional.ofNullable(habit.getHabitAchievement()).orElseGet(HabitAchievement::new);
 
 		return HabitResponse.builder()
-				.habitId(habit.getHabitId())
+				.id(habit.getId())
 				.memberId(habit.getMemberId())
 				.title(habit.getTitle())
 				.imojiPath(habit.getImojiPath())
@@ -25,7 +25,7 @@ public class HabitResponseConverter {
 				.status(habit.getStatus())
 				.totalAchievementCount(habit.getTotalAchievementCount())
 				.sequence(habitAchievement.getSequence())
-				.todayHabitAchievementId(habitAchievement.getHabitAchievementId())
+				.todayHabitAchievementId(habitAchievement.getId())
 				.mate(habit.getMate())
 				.notification(habit.getNotification())
 				.createAt(habit.getCreateAt())

@@ -19,7 +19,7 @@ public class GetMemberUseCase {
 	private final MemberRepository memberRepository;
 	private final TokenGenerator tokenGenerator;
 
-	public Member execute(GetMemberQuery query) {
+	public Member execute(final GetMemberQuery query) {
 		MemberEntity member =
 				memberRepository
 						.findByCertificationIdAndCertificationSubject(

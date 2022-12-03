@@ -133,7 +133,7 @@ public class SaveHabitAchievementUseCase {
 		if (sequence % PROVIDE_REWARD_COUNT == 0) {
 			rewardHistoryRepository.save(RewardHistoryConverter.to(habit));
 		}
-		return rewardHistoryRepository.countByHabitId(habit.getHabitId());
+		return rewardHistoryRepository.countByHabitId(habit.getId());
 	}
 
 	private Mate updateMateLevel(final Habit habit, final Integer sequence) {

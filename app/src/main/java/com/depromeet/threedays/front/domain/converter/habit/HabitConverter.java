@@ -39,7 +39,7 @@ public class HabitConverter {
 		}
 
 		return Habit.builder()
-				.habitId(habit.getHabitId())
+				.id(habit.getId())
 				.memberId(habit.getMemberId())
 				.title(habit.getTitle())
 				.imojiPath(habit.getImojiPath())
@@ -55,7 +55,7 @@ public class HabitConverter {
 			final Long reward,
 			final Mate mate) {
 		return Habit.builder()
-				.habitId(habit.getHabitId())
+				.id(habit.getId())
 				.memberId(habit.getMemberId())
 				.title(habit.getTitle())
 				.imojiPath(habit.getImojiPath())
@@ -90,7 +90,7 @@ public class HabitConverter {
 		}
 
 		return Habit.builder()
-				.habitId(entity.getId())
+				.id(entity.getId())
 				.memberId(entity.getMemberId())
 				.title(entity.getTitle())
 				.imojiPath(entity.getImojiPath())
@@ -102,7 +102,7 @@ public class HabitConverter {
 
 	public static Habit from(final Habit data, final Long reward) {
 		return Habit.builder()
-				.habitId(data.getHabitId())
+				.id(data.getId())
 				.memberId(data.getMemberId())
 				.title(data.getTitle())
 				.imojiPath(data.getImojiPath())
@@ -119,7 +119,7 @@ public class HabitConverter {
 		}
 
 		return Habit.builder()
-				.habitId(entity.getId())
+				.id(entity.getId())
 				.memberId(entity.getMemberId())
 				.title(entity.getTitle())
 				.imojiPath(entity.getImojiPath())
@@ -139,7 +139,7 @@ public class HabitConverter {
 		}
 
 		return HabitOverview.builder()
-				.habitId(entity.getId())
+				.id(entity.getId())
 				.memberId(entity.getMemberId())
 				.title(entity.getTitle())
 				.imojiPath(entity.getImojiPath())
@@ -148,7 +148,7 @@ public class HabitConverter {
 				.createAt(entity.getCreateAt())
 				.reward(rewardCount)
 				.status(entity.getStatus())
-				.todayHabitAchievementId(achievementData.getHabitAchievementId())
+				.todayHabitAchievementId(achievementData.getId())
 				.sequence(achievementData.getSequence())
 				.mate(mate)
 				.build();
@@ -156,7 +156,7 @@ public class HabitConverter {
 
 	public static Habit from(HabitEntity entity) {
 		return Habit.builder()
-				.habitId(entity.getId())
+				.id(entity.getId())
 				.memberId(entity.getMemberId())
 				.title(entity.getTitle())
 				.imojiPath(entity.getImojiPath())
