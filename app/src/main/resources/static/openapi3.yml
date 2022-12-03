@@ -195,7 +195,7 @@ paths:
     get:
       tags:
         - Mate
-      summary: 짝궁 상세조회 API
+      summary: 짝꿍 상세조회 API
       operationId: getMate
       parameters:
         - name: habitId
@@ -223,8 +223,8 @@ paths:
     post:
       tags:
         - Mate
-      summary: 짝궁 생성 API
-      description: 짝궁 생성 API
+      summary: 짝꿍 생성 API
+      description: 짝 생성 API
       operationId: saveMate
       parameters:
         - name: habitId
@@ -459,6 +459,44 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/MemberNotificationConsentUpdateRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+        '400':
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "invalid.id"
+                  message: "id는 숫자여야만 합니다."
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
+  /api/v1/members/resource:
+    patch:
+      tags:
+        - Member
+      summary: 리소스 수정 API
+      description: 멤버용 리소스를 저장하기 위한 API입니다. 전송한 키값이 기존에 존재하는 경우 새로운 값으로 덮어써지며, 새로운 키값의 경우에는 추가됩니다(리소스 오브젝트가 전체 교체되지 않습니다)
+      operationId: patchMemberResource
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberResourceRequest'
       responses:
         '200':
           description: OK
@@ -866,7 +904,7 @@ components:
         notification:
           $ref: '#/components/schemas/Notification'
     MemberRequest:
-      required: [ certificationSubject, oAuthToken, fcmToken, identificationKey ]
+      required: [ certificationSubject, oAuthToken ]
       type: object
       properties:
         certificationSubject:
@@ -875,9 +913,6 @@ components:
         oAuthToken:
           type: string
           example: "oAuthToken"
-        identificationKey:
-          type: string
-          example: "단말을 식별할 수 있는 키를 넣어주세요"
     MemberNameUpdateRequest:
       type: object
       properties:
@@ -890,6 +925,11 @@ components:
         notificationConsent:
           type: boolean
           example: true
+    MemberResourceRequest:
+      type: object
+      properties:
+        resource:
+          type: object
     MateRequest:
       type: object
       properties:
@@ -944,12 +984,10 @@ components:
         certificationSubject:
           type: string
           enum: [ "GOOGLE", "KAKAO", "APPLE" ]
-        fcmTokens:
-          type: array
-          example:
-            - [ "fcmToken1", "fcmToken2" ]
         agreements:
           $ref: '#/components/schemas/Agreement'
+        resource:
+          type: object
     Mate:
       type: object
       properties:
