@@ -1,4 +1,4 @@
-package com.depromeet.threedays.front.domain.usecase
+package com.depromeet.threedays.front.domain.usecase.member
 
 import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.config.security.AuditorHolder
@@ -27,7 +27,7 @@ class SaveMemberConsentUseCaseSpec extends IntegrationTestSpecification {
     def "AuditorHolder Mock Test"() {
         given:
         def first = repository.findAll().stream().findFirst().get()
-        AuditorHolder auditorHolder = GroovyMock(AuditorHolder){
+        AuditorHolder auditorHolder = GroovyMock(AuditorHolder) {
             get() >> first.id
         }
 

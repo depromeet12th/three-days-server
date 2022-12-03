@@ -8,8 +8,7 @@ public interface RewardHistoryRepository extends JpaRepository<RewardHistoryEnti
 
 	Long countByHabitId(Long habitId);
 
-	Long countByHabitIdAndCreateAtIsAfter(final Long habitId,
-			final LocalDateTime createAt);
+	Long countByHabitIdAndCreateAtIsAfter(final Long habitId, final LocalDateTime createAt);
 
 	void deleteFirstByHabitIdOrderByCreateAtDesc(final Long habitId);
 }

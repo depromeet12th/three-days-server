@@ -8,7 +8,8 @@ public interface MateRepository extends JpaRepository<MateEntity, Long> {
 
 	Optional<MateEntity> findFirstByHabitIdOrderByCreateAtDesc(final Long habitId);
 
-	Optional<MateEntity> findByHabitIdAndMemberIdAndDeletedFalse(final Long habitId,
-			final Long memberId);
+	Optional<MateEntity> findByHabitIdAndMemberIdAndDeletedFalse(
+			final Long habitId, final Long memberId);
 
+	Boolean existsByMemberIdAndDeletedFalse(final Long habitId);
 }

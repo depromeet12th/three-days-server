@@ -33,17 +33,19 @@ public class GetHabitUseCase {
 	public Habit execute(final Long id) {
 		HabitEntity source = repository.findById(id).orElseThrow(ResourceNotFoundException::new);
 
-		MateEntity mateEntity = mateRepository.findFirstByHabitIdOrderByCreateAtDesc(id)
-				.orElse(null);
+		MateEntity mateEntity = mateRepository.findFirstByHabitIdOrderByCreateAtDesc(id).orElse(null);
 
 		Long totalAchievementCount = habitAchievementRepository.countByHabitId(id);
 
-		HabitAchievement lastHabitAchievement = habitAchievementRepository.findFirstByHabitIdOrderByAchievementDateDesc(
-						id).map(HabitAchievementConverter::from)
-				.orElse(HabitAchievement.builder().sequence(0).build());
+		HabitAchievement lastHabitAchievement =
+				habitAchievementRepository
+						.findFirstByHabitIdOrderByAchievementDateDesc(id)
+						.map(HabitAchievementConverter::from)
+						.orElse(HabitAchievement.builder().sequence(0).build());
 
 		Notification notification =
-				habitNotificationRepository.findFirstByHabitId(id)
+				habitNotificationRepository
+						.findFirstByHabitId(id)
 						.map(HabitNotificationConverter::from)
 						.orElse(null);
 

@@ -1,6 +1,6 @@
-package com.depromeet.threedays.front.web.request.habit;
+package com.depromeet.threedays.front.web.request.mate;
 
-import com.depromeet.threedays.data.enums.HabitStatus;
+import com.depromeet.threedays.data.enums.MateType;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
-public class SearchHabitRequest {
+public class SaveMateRequest {
 
-	@NotNull private HabitStatus status;
+	@NotNull private String title;
+	@NotNull private MateType characterType;
 }

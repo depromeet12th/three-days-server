@@ -45,10 +45,9 @@ public class SaveHabitUseCase {
 		if (data == null) {
 			return;
 		}
-		
+
 		for (DayOfWeek dayOfWeek : dayOfWeeks) {
-			habitNotificationRepository.save(
-					HabitNotificationConverter.to(data, habitId, dayOfWeek));
+			habitNotificationRepository.save(HabitNotificationConverter.to(data, habitId, dayOfWeek));
 		}
 	}
 }

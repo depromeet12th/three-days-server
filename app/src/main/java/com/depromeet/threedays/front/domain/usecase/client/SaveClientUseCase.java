@@ -18,15 +18,18 @@ public class SaveClientUseCase {
 
 	public Client execute(final ClientRequest request) {
 		Long memberId = AuditorHolder.get();
-		Client source = repository.findByMemberIdAndIdentificationKey(memberId,
-				request.getIdentificationKey()).map(ClientConverter::from).orElse(null);
+		Client source =
+				repository
+						.findByMemberIdAndIdentificationKey(memberId, request.getIdentificationKey())
+						.map(ClientConverter::from)
+						.orElse(null);
 
 		if (source == null) {
 			return ClientConverter.from(repository.save(ClientConverter.to(memberId, request)));
 		}
 
 		return ClientConverter.from(
-				repository.save(ClientConverter.to(memberId, request).toBuilder().id(
-						source.getId()).build()));
+				repository.save(
+						ClientConverter.to(memberId, request).toBuilder().id(source.getId()).build()));
 	}
 }

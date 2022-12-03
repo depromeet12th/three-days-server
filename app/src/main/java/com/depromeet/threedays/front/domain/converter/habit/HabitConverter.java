@@ -32,8 +32,8 @@ public class HabitConverter {
 				.build();
 	}
 
-	public static Habit from(final Habit habit, final HabitAchievement habitAchievement,
-			final Long reward) {
+	public static Habit from(
+			final Habit habit, final HabitAchievement habitAchievement, final Long reward) {
 		if (habit == null) {
 			return null;
 		}
@@ -51,7 +51,9 @@ public class HabitConverter {
 				.build();
 	}
 
-	public static Habit from(final Habit habit, final HabitAchievement habitAchievement,
+	public static Habit from(
+			final Habit habit,
+			final HabitAchievement habitAchievement,
 			final Long reward,
 			final Mate mate) {
 		return Habit.builder()

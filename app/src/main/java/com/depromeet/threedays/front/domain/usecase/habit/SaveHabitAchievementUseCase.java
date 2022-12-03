@@ -31,11 +31,7 @@ public class SaveHabitAchievementUseCase {
 
 	private static final int PROVIDE_REWARD_COUNT = 3;
 	private static final Map<Long, Integer> levelUpSection =
-			Map.of(1L, 1,
-					4L, 2,
-					8L, 3,
-					14L, 4,
-					22L, 5);
+			Map.of(1L, 1, 4L, 2, 8L, 3, 14L, 4, 22L, 5);
 	private final HabitAchievementRepository repository;
 	private final HabitRepository habitRepository;
 
@@ -47,17 +43,18 @@ public class SaveHabitAchievementUseCase {
 
 		validator.validateCreateConstraints(HabitAchievementConverter.from(request));
 
-		final HabitEntity source = habitRepository.findById(habitId)
-				.orElseThrow(ResourceNotFoundException::new);
+		final HabitEntity source =
+				habitRepository.findById(habitId).orElseThrow(ResourceNotFoundException::new);
 
 		final HabitAchievement lastHabitAchievement =
 				HabitAchievementConverter.to(
-						repository.findFirstByHabitIdOrderByAchievementDateDesc(habitId)
-								.orElse(null));
+						repository.findFirstByHabitIdOrderByAchievementDateDesc(habitId).orElse(null));
 
-		final Mate mate = mateRepository.findByHabitIdAndMemberIdAndDeletedFalse(
-				source.getId(),
-				source.getMemberId()).map(MateConverter::from).orElse(null);
+		final Mate mate =
+				mateRepository
+						.findByHabitIdAndMemberIdAndDeletedFalse(source.getId(), source.getMemberId())
+						.map(MateConverter::from)
+						.orElse(null);
 
 		final Habit habit = HabitConverter.from(source).toBuilder().mate(mate).build();
 
@@ -67,8 +64,7 @@ public class SaveHabitAchievementUseCase {
 					this.save(
 							habit,
 							request,
-							DateCalculator.findNextDate(habit.getDayOfWeeks(),
-									request.getAchievementDate()),
+							DateCalculator.findNextDate(habit.getDayOfWeeks(), request.getAchievementDate()),
 							1),
 					0L);
 		}
@@ -86,8 +82,7 @@ public class SaveHabitAchievementUseCase {
 					this.save(
 							habit,
 							request,
-							DateCalculator.findNextDate(habit.getDayOfWeeks(),
-									request.getAchievementDate()),
+							DateCalculator.findNextDate(habit.getDayOfWeeks(), request.getAchievementDate()),
 							1),
 					getTotalRewardCount(habit, 1));
 		}
@@ -100,8 +95,7 @@ public class SaveHabitAchievementUseCase {
 					this.save(
 							habit,
 							request,
-							DateCalculator.findNextDate(habit.getDayOfWeeks(),
-									request.getAchievementDate()),
+							DateCalculator.findNextDate(habit.getDayOfWeeks(), request.getAchievementDate()),
 							sequence),
 					getTotalRewardCount(habit, sequence),
 					updateMateLevel(habit, sequence));
@@ -109,12 +103,9 @@ public class SaveHabitAchievementUseCase {
 
 		return HabitConverter.from(
 				habit,
-				this.save(
-						habit,
-						request,
-						lastHabitAchievement.getNextAchievementDate(),
-						sequence),
-				getTotalRewardCount(habit, sequence), updateMateLevel(habit, sequence));
+				this.save(habit, request, lastHabitAchievement.getNextAchievementDate(), sequence),
+				getTotalRewardCount(habit, sequence),
+				updateMateLevel(habit, sequence));
 	}
 
 	private HabitAchievement save(
@@ -124,8 +115,7 @@ public class SaveHabitAchievementUseCase {
 			int sequence) {
 		HabitAchievementEntity entity =
 				repository.save(
-						HabitAchievementConverter.to(habit, request, nextAchievementDate,
-								sequence));
+						HabitAchievementConverter.to(habit, request, nextAchievementDate, sequence));
 		return HabitAchievementConverter.from(entity);
 	}
 
@@ -147,14 +137,20 @@ public class SaveHabitAchievementUseCase {
 			return mate;
 		}
 
-		Long rewardCount = rewardHistoryRepository.countByHabitIdAndCreateAtIsAfter(
-				habit.getMemberId(),
-				mate.getCreateAt()) + 1;
+		Long rewardCount =
+				rewardHistoryRepository.countByHabitIdAndCreateAtIsAfter(
+								habit.getMemberId(), mate.getCreateAt())
+						+ 1;
 
 		if (this.isLevelUp(rewardCount)) {
-			return MateConverter.from(mateRepository.save(MateConverter.to(
-					mate.toBuilder().level(levelUpSection.get(rewardCount))
-							.levelUpAt(LocalDateTime.now()).build(), habit)));
+			return MateConverter.from(
+					mateRepository.save(
+							MateConverter.to(
+									mate.toBuilder()
+											.level(levelUpSection.get(rewardCount))
+											.levelUpAt(LocalDateTime.now())
+											.build(),
+									habit)));
 		}
 
 		return mate;
@@ -163,5 +159,4 @@ public class SaveHabitAchievementUseCase {
 	private boolean isLevelUp(final Long rewardCount) {
 		return levelUpSection.containsKey(rewardCount);
 	}
-
 }

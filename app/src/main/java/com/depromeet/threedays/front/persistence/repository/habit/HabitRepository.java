@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface HabitRepository extends JpaRepository<HabitEntity, Long> {
 
-	List<HabitEntity> findAllByMemberIdAndDeletedFalseAndStatus(final Long memberId,
-			final HabitStatus status);
+	List<HabitEntity> findAllByMemberIdAndDeletedFalseAndStatus(
+			final Long memberId, final HabitStatus status);
 }

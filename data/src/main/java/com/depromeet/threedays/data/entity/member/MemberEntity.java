@@ -37,7 +37,8 @@ public class MemberEntity implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private CertificationSubject certificationSubject;
 
-	@Column private String profile;
+	@Column(name = "resource", columnDefinition = "json")
+	private String resource;
 
 	@Column private Boolean notificationConsent;
 

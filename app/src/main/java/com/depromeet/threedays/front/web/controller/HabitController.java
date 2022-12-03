@@ -44,7 +44,7 @@ public class HabitController {
 
 	@GetMapping("/{id}")
 	public ApiResponse<HabitResponse> read(@PathVariable final Long id) {
-		return ApiResponseGenerator.success(HabitResponseConverter.from(getUseCase.execute(id)),
-				HttpStatus.OK);
+		return ApiResponseGenerator.success(
+				HabitResponseConverter.from(getUseCase.execute(id)), HttpStatus.OK);
 	}
 }

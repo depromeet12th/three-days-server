@@ -4,7 +4,7 @@ import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.data.habit.HabitAchievementDataInitializer
 import com.depromeet.threedays.front.data.habit.HabitDataInitializer
 import com.depromeet.threedays.front.domain.model.DatePeriod
-import com.depromeet.threedays.front.domain.usecase.SearchHabitAchievementUseCase
+import com.depromeet.threedays.front.domain.usecase.habit.SearchHabitAchievementUseCase
 import com.depromeet.threedays.front.web.request.habit.SearchHabitAchievementRequest
 import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.Subject

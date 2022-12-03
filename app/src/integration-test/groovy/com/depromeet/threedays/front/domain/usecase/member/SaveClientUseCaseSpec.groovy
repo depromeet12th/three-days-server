@@ -1,4 +1,4 @@
-package com.depromeet.threedays.front.domain.usecase
+package com.depromeet.threedays.front.domain.usecase.member
 
 import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.domain.usecase.client.SaveClientUseCase

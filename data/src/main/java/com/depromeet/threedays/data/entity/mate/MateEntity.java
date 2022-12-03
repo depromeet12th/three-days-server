@@ -1,8 +1,11 @@
 package com.depromeet.threedays.data.entity.mate;
 
+import com.depromeet.threedays.data.enums.MateType;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,11 +41,11 @@ public class MateEntity {
 	@Column(nullable = false)
 	private Integer level;
 
-	@Column
-	private LocalDateTime levelUpAt;
+	@Column private LocalDateTime levelUpAt;
 
+	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	private String characterType;
+	private MateType characterType;
 
 	@Column(nullable = false, updatable = false)
 	@Builder.Default

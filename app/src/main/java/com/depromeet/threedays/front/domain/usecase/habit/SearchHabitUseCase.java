@@ -32,11 +32,10 @@ public class SearchHabitUseCase {
 	private final RewardHistoryRepository rewardHistoryRepository;
 	private final MateRepository mateRepository;
 
-	public List<HabitOverview> execute(
-			final SearchHabitRequest request) {
+	public List<HabitOverview> execute(final SearchHabitRequest request) {
 		List<HabitEntity> habitEntities =
-				repository.findAllByMemberIdAndDeletedFalseAndStatus(AuditorHolder.get(),
-						request.getStatus());
+				repository.findAllByMemberIdAndDeletedFalseAndStatus(
+						AuditorHolder.get(), request.getStatus());
 
 		List<HabitOverview> habitOverviews = new ArrayList<>();
 
@@ -55,8 +54,10 @@ public class SearchHabitUseCase {
 		HabitAchievement achievementData = this.calculateSequence(achievementEntity);
 		Long rewardCount = rewardHistoryRepository.countByHabitId(entity.getId());
 		Mate mate =
-				mateRepository.findFirstByHabitIdOrderByCreateAtDesc(entity.getId())
-						.map(MateConverter::from).orElse(null);
+				mateRepository
+						.findFirstByHabitIdOrderByCreateAtDesc(entity.getId())
+						.map(MateConverter::from)
+						.orElse(null);
 
 		return HabitConverter.from(entity, achievementData, rewardCount, mate);
 	}

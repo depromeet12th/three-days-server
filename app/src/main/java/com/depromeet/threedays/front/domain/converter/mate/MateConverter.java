@@ -3,6 +3,7 @@ package com.depromeet.threedays.front.domain.converter.mate;
 import com.depromeet.threedays.data.entity.mate.MateEntity;
 import com.depromeet.threedays.front.domain.model.habit.Habit;
 import com.depromeet.threedays.front.domain.model.mate.Mate;
+import com.depromeet.threedays.front.web.request.mate.SaveMateRequest;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -23,8 +24,7 @@ public class MateConverter {
 				.build();
 	}
 
-	public static MateEntity to(final Mate data,
-			final Habit habit) {
+	public static MateEntity to(final Mate data, final Habit habit) {
 		if (habit == null || data == null) {
 			return null;
 		}
@@ -37,6 +37,17 @@ public class MateConverter {
 				.memberId(habit.getMemberId())
 				.habitId(habit.getId())
 				.levelUpAt(data.getLevelUpAt())
+				.build();
+	}
+
+	public static Mate from(final SaveMateRequest request) {
+		if (request == null) {
+			return null;
+		}
+
+		return Mate.builder()
+				.title(request.getTitle())
+				.characterType(request.getCharacterType())
 				.build();
 	}
 }

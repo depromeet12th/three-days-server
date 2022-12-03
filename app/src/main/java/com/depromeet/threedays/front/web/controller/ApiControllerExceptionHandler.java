@@ -45,32 +45,28 @@ public class ApiControllerExceptionHandler {
 	public final ApiResponse<ApiResponse.FailureBody> handleBadRequest(
 			final MethodArgumentTypeMismatchException ex, final WebRequest request) {
 		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex),
-				HttpStatus.BAD_REQUEST);
+		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler({MissingServletRequestParameterException.class})
 	public final ApiResponse<ApiResponse.FailureBody> handleBadRequest(
 			final MissingServletRequestParameterException ex, final WebRequest request) {
 		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex),
-				HttpStatus.BAD_REQUEST);
+		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler({BindException.class, MethodArgumentNotValidException.class})
 	public final ApiResponse<ApiResponse.FailureBody> handleBadRequest(
 			final BindException ex, final WebRequest request) {
 		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex),
-				HttpStatus.BAD_REQUEST);
+		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(ConstraintViolationException.class)
 	public final ApiResponse<ApiResponse.FailureBody> handleBadRequest(
 			final ConstraintViolationException ex, final WebRequest request) {
 		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex),
-				HttpStatus.BAD_REQUEST);
+		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler({ResourceNotFoundException.class, NoHandlerFoundException.class})
@@ -87,8 +83,7 @@ public class ApiControllerExceptionHandler {
 	}
 
 	@ExceptionHandler(Exception.class)
-	public ApiResponse<Void> handleInternalServerError(final Exception ex,
-			final WebRequest request) {
+	public ApiResponse<Void> handleInternalServerError(final Exception ex, final WebRequest request) {
 		this.writeLog(ex, request);
 		return ApiResponseGenerator.fail(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -103,8 +98,7 @@ public class ApiControllerExceptionHandler {
 					ex.getMessage(),
 					ex);
 		} catch (Exception e) {
-			log.error(LOG_MESSAGE_FORMAT, UNCAUGHT_LOG_MESSAGE, UNCAUGHT_LOG_MESSAGE,
-					e.getMessage(), e);
+			log.error(LOG_MESSAGE_FORMAT, UNCAUGHT_LOG_MESSAGE, UNCAUGHT_LOG_MESSAGE, e.getMessage(), e);
 		}
 	}
 }

@@ -12,7 +12,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 public class MessageSourceConfig {
 
 	private static final List<String> MESSAGE_SOURCE_CLASSPATH_LIST =
-			List.of("classpath:messages/member", "classpath:messages/habit");
+			List.of("classpath:messages/member", "classpath:messages/habit", "classpath:messages/mate");
 
 	@Bean
 	public ReloadableResourceBundleMessageSource messageSource() {

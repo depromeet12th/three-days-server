@@ -1,4 +1,4 @@
-package com.depromeet.threedays.front.domain.usecase;
+package com.depromeet.threedays.front.domain.usecase.habit;
 
 import com.depromeet.threedays.front.domain.converter.habit.HabitAchievementConverter;
 import com.depromeet.threedays.front.domain.converter.habit.HabitConverter;
@@ -26,18 +26,24 @@ public class SearchHabitAchievementUseCase {
 
 	private final HabitRepository habitRepository;
 
-	public List<HabitAchievement> execute(final Long habitId,
-			final SearchHabitAchievementRequest request) {
+	public List<HabitAchievement> execute(
+			final Long habitId, final SearchHabitAchievementRequest request) {
 
-		Habit habit = habitRepository.findById(habitId).map(HabitConverter::from)
-				.orElseThrow(ResourceNotFoundException::new);
+		Habit habit =
+				habitRepository
+						.findById(habitId)
+						.map(HabitConverter::from)
+						.orElseThrow(ResourceNotFoundException::new);
 
-		DatePeriod searchDatePeriod = Optional.ofNullable(request.getDatePeriod())
-				.orElse(new DatePeriod(habit.getCreateAt()
-						.toLocalDate(), LocalDate.now()));
+		DatePeriod searchDatePeriod =
+				Optional.ofNullable(request.getDatePeriod())
+						.orElse(new DatePeriod(habit.getCreateAt().toLocalDate(), LocalDate.now()));
 
-		return repository.findAllByHabitIdAndAchievementDateBetween(habitId,
-				searchDatePeriod.getFrom(), searchDatePeriod.getTo()).stream().map(
-				HabitAchievementConverter::from).collect(Collectors.toList());
+		return repository
+				.findAllByHabitIdAndAchievementDateBetween(
+						habitId, searchDatePeriod.getFrom(), searchDatePeriod.getTo())
+				.stream()
+				.map(HabitAchievementConverter::from)
+				.collect(Collectors.toList());
 	}
 }
