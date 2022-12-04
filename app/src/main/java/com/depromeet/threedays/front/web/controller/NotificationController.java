@@ -10,6 +10,7 @@ import com.google.firebase.messaging.BatchResponse;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/v1/notifications")
@@ -23,12 +24,12 @@ public class NotificationController {
 	@PostMapping("/global")
 	public ApiResponse<List<NotificationBatchResponse>> sendGlobalNotification(
 			@RequestBody @Valid NotificationRequest request) {
-		return ApiResponseGenerator.success(globalUseCase.execute(request));
+		return ApiResponseGenerator.success(globalUseCase.execute(request), HttpStatus.OK);
 	}
 
 	@PostMapping("/habit")
 	public ApiResponse<List<BatchResponse>> sendHabitNotification(
 			@RequestBody @Valid NotificationRequest request) {
-		return ApiResponseGenerator.success(habitUseCase.execute(request));
+		return ApiResponseGenerator.success(habitUseCase.execute(request), HttpStatus.OK);
 	}
 }

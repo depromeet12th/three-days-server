@@ -11,19 +11,19 @@ public class FirebaseProperty {
 	@Value("${firebase.multicast-message.size}")
 	Long multicastMessageSize;
 
-	@Value("${firebase.projectId}")
+	@Value("${firebase.projectId:#{null}}")
 	String projectId;
 
-	@Value("${firebase.private.keyId}")
+	@Value("${firebase.private.keyId:#{null}}")
 	String privateKeyId;
 
-	@Value("${firebase.private.key}")
+	@Value("${firebase.private.key:#{null}}")
 	String privateKey;
 
-	@Value("${firebase.client.id}")
+	@Value("${firebase.client.id:#{null}}")
 	String clientId;
 
-	@Value("${firebase.client.email}")
+	@Value("${firebase.client.email:#{null}}")
 	String clientEmail;
 
 	@Value("${firebase.token.uri}")
