@@ -192,34 +192,6 @@ paths:
                 - code: "uncaught error"
                   message: "서버 에러"
   /api/v1/habits/{habitId}/mates:
-    get:
-      tags:
-        - Mate
-      summary: 짝꿍 상세조회 API
-      operationId: getMate
-      parameters:
-        - name: habitId
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Mate'
-        '500':
-          description: INTERNAL SERVER ERROR
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
-              example:
-                - code: "uncaught error"
-                  message: "서버 에러"
     post:
       tags:
         - Mate
@@ -264,6 +236,41 @@ paths:
               example:
                 - code: "uncaught error"
                   message: "서버 에러"
+  /api/v1/habits/{habitId}/mates/{mateId}:
+    get:
+      tags:
+        - Mate
+      summary: 짝꿍 상세조회 API
+      operationId: getMate
+      parameters:
+        - name: habitId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: mateId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mate'
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
     delete:
       tags:
         - Mate
@@ -271,6 +278,12 @@ paths:
       operationId: deleteMate
       parameters:
         - name: habitId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: mateId
           in: path
           required: true
           schema:
