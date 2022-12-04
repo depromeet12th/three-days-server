@@ -13,7 +13,7 @@ class MateDataInitializer {
     private MateEntity data
 
     void initialize(Long habitId) {
-        repository.deleteAll()
+        repository.deleteByHabitId(habitId)
         this.save(habitId)
     }
 

@@ -9,6 +9,7 @@ public class FakeMateEntity {
 
     public static MateEntity create(Long habitId) {
         return MateEntity.builder()
+                         .title(RandomString.make())
                          .deleted(false)
                          .createAt(LocalDateTime.now())
                          .memberId(0L)

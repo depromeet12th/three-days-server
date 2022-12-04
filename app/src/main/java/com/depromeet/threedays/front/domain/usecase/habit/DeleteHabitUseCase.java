@@ -1,8 +1,6 @@
 package com.depromeet.threedays.front.domain.usecase.habit;
 
-import com.depromeet.threedays.data.entity.habit.HabitAchievementEntity;
 import com.depromeet.threedays.data.entity.habit.HabitEntity;
-import com.depromeet.threedays.data.entity.mate.MateEntity;
 import com.depromeet.threedays.data.enums.HabitStatus;
 import com.depromeet.threedays.front.domain.converter.habit.HabitAchievementConverter;
 import com.depromeet.threedays.front.domain.converter.habit.HabitConverter;
@@ -10,7 +8,6 @@ import com.depromeet.threedays.front.domain.converter.mate.MateConverter;
 import com.depromeet.threedays.front.domain.model.habit.Habit;
 import com.depromeet.threedays.front.domain.model.habit.HabitAchievement;
 import com.depromeet.threedays.front.domain.model.mate.Mate;
-import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import com.depromeet.threedays.front.persistence.repository.habit.HabitAchievementRepository;
 import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository;
 import com.depromeet.threedays.front.persistence.repository.mate.MateRepository;
@@ -27,35 +24,39 @@ public class DeleteHabitUseCase {
 	private final MateRepository mateRepository;
 
 	public void execute(Long habitId) {
-		HabitEntity entity = repository.findById(habitId).orElseThrow(ResourceNotFoundException::new);
-		MateEntity mateEntity = mateRepository.findByHabitId(habitId).orElse(null);
-		HabitAchievementEntity habitAchievementEntity =
+		HabitEntity entity = repository.findById(habitId).orElse(null);
+		Mate mate = mateRepository.findByHabitId(habitId).map(MateConverter::from).orElse(null);
+		HabitAchievement habitAchievement =
 				habitAchievementRepository
 						.findFirstByHabitIdOrderByAchievementDateDesc(habitId)
+						.map(HabitAchievementConverter::from)
 						.orElse(null);
-
-		Mate mate = MateConverter.from(mateEntity);
-		HabitAchievement habitAchievement = HabitAchievementConverter.from(habitAchievementEntity);
 
 		this.delete(HabitConverter.from(entity, habitAchievement, mate));
 	}
 
 	private void delete(Habit target) {
-		if (target.getStatus().equals(HabitStatus.ACTIVE)) {
-			repository.updateStatusById(target.getHabitId(), HabitStatus.ARCHIVED);
-
-			if (target.getMate() != null) {
-				this.deleteAssociation(target);
-				return;
-			}
+		if (target == null) {
+			return;
 		}
 
-		if (target.getHabitAchievement() == null || target.getStatus().equals(HabitStatus.ARCHIVED)) {
-			repository.updateDeletedById(target.getHabitId(), true);
+		if (target.getMate() != null || target.getHabitAchievement() != null) {
+			this.archiveHabit(target);
+			return;
 		}
+
+		repository.save(HabitConverter.to(target, true));
 	}
 
-	private void deleteAssociation(Habit target) {
-		mateRepository.updateDeletedById(target.getHabitId(), true);
+	private void archiveHabit(Habit target) {
+		repository.save(HabitConverter.to(target, HabitStatus.ARCHIVED));
+		this.deleteMate(target);
+	}
+
+	private void deleteMate(Habit target) {
+		if (target.getMate() == null) {
+			return;
+		}
+		mateRepository.save(MateConverter.to(target.getMate(), true));
 	}
 }
