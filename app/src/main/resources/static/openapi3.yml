@@ -386,7 +386,7 @@ paths:
       summary: 회원 탈퇴 API
       operationId: deleteMember
       responses:
-        '200':
+        '204':
           description: OK
           content:
             application/json:
