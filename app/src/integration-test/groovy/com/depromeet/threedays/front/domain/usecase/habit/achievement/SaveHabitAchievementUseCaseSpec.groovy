@@ -95,4 +95,7 @@ class SaveHabitAchievementUseCaseSpec extends IntegrationTestSpecification {
         then:
         actual.habitAchievement.sequence == 1
     }
+
+    //TODO: 습관 달성일 시퀀스 3이상일떄 reward 추가되는지, mate level 정상적으로 증가하는지 테스트
+
 }

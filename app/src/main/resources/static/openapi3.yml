@@ -196,7 +196,7 @@ paths:
       tags:
         - Mate
       summary: 짝꿍 생성 API
-      description: 짝 생성 API
+      description: 짝꿍 생성 API
       operationId: saveMate
       parameters:
         - name: habitId
@@ -1011,6 +1011,12 @@ components:
       type: object
       properties:
         id:
+          type: integer
+          example: 1
+        memberId:
+          type: integer
+          example: 1
+        habitId:
           type: integer
           example: 1
         title:

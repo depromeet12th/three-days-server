@@ -2,6 +2,7 @@ package com.depromeet.threedays.front.data.habit
 
 import com.depromeet.threedays.data.entity.habit.HabitEntity
 import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository
+import com.depromeet.threedays.front.persistence.repository.mate.MateRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -13,10 +14,14 @@ class HabitDataInitializer {
     @Autowired
     private HabitRepository repository
 
+    @Autowired
+    private MateRepository mateRepository
+
     private Collection<HabitEntity> data
 
     void initialize() {
         repository.deleteAll()
+        mateRepository.deleteAll()
 
         this.setData()
     }

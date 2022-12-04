@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 public class Mate implements Serializable {
 
 	private Long id;
+	private Long habitId;
+	private Long memberId;
 	private String title;
 	private LocalDateTime createAt;
 	private Integer level;
