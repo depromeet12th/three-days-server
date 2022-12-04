@@ -7,8 +7,6 @@ import org.springframework.stereotype.Component;
 @Getter
 @Component
 public class FirebaseProperty {
-	@Value("${firebase.database.uri}")
-	String dataBaseUri;
 
 	@Value("${firebase.multicast-message.size}")
 	Long multicastMessageSize;

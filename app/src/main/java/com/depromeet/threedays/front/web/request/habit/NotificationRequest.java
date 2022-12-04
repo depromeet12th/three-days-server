@@ -1,7 +1,7 @@
 package com.depromeet.threedays.front.web.request.habit;
 
 import java.time.LocalDateTime;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 public class NotificationRequest {
-	@NotBlank private LocalDateTime notificationTime;
+	@NotNull private LocalDateTime notificationTime;
 }

@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class GetHabitNotificationUseCase {
 	private final HabitNotificationRepository repository;
 
-	@Value("batch.habit.time-section")
+	@Value("${batch.habit}")
 	private int section;
 
 	public List<HabitNotificationEntity> execute(LocalDateTime notificationTime) {

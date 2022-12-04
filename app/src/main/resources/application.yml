@@ -36,7 +36,7 @@ springdoc:
   paths-to-match:
     - /api/**
 server:
-  port: 8080
+  port: 11111
 
 
 security:
@@ -51,3 +51,20 @@ google:
 kakao:
   user:
     uri: https://kapi.kakao.com/v2/user/me
+
+firebase:
+  multicast-message:
+    size: 500
+  projectId: ${FIREBASE_PROJECT_ID}
+  private:
+    keyId: ${FIREBASE_PRIVATE_KEY_ID}
+    key: ${FIREBASE_PRIVATE_KEY}
+  client:
+    id: ${FIREBASE_CLIENT_ID}
+    email: ${FIREBASE_CLIENT_EMAIL}
+  token:
+    uri: https://oauth2.googleapis.com/token
+
+batch:
+  global: 15
+  habit: 15

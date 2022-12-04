@@ -8,6 +8,7 @@ import com.depromeet.threedays.front.client.property.FirebaseProperty;
 import com.depromeet.threedays.front.domain.model.notification.NotificationMessage;
 import com.depromeet.threedays.front.persistence.repository.client.ClientRepository;
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository;
+import com.depromeet.threedays.front.support.NotificationLogger;
 import com.depromeet.threedays.front.web.request.habit.NotificationRequest;
 import com.depromeet.threedays.front.web.response.NotificationBatchResponse;
 import com.google.firebase.messaging.BatchResponse;
@@ -34,6 +35,7 @@ public class SendGlobalNotificationUseCase {
 
 	public List<NotificationBatchResponse> execute(NotificationRequest request) {
 		List<NotificationMessage> messages = getUseCase.execute(request.getNotificationTime());
+		NotificationLogger.messagesLogger(messages);
 
 		List<NotificationBatchResponse> result = new ArrayList<>();
 		for (NotificationMessage message : messages) {
@@ -54,10 +56,12 @@ public class SendGlobalNotificationUseCase {
 
 		List<BatchResponse> responses = new ArrayList<>();
 		for (List<ClientEntity> group : clientGroups) {
-			responses.add(
+			BatchResponse response =
 					messageClient.send(
 							FireBaseMessageBuilder.makeMulticastMessage(
-									group, message.getTitle(), message.getContents())));
+									group, message.getTitle(), message.getContents()));
+			NotificationLogger.batchResponseLogger(response);
+			responses.add(response);
 		}
 
 		return responses;
@@ -65,6 +69,7 @@ public class SendGlobalNotificationUseCase {
 
 	private List<Long> getMemberIds() {
 		List<MemberEntity> members = memberRepository.findAllByNotificationConsent(true).orElse(null);
+		if (members == null) return Collections.emptyList();
 		return members.stream().map(MemberEntity::getId).collect(Collectors.toList());
 	}
 

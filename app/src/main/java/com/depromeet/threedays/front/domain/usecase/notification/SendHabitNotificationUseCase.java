@@ -15,6 +15,7 @@ import com.depromeet.threedays.front.web.request.habit.NotificationRequest;
 import com.google.firebase.messaging.BatchResponse;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -70,10 +71,15 @@ public class SendHabitNotificationUseCase {
 
 		return messages;
 	}
+
 	private List<Long> getMemberIds() {
 		List<MemberEntity> members = memberRepository.findAllByNotificationConsent(true).orElse(null);
+		if (members == null) {
+			return Collections.emptyList();
+		}
 		return members.stream().map(MemberEntity::getId).collect(Collectors.toList());
 	}
+
 	private List<BatchResponse> sendMessage(List<HabitNotificationMessage> messages) {
 		List<BatchResponse> responses = new ArrayList<>();
 		for (HabitNotificationMessage message : messages) {

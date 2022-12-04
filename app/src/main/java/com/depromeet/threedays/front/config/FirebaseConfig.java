@@ -30,7 +30,6 @@ public class FirebaseConfig {
 										.setClientId(firebaseProperty.getClientId())
 										.setTokenServerUri(URI.create(firebaseProperty.getTokenUri()))
 										.build())
-						.setDatabaseUrl(firebaseProperty.getDataBaseUri())
 						.build();
 
 		return FirebaseApp.initializeApp(options);

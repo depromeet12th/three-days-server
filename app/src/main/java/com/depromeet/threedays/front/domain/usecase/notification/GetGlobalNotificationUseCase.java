@@ -21,8 +21,8 @@ public class GetGlobalNotificationUseCase {
 
 	private final GlobalNotificationRepository repository;
 
-	@Value("batch.global.time-section")
-	private int section;
+	@Value("${batch.global}")
+	private Integer section;
 
 	public List<NotificationMessage> execute(LocalDateTime notificationTime) {
 		DayOfWeek day = notificationTime.getDayOfWeek();
