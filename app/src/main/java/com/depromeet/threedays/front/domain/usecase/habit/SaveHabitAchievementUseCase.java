@@ -48,13 +48,11 @@ public class SaveHabitAchievementUseCase {
 
 		final HabitAchievement lastHabitAchievement =
 				HabitAchievementConverter.to(
-						repository.findFirstByHabitIdOrderByAchievementDateDesc(habitId)
-								.orElse(null));
+						repository.findFirstByHabitIdOrderByAchievementDateDesc(habitId).orElse(null));
 
 		final Mate mate =
 				mateRepository
-						.findByHabitIdAndMemberIdAndDeletedFalse(source.getId(),
-								source.getMemberId())
+						.findByHabitIdAndMemberIdAndDeletedFalse(source.getId(), source.getMemberId())
 						.map(MateConverter::from)
 						.orElse(null);
 
@@ -66,8 +64,7 @@ public class SaveHabitAchievementUseCase {
 					this.save(
 							habit,
 							request,
-							DateCalculator.findNextDate(habit.getDayOfWeeks(),
-									request.getAchievementDate()),
+							DateCalculator.findNextDate(habit.getDayOfWeeks(), request.getAchievementDate()),
 							1),
 					0L);
 		}
@@ -85,8 +82,7 @@ public class SaveHabitAchievementUseCase {
 					this.save(
 							habit,
 							request,
-							DateCalculator.findNextDate(habit.getDayOfWeeks(),
-									request.getAchievementDate()),
+							DateCalculator.findNextDate(habit.getDayOfWeeks(), request.getAchievementDate()),
 							1),
 					getTotalRewardCount(habit, 1));
 		}
@@ -99,8 +95,7 @@ public class SaveHabitAchievementUseCase {
 					this.save(
 							habit,
 							request,
-							DateCalculator.findNextDate(habit.getDayOfWeeks(),
-									request.getAchievementDate()),
+							DateCalculator.findNextDate(habit.getDayOfWeeks(), request.getAchievementDate()),
 							sequence),
 					getTotalRewardCount(habit, sequence),
 					updateMateLevel(habit, sequence));
@@ -120,8 +115,7 @@ public class SaveHabitAchievementUseCase {
 			int sequence) {
 		HabitAchievementEntity entity =
 				repository.save(
-						HabitAchievementConverter.to(habit, request, nextAchievementDate,
-								sequence));
+						HabitAchievementConverter.to(habit, request, nextAchievementDate, sequence));
 		return HabitAchievementConverter.from(entity);
 	}
 
@@ -137,8 +131,11 @@ public class SaveHabitAchievementUseCase {
 			return null;
 		}
 
-		Mate mate = mateRepository.findById(habit.getMate().getId()).map(MateConverter::from)
-				.orElseThrow(ResourceNotFoundException::new);
+		Mate mate =
+				mateRepository
+						.findById(habit.getMate().getId())
+						.map(MateConverter::from)
+						.orElseThrow(ResourceNotFoundException::new);
 
 		if (sequence % PROVIDE_REWARD_COUNT != 0) {
 			return mate;
@@ -146,7 +143,7 @@ public class SaveHabitAchievementUseCase {
 
 		Long rewardCount =
 				rewardHistoryRepository.countByHabitIdAndCreateAtIsAfter(
-						habit.getMemberId(), mate.getCreateAt())
+								habit.getMemberId(), mate.getCreateAt())
 						+ 1;
 
 		if (this.isLevelUp(rewardCount)) {

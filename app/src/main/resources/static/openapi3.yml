@@ -335,7 +335,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Member'
+                allOf:
+                  - $ref: '#/components/schemas/Member'
+                  - type: object
+                    properties:
+                      token:
+                        $ref: '#/components/schemas/Token'
         '400':
           description: BAD REQUEST
           content:
