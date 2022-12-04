@@ -9,8 +9,7 @@ public class FakeMemberEntity {
 	static MemberEntity create() {
 		return MemberEntity.builder()
 				.name(RandomString.make())
-				.profile("empty")
-				.certificationId(0L)
+				.certificationId(RandomString.make())
 				.certificationSubject(CertificationSubject.GOOGLE)
 				.build();
 	}

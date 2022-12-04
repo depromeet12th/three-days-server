@@ -1,9 +1,10 @@
 package com.depromeet.threedays.front.domain.usecase.client;
 
-import com.depromeet.threedays.front.domain.command.client.SaveClientCommand;
+import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.converter.client.ClientConverter;
 import com.depromeet.threedays.front.domain.model.client.Client;
 import com.depromeet.threedays.front.persistence.repository.client.ClientRepository;
+import com.depromeet.threedays.front.web.request.client.ClientRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,9 +14,22 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class SaveClientUseCase {
 
-	private final ClientRepository clientRepository;
+	private final ClientRepository repository;
 
-	public Client execute(SaveClientCommand command) {
-		return ClientConverter.from(clientRepository.save(ClientConverter.to(command)));
+	public Client execute(final ClientRequest request) {
+		Long memberId = AuditorHolder.get();
+		Client source =
+				repository
+						.findByMemberIdAndIdentificationKey(memberId, request.getIdentificationKey())
+						.map(ClientConverter::from)
+						.orElse(null);
+
+		if (source == null) {
+			return ClientConverter.from(repository.save(ClientConverter.to(memberId, request)));
+		}
+
+		return ClientConverter.from(
+				repository.save(
+						ClientConverter.to(memberId, request).toBuilder().id(source.getId()).build()));
 	}
 }

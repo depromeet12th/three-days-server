@@ -6,7 +6,11 @@ import io.jsonwebtoken.Jwts;
 import java.util.Base64;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +23,7 @@ public class TokenResolver {
 	private static final String AUTHORIZATION_HEADER = "authorization";
 
 	@Value("${security.jwt.token.secretkey}")
-	private String SECRET_KEY;
+	private String secretKey;
 
 	public String resolveToken(HttpServletRequest request) {
 		String jwtToken = request.getHeader(AUTHORIZATION_HEADER);
@@ -37,7 +41,7 @@ public class TokenResolver {
 
 		Jws<Claims> claims =
 				Jwts.parserBuilder()
-						.setSigningKey(SECRET_KEY.getBytes())
+						.setSigningKey(secretKey.getBytes())
 						.build()
 						.parseClaimsJws(parseBearerToken(jwtToken));
 
@@ -55,5 +59,22 @@ public class TokenResolver {
 
 		String[] split = jwtToken.split("\\.");
 		return new String(decoder.decode(split[PAYLOAD_INDEX].getBytes()));
+	}
+
+	public Long extractIdByToken(String jwtToken) {
+
+		Base64.Decoder decoder = Base64.getUrlDecoder();
+
+		String[] split = jwtToken.split("\\.");
+		String s = new String(decoder.decode(split[PAYLOAD_INDEX].getBytes()));
+
+		JSONParser jsonParser = new JSONParser();
+
+		try {
+			JSONObject jsonObject = (JSONObject) jsonParser.parse(s);
+			return (Long) jsonObject.get("memberId");
+		} catch (ParseException e) {
+			throw new AccessDeniedException(e.getMessage());
+		}
 	}
 }

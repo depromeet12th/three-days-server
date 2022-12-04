@@ -16,6 +16,6 @@ import lombok.ToString;
 @ToString
 public class GetMemberQuery {
 
-	private Long certificationId;
+	private String certificationId;
 	private CertificationSubject certificationSubject;
 }

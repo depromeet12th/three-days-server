@@ -11,19 +11,19 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class HabitValidator {
 
-	public void validateCreateConstraints(final Habit data) {
-		this.throwIfInSufficientDayOfWeeks(data.getDayOfWeeks());
+	public void validateCreateConstraints(final Habit target) {
+		this.throwIfInSufficientDayOfWeeks(target.getDayOfWeeks());
 	}
 
-	private void throwIfInSufficientDayOfWeeks(EnumSet<DayOfWeek> data) {
-		if (data == null) {
+	private void throwIfInSufficientDayOfWeeks(EnumSet<DayOfWeek> target) {
+		if (target == null) {
 			return;
 		}
 
 		final String INSUFFICIENT_DAY_OF_WEEKS = "insufficient.day.of.weeks";
 		final int MINIMUM_SIZE = 3;
 
-		this.throwIf(data.size() < MINIMUM_SIZE, INSUFFICIENT_DAY_OF_WEEKS);
+		this.throwIf(target.size() < MINIMUM_SIZE, INSUFFICIENT_DAY_OF_WEEKS);
 	}
 
 	private void throwIf(final boolean condition, final String messageCodeSuffix) {

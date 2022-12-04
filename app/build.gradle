@@ -25,5 +25,21 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.7.4'
 
+
+}
+
+def imageName = project.hasProperty('imageName') ? imageName : "app:local"
+def releaseVersion = project.hasProperty('releaseVersion') ? releaseVersion : null
+
+task buildDockerImage {
+    dependsOn bootJar
+
+    doLast {
+        exec {
+            workingDir '.'
+            commandLine 'docker', 'build', '-t', "${imageName}", '--build-arg', "RELEASE_VERSION=${releaseVersion}", '.'
+        }
+    }
 }

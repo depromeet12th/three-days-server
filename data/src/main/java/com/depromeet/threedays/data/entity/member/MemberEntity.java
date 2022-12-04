@@ -29,7 +29,7 @@ public class MemberEntity implements Serializable {
 	@Column(name = "member_id")
 	private Long id;
 
-	@Column private Long certificationId;
+	@Column private String certificationId;
 
 	@Column private String name;
 
@@ -37,11 +37,16 @@ public class MemberEntity implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private CertificationSubject certificationSubject;
 
-	@Column private String profile;
+	@Column(name = "resource", columnDefinition = "json")
+	private String resource;
 
 	@Column private Boolean notificationConsent;
 
 	public void updateName(String name) {
 		this.name = name;
+	}
+
+	public void updateNotificationConsent(Boolean consent) {
+		this.notificationConsent = consent;
 	}
 }

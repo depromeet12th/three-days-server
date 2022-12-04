@@ -1,0 +1,31 @@
+threedays:
+  datasource:
+    write:
+      jdbc-url: ${DB_HOSTNAME}/threedays?allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: ${DB_USERNAME}
+      password: ${DB_PASSWORD}
+      pool-name: threedays-pool-write
+    read:
+      jdbc-url: ${DB_HOSTNAME}/threedays?allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: ${DB_USERNAME}
+      password: ${DB_PASSWORD}
+      pool-name: threedays-pool-read
+      readOnly: true
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        hbm2ddl:
+          jdbc_metadata_extraction_strategy: individually
+        format_sql: true
+        show_sql: false
+        order_inserts: true
+        order_updates: true
+        jdbc:
+          batch_size: 500
+          fetch_size: 500
+          batch_versioned_data: true

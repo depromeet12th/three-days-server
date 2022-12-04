@@ -1,8 +1,9 @@
 package com.depromeet.threedays.front.domain.usecase.habit
 
+import com.depromeet.threedays.data.enums.HabitStatus
 import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.data.habit.HabitDataInitializer
-import com.depromeet.threedays.front.domain.usecase.habit.SearchHabitUseCase
+import com.depromeet.threedays.front.web.request.habit.SearchHabitRequest
 import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.Subject
 
@@ -21,11 +22,11 @@ class SearchHabitUseCaseSpec extends IntegrationTestSpecification {
 
     def "사용자는 자신의 습관 목록을 조회할 수 있다."() {
         when:
-        def actual = searchUseCase.execute()
+        def actual = searchUseCase.execute(SearchHabitRequest.builder()
+                .status(HabitStatus.ACTIVE)
+                .build())
 
         then:
         actual.size() == 10
     }
-
-
 }

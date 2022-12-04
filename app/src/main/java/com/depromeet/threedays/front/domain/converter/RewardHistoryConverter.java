@@ -10,7 +10,7 @@ public class RewardHistoryConverter {
 
 	public static RewardHistoryEntity to(Habit habit) {
 		return RewardHistoryEntity.builder()
-				.habitId(habit.getHabitId())
+				.habitId(habit.getId())
 				.memberId(habit.getMemberId())
 				.createAt(LocalDateTime.now())
 				.build();

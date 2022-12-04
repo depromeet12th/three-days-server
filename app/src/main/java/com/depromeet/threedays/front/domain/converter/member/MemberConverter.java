@@ -3,6 +3,7 @@ package com.depromeet.threedays.front.domain.converter.member;
 import com.depromeet.threedays.data.entity.member.MemberEntity;
 import com.depromeet.threedays.front.domain.command.SaveMemberCommand;
 import com.depromeet.threedays.front.domain.model.member.Member;
+import com.depromeet.threedays.front.domain.model.member.Token;
 
 public class MemberConverter {
 
@@ -10,21 +11,24 @@ public class MemberConverter {
 		throw new UnsupportedOperationException();
 	}
 
-	public static Member from(final MemberEntity entity, boolean isNew) {
+	public static Member from(final MemberEntity entity, boolean isNew, Token token) {
 		if (entity == null) {
 			return null;
 		}
 
-		// TODO: 토큰 생성하여 넣어주는 로직 추가
-
-		return Member.builder().memberId(entity.getId()).name(entity.getName()).isNew(isNew).build();
+		return Member.builder()
+				.id(entity.getId())
+				.name(entity.getName())
+				.isNew(isNew)
+				.token(token)
+				.build();
 	}
 
 	public static Member from(final MemberEntity entity) {
 		if (entity == null) {
 			return null;
 		}
-		return Member.builder().memberId(entity.getId()).name(entity.getName()).isNew(false).build();
+		return Member.builder().id(entity.getId()).name(entity.getName()).isNew(false).build();
 	}
 
 	public static MemberEntity to(final SaveMemberCommand command) {
@@ -34,7 +38,7 @@ public class MemberConverter {
 
 		return MemberEntity.builder()
 				.name(command.getName())
-				.profile(MemberInfoConverter.convert(command.getMemberInfo()))
+				.certificationId(command.getCertificationId())
 				.certificationSubject(command.getCertificationSubject())
 				.build();
 	}

@@ -1,5 +1,6 @@
 package com.depromeet.threedays.front.web.response;
 
+import com.depromeet.threedays.data.enums.HabitStatus;
 import com.depromeet.threedays.front.domain.model.mate.Mate;
 import com.depromeet.threedays.front.domain.model.notification.Notification;
 import java.time.DayOfWeek;
@@ -16,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class HabitResponse {
 
-	private Long habitId;
+	private Long id;
 	private Long memberId;
 	private String title;
 	private String imojiPath;
@@ -24,6 +25,7 @@ public class HabitResponse {
 	private EnumSet<DayOfWeek> dayOfWeeks;
 	private Long reward;
 	private Integer sequence;
+	private HabitStatus status;
 	private Long totalAchievementCount;
 	private Long todayHabitAchievementId;
 	private Mate mate;
