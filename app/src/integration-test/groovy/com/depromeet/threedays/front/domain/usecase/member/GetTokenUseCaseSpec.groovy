@@ -1,4 +1,4 @@
-package com.depromeet.threedays.front.domain.usecase
+package com.depromeet.threedays.front.domain.usecase.member
 
 import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.config.security.filter.token.TokenResolver
@@ -7,7 +7,6 @@ import com.depromeet.threedays.front.domain.model.member.Token
 import com.depromeet.threedays.front.domain.usecase.member.GetTokenUseCase
 import com.depromeet.threedays.front.exception.PolicyViolationException
 import com.depromeet.threedays.front.support.TokenGenerator
-import com.depromeet.threedays.front.web.request.client.ClientRequest
 import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.Subject
 
@@ -33,8 +32,8 @@ class GetTokenUseCaseSpec extends IntegrationTestSpecification {
         given:
         def expected = initializer.getData().stream().findFirst().get().id
         def req = Token.builder().accessToken(tokenGenerator.generateAccessToken(expected))
-        .refreshToken(tokenGenerator.generateRefreshToken(expected))
-        .build()
+                .refreshToken(tokenGenerator.generateRefreshToken(expected))
+                .build()
 
         when:
         def token = getUseCase.execute(req)
@@ -47,8 +46,8 @@ class GetTokenUseCaseSpec extends IntegrationTestSpecification {
         given:
         def expected = 10000L
         def req = Token.builder().accessToken(tokenGenerator.generateAccessToken(expected))
-        .refreshToken(tokenGenerator.generateRefreshToken(expected))
-        .build()
+                .refreshToken(tokenGenerator.generateRefreshToken(expected))
+                .build()
 
         when:
         getUseCase.execute(req)

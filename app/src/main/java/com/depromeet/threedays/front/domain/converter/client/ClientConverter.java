@@ -1,10 +1,11 @@
 package com.depromeet.threedays.front.domain.converter.client;
 
 import com.depromeet.threedays.data.entity.client.ClientEntity;
-import com.depromeet.threedays.front.domain.command.client.SaveClientCommand;
 import com.depromeet.threedays.front.domain.model.client.Client;
+import com.depromeet.threedays.front.web.request.client.ClientRequest;
 
 public class ClientConverter {
+
 	private ClientConverter() {
 		throw new UnsupportedOperationException();
 	}
@@ -22,14 +23,15 @@ public class ClientConverter {
 				.build();
 	}
 
-	public static ClientEntity to(final SaveClientCommand command) {
-		if (command == null) {
+	public static ClientEntity to(final Long memberId, final ClientRequest request) {
+		if (memberId == null || request == null) {
 			return null;
 		}
+
 		return ClientEntity.builder()
-				.memberId(command.getMemberId())
-				.fcmToken(command.getFcmToken())
-				.identificationKey(command.getIdentificationKey())
+				.memberId(memberId)
+				.fcmToken(request.getFcmToken())
+				.identificationKey(request.getIdentificationKey())
 				.build();
 	}
 }

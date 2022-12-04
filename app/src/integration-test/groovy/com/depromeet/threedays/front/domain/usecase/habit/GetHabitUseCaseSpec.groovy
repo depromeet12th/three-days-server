@@ -26,7 +26,7 @@ class GetHabitUseCaseSpec extends IntegrationTestSpecification {
         def actual = getUseCase.execute(expected.id)
 
         then:
-        expected.id == actual.habitId
+        expected.id == actual.id
         expected.title == actual.title
     }
 

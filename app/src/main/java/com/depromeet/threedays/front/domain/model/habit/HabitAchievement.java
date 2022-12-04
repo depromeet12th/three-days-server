@@ -15,11 +15,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class HabitAchievement implements Serializable {
 
-	private Long habitId;
+	private Long id;
 
-	private Long habitAchievementId;
-	@Builder.Default
-	private Integer sequence = 0;
+	private Long habitId;
+	@Builder.Default private Integer sequence = 0;
 
 	@JsonInclude(Include.NON_NULL)
 	private LocalDate achievementDate;

@@ -23,5 +23,5 @@ public class SaveHabitRequest {
 
 	@NotNull private EnumSet<DayOfWeek> dayOfWeeks;
 
-	@NotNull private Notification notification;
+	private Notification notification;
 }

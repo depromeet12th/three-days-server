@@ -4,6 +4,7 @@ import com.depromeet.threedays.data.entity.habit.HabitAchievementEntity
 import com.depromeet.threedays.data.entity.history.RewardHistoryEntity
 import com.depromeet.threedays.front.persistence.repository.RewardHistoryRepository
 import com.depromeet.threedays.front.persistence.repository.habit.HabitAchievementRepository
+import com.depromeet.threedays.front.persistence.repository.mate.MateRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -18,6 +19,9 @@ class HabitAchievementDataInitializer {
     @Autowired
     private RewardHistoryRepository rewardHistoryRepository
 
+    @Autowired
+    private MateRepository mateRepository
+
     private Collection<HabitAchievementEntity> data
 
     void initialize(final Long habitId) {
@@ -26,10 +30,11 @@ class HabitAchievementDataInitializer {
         this.setData(habitId)
     }
 
-    void setSpecificData(HabitAchievementEntity entity){
+    void setSpecificData(List<HabitAchievementEntity> entities) {
         repository.deleteAll()
+        rewardHistoryRepository.deleteAll()
 
-        repository.save(entity)
+        repository.saveAll(entities)
     }
 
 

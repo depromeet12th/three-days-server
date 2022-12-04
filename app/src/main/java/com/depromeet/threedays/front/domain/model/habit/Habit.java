@@ -21,7 +21,7 @@ import lombok.ToString;
 @ToString
 public class Habit {
 
-	private Long habitId;
+	private Long id;
 	private Long memberId;
 	private String title;
 	private String imojiPath;

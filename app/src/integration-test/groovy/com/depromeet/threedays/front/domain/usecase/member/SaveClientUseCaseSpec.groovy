@@ -1,16 +1,17 @@
-package com.depromeet.threedays.front.domain.usecase
+package com.depromeet.threedays.front.domain.usecase.member
 
 import com.depromeet.threedays.front.IntegrationTestSpecification
-import com.depromeet.threedays.front.domain.usecase.client.AddClientUseCaseFacade
+import com.depromeet.threedays.front.domain.usecase.client.SaveClientUseCase
 import com.depromeet.threedays.front.persistence.repository.client.ClientRepository
 import com.depromeet.threedays.front.web.request.client.ClientRequest
 import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.Subject
 
-class AddClientUseCaseSpec extends IntegrationTestSpecification {
+//TODO: TestCode Refactor by jh
+class SaveClientUseCaseSpec extends IntegrationTestSpecification {
     @Subject
     @Autowired
-    private AddClientUseCaseFacade addUseCase
+    private SaveClientUseCase saveUseCase
 
     @Autowired
     private ClientRepository repository
@@ -27,7 +28,7 @@ class AddClientUseCaseSpec extends IntegrationTestSpecification {
                 .build()
 
         when:
-        addUseCase.execute(expected)
+        saveUseCase.execute(expected)
 
         then:
         repository.findAll().size() > 0
@@ -39,7 +40,7 @@ class AddClientUseCaseSpec extends IntegrationTestSpecification {
                 .fcmToken("fcmToken")
                 .identificationKey("ikey")
                 .build()
-        addUseCase.execute(request)
+        saveUseCase.execute(request)
 
         when:
         def newToken = "newToken"
@@ -47,7 +48,7 @@ class AddClientUseCaseSpec extends IntegrationTestSpecification {
                 .fcmToken(newToken)
                 .identificationKey("ikey")
                 .build()
-        addUseCase.execute(actual)
+        saveUseCase.execute(actual)
 
         then:
         repository.findAll().get(0).getFcmToken() == newToken
