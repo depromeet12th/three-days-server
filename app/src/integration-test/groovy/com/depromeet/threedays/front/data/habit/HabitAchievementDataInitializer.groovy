@@ -2,7 +2,6 @@ package com.depromeet.threedays.front.data.habit
 
 import com.depromeet.threedays.data.entity.habit.HabitAchievementEntity
 import com.depromeet.threedays.data.entity.history.RewardHistoryEntity
-import com.depromeet.threedays.data.entity.mate.MateEntity
 import com.depromeet.threedays.front.persistence.repository.RewardHistoryRepository
 import com.depromeet.threedays.front.persistence.repository.habit.HabitAchievementRepository
 import com.depromeet.threedays.front.persistence.repository.mate.MateRepository
@@ -31,15 +30,11 @@ class HabitAchievementDataInitializer {
         this.setData(habitId)
     }
 
-    void setSpecificData(List<HabitAchievementEntity> entities, MateEntity mateEntity) {
+    void setSpecificData(List<HabitAchievementEntity> entities) {
         repository.deleteAll()
         rewardHistoryRepository.deleteAll()
 
         repository.saveAll(entities)
-
-        if (mateEntity != null) {
-            mateRepository.save(mateEntity)
-        }
     }
 
 

@@ -3,7 +3,6 @@ package com.depromeet.threedays.front.domain.usecase.mate;
 import com.depromeet.threedays.front.domain.converter.mate.MateConverter;
 import com.depromeet.threedays.front.domain.model.mate.Mate;
 import com.depromeet.threedays.front.domain.validation.MateValidator;
-import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository;
 import com.depromeet.threedays.front.persistence.repository.mate.MateRepository;
 import com.depromeet.threedays.front.web.request.mate.SaveMateRequest;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class SaveMateUseCase {
 
 	private final MateRepository repository;
-	private final HabitRepository habitRepository;
 
 	private final MateValidator validator;
 

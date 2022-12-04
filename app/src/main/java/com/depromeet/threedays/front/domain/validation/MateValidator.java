@@ -15,21 +15,26 @@ public class MateValidator {
 	private final HabitRepository habitRepository;
 
 	public void validateCreateConstraints(final Mate target) {
-		this.throwIfInvalidHabit(target);
+		this.throwIfInvalidHabit(target.getHabitId());
 		this.throwIfAlreadyExistMate(target);
 	}
 
-	private void throwIfInvalidHabit(final Mate target) {
+	public void validateDeleteConstraints(final Long habitId) {
+		this.throwIfInvalidHabit(habitId);
+	}
+
+	private void throwIfInvalidHabit(final Long habitId) {
 		final String INVALID_HABIT = "invalid.habit";
 
-		this.throwIf(!habitRepository.existsByIdAndDeletedFalse(target.getHabitId()), INVALID_HABIT);
+		this.throwIf(!habitRepository.existsByIdAndDeletedFalse(habitId), INVALID_HABIT);
 	}
 
 	private void throwIfAlreadyExistMate(final Mate target) {
 		final String ALREADY_EXIST_MATE = "already.exist.mate";
 
 		this.throwIf(
-				repository.existsByMemberIdAndDeletedFalse(target.getMemberId()), ALREADY_EXIST_MATE);
+				repository.existsByMemberIdAndDeletedFalse(target.getMemberId()),
+				ALREADY_EXIST_MATE);
 	}
 
 	private void throwIf(final boolean condition, final String messageCodeSuffix) {

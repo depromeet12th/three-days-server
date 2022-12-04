@@ -35,11 +35,9 @@ public class HabitAchievementController {
 
 	@PostMapping
 	public ApiResponse<HabitResponse> add(
-			@PathVariable Long habitId,
-			@RequestBody @Valid final SaveHabitAchievementRequest request) {
+			@PathVariable Long habitId, @RequestBody @Valid final SaveHabitAchievementRequest request) {
 		return ApiResponseGenerator.success(
-				HabitResponseConverter.from(saveUseCase.execute(habitId, request)),
-				HttpStatus.CREATED);
+				HabitResponseConverter.from(saveUseCase.execute(habitId, request)), HttpStatus.CREATED);
 	}
 
 	@GetMapping

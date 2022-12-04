@@ -16,6 +16,8 @@ public class MateConverter {
 
 		return Mate.builder()
 				.id(entity.getId())
+				.memberId(entity.getMemberId())
+				.habitId(entity.getHabitId())
 				.createAt(entity.getCreateAt())
 				.level(entity.getLevel())
 				.characterType(entity.getCharacterType())

@@ -1,8 +1,6 @@
 package com.depromeet.threedays.front.domain.usecase.habit.achievement
 
 import com.depromeet.threedays.data.entity.habit.HabitAchievementEntity
-import com.depromeet.threedays.data.entity.mate.MateEntity
-import com.depromeet.threedays.data.enums.MateType
 import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.data.habit.HabitAchievementDataInitializer
 import com.depromeet.threedays.front.data.habit.HabitDataInitializer
@@ -86,7 +84,7 @@ class SaveHabitAchievementUseCaseSpec extends IntegrationTestSpecification {
                 .achievementDate(LocalDate.now().minusDays(10))
                 .nextAchievementDate(LocalDate.now().minusDays(3))
                 .sequence(5)
-                .build()), null)
+                .build()))
 
         when:
         def actual = saveUseCase.execute(criterionHabit.id,
@@ -97,8 +95,6 @@ class SaveHabitAchievementUseCaseSpec extends IntegrationTestSpecification {
         then:
         actual.habitAchievement.sequence == 1
     }
-
-    //TODO: 습관 달성일 시퀀스 3이상일떄 reward 추가되는지, mate level 정상적으로 증가하는지 테스트
 
     def "습관 달성 여부가 정해진 조건을 달성할 경우, 박수를 받을 수 있다."() {
         given:
@@ -117,14 +113,8 @@ class SaveHabitAchievementUseCaseSpec extends IntegrationTestSpecification {
                         .nextAchievementDate(LocalDate.now())
                         .sequence(2)
                         .build())
-        def criterionMate = MateEntity.builder()
-                .memberId(0L)
-                .habitId(criterionHabit.id)
-                .characterType(MateType.CARROT)
-                .level(0)
-                .title("mate title")
-                .build()
-        dataInitializer.setSpecificData(pastAchievements, criterionMate)
+
+        dataInitializer.setSpecificData(pastAchievements)
 
         when:
         def actual = saveUseCase.execute(criterionHabit.id,

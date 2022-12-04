@@ -1,8 +1,11 @@
 package com.depromeet.threedays.front.data.habit
 
 import com.depromeet.threedays.data.entity.habit.HabitEntity
+import com.depromeet.threedays.data.entity.mate.MateEntity
+import com.depromeet.threedays.data.enums.MateType
 import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository
 import com.depromeet.threedays.front.persistence.repository.mate.MateRepository
+import net.bytebuddy.utility.RandomString
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
@@ -18,16 +21,22 @@ class HabitDataInitializer {
     private MateRepository mateRepository
 
     private Collection<HabitEntity> data
+    private MateEntity associationData
 
     void initialize() {
         repository.deleteAll()
         mateRepository.deleteAll()
 
         this.setData()
+        this.setAssociation(data.first().id)
     }
 
     Collection<HabitEntity> getData() {
         return this.data
+    }
+
+    MateEntity getAssociationData() {
+        return this.associationData
     }
 
     private void setData() {
@@ -37,6 +46,18 @@ class HabitDataInitializer {
         }
 
         this.data = data
+    }
+
+    private void setAssociation(final Long habitId) {
+        def mateEntity = MateEntity.builder()
+                .title(RandomString.make())
+                .level(0)
+                .characterType(MateType.CARROT)
+                .habitId(habitId)
+                .memberId(0L)
+                .build()
+
+        this.associationData = mateRepository.save(mateEntity)
     }
 
 }
