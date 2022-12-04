@@ -52,13 +52,13 @@ kakao:
 firebase:
   multicast-message:
     size: 500
-  projectId: ${FIREBASE_PROJECT_ID}
+  projectId: three-days-bd5f3
   private:
     keyId: ${FIREBASE_PRIVATE_KEY_ID}
     key: ${FIREBASE_PRIVATE_KEY}
   client:
-    id: ${FIREBASE_CLIENT_ID}
-    email: ${FIREBASE_CLIENT_EMAIL}
+    id: 115789865759617169410
+    email: firebase-adminsdk-v3brd@three-days-bd5f3.iam.gserviceaccount.com
   token:
     uri: https://oauth2.googleapis.com/token
 
