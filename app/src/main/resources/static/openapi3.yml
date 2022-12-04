@@ -68,12 +68,13 @@ paths:
       summary: 모든 습관 목록을 가져오는 API
       description: 모든 habit list를 반환한다
       operationId: getHabits
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SearchHabitRequest'
+      parameters:
+        - name: status
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [ "ACTIVE", "ARCHIVED" ]
       responses:
         '200':
           description: OK
@@ -581,12 +582,27 @@ paths:
       summary: 특정 습관의 성취기록을 가져오는 API (나의 기록 - 상세 기록)
       description: 나의 기록 - 상세 기록 페이지에서 달력 뷰를 구성하는데 쓰이는 API, 기간 (10-01 ~ 10-30)을 검색조건으로 입력하면, 그 기간동안의 성취 기록을 리턴합니다. 검색 조건이 없다면 모든 성취 기록을 리턴합니다.(페이징 없음)
       operationId: getHabits
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SearchHabitAchievementRequest'
+      parameters:
+        - name: habitId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: datePeriod.to
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+            example: 2022-11-10
+        - name: datePeriod.from
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+            example: 2022-11-20
       responses:
         '200':
           description: OK
@@ -726,18 +742,21 @@ paths:
       summary: 특정 멤버의 통계 데이터를 제공한다.
       description: 기간을 설정하지 않은 경우, 멤버가 가입한 이후부터 현재까지의 모든 데이터의 통계를 가져옵니다. (페이징 없음)
       operationId: getRecords
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RecordRequest'
       parameters:
-        - name: habitId
-          in: path
-          required: true
+        - name: datePeriod.to
+          in: query
+          required: false
           schema:
-            type: integer
-            format: int64
+            type: string
+            format: date
+            example: 2022-11-10
+        - name: datePeriod.from
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+            example: 2022-11-20
       responses:
         '200':
           description: OK

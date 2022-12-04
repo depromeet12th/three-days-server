@@ -38,7 +38,7 @@ public class HabitController {
 	}
 
 	@GetMapping
-	public ApiResponse<List<HabitOverview>> browse(@RequestBody final SearchHabitRequest request) {
+	public ApiResponse<List<HabitOverview>> browse(final SearchHabitRequest request) {
 		return ApiResponseGenerator.success(searchUseCase.execute(request), HttpStatus.OK);
 	}
 
