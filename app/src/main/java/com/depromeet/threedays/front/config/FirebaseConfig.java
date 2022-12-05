@@ -18,6 +18,12 @@ public class FirebaseConfig {
 		return new FirebaseProperty();
 	}
 
+	@Profile({"local", "integration-test"})
+	@Bean
+	public FirebaseApp localFireBaseApp() {
+		return null;
+	}
+
 	@Profile("default")
 	@Bean
 	public FirebaseApp fireBaseApp(FirebaseProperty firebaseProperty) throws IOException {
@@ -35,11 +41,5 @@ public class FirebaseConfig {
 						.build();
 
 		return FirebaseApp.initializeApp(options);
-	}
-
-	@Profile("local")
-	@Bean
-	public FirebaseApp localFireBaseApp() {
-		return null;
 	}
 }
