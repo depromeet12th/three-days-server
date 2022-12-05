@@ -48,4 +48,3 @@ jobs:
             sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
             sudo docker run -p 80:8080 -d -e DB_HOSTNAME=${{ secrets.DB_HOSTNAME }} -e DB_USERNAME=${{ secrets.DB_USERNAME }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -e TOKEN_VALIDTIME=${{ secrets.TOKEN_VALIDTIME }} -e TOKEN_SECRETKEY=${{ secrets.TOKEN_SECRETKEY }} -e FIREBASE_PRIVATE_KEY_ID=${{ secrets.FIREBASE_PRIVATE_KEY_ID }} -e FIREBASE_PRIVATE_KEY=${{ secrets.FIREBASE_PRIVATE_KEY }} ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest 
             sudo docker image prune -f
-            
