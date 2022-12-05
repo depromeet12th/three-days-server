@@ -33,7 +33,8 @@ public class MateValidator {
 		final String ALREADY_EXIST_MATE = "already.exist.mate";
 
 		this.throwIf(
-				repository.existsByMemberIdAndDeletedFalse(target.getMemberId()), ALREADY_EXIST_MATE);
+				repository.existsByMemberIdAndDeletedFalse(target.getMemberId()),
+				ALREADY_EXIST_MATE);
 	}
 
 	private void throwIf(final boolean condition, final String messageCodeSuffix) {

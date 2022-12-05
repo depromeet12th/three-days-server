@@ -23,20 +23,3 @@ google:
 kakao:
   user:
     uri: https://kapi.kakao.com/v2/user/me
-
-firebase:
-  multicast-message:
-    size: 500
-  projectId: project
-  private:
-    keyId: privateKeyId
-    key: privateKey
-  client:
-    id: clientId
-    email: clientEmail
-  token:
-    uri: https://oauth2.googleapis.com/token
-
-batch:
-  global: 15
-  habit: 15

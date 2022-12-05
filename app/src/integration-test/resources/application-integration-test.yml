@@ -69,20 +69,3 @@ security:
     token:
       validtime: 72000000
       secretkey: 974AE3E91F2972E1BF2951CE1F651974AE3E91F2972E1BF2951CE1F651
-
-firebase:
-  multicast-message:
-    size: 500
-  projectId: project
-  private:
-    keyId: privateKeyId
-    key: privateKey
-  client:
-    id: clientId
-    email: clientEmail
-  token:
-    uri: https://oauth2.googleapis.com/token
-
-batch:
-  global: 15
-  habit: 15

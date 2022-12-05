@@ -1,1 +1,0 @@
-ALTER TABLE global_notification ADD COLUMN title varchar(30) NOT NULL;

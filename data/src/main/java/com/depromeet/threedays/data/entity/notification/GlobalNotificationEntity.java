@@ -32,9 +32,6 @@ public class GlobalNotificationEntity {
 	@Column(nullable = false)
 	private LocalTime notificationTime;
 
-	@Column(name = "title", length = 100)
-	private String title;
-
 	@Column(name = "contents", length = 100)
 	private String contents;
 
