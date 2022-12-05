@@ -41,19 +41,12 @@ public class SendHabitNotificationUseCase {
 
 	private List<HabitNotificationMessage> makeHabitNotificationMessage(
 			LocalDateTime notificationTime) {
-		List<HabitNotificationEntity> list = getUseCase.execute(notificationTime);
 
-		List<Long> memberIds = this.getMemberIds();
 		List<ClientEntity> clientEntities = clientRepository.findAll();
 
-		// message 구성
 		List<HabitNotificationMessage> messages =
-				list.stream()
-						.filter(m -> memberIds.contains(m.getMemberId()))
-						.map(HabitNotificationConverter::habitMessagefrom)
-						.collect(Collectors.toList());
+				getNotificationFilterByNotificationConsent(notificationTime);
 
-		// 같은 멤버출신끼리 리스트화 한 Client 리스트 리스트
 		List<List<Client>> groupedClient =
 				new ArrayList<>(
 						clientEntities.stream()
@@ -61,6 +54,21 @@ public class SendHabitNotificationUseCase {
 								.collect(Collectors.groupingBy(Client::getMemberId))
 								.values());
 
+		return mappingClientWithNotification(groupedClient, messages);
+	}
+
+	private List<HabitNotificationMessage> getNotificationFilterByNotificationConsent(
+			LocalDateTime notificationTime) {
+		List<Long> memberIds = this.getMemberIds();
+		List<HabitNotificationEntity> list = getUseCase.execute(notificationTime);
+		return list.stream()
+				.filter(m -> memberIds.contains(m.getMemberId()))
+				.map(HabitNotificationConverter::habitMessagefrom)
+				.collect(Collectors.toList());
+	}
+
+	private List<HabitNotificationMessage> mappingClientWithNotification(
+			List<List<Client>> groupedClient, List<HabitNotificationMessage> messages) {
 		for (HabitNotificationMessage message : messages) { // 습관 알림
 			for (List<Client> client : groupedClient) { // 같은 멤버를 가지는 클라이언트들
 				if (message.getMemberId().equals(client.get(0).getMemberId())) {
@@ -68,7 +76,6 @@ public class SendHabitNotificationUseCase {
 				}
 			}
 		}
-
 		return messages;
 	}
 
