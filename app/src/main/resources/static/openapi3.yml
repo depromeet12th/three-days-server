@@ -930,12 +930,9 @@ components:
           type: string
           enum: [ "ACTIVE", "ARCHIVED" ]
     EditHabitRequest:
-      required: [ habitId, title, imojiPath, dayOfWeek, notification ]
+      required: [ title, imojiPath, dayOfWeek, notification ]
       type: object
       properties:
-        habitId:
-          type: integer
-          example: 1
         title:
           type: string
           example: "물을 마시자"

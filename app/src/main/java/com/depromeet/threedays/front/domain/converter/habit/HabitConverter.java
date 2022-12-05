@@ -9,6 +9,7 @@ import com.depromeet.threedays.front.domain.model.habit.HabitOverview;
 import com.depromeet.threedays.front.domain.model.mate.Mate;
 import com.depromeet.threedays.front.domain.model.notification.Notification;
 import com.depromeet.threedays.front.web.request.habit.SaveHabitRequest;
+import com.depromeet.threedays.front.web.request.habit.UpdateHabitRequest;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -169,6 +170,46 @@ public class HabitConverter {
 				.status(entity.getStatus())
 				.createAt(entity.getCreateAt())
 				.deleted(entity.getDeleted())
+				.build();
+	}
+
+
+	public static Habit from(final Habit source, final UpdateHabitRequest request) {
+		if (source == null || request == null) {
+			return null;
+		}
+
+		return Habit.builder()
+				.id(source.getId())
+				.memberId(source.getMemberId())
+				.title(request.getTitle())
+				.imojiPath(request.getImojiPath())
+				.dayOfWeeks(request.getDayOfWeeks())
+				.archiveNumberOfDate(source.getArchiveNumberOfDate())
+				.color(request.getColor())
+				.status(source.getStatus())
+				.createAt(source.getCreateAt())
+				.deleted(source.getDeleted())
+				.build();
+
+	}
+
+	public static HabitEntity to(final Habit source, final UpdateHabitRequest request) {
+		if (source == null || request == null) {
+			return null;
+		}
+
+		return HabitEntity.builder()
+				.id(source.getId())
+				.memberId(source.getMemberId())
+				.title(request.getTitle())
+				.imojiPath(request.getImojiPath())
+				.dayOfWeeks(request.getDayOfWeeks())
+				.archiveNumberOfDate(source.getArchiveNumberOfDate())
+				.color(request.getColor())
+				.status(source.getStatus())
+				.createAt(source.getCreateAt())
+				.deleted(source.getDeleted())
 				.build();
 	}
 }
