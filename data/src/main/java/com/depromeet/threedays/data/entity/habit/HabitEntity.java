@@ -52,7 +52,8 @@ public class HabitEntity {
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	private HabitStatus status;
+	@Builder.Default
+	private HabitStatus status = HabitStatus.ACTIVE;
 
 	@Column(nullable = false, updatable = false)
 	@Builder.Default

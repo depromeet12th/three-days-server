@@ -2,6 +2,7 @@ package com.depromeet.threedays.front.domain.usecase.habit;
 
 import com.depromeet.threedays.data.entity.habit.HabitAchievementEntity;
 import com.depromeet.threedays.data.entity.habit.HabitEntity;
+import com.depromeet.threedays.data.enums.HabitStatus;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.converter.habit.HabitConverter;
 import com.depromeet.threedays.front.domain.converter.mate.MateConverter;
@@ -46,20 +47,28 @@ public class SearchHabitUseCase {
 		return habitOverviews;
 	}
 
-	private HabitOverview setAssociation(HabitEntity entity) {
+	private HabitOverview setAssociation(final HabitEntity entity) {
 		HabitAchievementEntity achievementEntity =
 				habitAchievementRepository
 						.findFirstByHabitIdOrderByAchievementDateDesc(entity.getId())
 						.orElse(null);
 		HabitAchievement achievementData = this.calculateSequence(achievementEntity);
 		Long rewardCount = rewardHistoryRepository.countByHabitId(entity.getId());
-		Mate mate =
-				mateRepository
-						.findFirstByHabitIdOrderByCreateAtDesc(entity.getId())
-						.map(MateConverter::from)
-						.orElse(null);
 
-		return HabitConverter.from(entity, achievementData, rewardCount, mate);
+		return HabitConverter.from(entity, achievementData, rewardCount,
+				getMate(entity.getStatus(), entity.getId()));
+	}
+
+	private Mate getMate(final HabitStatus status, final Long habitId) {
+		if (status.equals(HabitStatus.ACTIVE)) {
+			return mateRepository
+					.findFirstByHabitIdAndDeletedFalseOrderByCreateAtDesc(habitId)
+					.map(MateConverter::from)
+					.orElse(null);
+		}
+
+		return mateRepository.findFirstByHabitIdOrderByCreateAtDesc(habitId)
+				.map(MateConverter::from).orElse(null);
 	}
 
 	private HabitAchievement calculateSequence(HabitAchievementEntity achievementEntity) {

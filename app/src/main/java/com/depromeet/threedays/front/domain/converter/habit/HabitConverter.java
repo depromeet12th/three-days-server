@@ -75,6 +75,7 @@ public class HabitConverter {
 		}
 
 		return HabitEntity.builder()
+				.id(data.getId())
 				.memberId(data.getMemberId())
 				.title(data.getTitle())
 				.imojiPath(data.getImojiPath())
@@ -163,8 +164,11 @@ public class HabitConverter {
 				.title(entity.getTitle())
 				.imojiPath(entity.getImojiPath())
 				.dayOfWeeks(entity.getDayOfWeeks())
+				.archiveNumberOfDate(entity.getArchiveNumberOfDate())
 				.color(entity.getColor())
+				.status(entity.getStatus())
 				.createAt(entity.getCreateAt())
+				.deleted(entity.getDeleted())
 				.build();
 	}
 }
