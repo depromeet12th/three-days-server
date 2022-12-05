@@ -27,8 +27,6 @@ public class FirebaseConfig {
 	@Profile("default")
 	@Bean
 	public FirebaseApp fireBaseApp(FirebaseProperty firebaseProperty) throws IOException {
-		System.out.println("hello fireBaseApp");
-		System.out.println(firebaseProperty);
 		FirebaseOptions options =
 				FirebaseOptions.builder()
 						.setCredentials(
