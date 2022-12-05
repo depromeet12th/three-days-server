@@ -33,7 +33,7 @@ springdoc:
   paths-to-match:
     - /api/**
 server:
-  port: 11111
+  port: 8080
 
 
 security:
