@@ -54,14 +54,14 @@ class DeleteHabitUseCaseSpec extends IntegrationTestSpecification {
 
     def "사용자가 습관 달성 이력이 없는 습관에 삭제를 요청한 경우, 습관은 완전 삭제 된다."() {
         given:
-        def habitData = habitDataInitializer.data.first()
+        def habitData = habitDataInitializer.data[2]
 
         when:
         deleteUseCase.execute(habitData.id)
         def result = repository.findById(habitData.id).get()
 
         then:
-        result.deleted == true
+        result.deleted
         result.status == HabitStatus.ACTIVE
     }
 
@@ -88,6 +88,6 @@ class DeleteHabitUseCaseSpec extends IntegrationTestSpecification {
         def result = repository.findById(habitData.id).get()
 
         then:
-        result.deleted == true
+        result.deleted
     }
 }

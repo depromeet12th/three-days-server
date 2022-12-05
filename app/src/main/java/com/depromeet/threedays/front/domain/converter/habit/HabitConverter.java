@@ -75,6 +75,7 @@ public class HabitConverter {
 		}
 
 		return HabitEntity.builder()
+				.id(data.getId())
 				.memberId(data.getMemberId())
 				.title(data.getTitle())
 				.imojiPath(data.getImojiPath())
