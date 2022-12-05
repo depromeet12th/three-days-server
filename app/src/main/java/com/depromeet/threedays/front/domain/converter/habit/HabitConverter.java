@@ -163,8 +163,11 @@ public class HabitConverter {
 				.title(entity.getTitle())
 				.imojiPath(entity.getImojiPath())
 				.dayOfWeeks(entity.getDayOfWeeks())
+				.archiveNumberOfDate(entity.getArchiveNumberOfDate())
 				.color(entity.getColor())
+				.status(entity.getStatus())
 				.createAt(entity.getCreateAt())
+				.deleted(entity.getDeleted())
 				.build();
 	}
 }

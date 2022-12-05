@@ -37,19 +37,19 @@ class DeleteHabitUseCaseSpec extends IntegrationTestSpecification {
 
     def "사용자가 짝꿍과 연결된 습관에 삭제를 요청한 경우, 습관은 보관함으로 이동하고 짝꿍은 완전 삭제된다."() {
         given:
-        def habitData = habitDataInitializer.data.first()
+        def criterionHabit = habitDataInitializer.data.first()
 
-        mateDataInitializer.initialize(habitData.id)
-        def mateData = mateDataInitializer.getData()
+        mateDataInitializer.initialize(criterionHabit.id)
+        def criterion = mateDataInitializer.getData()
 
         when:
-        deleteUseCase.execute(habitData.id)
-        def result = repository.findById(habitData.id).get()
-        def mateResult = mateRepository.findById(mateData.id).get()
+        deleteUseCase.execute(criterionHabit.id)
+        def actual = repository.findById(criterionHabit.id).get()
+        def actualMate = mateRepository.findById(criterion.id).get()
 
         then:
-        result.status == HabitStatus.ARCHIVED
-        mateResult.deleted == true
+        actual.status == HabitStatus.ARCHIVED
+        actualMate.deleted
     }
 
     def "사용자가 습관 달성 이력이 없는 습관에 삭제를 요청한 경우, 습관은 완전 삭제 된다."() {

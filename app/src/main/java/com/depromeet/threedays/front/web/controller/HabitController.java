@@ -1,6 +1,7 @@
 package com.depromeet.threedays.front.web.controller;
 
 import com.depromeet.threedays.front.domain.model.habit.HabitOverview;
+import com.depromeet.threedays.front.domain.usecase.habit.DeleteHabitUseCase;
 import com.depromeet.threedays.front.domain.usecase.habit.GetHabitUseCase;
 import com.depromeet.threedays.front.domain.usecase.habit.SaveHabitUseCase;
 import com.depromeet.threedays.front.domain.usecase.habit.SearchHabitUseCase;
@@ -14,6 +15,7 @@ import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +33,8 @@ public class HabitController {
 
 	private final SearchHabitUseCase searchUseCase;
 
+	private final DeleteHabitUseCase deleteUseCase;
+
 	@PostMapping
 	public ApiResponse<HabitResponse> add(@RequestBody @Valid final SaveHabitRequest request) {
 		return ApiResponseGenerator.success(
@@ -47,4 +51,11 @@ public class HabitController {
 		return ApiResponseGenerator.success(
 				HabitResponseConverter.from(getUseCase.execute(id)), HttpStatus.OK);
 	}
+
+	@DeleteMapping("/{id}")
+	public ApiResponse<Void> delete(@PathVariable final Long id) {
+		deleteUseCase.execute(id);
+		return ApiResponseGenerator.success(HttpStatus.NO_CONTENT);
+	}
+
 }
