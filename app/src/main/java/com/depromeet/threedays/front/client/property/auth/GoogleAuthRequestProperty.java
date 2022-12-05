@@ -1,4 +1,4 @@
-package com.depromeet.threedays.front.client.property;
+package com.depromeet.threedays.front.client.property.auth;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
