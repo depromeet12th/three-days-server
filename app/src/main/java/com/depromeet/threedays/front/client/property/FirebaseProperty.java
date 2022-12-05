@@ -1,10 +1,12 @@
 package com.depromeet.threedays.front.client.property;
 
 import lombok.Getter;
+import lombok.ToString;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Getter
+@ToString
 @Component
 public class FirebaseProperty {
 

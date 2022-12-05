@@ -27,6 +27,8 @@ public class FirebaseConfig {
 	@Profile("default")
 	@Bean
 	public FirebaseApp fireBaseApp(FirebaseProperty firebaseProperty) throws IOException {
+		System.out.println("hello fireBaseApp");
+		System.out.println(firebaseProperty);
 		FirebaseOptions options =
 				FirebaseOptions.builder()
 						.setCredentials(
@@ -36,7 +38,8 @@ public class FirebaseConfig {
 										.setPrivateKeyString(firebaseProperty.getPrivateKey())
 										.setClientEmail(firebaseProperty.getClientEmail())
 										.setClientId(firebaseProperty.getClientId())
-										.setTokenServerUri(URI.create(firebaseProperty.getTokenUri()))
+										.setTokenServerUri(
+												URI.create(firebaseProperty.getTokenUri()))
 										.build())
 						.build();
 
