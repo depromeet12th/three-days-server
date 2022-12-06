@@ -1,5 +1,6 @@
 package com.depromeet.threedays.front.domain.model.member;
 
+import com.depromeet.threedays.data.enums.CertificationSubject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -19,4 +20,7 @@ public class Member {
 	private String name;
 	private Boolean isNew;
 	private Token token;
+	private String resource;
+	public Boolean notificationConsent;
+	public CertificationSubject certificationSubject;
 }

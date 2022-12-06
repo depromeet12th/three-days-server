@@ -21,14 +21,10 @@ public class MemberConverter {
 				.name(entity.getName())
 				.isNew(isNew)
 				.token(token)
+				.certificationSubject(entity.getCertificationSubject())
+				.notificationConsent(entity.getNotificationConsent())
+				.resource(entity.getResource())
 				.build();
-	}
-
-	public static Member from(final MemberEntity entity) {
-		if (entity == null) {
-			return null;
-		}
-		return Member.builder().id(entity.getId()).name(entity.getName()).isNew(false).build();
 	}
 
 	public static MemberEntity to(final SaveMemberCommand command) {
@@ -40,6 +36,8 @@ public class MemberConverter {
 				.name(command.getName())
 				.certificationId(command.getCertificationId())
 				.certificationSubject(command.getCertificationSubject())
+				.resource(command.getResource())
+				.notificationConsent(command.getNotificationConsent())
 				.build();
 	}
 }

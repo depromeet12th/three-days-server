@@ -20,7 +20,7 @@ public class SaveConsentUseCase {
 
 	public Member execute(final MemberNotificationConsentUpdateRequest request) {
 		Long memberId = AuditorHolder.get();
-		return MemberConverter.from(this.updateNotificationConsent(memberId, request));
+		return MemberConverter.from(this.updateNotificationConsent(memberId, request), false, null);
 	}
 
 	public MemberEntity updateNotificationConsent(

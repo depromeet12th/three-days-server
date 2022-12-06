@@ -21,4 +21,5 @@ public class SaveMemberCommand {
 	private CertificationSubject certificationSubject;
 	private MemberInfo memberInfo;
 	private String resource;
+	private Boolean notificationConsent;
 }

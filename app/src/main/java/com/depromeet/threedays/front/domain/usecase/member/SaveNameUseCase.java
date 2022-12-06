@@ -20,7 +20,7 @@ public class SaveNameUseCase {
 
 	public Member execute(final MemberNameUpdateRequest request) {
 		Long memberId = AuditorHolder.get();
-		return MemberConverter.from(this.updateName(memberId, request));
+		return MemberConverter.from(this.updateName(memberId, request), false, null);
 	}
 
 	public MemberEntity updateName(final Long memberId, final MemberNameUpdateRequest request) {
