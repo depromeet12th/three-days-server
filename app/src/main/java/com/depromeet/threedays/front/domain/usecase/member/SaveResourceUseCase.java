@@ -44,7 +44,7 @@ public class SaveResourceUseCase {
 
 		Set<Map.Entry<String, JsonElement>> element = newResource.entrySet();
 		for (Map.Entry<String, JsonElement> entry : element) {
-			asis.replace(entry.getKey(), entry.getValue());
+			asis.put(entry.getKey(), entry.getValue());
 		}
 
 		return asis.toJSONString();

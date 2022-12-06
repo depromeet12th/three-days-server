@@ -11,6 +11,8 @@ public class FakeMemberEntity {
 				.name(RandomString.make())
 				.certificationId(RandomString.make())
 				.certificationSubject(CertificationSubject.GOOGLE)
+				.notificationConsent(true)
+				.resource("{\"te\":\"te\"}")
 				.build();
 	}
 }
