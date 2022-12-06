@@ -3,6 +3,7 @@ package com.depromeet.threedays.front.domain.converter.member;
 import com.depromeet.threedays.data.entity.member.MemberEntity;
 import com.depromeet.threedays.front.domain.command.SaveMemberCommand;
 import com.depromeet.threedays.front.domain.model.member.Member;
+import com.depromeet.threedays.front.domain.model.member.MemberOverview;
 import com.depromeet.threedays.front.domain.model.member.Token;
 
 public class MemberConverter {
@@ -38,6 +39,19 @@ public class MemberConverter {
 				.certificationSubject(command.getCertificationSubject())
 				.resource(command.getResource())
 				.notificationConsent(command.getNotificationConsent())
+				.build();
+	}
+
+	public static MemberOverview from(final MemberEntity entity){
+		if(entity == null){
+			return null;
+		}
+		return MemberOverview.builder()
+				.certificationSubject(entity.getCertificationSubject())
+				.id(entity.getId())
+				.name(entity.getName())
+				.resource(entity.getResource())
+				.notificationConsent(entity.getNotificationConsent())
 				.build();
 	}
 }

@@ -1,6 +1,7 @@
 package com.depromeet.threedays.front.web.controller;
 
 import com.depromeet.threedays.front.domain.model.member.Member;
+import com.depromeet.threedays.front.domain.model.member.MemberOverview;
 import com.depromeet.threedays.front.domain.model.member.Token;
 import com.depromeet.threedays.front.domain.usecase.member.GetTokenUseCase;
 import com.depromeet.threedays.front.domain.usecase.member.SaveConsentUseCase;
@@ -41,12 +42,12 @@ public class MemberController {
 	}
 
 	@PatchMapping("/name")
-	public ApiResponse<Member> updateName(@RequestBody @Valid MemberNameUpdateRequest request) {
+	public ApiResponse<MemberOverview> updateName(@RequestBody @Valid MemberNameUpdateRequest request) {
 		return ApiResponseGenerator.success(saveNameUseCase.execute(request), HttpStatus.OK);
 	}
 
 	@PatchMapping("/consents")
-	public ApiResponse<Member> updateConsent(
+	public ApiResponse<MemberOverview> updateConsent(
 			@RequestBody @Valid MemberNotificationConsentUpdateRequest request) {
 		return ApiResponseGenerator.success(saveConsentUseCase.execute(request), HttpStatus.OK);
 	}
