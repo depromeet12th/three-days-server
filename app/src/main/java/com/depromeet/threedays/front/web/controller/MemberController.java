@@ -1,7 +1,9 @@
 package com.depromeet.threedays.front.web.controller;
 
+import com.depromeet.threedays.front.domain.converter.member.MemberConverter;
+import com.depromeet.threedays.front.web.response.SaveMemberResponse;
+import com.depromeet.threedays.front.domain.model.member.SaveMemberUseCaseResponse;
 import com.depromeet.threedays.front.domain.model.member.Member;
-import com.depromeet.threedays.front.domain.model.member.MemberOverview;
 import com.depromeet.threedays.front.domain.model.member.Token;
 import com.depromeet.threedays.front.domain.usecase.member.*;
 import com.depromeet.threedays.front.support.ApiResponse;
@@ -34,25 +36,25 @@ public class MemberController {
 	private final GetTokenUseCase getTokenUseCase;
 
 	@PostMapping
-	public ApiResponse<Member> add(@RequestBody @Valid SignMemberRequest request) {
-		Member member = signUseCase.execute(request);
-		HttpStatus status = member.getIsNew()?HttpStatus.CREATED:HttpStatus.OK;
-		return ApiResponseGenerator.success(member, status);
+	public ApiResponse<SaveMemberResponse> add(@RequestBody @Valid SignMemberRequest request) {
+		SaveMemberUseCaseResponse member = signUseCase.execute(request);
+		HttpStatus status = Boolean.TRUE.equals(member.getIsNew())?HttpStatus.CREATED:HttpStatus.OK;
+		return ApiResponseGenerator.success(MemberConverter.to(member), status);
 	}
 
 	@PatchMapping("/name")
-	public ApiResponse<MemberOverview> updateName(@RequestBody @Valid MemberNameUpdateRequest request) {
+	public ApiResponse<Member> updateName(@RequestBody @Valid MemberNameUpdateRequest request) {
 		return ApiResponseGenerator.success(saveNameUseCase.execute(request), HttpStatus.OK);
 	}
 
 	@PatchMapping("/consents")
-	public ApiResponse<MemberOverview> updateConsent(
+	public ApiResponse<Member> updateConsent(
 			@RequestBody @Valid MemberNotificationConsentUpdateRequest request) {
 		return ApiResponseGenerator.success(saveConsentUseCase.execute(request), HttpStatus.OK);
 	}
 
 	@PatchMapping("/resources")
-	public ApiResponse<MemberOverview> updateResource(@RequestBody @Valid MemberResourceUpdateRequest request){
+	public ApiResponse<Member> updateResource(@RequestBody @Valid MemberResourceUpdateRequest request){
 		return ApiResponseGenerator.success(saveResourceUseCase.execute(request), HttpStatus.OK);
 	}
 

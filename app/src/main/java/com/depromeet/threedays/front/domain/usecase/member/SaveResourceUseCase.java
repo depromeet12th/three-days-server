@@ -3,7 +3,7 @@ package com.depromeet.threedays.front.domain.usecase.member;
 import com.depromeet.threedays.data.entity.member.MemberEntity;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.converter.member.MemberConverter;
-import com.depromeet.threedays.front.domain.model.member.MemberOverview;
+import com.depromeet.threedays.front.domain.model.member.Member;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository;
 import com.depromeet.threedays.front.support.converter.MemberInfoJsonConverter;
@@ -25,7 +25,7 @@ public class SaveResourceUseCase {
 
 	private final MemberRepository memberRepository;
 
-	public MemberOverview execute(final MemberResourceUpdateRequest request) {
+	public Member execute(final MemberResourceUpdateRequest request) {
 		Long memberId = AuditorHolder.get();
 		return MemberConverter.from(this.updateResource(memberId, request));
 	}

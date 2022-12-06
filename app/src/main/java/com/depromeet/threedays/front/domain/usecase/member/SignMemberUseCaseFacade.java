@@ -6,7 +6,7 @@ import com.depromeet.threedays.front.client.model.MemberInfo;
 import com.depromeet.threedays.front.client.property.auth.AuthRequestProperty;
 import com.depromeet.threedays.front.domain.converter.member.MemberCommandConverter;
 import com.depromeet.threedays.front.domain.converter.member.MemberQueryConverter;
-import com.depromeet.threedays.front.domain.model.member.Member;
+import com.depromeet.threedays.front.domain.model.member.SaveMemberUseCaseResponse;
 import com.depromeet.threedays.front.exception.ExternalIntegrationException;
 import com.depromeet.threedays.front.web.request.member.SignMemberRequest;
 import java.net.URI;
@@ -26,14 +26,14 @@ public class SignMemberUseCaseFacade {
 	private final SaveMemberUseCase saveUseCase;
 	private final AuthClient authClient;
 
-	public Member execute(final SignMemberRequest request) {
+	public SaveMemberUseCaseResponse execute(final SignMemberRequest request) {
 		if (request == null) {
 			return null;
 		}
 
 		MemberInfo info = getInfo(request.getCertificationSubject(), request.getOAuthToken());
 
-		Member member = getUseCase.execute(MemberQueryConverter.from(info.getId(), request));
+		SaveMemberUseCaseResponse member = getUseCase.execute(MemberQueryConverter.from(info.getId(), request));
 
 		if (member == null) {
 			return saveUseCase.execute(MemberCommandConverter.from(info, request));
