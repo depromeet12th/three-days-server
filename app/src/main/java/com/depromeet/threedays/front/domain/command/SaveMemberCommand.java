@@ -16,9 +16,9 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class SaveMemberCommand {
-
 	private String certificationId;
 	private String name;
 	private CertificationSubject certificationSubject;
 	private MemberInfo memberInfo;
+	private String resource;
 }

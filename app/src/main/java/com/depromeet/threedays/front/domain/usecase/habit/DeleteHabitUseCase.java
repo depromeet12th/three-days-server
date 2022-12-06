@@ -22,17 +22,19 @@ public class DeleteHabitUseCase {
 	private final MateRepository mateRepository;
 
 	public void execute(Long habitId) {
-		Habit source = repository.findByIdAndDeletedFalse(habitId).map(HabitConverter::from)
-				.orElse(null);
+		Habit source =
+				repository.findByIdAndDeletedFalse(habitId).map(HabitConverter::from).orElse(null);
 
 		if (source == null) {
 			return;
 		}
 
 		if (source.getStatus().equals(HabitStatus.ACTIVE)) {
-			Mate mate = mateRepository.findByHabitIdAndDeletedFalse(habitId)
-					.map(MateConverter::from)
-					.orElse(null);
+			Mate mate =
+					mateRepository
+							.findByHabitIdAndDeletedFalse(habitId)
+							.map(MateConverter::from)
+							.orElse(null);
 			Long achievementCount = habitAchievementRepository.countByHabitId(habitId);
 
 			if (mate != null || achievementCount != 0L) {
@@ -49,8 +51,7 @@ public class DeleteHabitUseCase {
 	}
 
 	private void archive(final Habit source, final Mate mate) {
-		repository.save(
-				HabitConverter.to(source).toBuilder().status(HabitStatus.ARCHIVED).build());
+		repository.save(HabitConverter.to(source).toBuilder().status(HabitStatus.ARCHIVED).build());
 		this.deleteMate(mate);
 	}
 

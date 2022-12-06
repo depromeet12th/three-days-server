@@ -55,8 +55,8 @@ public class SearchHabitUseCase {
 		HabitAchievement achievementData = this.calculateSequence(achievementEntity);
 		Long rewardCount = rewardHistoryRepository.countByHabitId(entity.getId());
 
-		return HabitConverter.from(entity, achievementData, rewardCount,
-				getMate(entity.getStatus(), entity.getId()));
+		return HabitConverter.from(
+				entity, achievementData, rewardCount, getMate(entity.getStatus(), entity.getId()));
 	}
 
 	private Mate getMate(final HabitStatus status, final Long habitId) {
@@ -67,8 +67,10 @@ public class SearchHabitUseCase {
 					.orElse(null);
 		}
 
-		return mateRepository.findFirstByHabitIdOrderByCreateAtDesc(habitId)
-				.map(MateConverter::from).orElse(null);
+		return mateRepository
+				.findFirstByHabitIdOrderByCreateAtDesc(habitId)
+				.map(MateConverter::from)
+				.orElse(null);
 	}
 
 	private HabitAchievement calculateSequence(HabitAchievementEntity achievementEntity) {
