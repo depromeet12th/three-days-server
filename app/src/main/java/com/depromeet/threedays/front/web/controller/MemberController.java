@@ -12,6 +12,7 @@ import com.depromeet.threedays.front.web.request.member.MemberNameUpdateRequest;
 import com.depromeet.threedays.front.web.request.member.MemberNotificationConsentUpdateRequest;
 import com.depromeet.threedays.front.web.request.member.SignMemberRequest;
 import javax.validation.Valid;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -34,7 +35,9 @@ public class MemberController {
 
 	@PostMapping
 	public ApiResponse<Member> add(@RequestBody @Valid SignMemberRequest request) {
-		return ApiResponseGenerator.success(signUseCase.execute(request), HttpStatus.CREATED);
+		Member member = signUseCase.execute(request);
+		HttpStatus status = member.getIsNew()?HttpStatus.CREATED:HttpStatus.OK;
+		return ApiResponseGenerator.success(member, status);
 	}
 
 	@PatchMapping("/name")
