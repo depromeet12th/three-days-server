@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.json.simple.JSONObject;
 
 @Getter
 @NoArgsConstructor
@@ -15,5 +16,5 @@ public class MemberOverview {
     private String name;
     private CertificationSubject certificationSubject;
     private boolean notificationConsent;
-    private String resource;
+    private JSONObject resource;
 }

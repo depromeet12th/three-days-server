@@ -5,6 +5,7 @@ import com.depromeet.threedays.front.domain.command.SaveMemberCommand;
 import com.depromeet.threedays.front.domain.model.member.Member;
 import com.depromeet.threedays.front.domain.model.member.MemberOverview;
 import com.depromeet.threedays.front.domain.model.member.Token;
+import com.depromeet.threedays.front.support.converter.MemberInfoJsonConverter;
 
 public class MemberConverter {
 
@@ -50,7 +51,7 @@ public class MemberConverter {
 				.certificationSubject(entity.getCertificationSubject())
 				.id(entity.getId())
 				.name(entity.getName())
-				.resource(entity.getResource())
+				.resource(MemberInfoJsonConverter.from(entity.getResource()))
 				.notificationConsent(entity.getNotificationConsent())
 				.build();
 	}

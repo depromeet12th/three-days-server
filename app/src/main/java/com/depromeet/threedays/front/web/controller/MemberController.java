@@ -3,14 +3,12 @@ package com.depromeet.threedays.front.web.controller;
 import com.depromeet.threedays.front.domain.model.member.Member;
 import com.depromeet.threedays.front.domain.model.member.MemberOverview;
 import com.depromeet.threedays.front.domain.model.member.Token;
-import com.depromeet.threedays.front.domain.usecase.member.GetTokenUseCase;
-import com.depromeet.threedays.front.domain.usecase.member.SaveConsentUseCase;
-import com.depromeet.threedays.front.domain.usecase.member.SaveNameUseCase;
-import com.depromeet.threedays.front.domain.usecase.member.SignMemberUseCaseFacade;
+import com.depromeet.threedays.front.domain.usecase.member.*;
 import com.depromeet.threedays.front.support.ApiResponse;
 import com.depromeet.threedays.front.support.ApiResponseGenerator;
 import com.depromeet.threedays.front.web.request.member.MemberNameUpdateRequest;
 import com.depromeet.threedays.front.web.request.member.MemberNotificationConsentUpdateRequest;
+import com.depromeet.threedays.front.web.request.member.MemberResourceUpdateRequest;
 import com.depromeet.threedays.front.web.request.member.SignMemberRequest;
 import javax.validation.Valid;
 
@@ -32,6 +30,7 @@ public class MemberController {
 	private final SaveNameUseCase saveNameUseCase;
 
 	private final SaveConsentUseCase saveConsentUseCase;
+	private final SaveResourceUseCase saveResourceUseCase;
 	private final GetTokenUseCase getTokenUseCase;
 
 	@PostMapping
@@ -50,6 +49,11 @@ public class MemberController {
 	public ApiResponse<MemberOverview> updateConsent(
 			@RequestBody @Valid MemberNotificationConsentUpdateRequest request) {
 		return ApiResponseGenerator.success(saveConsentUseCase.execute(request), HttpStatus.OK);
+	}
+
+	@PatchMapping("/resources")
+	public ApiResponse<MemberOverview> updateResource(@RequestBody @Valid MemberResourceUpdateRequest request){
+		return ApiResponseGenerator.success(saveResourceUseCase.execute(request), HttpStatus.OK);
 	}
 
 	@PostMapping("/tokens")
