@@ -15,4 +15,6 @@ public interface RewardHistoryRepository extends JpaRepository<RewardHistoryEnti
 			final Long habitId, final LocalDateTime createAt);
 
 	void deleteFirstByHabitIdOrderByCreateAtDesc(final Long habitId);
+
+	void deleteAllByMemberId(final Long memberId);
 }

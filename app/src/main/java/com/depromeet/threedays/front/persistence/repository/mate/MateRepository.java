@@ -13,4 +13,6 @@ public interface MateRepository extends JpaRepository<MateEntity, Long> {
 	Boolean existsByMemberIdAndDeletedFalse(final Long habitId);
 
 	Optional<MateEntity> findFirstByHabitIdOrderByCreateAtDesc(final Long habitId);
+
+	void deleteAllByMemberId(final Long memberId);
 }
