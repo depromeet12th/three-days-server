@@ -11,6 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HabitNotificationMessage {
+	private Long notificationId;
 	private Long memberId;
 	private List<Client> clients;
 	private Long habitId;

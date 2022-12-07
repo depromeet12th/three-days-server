@@ -11,6 +11,7 @@ import com.depromeet.threedays.front.domain.model.client.Client;
 import com.depromeet.threedays.front.domain.model.notification.HabitNotificationMessage;
 import com.depromeet.threedays.front.persistence.repository.client.ClientRepository;
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository;
+import com.depromeet.threedays.front.support.NotificationLogger;
 import com.depromeet.threedays.front.web.request.habit.NotificationRequest;
 import com.google.firebase.messaging.BatchResponse;
 import java.time.LocalDateTime;
@@ -28,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class SendHabitNotificationUseCase {
 
 	private final GetHabitNotificationUseCase getUseCase;
+	private final SaveNotificationHistoryUseCase saveHistoryUseCase;
 	private final MemberRepository memberRepository;
 	private final ClientRepository clientRepository;
 
@@ -54,7 +56,7 @@ public class SendHabitNotificationUseCase {
 								.collect(Collectors.groupingBy(Client::getMemberId))
 								.values());
 
-		return mappingClientWithNotification(groupedClient, messages);
+		return addClientList(groupedClient, messages);
 	}
 
 	private List<HabitNotificationMessage> getNotificationFilterByNotificationConsent(
@@ -63,14 +65,14 @@ public class SendHabitNotificationUseCase {
 		List<HabitNotificationEntity> list = getUseCase.execute(notificationTime);
 		return list.stream()
 				.filter(m -> memberIds.contains(m.getMemberId()))
-				.map(HabitNotificationConverter::habitMessagefrom)
+				.map(HabitNotificationConverter::habitMessageFrom)
 				.collect(Collectors.toList());
 	}
 
-	private List<HabitNotificationMessage> mappingClientWithNotification(
+	private List<HabitNotificationMessage> addClientList(
 			List<List<Client>> groupedClient, List<HabitNotificationMessage> messages) {
-		for (HabitNotificationMessage message : messages) { // 습관 알림
-			for (List<Client> client : groupedClient) { // 같은 멤버를 가지는 클라이언트들
+		for (HabitNotificationMessage message : messages) {
+			for (List<Client> client : groupedClient) {
 				if (message.getMemberId().equals(client.get(0).getMemberId())) {
 					message.setClients(client);
 				}
@@ -90,7 +92,12 @@ public class SendHabitNotificationUseCase {
 	private List<BatchResponse> sendMessage(List<HabitNotificationMessage> messages) {
 		List<BatchResponse> responses = new ArrayList<>();
 		for (HabitNotificationMessage message : messages) {
-			responses.add(messageClient.send(FireBaseMessageBuilder.makeMulticastMessage(message)));
+			NotificationLogger.messagesLogger(message);
+			BatchResponse response =
+					messageClient.send(FireBaseMessageBuilder.makeMulticastMessage(message));
+			responses.add(response);
+			NotificationLogger.batchResponseLogger(response);
+			saveHistoryUseCase.execute(response.getSuccessCount(), message);
 		}
 		return responses;
 	}

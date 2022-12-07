@@ -18,6 +18,7 @@ public class GlobalNotificationConverter {
 
 	public static NotificationMessage from(GlobalNotificationEntity entity) {
 		return NotificationMessage.builder()
+				.notificationId(entity.getId())
 				.contents(entity.getContents())
 				.notificationTime(entity.getNotificationTime())
 				.title(entity.getTitle())
