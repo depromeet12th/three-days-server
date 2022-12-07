@@ -1,14 +1,14 @@
 package com.depromeet.threedays.front.domain.usecase.member
 
 import com.depromeet.threedays.front.IntegrationTestSpecification
-import com.depromeet.threedays.front.data.member.MemberDataInitializer
+import com.depromeet.threedays.front.data.member.MemberInitializer
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository
 import com.depromeet.threedays.front.web.request.member.MemberNotificationConsentUpdateRequest
 import org.springframework.beans.factory.annotation.Autowired
 
 class SaveMemberConsentUseCaseSpec extends IntegrationTestSpecification {
     @Autowired
-    MemberDataInitializer initializer
+    MemberInitializer initializer
     MemberRepository mockRepo
     SaveConsentUseCase useCase
 
@@ -27,7 +27,7 @@ class SaveMemberConsentUseCaseSpec extends IntegrationTestSpecification {
         def actual = useCase.execute(expected)
 
         then:
-        mockRepo.findById(_) >> Optional.of(id)
+        mockRepo.findById(_ as Long) >> Optional.of(id)
         !actual.notificationConsent
     }
 }

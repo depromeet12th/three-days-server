@@ -3,7 +3,7 @@ package com.depromeet.threedays.front.domain.usecase.member
 
 import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.data.habit.HabitDataInitializer
-import com.depromeet.threedays.front.data.member.MemberDataInitializer
+import com.depromeet.threedays.front.data.member.MemberInitializer
 import com.depromeet.threedays.front.persistence.repository.RewardHistoryRepository
 import com.depromeet.threedays.front.persistence.repository.client.ClientRepository
 import com.depromeet.threedays.front.persistence.repository.habit.HabitAchievementRepository
@@ -20,7 +20,7 @@ class DeleteMemberUseCaseSpec extends IntegrationTestSpecification {
     MemberRepository memberRepository
 
     @Autowired
-    MemberDataInitializer initializer
+    MemberInitializer initializer
     @Autowired
     HabitDataInitializer habitDataInitializer
 
@@ -59,10 +59,10 @@ class DeleteMemberUseCaseSpec extends IntegrationTestSpecification {
 
         when:
         useCase.execute()
-        habitRepository.findById(criterion.id).get()
+        habitRepository.findById(criterion.id as Long).get()
 
         then:
-        memberRepository.findById(_) >> Optional.of(criterionMember)
+        memberRepository.findById(_ as Long) >> Optional.of(criterionMember)
         thrown(NullPointerException)
     }
 }

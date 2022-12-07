@@ -6,7 +6,7 @@ import net.bytebuddy.utility.RandomString;
 
 public class FakeMemberEntity {
 
-	static MemberEntity create() {
+	public static MemberEntity create() {
 		return MemberEntity.builder()
 				.name(RandomString.make())
 				.certificationId(RandomString.make())

@@ -3,7 +3,6 @@ package com.depromeet.threedays.front.data.habit
 import com.depromeet.threedays.data.entity.habit.HabitEntity
 import com.depromeet.threedays.data.entity.mate.MateEntity
 import com.depromeet.threedays.data.enums.MateType
-import com.depromeet.threedays.front.data.mate.FakeMateEntity
 import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository
 import com.depromeet.threedays.front.persistence.repository.mate.MateRepository
 import net.bytebuddy.utility.RandomString
@@ -36,8 +35,9 @@ class HabitDataInitializer {
         repository.deleteAll()
         this.save(memberId)
     }
+
     private void save(Long memberId) {
-        this.data = repository.save(FakeHabitEntity.create(memberId))
+        this.data.add(repository.save(FakeHabitEntity.create(memberId)))
     }
 
     Collection<HabitEntity> getData() {

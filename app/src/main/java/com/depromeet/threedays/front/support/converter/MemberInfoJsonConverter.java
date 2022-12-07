@@ -2,22 +2,20 @@ package com.depromeet.threedays.front.support.converter;
 
 import com.depromeet.threedays.front.client.model.MemberInfo;
 import com.depromeet.threedays.front.exception.JsonParsingException;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.experimental.UtilityClass;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
+@UtilityClass
 public class MemberInfoJsonConverter {
-	public static ObjectMapper objectMapper;
 
-	@Autowired
-	private MemberInfoJsonConverter(ObjectMapper mapper) {
-		objectMapper = mapper;
-	}
+	private static final ObjectMapper objectMapper = new ObjectMapper().setSerializationInclusion(
+			JsonInclude.Include.NON_NULL);
+
 
 	public static String to(MemberInfo info) {
 		try {

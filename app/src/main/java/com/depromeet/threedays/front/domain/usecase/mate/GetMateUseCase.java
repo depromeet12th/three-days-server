@@ -1,5 +1,6 @@
 package com.depromeet.threedays.front.domain.usecase.mate;
 
+import com.depromeet.threedays.data.enums.LevelUpSection;
 import com.depromeet.threedays.front.domain.converter.RewardHistoryConverter;
 import com.depromeet.threedays.front.domain.converter.mate.MateConverter;
 import com.depromeet.threedays.front.domain.model.RewardHistory;
@@ -46,6 +47,8 @@ public class GetMateUseCase {
 
 		return MateResponseConverter.from(source)
 				.withReward(rewardHistories.size())
-				.withRewardHistory(rewardHistories);
+				.withRewardHistory(rewardHistories)
+				.withLevelUpSection(LevelUpSection.MATE.getSectionList());
 	}
+
 }

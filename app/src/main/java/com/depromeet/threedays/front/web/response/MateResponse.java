@@ -27,4 +27,5 @@ public class MateResponse {
 	private List<RewardHistory> rewardHistory;
 	private LocalDateTime levelUpAt;
 	private MateType characterType;
+	private List<Integer> levelUpSection;
 }

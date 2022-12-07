@@ -14,7 +14,7 @@ import java.time.DayOfWeek
 
 
 @Component
-class MemberDataInitializer {
+class MemberInitializer {
     private static final int DEFAULT_DATA_SIZE = 10
 
     @Autowired

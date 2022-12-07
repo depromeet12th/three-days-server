@@ -5,7 +5,6 @@ import com.depromeet.threedays.front.support.converter.LocalDateParamBinder;
 import com.depromeet.threedays.front.support.converter.LocalDateTimeJsonConverter;
 import com.depromeet.threedays.front.support.converter.LocalDateTimeParamBinder;
 import com.depromeet.threedays.front.support.converter.LocalTimeParamBinder;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -41,7 +40,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 		objectMapper.registerModule(javaTimeModule());
 		objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-		objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
 		return objectMapper;
 	}
