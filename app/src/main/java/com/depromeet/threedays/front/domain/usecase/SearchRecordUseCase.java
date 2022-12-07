@@ -40,21 +40,27 @@ public class SearchRecordUseCase {
 
 	public RecordResponse execute(final SearchRecordRequest request) {
 
-		MemberEntity memberEntity = memberRepository.findById(AuditorHolder.get())
-				.orElseThrow(IllegalArgumentException::new);
+		MemberEntity memberEntity =
+				memberRepository.findById(AuditorHolder.get()).orElseThrow(IllegalArgumentException::new);
 
-		DatePeriod datePeriod = Optional.ofNullable(request.getDatePeriod())
-				.orElse(new DatePeriod(memberEntity.getCreateAt().toLocalDate(), LocalDate.now()));
+		DatePeriod datePeriod =
+				Optional.ofNullable(request.getDatePeriod())
+						.orElse(new DatePeriod(memberEntity.getCreateAt().toLocalDate(), LocalDate.now()));
 
-		Long rewardCount = rewardHistoryRepository.countByMemberIdAndCreateAtBetween(
-				memberEntity.getId(),
-				datePeriod.getFrom().atStartOfDay(), datePeriod.getTo().atTime(LocalTime.MAX));
+		Long rewardCount =
+				rewardHistoryRepository.countByMemberIdAndCreateAtBetween(
+						memberEntity.getId(),
+						datePeriod.getFrom().atStartOfDay(),
+						datePeriod.getTo().atTime(LocalTime.MAX));
 
-		List<HabitAchievementEntity> habitAchievementEntities = habitAchievementRepository.findAllByMemberIdAndAchievementDateBetween(
-				memberEntity.getId(), datePeriod.getFrom(), datePeriod.getTo());
+		List<HabitAchievementEntity> habitAchievementEntities =
+				habitAchievementRepository.findAllByMemberIdAndAchievementDateBetween(
+						memberEntity.getId(), datePeriod.getFrom(), datePeriod.getTo());
 
-		List<Long> habitIds = habitAchievementEntities.stream()
-				.map(HabitAchievementEntity::getHabitId).collect(Collectors.toList());
+		List<Long> habitIds =
+				habitAchievementEntities.stream()
+						.map(HabitAchievementEntity::getHabitId)
+						.collect(Collectors.toList());
 
 		Long frequentHabitId = this.getFrequentId(this.calculateFrequentHabit(habitIds));
 
@@ -77,14 +83,12 @@ public class SearchRecordUseCase {
 		return achievementCountMap;
 	}
 
-
 	private Habit getHabit(final Long habitId) {
 		if (habitId == null) {
 			return null;
 		}
 
-		return habitRepository.findById(habitId)
-				.map(HabitConverter::from).orElse(null);
+		return habitRepository.findById(habitId).map(HabitConverter::from).orElse(null);
 	}
 
 	private Long getFrequentId(final Map<Long, Integer> map) {

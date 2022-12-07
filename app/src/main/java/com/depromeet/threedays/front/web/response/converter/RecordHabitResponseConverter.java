@@ -7,8 +7,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class RecordHabitResponseConverter {
 
-	public static RecordHabitResponse from(
-			final Habit habit) {
+	public static RecordHabitResponse from(final Habit habit) {
 		if (habit == null) {
 			return null;
 		}

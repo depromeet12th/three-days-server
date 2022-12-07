@@ -22,5 +22,4 @@ public class RecordController {
 	public ApiResponse<RecordResponse> browse(final SearchRecordRequest request) {
 		return ApiResponseGenerator.success(searchUseCase.execute(request), HttpStatus.OK);
 	}
-
 }

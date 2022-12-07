@@ -8,8 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface HabitAchievementRepository extends JpaRepository<HabitAchievementEntity, Long> {
 
-	Optional<HabitAchievementEntity> findFirstByHabitIdOrderByAchievementDateDesc(
-			final Long habitId);
+	Optional<HabitAchievementEntity> findFirstByHabitIdOrderByAchievementDateDesc(final Long habitId);
 
 	Long countByHabitId(final Long habitId);
 

@@ -25,5 +25,4 @@ public class RecordHabitResponse {
 	private EnumSet<DayOfWeek> dayOfWeeks;
 	private HabitStatus status;
 	private LocalDateTime createAt;
-	
 }
