@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NotificationMessage {
+	private Long notificationId;
 	private LocalTime notificationTime;
 	private String contents;
 	private String title;
