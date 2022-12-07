@@ -18,8 +18,11 @@ public class UpdateHabitUseCase {
 
 	public Habit execute(final Long id, final UpdateHabitRequest request) {
 
-		Habit source = repository.findById(id).map(HabitConverter::from).orElseThrow(
-				ResourceNotFoundException::new);
+		Habit source =
+				repository
+						.findById(id)
+						.map(HabitConverter::from)
+						.orElseThrow(ResourceNotFoundException::new);
 
 		return HabitConverter.from(repository.save(HabitConverter.to(source, request)));
 	}

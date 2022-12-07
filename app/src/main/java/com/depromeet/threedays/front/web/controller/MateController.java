@@ -32,8 +32,7 @@ public class MateController {
 	@PostMapping()
 	public ApiResponse<Mate> add(
 			@PathVariable Long habitId, @RequestBody @Valid final SaveMateRequest request) {
-		return ApiResponseGenerator.success(saveUseCase.execute(habitId, request),
-				HttpStatus.CREATED);
+		return ApiResponseGenerator.success(saveUseCase.execute(habitId, request), HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/{id}")

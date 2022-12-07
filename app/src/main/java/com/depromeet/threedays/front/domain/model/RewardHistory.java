@@ -15,5 +15,4 @@ import lombok.NoArgsConstructor;
 public class RewardHistory {
 
 	private LocalDateTime createAt;
-
 }

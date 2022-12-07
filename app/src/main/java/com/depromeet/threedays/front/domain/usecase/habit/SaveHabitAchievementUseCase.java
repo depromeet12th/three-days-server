@@ -48,8 +48,7 @@ public class SaveHabitAchievementUseCase {
 
 		final HabitAchievement lastHabitAchievement =
 				HabitAchievementConverter.to(
-						repository.findFirstByHabitIdOrderByAchievementDateDesc(habitId)
-								.orElse(null));
+						repository.findFirstByHabitIdOrderByAchievementDateDesc(habitId).orElse(null));
 
 		final Mate mate =
 				mateRepository
@@ -65,8 +64,7 @@ public class SaveHabitAchievementUseCase {
 					this.save(
 							habit,
 							request,
-							DateCalculator.findNextDate(habit.getDayOfWeeks(),
-									request.getAchievementDate()),
+							DateCalculator.findNextDate(habit.getDayOfWeeks(), request.getAchievementDate()),
 							1),
 					0L);
 		}
@@ -84,8 +82,7 @@ public class SaveHabitAchievementUseCase {
 					this.save(
 							habit,
 							request,
-							DateCalculator.findNextDate(habit.getDayOfWeeks(),
-									request.getAchievementDate()),
+							DateCalculator.findNextDate(habit.getDayOfWeeks(), request.getAchievementDate()),
 							1),
 					getTotalRewardCount(habit, 1));
 		}
@@ -98,8 +95,7 @@ public class SaveHabitAchievementUseCase {
 					this.save(
 							habit,
 							request,
-							DateCalculator.findNextDate(habit.getDayOfWeeks(),
-									request.getAchievementDate()),
+							DateCalculator.findNextDate(habit.getDayOfWeeks(), request.getAchievementDate()),
 							sequence),
 					getTotalRewardCount(habit, sequence),
 					updateMateLevel(habit, sequence));
@@ -119,8 +115,7 @@ public class SaveHabitAchievementUseCase {
 			int sequence) {
 		HabitAchievementEntity entity =
 				repository.save(
-						HabitAchievementConverter.to(habit, request, nextAchievementDate,
-								sequence));
+						HabitAchievementConverter.to(habit, request, nextAchievementDate, sequence));
 		return HabitAchievementConverter.from(entity);
 	}
 
@@ -148,7 +143,7 @@ public class SaveHabitAchievementUseCase {
 
 		Long rewardCount =
 				rewardHistoryRepository.countByHabitIdAndCreateAtIsAfter(
-						habit.getMemberId(), mate.getCreateAt())
+								habit.getMemberId(), mate.getCreateAt())
 						+ 1;
 
 		if (this.isLevelUp(rewardCount)) {

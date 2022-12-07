@@ -1,8 +1,6 @@
 package com.depromeet.threedays.front.web.request.member;
 
 import com.depromeet.threedays.data.enums.CertificationSubject;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,8 +10,6 @@ import lombok.NoArgsConstructor;
 @Getter
 public class SignMemberRequest {
 
-	@NotNull private CertificationSubject certificationSubject;
-	@NotBlank private String oAuthToken;
-	@NotBlank private String fcmToken;
-	@NotBlank private String identificationKey;
+	private CertificationSubject certificationSubject;
+	private String oAuthToken;
 }
