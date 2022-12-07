@@ -35,7 +35,7 @@ jobs:
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }} --all-tags
       - name: Deploy to prod
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v0.1.4
         id: deploy-prod
         with:
           host: ${{ secrets.EC2_HOST }}
