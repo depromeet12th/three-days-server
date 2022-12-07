@@ -23,4 +23,20 @@ public class NotificationHistoryConverter {
 				.build();
 
 	}
+
+	public static NotificationHistoryEntity to(final NotificationHistory data) {
+		if (data == null) {
+			return null;
+		}
+
+		return NotificationHistoryEntity.builder()
+				.id(data.getId())
+				.memberId(data.getMemberId())
+				.notificationId(data.getNotificationId())
+				.contents(data.getContents())
+				.status(data.getStatus())
+				.type(data.getType())
+				.createAt(data.getCreateAt())
+				.build();
+	}
 }
