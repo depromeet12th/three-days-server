@@ -9,7 +9,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class HabitResponseConverter {
 
-	public static HabitResponse from(Habit habit) {
+	public static HabitResponse from(final Habit habit) {
 
 		HabitAchievement habitAchievement =
 				Optional.ofNullable(habit.getHabitAchievement()).orElseGet(HabitAchievement::new);

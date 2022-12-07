@@ -23,6 +23,8 @@ tags:
     description: 기록
   - name: Client
     description: 사용자의 단말 정보
+  - name: Notification
+    description: 알림
 paths:
   /api/v1/habits:
     post:
@@ -180,7 +182,7 @@ paths:
             format: int64
       responses:
         '204':
-          description: OK
+          description: NO CONTENT
           content:
             application/json:
               schema:
@@ -294,7 +296,7 @@ paths:
             format: int64
       responses:
         '204':
-          description: OK
+          description: NO CONTENT
           content:
             application/json:
               schema:
@@ -390,7 +392,7 @@ paths:
       operationId: deleteMember
       responses:
         '204':
-          description: OK
+          description: NO CONTENT
           content:
             application/json:
               schema:
@@ -422,7 +424,7 @@ paths:
                   example: identificationKey
       responses:
         '204':
-          description: OK
+          description: NO CONTENT
           content:
             application/json:
               schema:
@@ -783,13 +785,76 @@ paths:
               example:
                 - code: "uncaught error"
                   message: "서버 에러"
+  /api/v1/notifications:
+    get:
+      tags:
+        - Notification
+      summary: 특정 멤버의 알림 목록을 제공한다.
+      description: 특정 멤버의 30일간의 알림 목록을 제공한다.
+      operationId: getNotifications
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/NotificationHistory'
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
+  /api/v1/notifications/{notificationId}/status:
+    patch:
+      tags:
+        - Notification
+      summary: 알림 읽음 상태변경 API
+      description: 특정 알림의 읽음 상태를 변경한다.
+      operationId: patchNotificationStatus
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationUpdateStatusRequest'
+      responses:
+        '204':
+          description: NO CONTENT
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "invalid.id"
+                  message: "id는 숫자여야만 합니다."
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
+
 
 security:
-  - bearerAuth: [ token ]
+  - bearerAuth: [ ]
 
 components:
   securitySchemes:
-    token:
+    bearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
@@ -922,13 +987,6 @@ components:
           example: [ "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY" ]
         notification:
           $ref: '#/components/schemas/Notification'
-    SearchHabitRequest:
-      required: [ status ]
-      type: object
-      properties:
-        status:
-          type: string
-          enum: [ "ACTIVE", "ARCHIVED" ]
     EditHabitRequest:
       required: [ title, imojiPath, dayOfWeek, notification ]
       type: object
@@ -960,6 +1018,13 @@ components:
         name:
           type: string
           example: depromeet8manager
+    NotificationUpdateStatusRequest:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [ SENDED, CHECK ]
+          example: CHECK
     MemberNotificationConsentUpdateRequest:
       type: object
       properties:
@@ -987,17 +1052,6 @@ components:
           type: string
           format: date
           example: "2022-11-09"
-    LoginResponse:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: "1"
-        name:
-          type: string
-          example: "depromeet8manager"
-        token:
-          $ref: '#/components/schemas/Token'
     Client:
       type: object
       properties:
@@ -1051,6 +1105,17 @@ components:
         characterType:
           enum: [ "WHIP", "CARROT" ]
           example: "WHIP"
+        reward:
+          type: integer
+          example: 6
+        rewardHistory:
+          type: array
+          items:
+            properties:
+              createAt:
+                type: string
+                format: date-time
+                example: "2022-11-30 21:40:18.668458"
         levelUpAt:
           type: string
           format: date-time
@@ -1145,31 +1210,28 @@ components:
         identificationKey:
           type: string
           example: identificationKey
-    RecordRequest:
+    NotificationHistory:
       type: object
       properties:
-        datePeriod:
-          type: object
-          properties:
-            to:
-              type: string
-              format: date
-              example: 2022-11-01
-            from:
-              type: string
-              format: date
-              example: 2022-11-01
-    SearchHabitAchievementRequest:
-      type: object
-      properties:
-        datePeriod:
-          type: object
-          properties:
-            to:
-              type: string
-              format: date
-              example: 2022-11-01
-            from:
-              type: string
-              format: date
-              example: 2022-11-01
+        id:
+          type: integer
+          example: 1
+        memberId:
+          type: integer
+          example: 1
+        notificationId:
+          type: integer
+          example: 1
+        contents:
+          type: string
+          example: 짝심삼일 ver.2 출시
+        status:
+          type: string
+          enum: [ "SENDED", "CHECK" ]
+        type:
+          type: string
+          enum: [ "GLOBAL", "HABIT" ]
+        createAt:
+          type: string
+          format: date-time
+          example: "2022-11-30 21:40:18.668458"

@@ -7,6 +7,7 @@ import com.depromeet.threedays.front.domain.usecase.mate.SaveMateUseCase;
 import com.depromeet.threedays.front.support.ApiResponse;
 import com.depromeet.threedays.front.support.ApiResponseGenerator;
 import com.depromeet.threedays.front.web.request.mate.SaveMateRequest;
+import com.depromeet.threedays.front.web.response.MateResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,8 @@ public class MateController {
 	@PostMapping()
 	public ApiResponse<Mate> add(
 			@PathVariable Long habitId, @RequestBody @Valid final SaveMateRequest request) {
-		return ApiResponseGenerator.success(saveUseCase.execute(habitId, request), HttpStatus.CREATED);
+		return ApiResponseGenerator.success(saveUseCase.execute(habitId, request),
+				HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/{id}")
@@ -41,7 +43,7 @@ public class MateController {
 	}
 
 	@GetMapping("/{id}")
-	public ApiResponse<Mate> read(@PathVariable Long habitId, @PathVariable final Long id) {
+	public ApiResponse<MateResponse> read(@PathVariable Long habitId, @PathVariable final Long id) {
 		return ApiResponseGenerator.success(getUseCase.execute(habitId, id), HttpStatus.OK);
 	}
 }
