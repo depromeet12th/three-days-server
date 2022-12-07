@@ -22,7 +22,7 @@ public class SaveNotificationHistoryUseCase {
 
 	public void execute(int successCount, NotificationMessage message, List<ClientEntity> group) {
 		if (successCount == 0) {
-			repository.saveAll(createList(NotificationStatus.SUCCESS, message, group));
+			repository.saveAll(createList(NotificationStatus.SENT, message, group));
 		} else {
 			repository.saveAll(createList(NotificationStatus.FAILURE, message, group));
 		}
@@ -32,7 +32,7 @@ public class SaveNotificationHistoryUseCase {
 		if (successCount == 0) {
 			repository.saveAll(createList(NotificationStatus.FAILURE, message));
 		} else {
-			repository.saveAll(createList(NotificationStatus.SUCCESS, message));
+			repository.saveAll(createList(NotificationStatus.SENT, message));
 		}
 	}
 
