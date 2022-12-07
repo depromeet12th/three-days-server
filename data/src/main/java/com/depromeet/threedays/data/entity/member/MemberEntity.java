@@ -2,6 +2,7 @@ package com.depromeet.threedays.data.entity.member;
 
 import com.depromeet.threedays.data.enums.CertificationSubject;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -41,6 +42,10 @@ public class MemberEntity implements Serializable {
 	private String resource;
 
 	@Column private Boolean notificationConsent;
+
+	@Column(nullable = false, updatable = false)
+	@Builder.Default
+	private LocalDateTime createAt = LocalDateTime.now();
 
 	public void updateName(String name) {
 		this.name = name;

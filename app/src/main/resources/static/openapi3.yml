@@ -765,8 +765,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Record'
+                $ref: '#/components/schemas/Record'
         '400':
           description: BAD REQUEST
           content:
@@ -1138,10 +1137,10 @@ components:
         frequentHabit:
           $ref: '#/components/schemas/RecordHabitResponse'
     RecordHabitResponse:
-      required: [ habitId, memberId, title, imojiPath, dayOfWeeks, createAt ]
+      required: [ id, memberId, title, imojiPath, dayOfWeeks, createAt ]
       type: object
       properties:
-        habitId:
+        id:
           type: integer
           format: int64
           example: 1
