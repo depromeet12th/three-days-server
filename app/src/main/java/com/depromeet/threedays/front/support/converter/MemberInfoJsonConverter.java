@@ -13,9 +13,8 @@ import org.json.simple.parser.ParseException;
 @UtilityClass
 public class MemberInfoJsonConverter {
 
-	private static final ObjectMapper objectMapper = new ObjectMapper().setSerializationInclusion(
-			JsonInclude.Include.NON_NULL);
-
+	private static final ObjectMapper objectMapper =
+			new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
 	public static String to(MemberInfo info) {
 		try {
