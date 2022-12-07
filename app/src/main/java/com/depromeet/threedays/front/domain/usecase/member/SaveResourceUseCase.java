@@ -9,14 +9,12 @@ import com.depromeet.threedays.front.persistence.repository.member.MemberReposit
 import com.depromeet.threedays.front.support.converter.MemberInfoJsonConverter;
 import com.depromeet.threedays.front.web.request.member.MemberResourceUpdateRequest;
 import com.google.gson.JsonElement;
+import java.util.Map;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Map;
-import java.util.Set;
-
 
 @Transactional
 @RequiredArgsConstructor
@@ -30,7 +28,8 @@ public class SaveResourceUseCase {
 		return MemberConverter.from(this.updateResource(memberId, request));
 	}
 
-	private MemberEntity updateResource(final Long memberId, final MemberResourceUpdateRequest request) {
+	private MemberEntity updateResource(
+			final Long memberId, final MemberResourceUpdateRequest request) {
 		MemberEntity member =
 				memberRepository
 						.findById(memberId)
@@ -39,7 +38,7 @@ public class SaveResourceUseCase {
 		return member;
 	}
 
-	private String updateResource(String resource, JSONObject newResource){
+	private String updateResource(String resource, JSONObject newResource) {
 		JSONObject asis = MemberInfoJsonConverter.from(resource);
 
 		Set<Map.Entry<String, JsonElement>> element = newResource.entrySet();

@@ -2,11 +2,11 @@ package com.depromeet.threedays.front.domain.converter.member;
 
 import com.depromeet.threedays.data.entity.member.MemberEntity;
 import com.depromeet.threedays.front.domain.command.SaveMemberCommand;
-import com.depromeet.threedays.front.domain.model.member.SaveMemberUseCaseResponse;
 import com.depromeet.threedays.front.domain.model.member.Member;
-import com.depromeet.threedays.front.web.response.SaveMemberResponse;
+import com.depromeet.threedays.front.domain.model.member.SaveMemberUseCaseResponse;
 import com.depromeet.threedays.front.domain.model.member.Token;
 import com.depromeet.threedays.front.support.converter.MemberInfoJsonConverter;
+import com.depromeet.threedays.front.web.response.SaveMemberResponse;
 
 public class MemberConverter {
 
@@ -14,7 +14,8 @@ public class MemberConverter {
 		throw new UnsupportedOperationException();
 	}
 
-	public static SaveMemberUseCaseResponse from(final MemberEntity entity, boolean isNew, Token token) {
+	public static SaveMemberUseCaseResponse from(
+			final MemberEntity entity, boolean isNew, Token token) {
 		if (entity == null) {
 			return null;
 		}
@@ -44,8 +45,8 @@ public class MemberConverter {
 				.build();
 	}
 
-	public static Member from(final MemberEntity entity){
-		if(entity == null){
+	public static Member from(final MemberEntity entity) {
+		if (entity == null) {
 			return null;
 		}
 		return Member.builder()
@@ -57,8 +58,8 @@ public class MemberConverter {
 				.build();
 	}
 
-	public static SaveMemberResponse to(SaveMemberUseCaseResponse member){
-		if(member == null){
+	public static SaveMemberResponse to(SaveMemberUseCaseResponse member) {
+		if (member == null) {
 			return null;
 		}
 		return SaveMemberResponse.builder()

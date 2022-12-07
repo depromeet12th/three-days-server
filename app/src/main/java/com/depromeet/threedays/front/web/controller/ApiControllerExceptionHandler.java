@@ -84,8 +84,7 @@ public class ApiControllerExceptionHandler {
 	}
 
 	@ExceptionHandler({JsonParsingException.class})
-	public ApiResponse<Void> handleJson(
-			final JsonParsingException ex, final WebRequest request) {
+	public ApiResponse<Void> handleJson(final JsonParsingException ex, final WebRequest request) {
 		this.writeLog(ex, request);
 		return ApiResponseGenerator.fail(HttpStatus.FORBIDDEN);
 	}

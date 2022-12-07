@@ -3,9 +3,8 @@ package com.depromeet.threedays.front.domain.converter;
 import com.depromeet.threedays.data.entity.history.RewardHistoryEntity;
 import com.depromeet.threedays.front.domain.model.RewardHistory;
 import com.depromeet.threedays.front.domain.model.habit.Habit;
-import lombok.experimental.UtilityClass;
-
 import java.time.LocalDateTime;
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class RewardHistoryConverter {
@@ -22,8 +21,6 @@ public class RewardHistoryConverter {
 			return null;
 		}
 
-		return RewardHistory.builder()
-				.createAt(entity.getCreateAt())
-				.build();
+		return RewardHistory.builder().createAt(entity.getCreateAt()).build();
 	}
 }

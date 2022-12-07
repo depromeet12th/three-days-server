@@ -12,9 +12,9 @@ import org.json.simple.JSONObject;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class Member {
-    private Long id;
-    private String name;
-    private CertificationSubject certificationSubject;
-    private boolean notificationConsent;
-    private JSONObject resource;
+	private Long id;
+	private String name;
+	private CertificationSubject certificationSubject;
+	private boolean notificationConsent;
+	private JSONObject resource;
 }

@@ -15,11 +15,11 @@ public class MemberInfoJsonConverter {
 	public static ObjectMapper objectMapper;
 
 	@Autowired
-	private MemberInfoJsonConverter(ObjectMapper mapper){
+	private MemberInfoJsonConverter(ObjectMapper mapper) {
 		objectMapper = mapper;
 	}
 
-	public static String to(MemberInfo info){
+	public static String to(MemberInfo info) {
 		try {
 			return objectMapper.writeValueAsString(info);
 		} catch (JsonProcessingException e) {
@@ -27,9 +27,9 @@ public class MemberInfoJsonConverter {
 		}
 	}
 
-	public static JSONObject from(String jsonString){
+	public static JSONObject from(String jsonString) {
 		JSONParser parser = new JSONParser();
-		try{
+		try {
 			Object obj = parser.parse(jsonString);
 			return (JSONObject) obj;
 		} catch (ParseException e) {
@@ -37,7 +37,7 @@ public class MemberInfoJsonConverter {
 		}
 	}
 
-	public static String to(JSONObject object){
+	public static String to(JSONObject object) {
 		return object.toJSONString();
 	}
 }

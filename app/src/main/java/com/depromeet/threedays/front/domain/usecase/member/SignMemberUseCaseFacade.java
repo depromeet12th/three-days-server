@@ -33,7 +33,8 @@ public class SignMemberUseCaseFacade {
 
 		MemberInfo info = getInfo(request.getCertificationSubject(), request.getOAuthToken());
 
-		SaveMemberUseCaseResponse member = getUseCase.execute(MemberQueryConverter.from(info.getId(), request));
+		SaveMemberUseCaseResponse member =
+				getUseCase.execute(MemberQueryConverter.from(info.getId(), request));
 
 		if (member == null) {
 			return saveUseCase.execute(MemberCommandConverter.from(info, request));

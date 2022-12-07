@@ -1,9 +1,8 @@
 package com.depromeet.threedays.front.web.controller;
 
 import com.depromeet.threedays.front.domain.converter.member.MemberConverter;
-import com.depromeet.threedays.front.web.response.SaveMemberResponse;
-import com.depromeet.threedays.front.domain.model.member.SaveMemberUseCaseResponse;
 import com.depromeet.threedays.front.domain.model.member.Member;
+import com.depromeet.threedays.front.domain.model.member.SaveMemberUseCaseResponse;
 import com.depromeet.threedays.front.domain.model.member.Token;
 import com.depromeet.threedays.front.domain.usecase.member.*;
 import com.depromeet.threedays.front.support.ApiResponse;
@@ -12,8 +11,8 @@ import com.depromeet.threedays.front.web.request.member.MemberNameUpdateRequest;
 import com.depromeet.threedays.front.web.request.member.MemberNotificationConsentUpdateRequest;
 import com.depromeet.threedays.front.web.request.member.MemberResourceUpdateRequest;
 import com.depromeet.threedays.front.web.request.member.SignMemberRequest;
+import com.depromeet.threedays.front.web.response.SaveMemberResponse;
 import javax.validation.Valid;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -38,7 +37,7 @@ public class MemberController {
 	@PostMapping
 	public ApiResponse<SaveMemberResponse> add(@RequestBody @Valid SignMemberRequest request) {
 		SaveMemberUseCaseResponse member = signUseCase.execute(request);
-		HttpStatus status = Boolean.TRUE.equals(member.getIsNew())?HttpStatus.CREATED:HttpStatus.OK;
+		HttpStatus status = Boolean.TRUE.equals(member.getIsNew()) ? HttpStatus.CREATED : HttpStatus.OK;
 		return ApiResponseGenerator.success(MemberConverter.to(member), status);
 	}
 
@@ -54,7 +53,8 @@ public class MemberController {
 	}
 
 	@PatchMapping("/resources")
-	public ApiResponse<Member> updateResource(@RequestBody @Valid MemberResourceUpdateRequest request){
+	public ApiResponse<Member> updateResource(
+			@RequestBody @Valid MemberResourceUpdateRequest request) {
 		return ApiResponseGenerator.success(saveResourceUseCase.execute(request), HttpStatus.OK);
 	}
 
