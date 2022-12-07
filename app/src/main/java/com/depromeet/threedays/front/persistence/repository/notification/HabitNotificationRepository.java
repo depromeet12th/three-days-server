@@ -12,4 +12,6 @@ public interface HabitNotificationRepository extends JpaRepository<HabitNotifica
 
 	Optional<HabitNotificationEntity> findAllByNotificationTimeAndDayOfWeek(
 			final LocalTime notificationTime, final DayOfWeek dayOfWeek);
+
+	void deleteAllByMemberId(final Long memberId);
 }

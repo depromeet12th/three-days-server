@@ -15,11 +15,7 @@ import com.depromeet.threedays.front.web.response.SaveMemberResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/v1/members")
 @RequiredArgsConstructor
@@ -33,6 +29,7 @@ public class MemberController {
 	private final SaveConsentUseCase saveConsentUseCase;
 	private final SaveResourceUseCase saveResourceUseCase;
 	private final GetTokenUseCase getTokenUseCase;
+	private final DeleteMemberUseCase deleteUseCase;
 
 	@PostMapping
 	public ApiResponse<SaveMemberResponse> add(@RequestBody @Valid SignMemberRequest request) {
@@ -61,5 +58,11 @@ public class MemberController {
 	@PostMapping("/tokens")
 	public ApiResponse<Token> refreshToken(@RequestBody Token token) {
 		return ApiResponseGenerator.success(getTokenUseCase.execute(token), HttpStatus.CREATED);
+	}
+
+	@DeleteMapping
+	public ApiResponse<Void> deleteMember() {
+		deleteUseCase.execute();
+		return ApiResponseGenerator.success(HttpStatus.NO_CONTENT);
 	}
 }

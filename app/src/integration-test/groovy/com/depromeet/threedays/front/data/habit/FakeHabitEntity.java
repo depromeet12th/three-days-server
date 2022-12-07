@@ -23,5 +23,17 @@ public class FakeHabitEntity {
 				.deleted(false)
 				.build();
 	}
+	static HabitEntity create(Long memberId) {
+		return HabitEntity.builder()
+				.imojiPath(RandomString.make())
+				.memberId(memberId)
+				.title(RandomString.make())
+				.dayOfWeeks(dayOfWeeks)
+				.archiveNumberOfDate(0)
+				.color(RandomString.make())
+				.status(HabitStatus.ACTIVE)
+				.deleted(false)
+				.build();
+	}
 
 }
