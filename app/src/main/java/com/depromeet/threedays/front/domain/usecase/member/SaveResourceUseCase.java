@@ -35,11 +35,11 @@ public class SaveResourceUseCase {
 				memberRepository
 						.findById(memberId)
 						.orElseThrow(() -> new ResourceNotFoundException("member.not.found"));
-		member.updateResource(make(member.getResource(), request.getResource()));
+		member.updateResource(updateResource(member.getResource(), request.getResource()));
 		return member;
 	}
 
-	private String make(String resource, JSONObject newResource){
+	private String updateResource(String resource, JSONObject newResource){
 		JSONObject asis = MemberInfoJsonConverter.from(resource);
 
 		Set<Map.Entry<String, JsonElement>> element = newResource.entrySet();
