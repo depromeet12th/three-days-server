@@ -2,7 +2,7 @@ package com.depromeet.threedays.front.domain.usecase.member
 
 
 import com.depromeet.threedays.front.IntegrationTestSpecification
-import com.depromeet.threedays.front.data.member.MemberDataInitializer
+import com.depromeet.threedays.front.data.member.MemberInitializer
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository
 import com.depromeet.threedays.front.web.request.member.MemberResourceUpdateRequest
 import org.json.simple.JSONObject
@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired
 class SaveMemberResourceUseCaseSpec extends IntegrationTestSpecification {
 
     @Autowired
-    MemberDataInitializer initializer
+    MemberInitializer initializer
     MemberRepository mockRepo
     SaveResourceUseCase useCase
 
@@ -33,7 +33,7 @@ class SaveMemberResourceUseCaseSpec extends IntegrationTestSpecification {
         def actual = useCase.execute(expected)
 
         then:
-        mockRepo.findById(_) >> Optional.of(id)
+        mockRepo.findById(_ as Long) >> Optional.of(id)
         actual.resource.get("test") == json.get("test")
     }
 }
