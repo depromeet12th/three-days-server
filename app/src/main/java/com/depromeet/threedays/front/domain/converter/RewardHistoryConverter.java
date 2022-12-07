@@ -8,7 +8,6 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class RewardHistoryConverter {
-
 	public static RewardHistoryEntity to(final Habit habit) {
 		return RewardHistoryEntity.builder()
 				.habitId(habit.getId())
@@ -22,8 +21,6 @@ public class RewardHistoryConverter {
 			return null;
 		}
 
-		return RewardHistory.builder()
-				.createAt(entity.getCreateAt())
-				.build();
+		return RewardHistory.builder().createAt(entity.getCreateAt()).build();
 	}
 }

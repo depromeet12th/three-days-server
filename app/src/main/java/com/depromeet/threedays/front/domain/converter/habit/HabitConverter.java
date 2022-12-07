@@ -175,7 +175,6 @@ public class HabitConverter {
 				.build();
 	}
 
-
 	public static Habit from(final Habit source, final UpdateHabitRequest request) {
 		if (source == null || request == null) {
 			return null;
@@ -193,7 +192,6 @@ public class HabitConverter {
 				.createAt(source.getCreateAt())
 				.deleted(source.getDeleted())
 				.build();
-
 	}
 
 	public static HabitEntity to(final Habit source, final UpdateHabitRequest request) {

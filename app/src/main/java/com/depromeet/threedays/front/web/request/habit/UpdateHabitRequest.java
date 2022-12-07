@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 public class UpdateHabitRequest {
-	
+
 	@NotNull private String title;
 
 	@NotNull private String imojiPath;

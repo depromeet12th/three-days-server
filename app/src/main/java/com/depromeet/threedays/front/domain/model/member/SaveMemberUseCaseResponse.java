@@ -1,7 +1,6 @@
-package com.depromeet.threedays.front.domain.command;
+package com.depromeet.threedays.front.domain.model.member;
 
 import com.depromeet.threedays.data.enums.CertificationSubject;
-import com.depromeet.threedays.front.client.model.MemberInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -15,11 +14,13 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class SaveMemberCommand {
-	private String certificationId;
+public class SaveMemberUseCaseResponse {
+
+	private Long id;
 	private String name;
-	private CertificationSubject certificationSubject;
-	private MemberInfo memberInfo;
+	private Boolean isNew;
+	private Token token;
 	private String resource;
-	private Boolean notificationConsent;
+	public Boolean notificationConsent;
+	public CertificationSubject certificationSubject;
 }

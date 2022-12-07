@@ -1,5 +1,6 @@
 package com.depromeet.threedays.front.web.controller;
 
+import com.depromeet.threedays.front.exception.JsonParsingException;
 import com.depromeet.threedays.front.exception.PolicyViolationException;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import com.depromeet.threedays.front.support.ApiResponse;
@@ -78,6 +79,12 @@ public class ApiControllerExceptionHandler {
 	@ExceptionHandler({java.nio.file.AccessDeniedException.class})
 	public ApiResponse<Void> handleForbidden(
 			final AccessDeniedException ex, final WebRequest request) {
+		this.writeLog(ex, request);
+		return ApiResponseGenerator.fail(HttpStatus.FORBIDDEN);
+	}
+
+	@ExceptionHandler({JsonParsingException.class})
+	public ApiResponse<Void> handleJson(final JsonParsingException ex, final WebRequest request) {
 		this.writeLog(ex, request);
 		return ApiResponseGenerator.fail(HttpStatus.FORBIDDEN);
 	}

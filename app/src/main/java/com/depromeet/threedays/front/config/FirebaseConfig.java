@@ -36,8 +36,7 @@ public class FirebaseConfig {
 										.setPrivateKeyString(firebaseProperty.getPrivateKey())
 										.setClientEmail(firebaseProperty.getClientEmail())
 										.setClientId(firebaseProperty.getClientId())
-										.setTokenServerUri(
-												URI.create(firebaseProperty.getTokenUri()))
+										.setTokenServerUri(URI.create(firebaseProperty.getTokenUri()))
 										.build())
 						.build();
 

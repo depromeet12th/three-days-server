@@ -31,16 +31,21 @@ public class GetMateUseCase {
 			throw new ResourceNotFoundException();
 		}
 
-		Mate source = repository
-				.findById(id)
-				.map(MateConverter::from)
-				.orElseThrow(ResourceNotFoundException::new);
+		Mate source =
+				repository
+						.findById(id)
+						.map(MateConverter::from)
+						.orElseThrow(ResourceNotFoundException::new);
 
-		List<RewardHistory> rewardHistories = rewardHistoryRepository.findAllByHabitIdAndCreateAtAfter(
-				habitId, source.getCreateAt()).stream().map(RewardHistoryConverter::from).collect(
-				Collectors.toList());
+		List<RewardHistory> rewardHistories =
+				rewardHistoryRepository
+						.findAllByHabitIdAndCreateAtAfter(habitId, source.getCreateAt())
+						.stream()
+						.map(RewardHistoryConverter::from)
+						.collect(Collectors.toList());
 
-		return MateResponseConverter.from(source).withReward(rewardHistories.size())
+		return MateResponseConverter.from(source)
+				.withReward(rewardHistories.size())
 				.withRewardHistory(rewardHistories);
 	}
 }

@@ -47,11 +47,10 @@ public class HabitController {
 	}
 
 	@PutMapping("/{id}")
-	public ApiResponse<HabitResponse> edit(@PathVariable final Long id,
-			@RequestBody @Valid final UpdateHabitRequest request) {
+	public ApiResponse<HabitResponse> edit(
+			@PathVariable final Long id, @RequestBody @Valid final UpdateHabitRequest request) {
 		return ApiResponseGenerator.success(
-				HabitResponseConverter.from(updateUseCase.execute(id, request)),
-				HttpStatus.OK);
+				HabitResponseConverter.from(updateUseCase.execute(id, request)), HttpStatus.OK);
 	}
 
 	@GetMapping
@@ -70,5 +69,4 @@ public class HabitController {
 		deleteUseCase.execute(id);
 		return ApiResponseGenerator.success(HttpStatus.NO_CONTENT);
 	}
-
 }
