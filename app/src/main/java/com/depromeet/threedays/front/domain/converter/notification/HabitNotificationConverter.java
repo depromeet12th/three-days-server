@@ -31,12 +31,13 @@ public class HabitNotificationConverter {
 				.build();
 	}
 
-	public static HabitNotificationMessage habitMessagefrom(HabitNotificationEntity entity) {
+	public static HabitNotificationMessage habitMessageFrom(HabitNotificationEntity entity) {
 		if (entity == null) {
 			return null;
 		}
 
 		return HabitNotificationMessage.builder()
+				.notificationId(entity.getId())
 				.habitId(entity.getHabitId())
 				.content(entity.getContents())
 				.notificationTime(entity.getNotificationTime())

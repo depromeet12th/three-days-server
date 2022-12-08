@@ -30,15 +30,17 @@ public class SendGlobalNotificationUseCase {
 	private final ClientRepository clientRepository;
 	private final MemberRepository memberRepository;
 	private final GetGlobalNotificationUseCase getUseCase;
+
+	private final SaveNotificationHistoryUseCase saveHistoryUseCase;
 	private final MessageClient messageClient;
 	private final FirebaseProperty fireBaseProperty;
 
 	public List<NotificationBatchResponse> execute(NotificationRequest request) {
 		List<NotificationMessage> messages = getUseCase.execute(request.getNotificationTime());
-		NotificationLogger.messagesLogger(messages);
 
 		List<NotificationBatchResponse> result = new ArrayList<>();
 		for (NotificationMessage message : messages) {
+			NotificationLogger.messagesLogger(message);
 			List<BatchResponse> responses = sendMessage(message);
 			result.add(
 					NotificationBatchResponse.builder()
@@ -60,6 +62,7 @@ public class SendGlobalNotificationUseCase {
 					messageClient.send(
 							FireBaseMessageBuilder.makeMulticastMessage(
 									group, message.getTitle(), message.getContents()));
+			saveHistoryUseCase.execute(response.getSuccessCount(), message, group);
 			NotificationLogger.batchResponseLogger(response);
 			responses.add(response);
 		}

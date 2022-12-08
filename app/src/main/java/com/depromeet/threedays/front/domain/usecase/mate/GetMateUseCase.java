@@ -50,5 +50,4 @@ public class GetMateUseCase {
 				.withRewardHistory(rewardHistories)
 				.withLevelUpSection(LevelUpSection.MATE.getSectionList());
 	}
-
 }

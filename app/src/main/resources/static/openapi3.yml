@@ -813,7 +813,7 @@ paths:
       tags:
         - Notification
       summary: 알림 읽음 상태변경 API
-      description: 특정 알림의 읽음 상태를 변경한다.
+      description: 특정 알림의 읽음 상태를 변경한다. (읽기전 SUCCESS, 읽은 후 CHECKED)
       operationId: patchNotificationStatus
       requestBody:
         required: true
@@ -1229,7 +1229,7 @@ components:
           example: 짝심삼일 ver.2 출시
         status:
           type: string
-          enum: [ "SENDED", "CHECK" ]
+          enum: [ "SUCCESS", "CHECKED" ]
         type:
           type: string
           enum: [ "GLOBAL", "HABIT" ]

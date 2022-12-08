@@ -55,11 +55,10 @@ class DeleteMemberUseCaseSpec extends IntegrationTestSpecification {
         setup:
         def criterionMember = initializer.data.first()
         habitDataInitializer.initialize()
-        def criterion = habitDataInitializer.getData()
 
         when:
         useCase.execute()
-        habitRepository.findById(criterion.id as Long).get()
+        habitRepository.findById(criterionMember.id as Long).get()
 
         then:
         memberRepository.findById(_ as Long) >> Optional.of(criterionMember)
