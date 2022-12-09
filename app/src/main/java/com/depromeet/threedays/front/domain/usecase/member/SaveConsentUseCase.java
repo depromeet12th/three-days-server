@@ -29,7 +29,7 @@ public class SaveConsentUseCase {
 				memberRepository
 						.findById(memberId)
 						.orElseThrow(() -> new ResourceNotFoundException("member.not.found"));
-		member.updateNotificationConsent(request.isOn());
+		member.updateNotificationConsent(request.isNotificationConsent());
 		return member;
 	}
 }
