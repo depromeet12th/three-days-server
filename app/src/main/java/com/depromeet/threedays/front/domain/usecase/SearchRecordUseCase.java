@@ -15,7 +15,7 @@ import com.depromeet.threedays.front.web.response.RecordResponse;
 import com.depromeet.threedays.front.web.response.converter.RecordHabitResponseConverter;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -41,11 +41,13 @@ public class SearchRecordUseCase {
 	public RecordResponse execute(final SearchRecordRequest request) {
 
 		MemberEntity memberEntity =
-				memberRepository.findById(AuditorHolder.get()).orElseThrow(IllegalArgumentException::new);
+				memberRepository.findById(AuditorHolder.get())
+						.orElseThrow(IllegalArgumentException::new);
 
 		DatePeriod datePeriod =
 				Optional.ofNullable(request.getDatePeriod())
-						.orElse(new DatePeriod(memberEntity.getCreateAt().toLocalDate(), LocalDate.now()));
+						.orElse(new DatePeriod(memberEntity.getCreateAt().toLocalDate(),
+								LocalDate.now()));
 
 		Long rewardCount =
 				rewardHistoryRepository.countByMemberIdAndCreateAtBetween(
@@ -74,7 +76,7 @@ public class SearchRecordUseCase {
 	}
 
 	private Map<Long, Integer> calculateFrequentHabit(final List<Long> habitIds) {
-		Map<Long, Integer> achievementCountMap = new HashMap<>();
+		Map<Long, Integer> achievementCountMap = new LinkedHashMap<>();
 
 		for (Long habitId : habitIds) {
 			achievementCountMap.merge(habitId, 1, (oldValue, initValue) -> oldValue + 1);

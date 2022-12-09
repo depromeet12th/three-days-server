@@ -987,7 +987,7 @@ components:
         notification:
           $ref: '#/components/schemas/Notification'
     EditHabitRequest:
-      required: [ title, imojiPath, dayOfWeek, notification ]
+      required: [ title, imojiPath, dayOfWeeks, notification ]
       type: object
       properties:
         title:
@@ -996,7 +996,10 @@ components:
         imojiPath:
           type: string
           example: "imojiString"
-        dayOfWeek:
+        color:
+          type: string
+          example: "pink"
+        dayOfWeeks:
           type: array
           example: [ "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY" ]
         notification:
