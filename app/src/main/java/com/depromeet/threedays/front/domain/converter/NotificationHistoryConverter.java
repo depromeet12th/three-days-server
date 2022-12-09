@@ -21,7 +21,6 @@ public class NotificationHistoryConverter {
 				.type(entity.getType())
 				.createAt(entity.getCreateAt())
 				.build();
-
 	}
 
 	public static NotificationHistoryEntity to(final NotificationHistory data) {

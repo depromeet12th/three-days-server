@@ -21,10 +21,14 @@ public class SearchNotificationUseCase {
 
 	public List<NotificationHistory> execute() {
 
-		return repository.findAllByMemberIdAndStatusInAndCreateAtBetweenOrderByCreateAtDesc(
-				AuditorHolder.get(),
-				List.of(NotificationStatus.SUCCESS, NotificationStatus.CHECKED),
-				LocalDateTime.now().minusDays(30), LocalDateTime.now()).stream().map(
-				NotificationHistoryConverter::from).collect(Collectors.toList());
+		return repository
+				.findAllByMemberIdAndStatusInAndCreateAtBetweenOrderByCreateAtDesc(
+						AuditorHolder.get(),
+						List.of(NotificationStatus.SUCCESS, NotificationStatus.CHECKED),
+						LocalDateTime.now().minusDays(30),
+						LocalDateTime.now())
+				.stream()
+				.map(NotificationHistoryConverter::from)
+				.collect(Collectors.toList());
 	}
 }

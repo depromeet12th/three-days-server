@@ -10,4 +10,6 @@ public interface ClientRepository extends JpaRepository<ClientEntity, Long> {
 			final Long MemberId, final String identificationKey);
 
 	void deleteAllByMemberId(Long memberId);
+
+	void deleteByIdentificationKey(final String identificationKey);
 }

@@ -16,12 +16,13 @@ public class SaveNotificationUseCase {
 
 	private final NotificationHistoryRepository repository;
 
-
 	public void execute(final Long id, final EditStatusNotificationRequest request) {
 
-		NotificationHistory history = repository.findById(id)
-				.map(NotificationHistoryConverter::from).orElseThrow(
-						ResourceNotFoundException::new);
+		NotificationHistory history =
+				repository
+						.findById(id)
+						.map(NotificationHistoryConverter::from)
+						.orElseThrow(ResourceNotFoundException::new);
 
 		repository.save(NotificationHistoryConverter.to(history.withStatus(request.getStatus())));
 	}

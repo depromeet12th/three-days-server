@@ -11,6 +11,8 @@ public interface NotificationHistoryRepository
 		extends JpaRepository<NotificationHistoryEntity, Long> {
 
 	List<NotificationHistoryEntity> findAllByMemberIdAndStatusInAndCreateAtBetweenOrderByCreateAtDesc(
-			final Long memberId, final Collection<NotificationStatus> statuses, final
-	LocalDateTime startTime, final LocalDateTime endTime);
+			final Long memberId,
+			final Collection<NotificationStatus> statuses,
+			final LocalDateTime startTime,
+			final LocalDateTime endTime);
 }

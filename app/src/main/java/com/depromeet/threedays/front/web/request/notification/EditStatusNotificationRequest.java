@@ -14,5 +14,4 @@ import lombok.NoArgsConstructor;
 public class EditStatusNotificationRequest {
 
 	@NotNull private NotificationStatus status;
-
 }

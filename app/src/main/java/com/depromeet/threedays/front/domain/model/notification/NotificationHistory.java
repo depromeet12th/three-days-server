@@ -23,15 +23,14 @@ public class NotificationHistory {
 	private NotificationStatus status;
 	private NotificationType type;
 	private LocalDateTime createAt;
-
 }
 
 /*
-  "id": 1,
-    "memberId": 1,
-    "notificationId": 1,
-    "contents": "짝심삼일 ver.2 출시",
-    "status": "SENDED",
-    "type": "GLOBAL",
-    "createAt": "2022-11-30 21:40:18.668458"
- */
+"id": 1,
+	"memberId": 1,
+	"notificationId": 1,
+	"contents": "짝심삼일 ver.2 출시",
+	"status": "SENDED",
+	"type": "GLOBAL",
+	"createAt": "2022-11-30 21:40:18.668458"
+*/
