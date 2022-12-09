@@ -41,13 +41,11 @@ public class SearchRecordUseCase {
 	public RecordResponse execute(final SearchRecordRequest request) {
 
 		MemberEntity memberEntity =
-				memberRepository.findById(AuditorHolder.get())
-						.orElseThrow(IllegalArgumentException::new);
+				memberRepository.findById(AuditorHolder.get()).orElseThrow(IllegalArgumentException::new);
 
 		DatePeriod datePeriod =
 				Optional.ofNullable(request.getDatePeriod())
-						.orElse(new DatePeriod(memberEntity.getCreateAt().toLocalDate(),
-								LocalDate.now()));
+						.orElse(new DatePeriod(memberEntity.getCreateAt().toLocalDate(), LocalDate.now()));
 
 		Long rewardCount =
 				rewardHistoryRepository.countByMemberIdAndCreateAtBetween(

@@ -13,4 +13,3 @@ public class MemberNotificationConsentUpdateRequest {
 
 	private boolean notificationConsent;
 }
-

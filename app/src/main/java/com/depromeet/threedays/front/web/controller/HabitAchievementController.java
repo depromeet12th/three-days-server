@@ -35,18 +35,15 @@ public class HabitAchievementController {
 
 	@PostMapping
 	public ApiResponse<HabitResponse> add(
-			@PathVariable Long habitId,
-			@RequestBody @Valid final SaveHabitAchievementRequest request) {
+			@PathVariable Long habitId, @RequestBody @Valid final SaveHabitAchievementRequest request) {
 		return ApiResponseGenerator.success(
-				HabitResponseConverter.from(saveUseCase.execute(habitId, request)),
-				HttpStatus.CREATED);
+				HabitResponseConverter.from(saveUseCase.execute(habitId, request)), HttpStatus.CREATED);
 	}
 
 	@GetMapping
 	public ApiResponse<List<HabitAchievement>> browse(
 			@PathVariable Long habitId, final SearchHabitAchievementRequest request) {
-		return ApiResponseGenerator.success(
-				searchUseCase.execute(habitId, request), HttpStatus.OK);
+		return ApiResponseGenerator.success(searchUseCase.execute(habitId, request), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{habitAchievementId}")

@@ -14,7 +14,7 @@ public class AuditorHolder {
 				|| authentication.getPrincipal().equals("anonymousUser")) {
 			return 0L;
 		}
-		
+
 		return Long.valueOf(String.valueOf(authentication.getPrincipal()));
 	}
 }
