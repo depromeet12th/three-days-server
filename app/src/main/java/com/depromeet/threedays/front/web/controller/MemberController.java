@@ -32,8 +32,8 @@ public class MemberController {
 	private final SaveResourceUseCase saveResourceUseCase;
 	private final GetTokenUseCase getTokenUseCase;
 	private final DeleteMemberUseCase deleteUseCase;
-
 	private final DeleteClientUseCase deleteClientUseCase;
+	private final GetMemberUseCase getUseCase;
 
 	@PostMapping
 	public ApiResponse<SaveMemberResponse> add(@RequestBody @Valid SignMemberRequest request) {
@@ -68,6 +68,11 @@ public class MemberController {
 	public ApiResponse<Void> deleteMember() {
 		deleteUseCase.execute();
 		return ApiResponseGenerator.success(HttpStatus.NO_CONTENT);
+	}
+
+	@GetMapping
+	public ApiResponse<Member> readMember() {
+		return ApiResponseGenerator.success(getUseCase.execute(), HttpStatus.OK);
 	}
 
 	@PostMapping("/logout")
