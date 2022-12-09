@@ -41,7 +41,8 @@ public class NotificationController {
 	}
 
 	@PatchMapping("/{id}")
-	public ApiResponse<Void> editStatus(@PathVariable final Long id,
+	public ApiResponse<Void> editStatus(
+			@PathVariable final Long id,
 			@RequestBody @Valid final EditStatusNotificationRequest request) {
 		saveUseCase.execute(id, request);
 		return ApiResponseGenerator.success(HttpStatus.NO_CONTENT);
