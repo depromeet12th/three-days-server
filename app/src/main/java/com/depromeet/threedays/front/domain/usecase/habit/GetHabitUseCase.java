@@ -10,6 +10,7 @@ import com.depromeet.threedays.front.domain.model.habit.Habit;
 import com.depromeet.threedays.front.domain.model.habit.HabitAchievement;
 import com.depromeet.threedays.front.domain.model.notification.Notification;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
+import com.depromeet.threedays.front.persistence.repository.RewardHistoryRepository;
 import com.depromeet.threedays.front.persistence.repository.habit.HabitAchievementRepository;
 import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository;
 import com.depromeet.threedays.front.persistence.repository.mate.MateRepository;
@@ -24,17 +25,17 @@ import org.springframework.transaction.annotation.Transactional;
 public class GetHabitUseCase {
 
 	private final HabitRepository repository;
-
 	private final HabitAchievementRepository habitAchievementRepository;
 	private final MateRepository mateRepository;
-
 	private final HabitNotificationRepository habitNotificationRepository;
+	private final RewardHistoryRepository rewardHistoryRepository;
 
 	public Habit execute(final Long id) {
 		HabitEntity source = repository.findById(id).orElseThrow(ResourceNotFoundException::new);
 
 		MateEntity mateEntity =
-				mateRepository.findFirstByHabitIdAndDeletedFalseOrderByCreateAtDesc(id).orElse(null);
+				mateRepository.findFirstByHabitIdAndDeletedFalseOrderByCreateAtDesc(id)
+						.orElse(null);
 
 		Long totalAchievementCount = habitAchievementRepository.countByHabitId(id);
 
@@ -50,7 +51,10 @@ public class GetHabitUseCase {
 						.map(HabitNotificationConverter::from)
 						.orElse(null);
 
+		Long rewardCount = rewardHistoryRepository.countByHabitId(id);
+
 		return HabitConverter.from(source).toBuilder()
+				.reward(rewardCount)
 				.totalAchievementCount(totalAchievementCount)
 				.habitAchievement(lastHabitAchievement)
 				.mate(MateConverter.from(mateEntity))
