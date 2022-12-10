@@ -6,11 +6,11 @@ import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import com.depromeet.threedays.front.support.ApiResponse;
 import com.depromeet.threedays.front.support.ApiResponseGenerator;
 import com.depromeet.threedays.front.support.FailureBodyResolver;
+import java.nio.file.AccessDeniedException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -76,7 +76,7 @@ public class ApiControllerExceptionHandler {
 		return ApiResponseGenerator.fail(HttpStatus.NOT_FOUND);
 	}
 
-	@ExceptionHandler({AccessDeniedException.class})
+	@ExceptionHandler({java.nio.file.AccessDeniedException.class})
 	public ApiResponse<Void> handleForbidden(
 			final AccessDeniedException ex, final WebRequest request) {
 		this.writeLog(ex, request);

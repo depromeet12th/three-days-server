@@ -24,7 +24,7 @@ public class FirebaseConfig {
 		return null;
 	}
 
-	@Profile("default")
+	@Profile(value = "default")
 	@Bean
 	public FirebaseApp fireBaseApp(FirebaseProperty firebaseProperty) throws IOException {
 		FirebaseOptions options =
