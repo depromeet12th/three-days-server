@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 public class SignMemberRequest {
 
 	private CertificationSubject certificationSubject;
-	private String oAuthToken;
+	private String socialToken;
 }

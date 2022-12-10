@@ -43,8 +43,7 @@ public class HabitAchievementController {
 	@GetMapping
 	public ApiResponse<List<HabitAchievement>> browse(
 			@PathVariable Long habitId, final SearchHabitAchievementRequest request) {
-		return ApiResponseGenerator.success(
-				searchUseCase.execute(habitId, request), HttpStatus.CREATED);
+		return ApiResponseGenerator.success(searchUseCase.execute(habitId, request), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{habitAchievementId}")

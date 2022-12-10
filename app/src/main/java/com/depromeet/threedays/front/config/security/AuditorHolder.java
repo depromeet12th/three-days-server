@@ -3,7 +3,6 @@ package com.depromeet.threedays.front.config.security;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 
 @UtilityClass
 public class AuditorHolder {
@@ -16,7 +15,6 @@ public class AuditorHolder {
 			return 0L;
 		}
 
-		User user = (User) authentication.getPrincipal();
-		return Long.parseLong(user.getUsername());
+		return Long.valueOf(String.valueOf(authentication.getPrincipal()));
 	}
 }

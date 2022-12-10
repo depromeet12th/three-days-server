@@ -76,7 +76,7 @@ public class ApiControllerExceptionHandler {
 		return ApiResponseGenerator.fail(HttpStatus.NOT_FOUND);
 	}
 
-	@ExceptionHandler({org.springframework.security.access.AccessDeniedException.class})
+	@ExceptionHandler({java.nio.file.AccessDeniedException.class})
 	public ApiResponse<Void> handleForbidden(
 			final AccessDeniedException ex, final WebRequest request) {
 		this.writeLog(ex, request);

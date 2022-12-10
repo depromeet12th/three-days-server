@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 public class MemberNotificationConsentUpdateRequest {
 
-	private boolean isOn;
+	private boolean notificationConsent;
 }

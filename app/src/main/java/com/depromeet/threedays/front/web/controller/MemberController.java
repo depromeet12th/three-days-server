@@ -4,9 +4,11 @@ import com.depromeet.threedays.front.domain.converter.member.MemberConverter;
 import com.depromeet.threedays.front.domain.model.member.Member;
 import com.depromeet.threedays.front.domain.model.member.SaveMemberUseCaseResponse;
 import com.depromeet.threedays.front.domain.model.member.Token;
+import com.depromeet.threedays.front.domain.usecase.client.DeleteClientUseCase;
 import com.depromeet.threedays.front.domain.usecase.member.*;
 import com.depromeet.threedays.front.support.ApiResponse;
 import com.depromeet.threedays.front.support.ApiResponseGenerator;
+import com.depromeet.threedays.front.web.request.client.DeleteClientRequest;
 import com.depromeet.threedays.front.web.request.member.MemberNameUpdateRequest;
 import com.depromeet.threedays.front.web.request.member.MemberNotificationConsentUpdateRequest;
 import com.depromeet.threedays.front.web.request.member.MemberResourceUpdateRequest;
@@ -30,6 +32,8 @@ public class MemberController {
 	private final SaveResourceUseCase saveResourceUseCase;
 	private final GetTokenUseCase getTokenUseCase;
 	private final DeleteMemberUseCase deleteUseCase;
+	private final DeleteClientUseCase deleteClientUseCase;
+	private final GetMemberUseCase getUseCase;
 
 	@PostMapping
 	public ApiResponse<SaveMemberResponse> add(@RequestBody @Valid SignMemberRequest request) {
@@ -63,6 +67,17 @@ public class MemberController {
 	@DeleteMapping
 	public ApiResponse<Void> deleteMember() {
 		deleteUseCase.execute();
+		return ApiResponseGenerator.success(HttpStatus.NO_CONTENT);
+	}
+
+	@GetMapping
+	public ApiResponse<Member> readMember() {
+		return ApiResponseGenerator.success(getUseCase.execute(), HttpStatus.OK);
+	}
+
+	@PostMapping("/logout")
+	public ApiResponse<Void> deleteClient(@RequestBody @Valid DeleteClientRequest request) {
+		deleteClientUseCase.execute(request);
 		return ApiResponseGenerator.success(HttpStatus.NO_CONTENT);
 	}
 }
