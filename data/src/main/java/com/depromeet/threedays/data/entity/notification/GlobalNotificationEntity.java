@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.depromeet.threedays.data.enums.NotificationType;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,4 +43,8 @@ public class GlobalNotificationEntity {
 	@Column(name = "day_of_week", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private DayOfWeek dayOfWeek;
+
+	@Column(name = "type")
+	@Enumerated(EnumType.STRING)
+	private NotificationType type;
 }

@@ -1,6 +1,8 @@
 package com.depromeet.threedays.front.domain.model.notification;
 
 import java.time.LocalTime;
+
+import com.depromeet.threedays.data.enums.NotificationType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,4 +17,5 @@ public class NotificationMessage {
 	private LocalTime notificationTime;
 	private String contents;
 	private String title;
+	private NotificationType type;
 }
