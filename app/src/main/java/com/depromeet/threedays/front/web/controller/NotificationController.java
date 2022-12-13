@@ -59,4 +59,10 @@ public class NotificationController {
 			@RequestBody @Valid NotificationRequest request) {
 		return ApiResponseGenerator.success(habitUseCase.execute(request), HttpStatus.OK);
 	}
+
+	@PostMapping("/test")
+	public ApiResponse<Void> test() {
+		System.out.println("test Call");
+		return ApiResponseGenerator.success(HttpStatus.OK);
+	}
 }
