@@ -1,8 +1,7 @@
 package com.depromeet.threedays.front.domain.model.notification;
 
-import java.time.LocalTime;
-
 import com.depromeet.threedays.data.enums.NotificationType;
+import java.time.LocalTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

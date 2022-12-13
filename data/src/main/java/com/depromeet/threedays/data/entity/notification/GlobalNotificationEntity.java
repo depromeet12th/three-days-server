@@ -1,5 +1,6 @@
 package com.depromeet.threedays.data.entity.notification;
 
+import com.depromeet.threedays.data.enums.NotificationType;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import javax.persistence.Column;
@@ -10,8 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import com.depromeet.threedays.data.enums.NotificationType;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
