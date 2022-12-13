@@ -7,7 +7,6 @@ import com.depromeet.threedays.front.domain.usecase.notification.SendGlobalNotif
 import com.depromeet.threedays.front.domain.usecase.notification.SendHabitNotificationUseCase;
 import com.depromeet.threedays.front.support.ApiResponse;
 import com.depromeet.threedays.front.support.ApiResponseGenerator;
-import com.depromeet.threedays.front.web.request.habit.NotificationRequest;
 import com.depromeet.threedays.front.web.request.notification.EditStatusNotificationRequest;
 import com.depromeet.threedays.front.web.response.NotificationBatchResponse;
 import com.google.firebase.messaging.BatchResponse;
@@ -49,15 +48,13 @@ public class NotificationController {
 	}
 
 	@PostMapping("/global")
-	public ApiResponse<List<NotificationBatchResponse>> sendGlobalNotification(
-			@RequestBody @Valid NotificationRequest request) {
-		return ApiResponseGenerator.success(globalUseCase.execute(request), HttpStatus.OK);
+	public ApiResponse<List<NotificationBatchResponse>> sendGlobalNotification() {
+		return ApiResponseGenerator.success(globalUseCase.execute(), HttpStatus.OK);
 	}
 
 	@PostMapping("/habit")
-	public ApiResponse<List<BatchResponse>> sendHabitNotification(
-			@RequestBody @Valid NotificationRequest request) {
-		return ApiResponseGenerator.success(habitUseCase.execute(request), HttpStatus.OK);
+	public ApiResponse<List<BatchResponse>> sendHabitNotification() {
+		return ApiResponseGenerator.success(habitUseCase.execute(), HttpStatus.OK);
 	}
 
 	@PostMapping("/test")

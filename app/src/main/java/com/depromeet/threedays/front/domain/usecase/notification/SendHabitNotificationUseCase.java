@@ -12,9 +12,7 @@ import com.depromeet.threedays.front.domain.model.notification.HabitNotification
 import com.depromeet.threedays.front.persistence.repository.client.ClientRepository;
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository;
 import com.depromeet.threedays.front.support.NotificationLogger;
-import com.depromeet.threedays.front.web.request.habit.NotificationRequest;
 import com.google.firebase.messaging.BatchResponse;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,19 +33,18 @@ public class SendHabitNotificationUseCase {
 
 	private final MessageClient messageClient;
 
-	public List<BatchResponse> execute(NotificationRequest request) {
+	public List<BatchResponse> execute() {
 		List<HabitNotificationMessage> messages =
-				makeHabitNotificationMessage(request.getNotificationTime());
+				makeHabitNotificationMessage();
 		return sendMessage(messages);
 	}
 
-	private List<HabitNotificationMessage> makeHabitNotificationMessage(
-			LocalDateTime notificationTime) {
+	private List<HabitNotificationMessage> makeHabitNotificationMessage() {
 
 		List<ClientEntity> clientEntities = clientRepository.findAll();
 
 		List<HabitNotificationMessage> messages =
-				getNotificationFilterByNotificationConsent(notificationTime);
+				getNotificationFilterByNotificationConsent();
 
 		List<List<Client>> groupedClient =
 				new ArrayList<>(
@@ -59,10 +56,9 @@ public class SendHabitNotificationUseCase {
 		return addClientList(groupedClient, messages);
 	}
 
-	private List<HabitNotificationMessage> getNotificationFilterByNotificationConsent(
-			LocalDateTime notificationTime) {
+	private List<HabitNotificationMessage> getNotificationFilterByNotificationConsent() {
 		List<Long> memberIds = this.getMemberIds();
-		List<HabitNotificationEntity> list = getUseCase.execute(notificationTime);
+		List<HabitNotificationEntity> list = getUseCase.execute();
 		return list.stream()
 				.filter(m -> memberIds.contains(m.getMemberId()))
 				.map(HabitNotificationConverter::habitMessageFrom)
@@ -82,14 +78,15 @@ public class SendHabitNotificationUseCase {
 	}
 
 	private List<Long> getMemberIds() {
-		List<MemberEntity> members = memberRepository.findAllByNotificationConsent(true).orElse(null);
+		List<MemberEntity> members = memberRepository.findAllByNotificationConsent(true)
+				.orElse(null);
 		if (members == null) {
 			return Collections.emptyList();
 		}
 		return members.stream().map(MemberEntity::getId).collect(Collectors.toList());
 	}
 
-	private List<BatchResponse> sendMessage(List<HabitNotificationMessage> messages) {
+	private List<BatchResponse> sendMessage(final List<HabitNotificationMessage> messages) {
 		List<BatchResponse> responses = new ArrayList<>();
 		for (HabitNotificationMessage message : messages) {
 			NotificationLogger.messagesLogger(message);

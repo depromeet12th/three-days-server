@@ -24,9 +24,9 @@ public class GetGlobalNotificationUseCase {
 	@Value("${batch.global}")
 	private Integer section;
 
-	public List<NotificationMessage> execute(LocalDateTime notificationTime) {
-		DayOfWeek day = notificationTime.getDayOfWeek();
-		LocalTime timeSection = DateCalculator.getTimeSection(notificationTime, section);
+	public List<NotificationMessage> execute() {
+		DayOfWeek day = LocalDateTime.now().getDayOfWeek();
+		LocalTime timeSection = DateCalculator.getTimeSection(LocalDateTime.now(), section);
 
 		return repository.findAllByNotificationTimeAndDayOfWeek(timeSection, day).stream()
 				.map(GlobalNotificationConverter::from)
