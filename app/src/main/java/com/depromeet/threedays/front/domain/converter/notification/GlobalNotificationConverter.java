@@ -21,6 +21,7 @@ public class GlobalNotificationConverter {
 				.notificationId(entity.getId())
 				.contents(entity.getContents())
 				.notificationTime(entity.getNotificationTime())
+				.type(entity.getType())
 				.title(entity.getTitle())
 				.build();
 	}
