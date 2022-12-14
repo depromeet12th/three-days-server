@@ -63,5 +63,5 @@ firebase:
     uri: https://oauth2.googleapis.com/token
 
 batch:
-  global: 15
-  habit: 15
+  global: 30
+  habit: 30
