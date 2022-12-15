@@ -12,11 +12,11 @@ public enum MessageCode {
 		this.value = value;
 	}
 
-	public String getCode(){
+	public String getCode() {
 		return this.code;
 	}
 
-	public String getValue(){
+	public String getValue() {
 		return this.value;
 	}
 }

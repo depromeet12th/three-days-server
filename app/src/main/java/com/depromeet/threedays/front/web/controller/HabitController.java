@@ -45,7 +45,9 @@ public class HabitController {
 	public ApiResponse<ApiResponse.SuccessBody<HabitResponse>> add(
 			@RequestBody @Valid final SaveHabitRequest request) {
 		return ApiResponseGenerator.success(
-				HabitResponseConverter.from(saveUseCase.execute(request)), HttpStatus.CREATED, MessageCode.RESOURCE_CREATED);
+				HabitResponseConverter.from(saveUseCase.execute(request)),
+				HttpStatus.CREATED,
+				MessageCode.RESOURCE_CREATED);
 	}
 
 	@PutMapping("/{id}")

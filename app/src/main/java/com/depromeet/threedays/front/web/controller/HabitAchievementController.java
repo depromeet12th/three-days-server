@@ -38,7 +38,9 @@ public class HabitAchievementController {
 	public ApiResponse<ApiResponse.SuccessBody<HabitResponse>> add(
 			@PathVariable Long habitId, @RequestBody @Valid final SaveHabitAchievementRequest request) {
 		return ApiResponseGenerator.success(
-				HabitResponseConverter.from(saveUseCase.execute(habitId, request)), HttpStatus.CREATED, MessageCode.RESOURCE_CREATED);
+				HabitResponseConverter.from(saveUseCase.execute(habitId, request)),
+				HttpStatus.CREATED,
+				MessageCode.RESOURCE_CREATED);
 	}
 
 	@GetMapping

@@ -70,8 +70,7 @@ public class SendGlobalNotificationUseCase {
 	}
 
 	private List<Long> getMemberIds() {
-		List<MemberEntity> members = memberRepository.findAllByNotificationConsent(true)
-				.orElse(null);
+		List<MemberEntity> members = memberRepository.findAllByNotificationConsent(true).orElse(null);
 		if (members == null) {
 			return Collections.emptyList();
 		}
@@ -91,8 +90,7 @@ public class SendGlobalNotificationUseCase {
 				.filter(m -> memberIds.contains(m.getMemberId()))
 				.collect(
 						Collectors.groupingBy(
-								it -> counter.getAndIncrement()
-										/ fireBaseProperty.getMulticastMessageSize()))
+								it -> counter.getAndIncrement() / fireBaseProperty.getMulticastMessageSize()))
 				.values();
 	}
 }
