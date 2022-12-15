@@ -19,7 +19,8 @@ public class RecordController {
 	private final SearchRecordUseCase searchUseCase;
 
 	@GetMapping
-	public ApiResponse<RecordResponse> browse(final SearchRecordRequest request) {
+	public ApiResponse<ApiResponse.SuccessBody<RecordResponse>> browse(
+			final SearchRecordRequest request) {
 		return ApiResponseGenerator.success(searchUseCase.execute(request), HttpStatus.OK);
 	}
 }

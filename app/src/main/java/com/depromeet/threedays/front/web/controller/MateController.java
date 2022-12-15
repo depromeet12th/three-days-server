@@ -6,6 +6,7 @@ import com.depromeet.threedays.front.domain.usecase.mate.GetMateUseCase;
 import com.depromeet.threedays.front.domain.usecase.mate.SaveMateUseCase;
 import com.depromeet.threedays.front.support.ApiResponse;
 import com.depromeet.threedays.front.support.ApiResponseGenerator;
+import com.depromeet.threedays.front.support.MessageCode;
 import com.depromeet.threedays.front.web.request.mate.SaveMateRequest;
 import com.depromeet.threedays.front.web.response.MateResponse;
 import javax.validation.Valid;
@@ -30,19 +31,21 @@ public class MateController {
 	private final GetMateUseCase getUseCase;
 
 	@PostMapping()
-	public ApiResponse<Mate> add(
+	public ApiResponse<ApiResponse.SuccessBody<Mate>> add(
 			@PathVariable Long habitId, @RequestBody @Valid final SaveMateRequest request) {
-		return ApiResponseGenerator.success(saveUseCase.execute(habitId, request), HttpStatus.CREATED);
+		return ApiResponseGenerator.success(saveUseCase.execute(habitId, request), HttpStatus.CREATED, MessageCode.RESOURCE_CREATED);
 	}
 
 	@DeleteMapping("/{id}")
-	public ApiResponse<Void> delete(@PathVariable Long habitId, @PathVariable Long id) {
+	public ApiResponse<ApiResponse.SuccessBody<Void>> delete(
+			@PathVariable Long habitId, @PathVariable Long id) {
 		deleteUseCase.execute(habitId, id);
-		return ApiResponseGenerator.success(HttpStatus.NO_CONTENT);
+		return ApiResponseGenerator.success(HttpStatus.OK, MessageCode.RESOURCE_DELETED);
 	}
 
 	@GetMapping("/{id}")
-	public ApiResponse<MateResponse> read(@PathVariable Long habitId, @PathVariable final Long id) {
+	public ApiResponse<ApiResponse.SuccessBody<MateResponse>> read(
+			@PathVariable Long habitId, @PathVariable final Long id) {
 		return ApiResponseGenerator.success(getUseCase.execute(habitId, id), HttpStatus.OK);
 	}
 }

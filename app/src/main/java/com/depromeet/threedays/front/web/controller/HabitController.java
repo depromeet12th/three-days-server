@@ -8,6 +8,7 @@ import com.depromeet.threedays.front.domain.usecase.habit.SearchHabitUseCase;
 import com.depromeet.threedays.front.domain.usecase.habit.UpdateHabitUseCase;
 import com.depromeet.threedays.front.support.ApiResponse;
 import com.depromeet.threedays.front.support.ApiResponseGenerator;
+import com.depromeet.threedays.front.support.MessageCode;
 import com.depromeet.threedays.front.web.request.habit.SaveHabitRequest;
 import com.depromeet.threedays.front.web.request.habit.SearchHabitRequest;
 import com.depromeet.threedays.front.web.request.habit.UpdateHabitRequest;
@@ -41,32 +42,34 @@ public class HabitController {
 	private final UpdateHabitUseCase updateUseCase;
 
 	@PostMapping
-	public ApiResponse<HabitResponse> add(@RequestBody @Valid final SaveHabitRequest request) {
+	public ApiResponse<ApiResponse.SuccessBody<HabitResponse>> add(
+			@RequestBody @Valid final SaveHabitRequest request) {
 		return ApiResponseGenerator.success(
-				HabitResponseConverter.from(saveUseCase.execute(request)), HttpStatus.CREATED);
+				HabitResponseConverter.from(saveUseCase.execute(request)), HttpStatus.CREATED, MessageCode.RESOURCE_CREATED);
 	}
 
 	@PutMapping("/{id}")
-	public ApiResponse<HabitResponse> edit(
+	public ApiResponse<ApiResponse.SuccessBody<HabitResponse>> edit(
 			@PathVariable final Long id, @RequestBody @Valid final UpdateHabitRequest request) {
 		return ApiResponseGenerator.success(
 				HabitResponseConverter.from(updateUseCase.execute(id, request)), HttpStatus.OK);
 	}
 
 	@GetMapping
-	public ApiResponse<List<HabitOverview>> browse(final SearchHabitRequest request) {
+	public ApiResponse<ApiResponse.SuccessBody<List<HabitOverview>>> browse(
+			final SearchHabitRequest request) {
 		return ApiResponseGenerator.success(searchUseCase.execute(request), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
-	public ApiResponse<HabitResponse> read(@PathVariable final Long id) {
+	public ApiResponse<ApiResponse.SuccessBody<HabitResponse>> read(@PathVariable final Long id) {
 		return ApiResponseGenerator.success(
 				HabitResponseConverter.from(getUseCase.execute(id)), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
-	public ApiResponse<Void> delete(@PathVariable final Long id) {
+	public ApiResponse<ApiResponse.SuccessBody<Void>> delete(@PathVariable final Long id) {
 		deleteUseCase.execute(id);
-		return ApiResponseGenerator.success(HttpStatus.NO_CONTENT);
+		return ApiResponseGenerator.success(HttpStatus.OK, MessageCode.RESOURCE_DELETED);
 	}
 }

@@ -8,6 +8,7 @@ import com.depromeet.threedays.front.domain.usecase.client.DeleteClientUseCase;
 import com.depromeet.threedays.front.domain.usecase.member.*;
 import com.depromeet.threedays.front.support.ApiResponse;
 import com.depromeet.threedays.front.support.ApiResponseGenerator;
+import com.depromeet.threedays.front.support.MessageCode;
 import com.depromeet.threedays.front.web.request.client.DeleteClientRequest;
 import com.depromeet.threedays.front.web.request.member.MemberNameUpdateRequest;
 import com.depromeet.threedays.front.web.request.member.MemberNotificationConsentUpdateRequest;
@@ -36,47 +37,54 @@ public class MemberController {
 	private final GetMemberUseCase getUseCase;
 
 	@PostMapping
-	public ApiResponse<SaveMemberResponse> add(@RequestBody @Valid SignMemberRequest request) {
+	public ApiResponse<ApiResponse.SuccessBody<SaveMemberResponse>> add(
+			@RequestBody @Valid SignMemberRequest request) {
 		SaveMemberUseCaseResponse member = signUseCase.execute(request);
-		HttpStatus status = Boolean.TRUE.equals(member.getIsNew()) ? HttpStatus.CREATED : HttpStatus.OK;
-		return ApiResponseGenerator.success(MemberConverter.to(member), status);
+		if (Boolean.TRUE.equals(member.getIsNew())) {
+			return ApiResponseGenerator.success(
+					MemberConverter.to(member), HttpStatus.CREATED, MessageCode.RESOURCE_CREATED);
+		} else {
+			return ApiResponseGenerator.success(MemberConverter.to(member), HttpStatus.OK);
+		}
 	}
 
 	@PatchMapping("/name")
-	public ApiResponse<Member> updateName(@RequestBody @Valid MemberNameUpdateRequest request) {
+	public ApiResponse<ApiResponse.SuccessBody<Member>> updateName(
+			@RequestBody @Valid MemberNameUpdateRequest request) {
 		return ApiResponseGenerator.success(saveNameUseCase.execute(request), HttpStatus.OK);
 	}
 
 	@PatchMapping("/consents")
-	public ApiResponse<Member> updateConsent(
+	public ApiResponse<ApiResponse.SuccessBody<Member>> updateConsent(
 			@RequestBody @Valid MemberNotificationConsentUpdateRequest request) {
 		return ApiResponseGenerator.success(saveConsentUseCase.execute(request), HttpStatus.OK);
 	}
 
 	@PatchMapping("/resources")
-	public ApiResponse<Member> updateResource(
+	public ApiResponse<ApiResponse.SuccessBody<Member>> updateResource(
 			@RequestBody @Valid MemberResourceUpdateRequest request) {
 		return ApiResponseGenerator.success(saveResourceUseCase.execute(request), HttpStatus.OK);
 	}
 
 	@PostMapping("/tokens")
-	public ApiResponse<Token> refreshToken(@RequestBody Token token) {
+	public ApiResponse<ApiResponse.SuccessBody<Token>> refreshToken(@RequestBody Token token) {
 		return ApiResponseGenerator.success(getTokenUseCase.execute(token), HttpStatus.CREATED);
 	}
 
 	@DeleteMapping
-	public ApiResponse<Void> deleteMember() {
+	public ApiResponse<ApiResponse.SuccessBody<Void>> deleteMember() {
 		deleteUseCase.execute();
-		return ApiResponseGenerator.success(HttpStatus.NO_CONTENT);
+		return ApiResponseGenerator.success(HttpStatus.OK, MessageCode.RESOURCE_DELETED);
 	}
 
 	@GetMapping
-	public ApiResponse<Member> readMember() {
+	public ApiResponse<ApiResponse.SuccessBody<Member>> readMember() {
 		return ApiResponseGenerator.success(getUseCase.execute(), HttpStatus.OK);
 	}
 
 	@PostMapping("/logout")
-	public ApiResponse<Void> deleteClient(@RequestBody @Valid DeleteClientRequest request) {
+	public ApiResponse<ApiResponse.SuccessBody<Void>> deleteClient(
+			@RequestBody @Valid DeleteClientRequest request) {
 		deleteClientUseCase.execute(request);
 		return ApiResponseGenerator.success(HttpStatus.NO_CONTENT);
 	}

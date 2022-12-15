@@ -35,12 +35,12 @@ public class NotificationController {
 	private final SaveNotificationUseCase saveUseCase;
 
 	@GetMapping
-	public ApiResponse<List<NotificationHistory>> browse() {
+	public ApiResponse<ApiResponse.SuccessBody<List<NotificationHistory>>> browse() {
 		return ApiResponseGenerator.success(searchUseCase.execute(), HttpStatus.OK);
 	}
 
 	@PatchMapping("/{id}")
-	public ApiResponse<Void> editStatus(
+	public ApiResponse<ApiResponse.SuccessBody<Void>> editStatus(
 			@PathVariable final Long id,
 			@RequestBody @Valid final EditStatusNotificationRequest request) {
 		saveUseCase.execute(id, request);
@@ -48,18 +48,18 @@ public class NotificationController {
 	}
 
 	@PostMapping("/global")
-	public ApiResponse<List<NotificationBatchResponse>> sendGlobalNotification() {
+	public ApiResponse<ApiResponse.SuccessBody<List<NotificationBatchResponse>>>
+			sendGlobalNotification() {
 		return ApiResponseGenerator.success(globalUseCase.execute(), HttpStatus.OK);
 	}
 
 	@PostMapping("/habit")
-	public ApiResponse<List<BatchResponse>> sendHabitNotification() {
+	public ApiResponse<ApiResponse.SuccessBody<List<BatchResponse>>> sendHabitNotification() {
 		return ApiResponseGenerator.success(habitUseCase.execute(), HttpStatus.OK);
 	}
 
 	@PostMapping("/test")
-	public ApiResponse<Void> test() {
-		System.out.println("test Call");
+	public ApiResponse<ApiResponse.SuccessBody<Void>> test() {
 		return ApiResponseGenerator.success(HttpStatus.OK);
 	}
 }
