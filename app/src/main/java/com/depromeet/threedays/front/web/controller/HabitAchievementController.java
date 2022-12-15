@@ -6,6 +6,7 @@ import com.depromeet.threedays.front.domain.usecase.habit.SaveHabitAchievementUs
 import com.depromeet.threedays.front.domain.usecase.habit.SearchHabitAchievementUseCase;
 import com.depromeet.threedays.front.support.ApiResponse;
 import com.depromeet.threedays.front.support.ApiResponseGenerator;
+import com.depromeet.threedays.front.support.MessageCode;
 import com.depromeet.threedays.front.web.request.habit.SaveHabitAchievementRequest;
 import com.depromeet.threedays.front.web.request.habit.SearchHabitAchievementRequest;
 import com.depromeet.threedays.front.web.response.HabitResponse;
@@ -34,20 +35,22 @@ public class HabitAchievementController {
 	private final DeleteHabitAchievementUseCase deleteUseCase;
 
 	@PostMapping
-	public ApiResponse<HabitResponse> add(
+	public ApiResponse<ApiResponse.SuccessBody<HabitResponse>> add(
 			@PathVariable Long habitId, @RequestBody @Valid final SaveHabitAchievementRequest request) {
 		return ApiResponseGenerator.success(
-				HabitResponseConverter.from(saveUseCase.execute(habitId, request)), HttpStatus.CREATED);
+				HabitResponseConverter.from(saveUseCase.execute(habitId, request)),
+				HttpStatus.CREATED,
+				MessageCode.RESOURCE_CREATED);
 	}
 
 	@GetMapping
-	public ApiResponse<List<HabitAchievement>> browse(
+	public ApiResponse<ApiResponse.SuccessBody<List<HabitAchievement>>> browse(
 			@PathVariable Long habitId, final SearchHabitAchievementRequest request) {
 		return ApiResponseGenerator.success(searchUseCase.execute(habitId, request), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{habitAchievementId}")
-	public ApiResponse<HabitResponse> delete(
+	public ApiResponse<ApiResponse.SuccessBody<HabitResponse>> delete(
 			@PathVariable Long habitId, @PathVariable Long habitAchievementId) {
 		return ApiResponseGenerator.success(
 				HabitResponseConverter.from(deleteUseCase.execute(habitId, habitAchievementId)),

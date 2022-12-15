@@ -34,8 +34,7 @@ public class SendHabitNotificationUseCase {
 	private final MessageClient messageClient;
 
 	public List<BatchResponse> execute() {
-		List<HabitNotificationMessage> messages =
-				makeHabitNotificationMessage();
+		List<HabitNotificationMessage> messages = makeHabitNotificationMessage();
 		return sendMessage(messages);
 	}
 
@@ -43,8 +42,7 @@ public class SendHabitNotificationUseCase {
 
 		List<ClientEntity> clientEntities = clientRepository.findAll();
 
-		List<HabitNotificationMessage> messages =
-				getNotificationFilterByNotificationConsent();
+		List<HabitNotificationMessage> messages = getNotificationFilterByNotificationConsent();
 
 		List<List<Client>> groupedClient =
 				new ArrayList<>(
@@ -78,8 +76,7 @@ public class SendHabitNotificationUseCase {
 	}
 
 	private List<Long> getMemberIds() {
-		List<MemberEntity> members = memberRepository.findAllByNotificationConsent(true)
-				.orElse(null);
+		List<MemberEntity> members = memberRepository.findAllByNotificationConsent(true).orElse(null);
 		if (members == null) {
 			return Collections.emptyList();
 		}
