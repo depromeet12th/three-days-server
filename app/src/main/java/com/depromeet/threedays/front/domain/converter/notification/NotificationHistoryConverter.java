@@ -3,6 +3,7 @@ package com.depromeet.threedays.front.domain.converter.notification;
 import com.depromeet.threedays.data.entity.client.ClientEntity;
 import com.depromeet.threedays.data.entity.history.NotificationHistoryEntity;
 import com.depromeet.threedays.data.enums.NotificationStatus;
+import com.depromeet.threedays.data.enums.NotificationType;
 import com.depromeet.threedays.front.domain.model.client.Client;
 import com.depromeet.threedays.front.domain.model.notification.HabitNotificationMessage;
 import com.depromeet.threedays.front.domain.model.notification.NotificationMessage;
@@ -16,6 +17,7 @@ public class NotificationHistoryConverter {
 				.notificationId(message.getNotificationId())
 				.contents(message.getContents())
 				.status(status)
+				.type(message.getType())
 				.memberId(client.getMemberId())
 				.build();
 	}
@@ -26,6 +28,7 @@ public class NotificationHistoryConverter {
 				.notificationId(message.getNotificationId())
 				.contents(message.getContent())
 				.status(status)
+				.type(NotificationType.HABIT)
 				.memberId(client.getMemberId())
 				.build();
 	}

@@ -7,6 +7,7 @@ import com.depromeet.threedays.front.domain.model.member.SaveMemberUseCaseRespon
 import com.depromeet.threedays.front.domain.model.member.Token;
 import com.depromeet.threedays.front.support.converter.MemberInfoJsonConverter;
 import com.depromeet.threedays.front.web.response.SaveMemberResponse;
+import java.time.LocalDateTime;
 
 public class MemberConverter {
 
@@ -41,6 +42,7 @@ public class MemberConverter {
 				.certificationId(command.getCertificationId())
 				.certificationSubject(command.getCertificationSubject())
 				.resource(command.getResource())
+				.createAt(LocalDateTime.now())
 				.notificationConsent(command.getNotificationConsent())
 				.build();
 	}

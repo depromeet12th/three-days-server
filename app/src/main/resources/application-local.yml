@@ -10,7 +10,6 @@ spring:
     password:
     port: 16379
 
-
 security:
   jwt:
     token:
@@ -19,7 +18,7 @@ security:
 
 google:
   user:
-    uri: https://www.googleapis.com/oauth2/v1/userinfo#profile
+    uri: https://www.googleapis.com/oauth2/v2/userinfo#profile
 kakao:
   user:
     uri: https://kapi.kakao.com/v2/user/me
@@ -38,5 +37,5 @@ firebase:
     uri: https://oauth2.googleapis.com/token
 
 batch:
-  global: 15
-  habit: 15
+  global: 30
+  habit: 30

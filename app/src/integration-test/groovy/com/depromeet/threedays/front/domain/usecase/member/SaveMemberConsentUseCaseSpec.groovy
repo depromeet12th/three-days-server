@@ -21,7 +21,7 @@ class SaveMemberConsentUseCaseSpec extends IntegrationTestSpecification {
     def "사용자는 알림 수신 정책을 수정할 수 있다"() {
         setup:
         def id = initializer.data[2]
-        def expected = MemberNotificationConsentUpdateRequest.builder().isOn(false).build()
+        def expected = MemberNotificationConsentUpdateRequest.builder().notificationConsent(false).build()
 
         when:
         def actual = useCase.execute(expected)

@@ -17,14 +17,15 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 public class GetHabitNotificationUseCase {
+
 	private final HabitNotificationRepository repository;
 
 	@Value("${batch.habit}")
 	private int section;
 
-	public List<HabitNotificationEntity> execute(LocalDateTime notificationTime) {
-		DayOfWeek day = notificationTime.getDayOfWeek();
-		LocalTime timeSection = DateCalculator.getTimeSection(notificationTime, section);
+	public List<HabitNotificationEntity> execute() {
+		DayOfWeek day = LocalDateTime.now().getDayOfWeek();
+		LocalTime timeSection = DateCalculator.getTimeSection(LocalDateTime.now(), section);
 
 		return repository.findAllByNotificationTimeAndDayOfWeek(timeSection, day).stream()
 				.collect(Collectors.toList());

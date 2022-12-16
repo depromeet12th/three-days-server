@@ -28,4 +28,12 @@ public class ApiResponse<B> extends ResponseEntity<B> implements Serializable {
 			this.message = message;
 		}
 	}
+
+	@Getter
+	@AllArgsConstructor
+	public static class SuccessBody<D> implements Serializable {
+		private D data;
+		private String message;
+		private String code;
+	}
 }

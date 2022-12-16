@@ -1005,15 +1005,15 @@ components:
         notification:
           $ref: '#/components/schemas/Notification'
     MemberRequest:
-      required: [ certificationSubject, oAuthToken ]
+      required: [ certificationSubject, socialToken ]
       type: object
       properties:
         certificationSubject:
           type: string
           enum: [ "GOOGLE", "KAKAO", "APPLE" ]
-        oAuthToken:
+        socialToken:
           type: string
-          example: "oAuthToken"
+          example: "oauth access token"
     MemberNameUpdateRequest:
       type: object
       properties:

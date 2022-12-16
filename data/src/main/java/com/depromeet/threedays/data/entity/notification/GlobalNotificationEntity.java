@@ -1,5 +1,6 @@
 package com.depromeet.threedays.data.entity.notification;
 
+import com.depromeet.threedays.data.enums.NotificationType;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import javax.persistence.Column;
@@ -41,4 +42,8 @@ public class GlobalNotificationEntity {
 	@Column(name = "day_of_week", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private DayOfWeek dayOfWeek;
+
+	@Column(name = "type")
+	@Enumerated(EnumType.STRING)
+	private NotificationType type;
 }

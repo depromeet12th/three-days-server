@@ -21,7 +21,8 @@ public class ClientController {
 	private final SaveClientUseCase saveUseCase;
 
 	@PostMapping()
-	public ApiResponse<Client> add(@RequestBody @Valid ClientRequest request) {
-		return ApiResponseGenerator.success(saveUseCase.execute(request), HttpStatus.CREATED);
+	public ApiResponse<ApiResponse.SuccessBody<Client>> add(
+			@RequestBody @Valid ClientRequest request) {
+		return ApiResponseGenerator.success(saveUseCase.execute(request), HttpStatus.OK);
 	}
 }

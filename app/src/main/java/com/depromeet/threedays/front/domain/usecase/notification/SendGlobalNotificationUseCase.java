@@ -9,7 +9,6 @@ import com.depromeet.threedays.front.domain.model.notification.NotificationMessa
 import com.depromeet.threedays.front.persistence.repository.client.ClientRepository;
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository;
 import com.depromeet.threedays.front.support.NotificationLogger;
-import com.depromeet.threedays.front.web.request.habit.NotificationRequest;
 import com.depromeet.threedays.front.web.response.NotificationBatchResponse;
 import com.google.firebase.messaging.BatchResponse;
 import java.util.ArrayList;
@@ -35,8 +34,8 @@ public class SendGlobalNotificationUseCase {
 	private final MessageClient messageClient;
 	private final FirebaseProperty fireBaseProperty;
 
-	public List<NotificationBatchResponse> execute(NotificationRequest request) {
-		List<NotificationMessage> messages = getUseCase.execute(request.getNotificationTime());
+	public List<NotificationBatchResponse> execute() {
+		List<NotificationMessage> messages = getUseCase.execute();
 
 		List<NotificationBatchResponse> result = new ArrayList<>();
 		for (NotificationMessage message : messages) {
@@ -72,7 +71,9 @@ public class SendGlobalNotificationUseCase {
 
 	private List<Long> getMemberIds() {
 		List<MemberEntity> members = memberRepository.findAllByNotificationConsent(true).orElse(null);
-		if (members == null) return Collections.emptyList();
+		if (members == null) {
+			return Collections.emptyList();
+		}
 		return members.stream().map(MemberEntity::getId).collect(Collectors.toList());
 	}
 
