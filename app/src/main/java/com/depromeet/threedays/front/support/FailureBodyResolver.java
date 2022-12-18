@@ -4,13 +4,13 @@ import com.depromeet.threedays.front.support.ApiResponse.FailureBody;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
 import lombok.experimental.UtilityClass;
+import org.hibernate.TypeMismatchException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.ServletRequestBindingException;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @UtilityClass
 public class FailureBodyResolver {
@@ -35,8 +35,8 @@ public class FailureBodyResolver {
 		return new FailureBody(ex.getMessage());
 	}
 
-	public static ApiResponse.FailureBody resolveFrom(final MethodArgumentTypeMismatchException ex) {
-		return new FailureBody(ex.getErrorCode(), ex.getMessage());
+	public static ApiResponse.FailureBody resolveFrom(final TypeMismatchException ex) {
+		return new FailureBody(ex.getMessage());
 	}
 
 	public static ApiResponse.FailureBody resolveFrom(final BindException ex) {

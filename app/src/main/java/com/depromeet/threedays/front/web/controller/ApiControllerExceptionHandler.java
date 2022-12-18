@@ -9,6 +9,7 @@ import com.depromeet.threedays.front.support.FailureBodyResolver;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.TypeMismatchException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 @Slf4j
@@ -45,9 +45,9 @@ public class ApiControllerExceptionHandler {
 		return ApiResponseGenerator.fail(ex.getCode(), ex.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 
-	@ExceptionHandler({MethodArgumentTypeMismatchException.class})
+	@ExceptionHandler(TypeMismatchException.class)
 	public final ApiResponse<ApiResponse.FailureBody> handleBadRequest(
-			final MethodArgumentTypeMismatchException ex, final WebRequest request) {
+			final TypeMismatchException ex, final WebRequest request) {
 		this.writeLog(ex, request);
 		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
 	}
