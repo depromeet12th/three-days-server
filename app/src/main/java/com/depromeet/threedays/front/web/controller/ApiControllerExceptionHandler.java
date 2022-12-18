@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -80,6 +81,12 @@ public class ApiControllerExceptionHandler {
 
 	@ExceptionHandler(HttpMediaTypeNotSupportedException.class)
 	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(final HttpMediaTypeNotSupportedException ex, final WebRequest request) {
+		this.writeLog(ex, request);
+		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
+	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(final HttpMediaTypeNotAcceptableException ex, final WebRequest request) {
 		this.writeLog(ex, request);
 		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
 	}
