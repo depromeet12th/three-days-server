@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -66,6 +67,12 @@ public class ApiControllerExceptionHandler {
 	@ExceptionHandler(ConstraintViolationException.class)
 	public final ApiResponse<ApiResponse.FailureBody> handleBadRequest(
 			final ConstraintViolationException ex, final WebRequest request) {
+		this.writeLog(ex, request);
+		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(final HttpRequestMethodNotSupportedException ex, final WebRequest request) {
 		this.writeLog(ex, request);
 		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
 	}

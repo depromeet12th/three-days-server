@@ -8,6 +8,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
@@ -50,6 +51,10 @@ public class FailureBodyResolver {
 	}
 
 	public static ApiResponse.FailureBody resolveFrom(final AccessDeniedException ex) {
+		return new ApiResponse.FailureBody(ex.getMessage());
+	}
+
+	public static ApiResponse.FailureBody resolveFrom(final HttpRequestMethodNotSupportedException ex) {
 		return new ApiResponse.FailureBody(ex.getMessage());
 	}
 }
