@@ -46,14 +46,6 @@ public class FailureBodyResolver {
 		return null;
 	}
 
-	public static ApiResponse.FailureBody resolveFrom(final AuthenticationException ex) {
-		return new ApiResponse.FailureBody(ex.getMessage());
-	}
-
-	public static ApiResponse.FailureBody resolveFrom(final AccessDeniedException ex) {
-		return new ApiResponse.FailureBody(ex.getMessage());
-	}
-
 	public static ApiResponse.FailureBody resolveFrom(final HttpRequestMethodNotSupportedException ex) {
 		return new ApiResponse.FailureBody(ex.getMessage());
 	}
