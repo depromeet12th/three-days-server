@@ -5,6 +5,7 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
 import lombok.experimental.UtilityClass;
 import org.hibernate.TypeMismatchException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
@@ -57,4 +58,9 @@ public class FailureBodyResolver {
 	public static FailureBody resolveFrom(final HttpMediaTypeNotAcceptableException ex) {
 		return new ApiResponse.FailureBody(ex.getLocalizedMessage());
 	}
+
+	public static FailureBody resolveFrom(HttpMessageNotReadableException ex) {
+		return new ApiResponse.FailureBody(ex.getLocalizedMessage());
+	}
+
 }
