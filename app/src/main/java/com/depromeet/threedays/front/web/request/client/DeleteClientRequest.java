@@ -13,5 +13,7 @@ import org.hibernate.validator.constraints.Length;
 @AllArgsConstructor
 public class DeleteClientRequest {
 
-	@NotBlank @Length(max = 1000) private String identificationKey;
+	@NotBlank
+	@Length(max = 1000)
+	private String identificationKey;
 }

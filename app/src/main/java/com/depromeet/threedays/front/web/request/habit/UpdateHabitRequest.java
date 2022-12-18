@@ -20,7 +20,9 @@ public class UpdateHabitRequest {
 
 	@NotNull private String imojiPath;
 
-	@NotNull @Length(max = 40) private String color;
+	@NotNull
+	@Length(max = 40)
+	private String color;
 
 	@NotNull private EnumSet<DayOfWeek> dayOfWeeks;
 

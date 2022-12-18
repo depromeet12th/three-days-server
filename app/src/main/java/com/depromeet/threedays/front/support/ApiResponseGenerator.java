@@ -55,6 +55,5 @@ public class ApiResponseGenerator {
 	public static ApiResponse<ApiResponse.FailureBody> fail(
 			final String message, final HttpStatus status) {
 		return new ApiResponse<>(new ApiResponse.FailureBody(message), status);
-
 	}
 }

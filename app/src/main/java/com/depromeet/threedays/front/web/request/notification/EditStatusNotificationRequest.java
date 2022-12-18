@@ -14,5 +14,7 @@ import org.hibernate.validator.constraints.Length;
 @Builder(toBuilder = true)
 public class EditStatusNotificationRequest {
 
-	@NotNull @Length(max = 100) private NotificationStatus status;
+	@NotNull
+	@Length(max = 100)
+	private NotificationStatus status;
 }
