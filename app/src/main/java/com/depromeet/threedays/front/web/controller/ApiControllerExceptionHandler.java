@@ -76,31 +76,36 @@ public class ApiControllerExceptionHandler {
 	}
 
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(final HttpRequestMethodNotSupportedException ex, final WebRequest request) {
+	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(
+			final HttpRequestMethodNotSupportedException ex, final WebRequest request) {
 		this.writeLog(ex, request);
 		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(HttpMediaTypeNotSupportedException.class)
-	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(final HttpMediaTypeNotSupportedException ex, final WebRequest request) {
+	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(
+			final HttpMediaTypeNotSupportedException ex, final WebRequest request) {
 		this.writeLog(ex, request);
 		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
-	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(final HttpMediaTypeNotAcceptableException ex, final WebRequest request) {
+	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(
+			final HttpMediaTypeNotAcceptableException ex, final WebRequest request) {
 		this.writeLog(ex, request);
 		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(HttpMessageNotReadableException.class)
-	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(final HttpMessageNotReadableException ex, final WebRequest request) {
+	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(
+			final HttpMessageNotReadableException ex, final WebRequest request) {
 		this.writeLog(ex, request);
 		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(MissingServletRequestPartException.class)
-	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(final MissingServletRequestPartException ex, final WebRequest request) {
+	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(
+			final MissingServletRequestPartException ex, final WebRequest request) {
 		this.writeLog(ex, request);
 		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
 	}

@@ -32,8 +32,7 @@ public class FailureBodyResolver {
 				.orElse(null);
 	}
 
-	public static ApiResponse.FailureBody resolveFrom(
-			final ServletRequestBindingException ex) {
+	public static ApiResponse.FailureBody resolveFrom(final ServletRequestBindingException ex) {
 		return new FailureBody(ex.getMessage());
 	}
 
@@ -48,7 +47,8 @@ public class FailureBodyResolver {
 		return null;
 	}
 
-	public static ApiResponse.FailureBody resolveFrom(final HttpRequestMethodNotSupportedException ex) {
+	public static ApiResponse.FailureBody resolveFrom(
+			final HttpRequestMethodNotSupportedException ex) {
 		return new ApiResponse.FailureBody(ex.getLocalizedMessage());
 	}
 
