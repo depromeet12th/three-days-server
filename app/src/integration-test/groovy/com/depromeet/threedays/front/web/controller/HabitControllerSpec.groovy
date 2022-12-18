@@ -10,8 +10,6 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
-import java.time.DayOfWeek
-
 class HabitControllerSpec extends IntegrationTestSpecification {
 
     @Autowired
@@ -60,9 +58,6 @@ class HabitControllerSpec extends IntegrationTestSpecification {
 
     def "HttpRequestMethodNotSupportedException 이 핸들링 되는지 테스트"() {
         given:
-        def dayOfWeeks = EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY,
-                DayOfWeek.SUNDAY);
-
         when:
         def resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/habits/1")
                 .contentType(MediaType.APPLICATION_JSON)
