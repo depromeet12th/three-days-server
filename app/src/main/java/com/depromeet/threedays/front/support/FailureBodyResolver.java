@@ -12,6 +12,7 @@ import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.ServletRequestBindingException;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 @UtilityClass
 public class FailureBodyResolver {
@@ -63,4 +64,7 @@ public class FailureBodyResolver {
 		return new ApiResponse.FailureBody(ex.getLocalizedMessage());
 	}
 
+	public static FailureBody resolveFrom(MissingServletRequestPartException ex) {
+		return new ApiResponse.FailureBody(ex.getLocalizedMessage());
+	}
 }

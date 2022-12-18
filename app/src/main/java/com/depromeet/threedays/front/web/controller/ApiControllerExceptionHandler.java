@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 @Slf4j
@@ -94,6 +95,12 @@ public class ApiControllerExceptionHandler {
 
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(final HttpMessageNotReadableException ex, final WebRequest request) {
+		this.writeLog(ex, request);
+		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(MissingServletRequestPartException.class)
+	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(final MissingServletRequestPartException ex, final WebRequest request) {
 		this.writeLog(ex, request);
 		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
 	}
