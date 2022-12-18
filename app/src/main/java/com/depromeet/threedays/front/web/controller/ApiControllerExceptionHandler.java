@@ -5,7 +5,6 @@ import com.depromeet.threedays.front.exception.PolicyViolationException;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import com.depromeet.threedays.front.support.ApiResponse;
 import com.depromeet.threedays.front.support.ApiResponseGenerator;
-import com.depromeet.threedays.front.support.FailureBodyResolver;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -33,82 +32,83 @@ public class ApiControllerExceptionHandler {
 
 	private static final String LOG_MESSAGE_FORMAT = "{} '{}' - {}";
 	private static final String UNCAUGHT_LOG_MESSAGE = "??";
+	private static final String BAD_REQUEST_MESSAGE = "잘못된 요청입니다.";
 
 	@ExceptionHandler(IllegalArgumentException.class)
-	public final ApiResponse<Void> handleBadRequest(
+	public final ApiResponse<ApiResponse.FailureBody> handleBadRequest(
 			final IllegalArgumentException ex, final WebRequest request) {
 		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(HttpStatus.BAD_REQUEST);
+		return ApiResponseGenerator.fail(BAD_REQUEST_MESSAGE, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(PolicyViolationException.class)
 	public final ApiResponse<ApiResponse.FailureBody> handleBadRequest(
 			final PolicyViolationException ex, final WebRequest request) {
 		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(ex.getCode(), ex.getMessage(), HttpStatus.BAD_REQUEST);
+		return ApiResponseGenerator.fail(BAD_REQUEST_MESSAGE, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler({MethodArgumentTypeMismatchException.class, TypeMismatchException.class})
 	public final ApiResponse<ApiResponse.FailureBody> handleBadRequest(
 			final TypeMismatchException ex, final WebRequest request) {
 		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
+		return ApiResponseGenerator.fail(BAD_REQUEST_MESSAGE, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(ServletRequestBindingException.class)
 	public final ApiResponse<ApiResponse.FailureBody> handleBadRequest(
 			final ServletRequestBindingException ex, final WebRequest request) {
 		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
+		return ApiResponseGenerator.fail(BAD_REQUEST_MESSAGE, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler({BindException.class, MethodArgumentNotValidException.class})
 	public final ApiResponse<ApiResponse.FailureBody> handleBadRequest(
 			final BindException ex, final WebRequest request) {
 		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
+		return ApiResponseGenerator.fail(BAD_REQUEST_MESSAGE, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(ConstraintViolationException.class)
 	public final ApiResponse<ApiResponse.FailureBody> handleBadRequest(
 			final ConstraintViolationException ex, final WebRequest request) {
 		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
+		return ApiResponseGenerator.fail(BAD_REQUEST_MESSAGE, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
 	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(
 			final HttpRequestMethodNotSupportedException ex, final WebRequest request) {
 		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
+		return ApiResponseGenerator.fail(BAD_REQUEST_MESSAGE, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(HttpMediaTypeNotSupportedException.class)
 	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(
 			final HttpMediaTypeNotSupportedException ex, final WebRequest request) {
 		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
+		return ApiResponseGenerator.fail(BAD_REQUEST_MESSAGE, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
 	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(
 			final HttpMediaTypeNotAcceptableException ex, final WebRequest request) {
 		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
+		return ApiResponseGenerator.fail(BAD_REQUEST_MESSAGE, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(
 			final HttpMessageNotReadableException ex, final WebRequest request) {
 		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
+		return ApiResponseGenerator.fail(BAD_REQUEST_MESSAGE, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(MissingServletRequestPartException.class)
 	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(
 			final MissingServletRequestPartException ex, final WebRequest request) {
 		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
+		return ApiResponseGenerator.fail(BAD_REQUEST_MESSAGE, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler({ResourceNotFoundException.class, NoHandlerFoundException.class})

@@ -18,6 +18,8 @@ class HabitControllerSpec extends IntegrationTestSpecification {
     @Autowired
     private ObjectMapper objectMapper
 
+    private String BAD_REQUEST_MESSAGE = "잘못된 요청입니다."
+
     def "HttpMediaTypeNotSupportedException 이 핸들링 되는지 테스트"() {
         given:
         when:
@@ -28,7 +30,7 @@ class HabitControllerSpec extends IntegrationTestSpecification {
         then:
         resultActions
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError())
-                .andExpect(MockMvcResultMatchers.jsonPath("\$.message").value("Content type 'text/plain;charset=UTF-8' not supported"))
+                .andExpect(MockMvcResultMatchers.jsonPath("\$.message").value(BAD_REQUEST_MESSAGE))
     }
 
     def "MethodArgumentNotValidException 이 핸들링 되는지 테스트"() {
@@ -42,6 +44,7 @@ class HabitControllerSpec extends IntegrationTestSpecification {
                 .accept(MediaType.APPLICATION_JSON))
         then:
         resultActions.andExpect(MockMvcResultMatchers.status().is4xxClientError())
+                .andExpect(MockMvcResultMatchers.jsonPath("\$.message").value(BAD_REQUEST_MESSAGE))
     }
 
     def "HttpMessageNotReadableException 이 핸들링 되는지 테스트"() {
@@ -53,7 +56,8 @@ class HabitControllerSpec extends IntegrationTestSpecification {
 
         then:
         resultActions.andExpect(MockMvcResultMatchers.status().is4xxClientError())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("Required request body is missing")))
+                .andExpect(MockMvcResultMatchers.jsonPath("\$.message").value(BAD_REQUEST_MESSAGE))
+
     }
 
     def "HttpRequestMethodNotSupportedException 이 핸들링 되는지 테스트"() {
@@ -65,6 +69,7 @@ class HabitControllerSpec extends IntegrationTestSpecification {
 
         then:
         resultActions.andExpect(MockMvcResultMatchers.status().is4xxClientError())
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("Request method 'POST' not supported")))
+                .andExpect(MockMvcResultMatchers.jsonPath("\$.message").value(BAD_REQUEST_MESSAGE))
+
     }
 }
