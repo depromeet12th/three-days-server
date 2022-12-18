@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
@@ -47,7 +48,7 @@ public class ApiControllerExceptionHandler {
 		return ApiResponseGenerator.fail(ex.getCode(), ex.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 
-	@ExceptionHandler(TypeMismatchException.class)
+	@ExceptionHandler({MethodArgumentTypeMismatchException.class, TypeMismatchException.class})
 	public final ApiResponse<ApiResponse.FailureBody> handleBadRequest(
 			final TypeMismatchException ex, final WebRequest request) {
 		this.writeLog(ex, request);
