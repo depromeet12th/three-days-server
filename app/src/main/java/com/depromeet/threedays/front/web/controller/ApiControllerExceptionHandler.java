@@ -16,7 +16,7 @@ import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -52,9 +52,9 @@ public class ApiControllerExceptionHandler {
 		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
 	}
 
-	@ExceptionHandler({MissingServletRequestParameterException.class})
+	@ExceptionHandler(ServletRequestBindingException.class)
 	public final ApiResponse<ApiResponse.FailureBody> handleBadRequest(
-			final MissingServletRequestParameterException ex, final WebRequest request) {
+			final ServletRequestBindingException ex, final WebRequest request) {
 		this.writeLog(ex, request);
 		return ApiResponseGenerator.fail(FailureBodyResolver.resolveFrom(ex), HttpStatus.BAD_REQUEST);
 	}
