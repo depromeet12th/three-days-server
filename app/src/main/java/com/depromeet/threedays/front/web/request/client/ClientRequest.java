@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 @Builder(toBuilder = true)
 @Getter
@@ -12,6 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ClientRequest {
 
-	@NotBlank private String fcmToken;
-	@NotBlank private String identificationKey;
+	@NotBlank @Length(max = 1000) private String fcmToken;
+	@NotBlank @Length(max = 1000) private String identificationKey;
 }

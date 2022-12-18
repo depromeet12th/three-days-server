@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 @Getter
 @AllArgsConstructor
@@ -19,7 +20,7 @@ public class SaveHabitRequest {
 
 	@NotNull private String imojiPath;
 
-	@NotNull private String color;
+	@NotNull @Length(max = 40) private String color;
 
 	@NotNull private EnumSet<DayOfWeek> dayOfWeeks;
 
