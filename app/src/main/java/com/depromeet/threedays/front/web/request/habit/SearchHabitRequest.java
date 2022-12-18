@@ -15,5 +15,5 @@ import lombok.Setter;
 @Builder(toBuilder = true)
 public class SearchHabitRequest {
 
-	@NotNull private HabitStatus status;
+	private HabitStatus status;
 }
