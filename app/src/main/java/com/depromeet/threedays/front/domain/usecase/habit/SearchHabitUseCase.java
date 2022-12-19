@@ -34,11 +34,18 @@ public class SearchHabitUseCase {
 	private final MateRepository mateRepository;
 
 	public List<HabitOverview> execute(final SearchHabitRequest request) {
-		List<HabitEntity> habitEntities =
-				repository.findAllByMemberIdAndDeletedFalseAndStatus(
-						AuditorHolder.get(), request.getStatus());
-
+		List<HabitEntity> habitEntities = null;
 		List<HabitOverview> habitOverviews = new ArrayList<>();
+
+		if (request.getStatus() == null) {
+			habitEntities = repository.findAllByMemberIdAndDeletedFalse(AuditorHolder.get()).orElse(null);
+		}
+
+		if (request.getStatus() != null) {
+			habitEntities =
+					repository.findAllByMemberIdAndDeletedFalseAndStatus(
+							AuditorHolder.get(), request.getStatus());
+		}
 
 		for (HabitEntity habitEntity : habitEntities) {
 			habitOverviews.add(this.setAssociation(habitEntity));
