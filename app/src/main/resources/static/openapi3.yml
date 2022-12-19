@@ -266,7 +266,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Mate'
+                $ref: '#/components/schemas/MateResponse'
         '500':
           description: INTERNAL SERVER ERROR
           content:
@@ -1110,6 +1110,38 @@ components:
         bubble:
           type: string
           example: "오늘도 열심히 하쟈"
+        levelUpAt:
+          type: string
+          format: date-time
+          example: "2022-11-30 21:40:18.668458"
+        createAt:
+          type: string
+          format: date-time
+          example: "2022-11-30 21:40:18.668458"
+    MateResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        memberId:
+          type: integer
+          example: 1
+        habitId:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: "짝꿍이"
+        level:
+          type: integer
+          example: 1
+        characterType:
+          enum: [ "WHIP", "CARROT" ]
+          example: "WHIP"
+        bubble:
+          type: string
+          example: "오늘도 열심히 하쟈"
         reward:
           type: integer
           example: 6
@@ -1121,7 +1153,7 @@ components:
                 type: string
                 format: date-time
                 example: "2022-11-30 21:40:18.668458"
-        levelUpSectioin:
+        levelUpSection:
           type: array
           example: [ 1,4,8,14,22 ]
         levelUpAt:
