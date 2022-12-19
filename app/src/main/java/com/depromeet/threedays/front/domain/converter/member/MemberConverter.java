@@ -43,6 +43,7 @@ public class MemberConverter {
 				.certificationSubject(command.getCertificationSubject())
 				.resource(command.getResource())
 				.createAt(LocalDateTime.now())
+				.updateAt(LocalDateTime.now())
 				.notificationConsent(command.getNotificationConsent())
 				.build();
 	}

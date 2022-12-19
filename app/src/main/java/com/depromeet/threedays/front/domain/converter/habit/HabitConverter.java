@@ -12,6 +12,8 @@ import com.depromeet.threedays.front.web.request.habit.SaveHabitRequest;
 import com.depromeet.threedays.front.web.request.habit.UpdateHabitRequest;
 import lombok.experimental.UtilityClass;
 
+import java.time.LocalDateTime;
+
 @UtilityClass
 public class HabitConverter {
 
@@ -87,6 +89,7 @@ public class HabitConverter {
 				.archiveNumberOfDate(data.getArchiveNumberOfDate())
 				.status(data.getStatus())
 				.deleted(data.getDeleted())
+				.updateAt(LocalDateTime.now())
 				.build();
 	}
 
@@ -209,6 +212,7 @@ public class HabitConverter {
 				.color(request.getColor())
 				.status(source.getStatus())
 				.createAt(source.getCreateAt())
+				.updateAt(LocalDateTime.now())
 				.deleted(source.getDeleted())
 				.build();
 	}

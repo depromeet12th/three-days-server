@@ -6,6 +6,8 @@ import com.depromeet.threedays.front.domain.model.mate.Mate;
 import com.depromeet.threedays.front.web.request.mate.SaveMateRequest;
 import lombok.experimental.UtilityClass;
 
+import java.time.LocalDateTime;
+
 @UtilityClass
 public class MateConverter {
 
@@ -39,6 +41,7 @@ public class MateConverter {
 				.memberId(data.getMemberId())
 				.habitId(data.getHabitId())
 				.levelUpAt(data.getLevelUpAt())
+				.updateAt(LocalDateTime.now())
 				.build();
 	}
 

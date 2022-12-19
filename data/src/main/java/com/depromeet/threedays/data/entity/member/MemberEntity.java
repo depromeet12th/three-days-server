@@ -53,13 +53,16 @@ public class MemberEntity implements Serializable {
 
 	public void updateName(String name) {
 		this.name = name;
+		this.updateAt = LocalDateTime.now();
 	}
 
 	public void updateNotificationConsent(Boolean consent) {
 		this.notificationConsent = consent;
+		this.updateAt = LocalDateTime.now();
 	}
 
 	public void updateResource(String resource) {
 		this.resource = resource;
+		this.updateAt = LocalDateTime.now();
 	}
 }
