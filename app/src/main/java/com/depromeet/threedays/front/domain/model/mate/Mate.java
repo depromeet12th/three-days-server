@@ -22,4 +22,5 @@ public class Mate implements Serializable {
 	private Integer level;
 	private LocalDateTime levelUpAt;
 	private MateType characterType;
+	private String bubble;
 }

@@ -3,6 +3,7 @@ package com.depromeet.threedays.front.domain.converter.mate;
 import com.depromeet.threedays.data.entity.mate.MateEntity;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.model.mate.Mate;
+import com.depromeet.threedays.front.support.MateBubble;
 import com.depromeet.threedays.front.web.request.mate.SaveMateRequest;
 import java.time.LocalDateTime;
 import lombok.experimental.UtilityClass;
@@ -24,6 +25,7 @@ public class MateConverter {
 				.characterType(entity.getCharacterType())
 				.title(entity.getTitle())
 				.levelUpAt(entity.getLevelUpAt())
+				.bubble(MateBubble.randomBubble().getBubble())
 				.build();
 	}
 

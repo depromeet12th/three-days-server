@@ -1,6 +1,7 @@
 package com.depromeet.threedays.front.web.response.converter;
 
 import com.depromeet.threedays.front.domain.model.mate.Mate;
+import com.depromeet.threedays.front.support.MateBubble;
 import com.depromeet.threedays.front.web.response.MateResponse;
 import lombok.experimental.UtilityClass;
 
@@ -21,6 +22,7 @@ public class MateResponseConverter {
 				.characterType(mate.getCharacterType())
 				.title(mate.getTitle())
 				.levelUpAt(mate.getLevelUpAt())
+				.bubble(MateBubble.randomBubble().getBubble())
 				.build();
 	}
 }
