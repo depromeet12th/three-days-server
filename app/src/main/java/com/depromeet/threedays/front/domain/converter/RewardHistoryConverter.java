@@ -13,6 +13,7 @@ public class RewardHistoryConverter {
 				.habitId(habit.getId())
 				.memberId(habit.getMemberId())
 				.createAt(LocalDateTime.now())
+				.updateAt(LocalDateTime.now())
 				.build();
 	}
 

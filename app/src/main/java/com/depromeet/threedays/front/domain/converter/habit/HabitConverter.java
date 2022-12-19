@@ -10,6 +10,7 @@ import com.depromeet.threedays.front.domain.model.mate.Mate;
 import com.depromeet.threedays.front.domain.model.notification.Notification;
 import com.depromeet.threedays.front.web.request.habit.SaveHabitRequest;
 import com.depromeet.threedays.front.web.request.habit.UpdateHabitRequest;
+import java.time.LocalDateTime;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -87,6 +88,7 @@ public class HabitConverter {
 				.archiveNumberOfDate(data.getArchiveNumberOfDate())
 				.status(data.getStatus())
 				.deleted(data.getDeleted())
+				.updateAt(LocalDateTime.now())
 				.build();
 	}
 
@@ -209,6 +211,7 @@ public class HabitConverter {
 				.color(request.getColor())
 				.status(source.getStatus())
 				.createAt(source.getCreateAt())
+				.updateAt(LocalDateTime.now())
 				.deleted(source.getDeleted())
 				.build();
 	}

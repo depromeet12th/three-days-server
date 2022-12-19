@@ -1,6 +1,7 @@
 package com.depromeet.threedays.data.entity.notification;
 
 import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,4 +45,11 @@ public class HabitNotificationEntity {
 	@Column(name = "day_of_week", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private DayOfWeek dayOfWeek;
+
+	@Column(nullable = false, updatable = false)
+	@Builder.Default
+	private LocalDateTime createAt = LocalDateTime.now();
+
+	@Column(nullable = false)
+	private LocalDateTime updateAt;
 }

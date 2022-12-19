@@ -1,5 +1,6 @@
 package com.depromeet.threedays.data.entity.client;
 
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,6 +34,13 @@ public class ClientEntity {
 
 	@Column(name = "identification_key", length = 1000, nullable = false)
 	private String identificationKey;
+
+	@Column(nullable = false, updatable = false)
+	@Builder.Default
+	private LocalDateTime createAt = LocalDateTime.now();
+
+	@Column(nullable = false)
+	private LocalDateTime updateAt;
 
 	public void updateFcmToken(String fcmToken) {
 		this.fcmToken = fcmToken;

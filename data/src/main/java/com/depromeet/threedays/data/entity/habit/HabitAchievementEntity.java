@@ -1,6 +1,7 @@
 package com.depromeet.threedays.data.entity.habit;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,4 +41,11 @@ public class HabitAchievementEntity {
 
 	@Column(nullable = false)
 	private LocalDate nextAchievementDate;
+
+	@Column(nullable = false, updatable = false)
+	@Builder.Default
+	private LocalDateTime createAt = LocalDateTime.now();
+
+	@Column(nullable = false)
+	private LocalDateTime updateAt;
 }

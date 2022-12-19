@@ -5,6 +5,7 @@ import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.model.notification.HabitNotificationMessage;
 import com.depromeet.threedays.front.domain.model.notification.Notification;
 import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -16,6 +17,7 @@ public class HabitNotificationConverter {
 				.memberId(AuditorHolder.get())
 				.contents(data.getContents())
 				.notificationTime(data.getNotificationTime())
+				.updateAt(LocalDateTime.now())
 				.dayOfWeek(dayOfWeek)
 				.build();
 	}

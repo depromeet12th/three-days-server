@@ -60,6 +60,9 @@ public class HabitEntity {
 	private LocalDateTime createAt = LocalDateTime.now();
 
 	@Column(nullable = false)
+	private LocalDateTime updateAt;
+
+	@Column(nullable = false)
 	@Builder.Default
 	private Boolean deleted = false;
 }
