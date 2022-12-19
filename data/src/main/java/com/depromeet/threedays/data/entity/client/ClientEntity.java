@@ -12,6 +12,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -33,6 +35,14 @@ public class ClientEntity {
 
 	@Column(name = "identification_key", length = 1000, nullable = false)
 	private String identificationKey;
+
+	@Column(nullable = false, updatable = false)
+	@Builder.Default
+	private LocalDateTime createAt = LocalDateTime.now();
+
+	@Column(nullable = false)
+	private LocalDateTime updateAt;
+
 
 	public void updateFcmToken(String fcmToken) {
 		this.fcmToken = fcmToken;

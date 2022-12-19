@@ -47,6 +47,10 @@ public class MemberEntity implements Serializable {
 	@Builder.Default
 	private LocalDateTime createAt = LocalDateTime.now();
 
+	@Column(nullable = false)
+	private LocalDateTime updateAt;
+
+
 	public void updateName(String name) {
 		this.name = name;
 	}
