@@ -53,6 +53,4 @@ public class NotificationHistoryEntity {
 	@Column(name = "type")
 	@Enumerated(EnumType.STRING)
 	private NotificationType type;
-
-
 }

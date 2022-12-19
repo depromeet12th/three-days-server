@@ -6,7 +6,6 @@ import com.depromeet.threedays.front.domain.model.habit.HabitAchievement;
 import com.depromeet.threedays.front.web.request.habit.SaveHabitAchievementRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

@@ -6,7 +6,6 @@ import com.depromeet.threedays.front.domain.model.notification.HabitNotification
 import com.depromeet.threedays.front.domain.model.notification.Notification;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
-
 import lombok.experimental.UtilityClass;
 
 @UtilityClass

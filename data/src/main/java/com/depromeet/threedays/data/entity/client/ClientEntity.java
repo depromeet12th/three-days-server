@@ -1,5 +1,6 @@
 package com.depromeet.threedays.data.entity.client;
 
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,8 +12,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -42,7 +41,6 @@ public class ClientEntity {
 
 	@Column(nullable = false)
 	private LocalDateTime updateAt;
-
 
 	public void updateFcmToken(String fcmToken) {
 		this.fcmToken = fcmToken;

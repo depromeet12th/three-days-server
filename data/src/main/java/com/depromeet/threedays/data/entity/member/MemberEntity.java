@@ -50,7 +50,6 @@ public class MemberEntity implements Serializable {
 	@Column(nullable = false)
 	private LocalDateTime updateAt;
 
-
 	public void updateName(String name) {
 		this.name = name;
 		this.updateAt = LocalDateTime.now();
