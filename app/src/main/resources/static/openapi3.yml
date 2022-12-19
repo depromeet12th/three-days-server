@@ -1107,6 +1107,9 @@ components:
         characterType:
           enum: [ "WHIP", "CARROT" ]
           example: "WHIP"
+        bubble:
+          type: string
+          example: "오늘도 열심히 하쟈"
         reward:
           type: integer
           example: 6
