@@ -16,6 +16,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -47,9 +49,10 @@ public class HabitNotificationEntity {
 	private DayOfWeek dayOfWeek;
 
 	@Column(nullable = false, updatable = false)
-	@Builder.Default
-	private LocalDateTime createAt = LocalDateTime.now();
+	@CreatedDate
+	private LocalDateTime createAt;
 
 	@Column(nullable = false)
+	@LastModifiedDate
 	private LocalDateTime updateAt;
 }

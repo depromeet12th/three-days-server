@@ -3,7 +3,6 @@ package com.depromeet.threedays.front.domain.converter.client;
 import com.depromeet.threedays.data.entity.client.ClientEntity;
 import com.depromeet.threedays.front.domain.model.client.Client;
 import com.depromeet.threedays.front.web.request.client.ClientRequest;
-import java.time.LocalDateTime;
 
 public class ClientConverter {
 
@@ -33,7 +32,6 @@ public class ClientConverter {
 				.memberId(memberId)
 				.fcmToken(request.getFcmToken())
 				.identificationKey(request.getIdentificationKey())
-				.updateAt(LocalDateTime.now())
 				.build();
 	}
 }
