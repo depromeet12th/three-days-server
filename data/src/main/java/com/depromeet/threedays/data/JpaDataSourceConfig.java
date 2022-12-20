@@ -22,8 +22,8 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@EnableJpaAuditing
 @Configuration
+@EnableJpaAuditing
 @EnableTransactionManagement
 @EnableJpaRepositories(
 		basePackages = JpaDataSourceConfig.BASE_PACKAGE,
