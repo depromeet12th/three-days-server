@@ -26,15 +26,18 @@ class UpdateHabitUseCaseSpec extends IntegrationTestSpecification {
     def "사용자는 정해진 명세에 맞춰 습관 정보를 갱신할 수 있다"() {
         given:
         def criterion = dataInitializer.data[2]
+
+        def notification = Notification.builder()
+                .contents("contents")
+                .notificationTime(LocalTime.now())
+                .build()
+
         def expected = UpdateHabitRequest.builder()
                 .title("title")
                 .imojiPath("imoji")
                 .color("color")
                 .dayOfWeeks(EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.FRIDAY))
-                .notification(Notification.builder()
-                        .contents("contents")
-                        .notificationTime(LocalTime.now())
-                        .build())
+                .notification(notification)
                 .build()
 
         when:
@@ -43,6 +46,7 @@ class UpdateHabitUseCaseSpec extends IntegrationTestSpecification {
         then:
         actual.title == expected.title
         actual.id == criterion.id
-
+        notification.notificationTime == actual.notification.notificationTime
+        notification.contents == actual.notification.contents
     }
 }
