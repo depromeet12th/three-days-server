@@ -5,8 +5,6 @@ import com.depromeet.threedays.front.data.habit.HabitDataInitializer
 import com.depromeet.threedays.front.data.habit.HabitNotificationDataInitializer
 import com.depromeet.threedays.front.domain.model.notification.Notification
 import com.depromeet.threedays.front.exception.PolicyViolationException
-import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository
-import com.depromeet.threedays.front.persistence.repository.notification.HabitNotificationRepository
 import com.depromeet.threedays.front.web.request.habit.UpdateHabitRequest
 import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.Subject
