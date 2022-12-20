@@ -26,9 +26,7 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
 	private final SignMemberUseCaseFacade signUseCase;
-
 	private final SaveNameUseCase saveNameUseCase;
-
 	private final SaveConsentUseCase saveConsentUseCase;
 	private final SaveResourceUseCase saveResourceUseCase;
 	private final GetTokenUseCase getTokenUseCase;

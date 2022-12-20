@@ -14,4 +14,6 @@ public interface HabitNotificationRepository extends JpaRepository<HabitNotifica
 			final LocalTime notificationTime, final DayOfWeek dayOfWeek);
 
 	void deleteAllByMemberId(final Long memberId);
+
+	void deleteAllByHabitId(final Long habitId);
 }
