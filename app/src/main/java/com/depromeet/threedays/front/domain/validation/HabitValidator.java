@@ -2,10 +2,9 @@ package com.depromeet.threedays.front.domain.validation;
 
 import com.depromeet.threedays.front.domain.model.habit.Habit;
 import com.depromeet.threedays.front.exception.PolicyViolationException;
+import com.depromeet.threedays.front.web.request.habit.UpdateHabitRequest;
 import java.time.DayOfWeek;
 import java.util.EnumSet;
-
-import com.depromeet.threedays.front.web.request.habit.UpdateHabitRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -48,8 +47,10 @@ public class HabitValidator {
 
 		final String INSUFFICIENT_NOTIFICATION = "insufficient.notification";
 
-		this.throwIf(target.getNotification() != null && (target.getNotification()
-																.getNotificationTime() == null || target.getNotification()
-																										.getContents() == null), INSUFFICIENT_NOTIFICATION);
+		this.throwIf(
+				target.getNotification() != null
+						&& (target.getNotification().getNotificationTime() == null
+								|| target.getNotification().getContents() == null),
+				INSUFFICIENT_NOTIFICATION);
 	}
 }
