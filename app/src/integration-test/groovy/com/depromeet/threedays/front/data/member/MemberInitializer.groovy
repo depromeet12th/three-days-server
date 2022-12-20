@@ -3,7 +3,6 @@ package com.depromeet.threedays.front.data.member
 import com.depromeet.threedays.data.entity.habit.HabitEntity
 import com.depromeet.threedays.data.entity.member.MemberEntity
 import com.depromeet.threedays.data.enums.HabitStatus
-import com.depromeet.threedays.front.data.habit.FakeMemberEntity
 import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository
 import net.bytebuddy.utility.RandomString

@@ -2,19 +2,15 @@ package com.depromeet.threedays.data.entity.mate;
 
 import com.depromeet.threedays.data.enums.MateType;
 import java.time.LocalDateTime;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -22,6 +18,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Builder(toBuilder = true)
 @Table(name = "mate")
+@EntityListeners(AuditingEntityListener.class)
 public class MateEntity {
 
 	@Id
@@ -48,10 +45,11 @@ public class MateEntity {
 	private MateType characterType;
 
 	@Column(nullable = false, updatable = false)
-	@Builder.Default
-	private LocalDateTime createAt = LocalDateTime.now();
+	@CreatedDate
+	private LocalDateTime createAt;
 
 	@Column(nullable = false)
+	@LastModifiedDate
 	private LocalDateTime updateAt;
 
 	@Column(nullable = false)

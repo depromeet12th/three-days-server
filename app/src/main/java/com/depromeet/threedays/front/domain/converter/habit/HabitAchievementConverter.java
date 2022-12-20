@@ -5,7 +5,6 @@ import com.depromeet.threedays.front.domain.model.habit.Habit;
 import com.depromeet.threedays.front.domain.model.habit.HabitAchievement;
 import com.depromeet.threedays.front.web.request.habit.SaveHabitAchievementRequest;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -34,7 +33,6 @@ public class HabitAchievementConverter {
 				.habitId(habit.getId())
 				.memberId(habit.getMemberId())
 				.achievementDate(request.getAchievementDate())
-				.updateAt(LocalDateTime.now())
 				.nextAchievementDate(nextAchievementDate)
 				.sequence(sequence)
 				.build();

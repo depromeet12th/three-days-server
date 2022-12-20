@@ -2,20 +2,25 @@ package com.depromeet.threedays.front.data.mate;
 
 import com.depromeet.threedays.data.entity.mate.MateEntity;
 import com.depromeet.threedays.data.enums.MateType;
-import java.time.LocalDateTime;
 import net.bytebuddy.utility.RandomString;
 
-public class FakeMateEntity {
+import java.time.LocalDateTime;
 
-	public static MateEntity create(Long habitId) {
-		return MateEntity.builder()
-				.title(RandomString.make())
-				.deleted(false)
-				.createAt(LocalDateTime.now())
-				.memberId(0L)
-				.habitId(habitId)
-				.characterType(MateType.CARROT)
-				.level(3)
-				.build();
-	}
+public class FakeMateEntity {
+    private FakeMateEntity() {
+    }
+
+    public static MateEntity create(Long habitId) {
+        return MateEntity.builder()
+                .memberId(0L)
+                .title(RandomString.make())
+                .habitId(habitId)
+                .level(3)
+                .levelUpAt(LocalDateTime.now())
+                .characterType(MateType.CARROT)
+                .createAt(LocalDateTime.now())
+                .updateAt(LocalDateTime.now())
+                .deleted(false)
+                .build();
+    }
 }
