@@ -23,7 +23,7 @@ class HabitNotificationDataInitializer {
     void setData(Long habitId, Long memberId) {
         Collection<HabitNotificationEntity> data = new ArrayList<>()
         for (DayOfWeek dayOfWeek : DayOfWeek.values()) {
-            data.add(FakeHabitNotificationEntity.create(habitId, memberId, dayOfWeek))
+            data.add(repository.save(FakeHabitNotificationEntity.create(habitId, memberId, dayOfWeek)))
         }
         this.data = data
     }

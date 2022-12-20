@@ -26,12 +26,6 @@ class UpdateHabitUseCaseSpec extends IntegrationTestSpecification {
     @Autowired
     private HabitNotificationDataInitializer notificationDataInitializer
 
-    @Autowired
-    private HabitRepository repository
-
-    @Autowired
-    private HabitNotificationRepository notificationRepository
-
     def setup() {
         dataInitializer.initialize()
     }
@@ -109,7 +103,6 @@ class UpdateHabitUseCaseSpec extends IntegrationTestSpecification {
         given:
         def criterion = dataInitializer.data[2]
         notificationDataInitializer.initialize(criterion.id, criterion.memberId)
-        notificationRepository.save(notificationDataInitializer.data[1])
 
         def notification = Notification.builder()
                 .contents("contents")
@@ -135,7 +128,6 @@ class UpdateHabitUseCaseSpec extends IntegrationTestSpecification {
         given:
         def criterion = dataInitializer.data[2]
         notificationDataInitializer.initialize(criterion.id, criterion.memberId)
-        notificationRepository.save(notificationDataInitializer.data[1])
 
         def expected = UpdateHabitRequest.builder()
                 .title("title")
@@ -154,9 +146,6 @@ class UpdateHabitUseCaseSpec extends IntegrationTestSpecification {
         given:
         def criterion = dataInitializer.data[2]
         notificationDataInitializer.initialize(criterion.id, criterion.memberId)
-        for (int i = 1; i <= 5; i++) {
-            notificationRepository.save(notificationDataInitializer.data[i])
-        }
 
         EnumSet<DayOfWeek> dayOfWeeks = EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.FRIDAY)
 
