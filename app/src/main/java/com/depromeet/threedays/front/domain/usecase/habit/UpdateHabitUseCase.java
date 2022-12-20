@@ -27,7 +27,7 @@ public class UpdateHabitUseCase {
 	private final HabitValidator validator;
 
 	public Habit execute(final Long id, final UpdateHabitRequest request) {
-		validator.validateUpdateConstraints(request.getDayOfWeeks());
+		validator.validateUpdateConstraints(request);
 		Habit source =
 				repository
 						.findById(id)

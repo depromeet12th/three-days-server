@@ -182,4 +182,28 @@ class UpdateHabitUseCaseSpec extends IntegrationTestSpecification {
         then:
         thrown(PolicyViolationException.class)
     }
+
+    def "사용자는 알림을 수정할때 내용과 알림 시간을 비워두고 수정할 수 없다."() {
+        given:
+        def criterion = dataInitializer.data[2]
+
+        def notification = Notification.builder()
+                .contents(null)
+                .notificationTime(null)
+                .build()
+
+        def expected = UpdateHabitRequest.builder()
+                .title("title")
+                .imojiPath("imoji")
+                .color("color")
+                .dayOfWeeks(EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY))
+                .notification(notification)
+                .build()
+
+        when:
+        updateUseCase.execute(criterion.id, expected)
+
+        then:
+        thrown(PolicyViolationException.class)
+    }
 }
