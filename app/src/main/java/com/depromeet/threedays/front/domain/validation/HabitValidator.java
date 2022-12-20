@@ -15,6 +15,10 @@ public class HabitValidator {
 		this.throwIfInSufficientDayOfWeeks(target.getDayOfWeeks());
 	}
 
+	public void validateUpdateConstraints(final EnumSet<DayOfWeek> target) {
+		this.throwIfInSufficientDayOfWeeks(target);
+	}
+
 	private void throwIfInSufficientDayOfWeeks(EnumSet<DayOfWeek> target) {
 		if (target == null) {
 			return;
