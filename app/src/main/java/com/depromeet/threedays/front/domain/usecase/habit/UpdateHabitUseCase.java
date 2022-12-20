@@ -4,6 +4,7 @@ import com.depromeet.threedays.front.domain.converter.habit.HabitConverter;
 import com.depromeet.threedays.front.domain.converter.notification.HabitNotificationConverter;
 import com.depromeet.threedays.front.domain.model.habit.Habit;
 import com.depromeet.threedays.front.domain.model.notification.Notification;
+import com.depromeet.threedays.front.domain.validation.HabitValidator;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository;
 import com.depromeet.threedays.front.persistence.repository.notification.HabitNotificationRepository;
@@ -23,13 +24,16 @@ public class UpdateHabitUseCase {
 
 	private final HabitNotificationRepository habitNotificationRepository;
 
-	public Habit execute(final Long id, final UpdateHabitRequest request) {
+	private final HabitValidator validator;
 
+	public Habit execute(final Long id, final UpdateHabitRequest request) {
+		validator.validateUpdateConstraints(request.getDayOfWeeks());
 		Habit source =
 				repository
 						.findById(id)
 						.map(HabitConverter::from)
 						.orElseThrow(ResourceNotFoundException::new);
+
 		updateAssociation(id, request.getNotification(), request.getDayOfWeeks());
 
 		return HabitConverter.from(
