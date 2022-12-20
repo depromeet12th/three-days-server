@@ -4,7 +4,7 @@ info:
   description: description
   version: '1.0.1'
 servers:
-  - url: https://jjaksim.com
+  - url: https://api.jjaksim.com
     description: prod
   - url: http://localhost:8080
     description: local
