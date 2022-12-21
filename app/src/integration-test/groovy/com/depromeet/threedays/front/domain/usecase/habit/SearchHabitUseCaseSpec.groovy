@@ -29,4 +29,13 @@ class SearchHabitUseCaseSpec extends IntegrationTestSpecification {
         then:
         actual.size() == 10
     }
+
+    def "습관 상태를 제외하고 요청을 보냈을때 완전삭제되지 않은 전체 습관 목록을 조회한다."() {
+        when:
+        def actual = searchUseCase.execute(SearchHabitRequest.builder()
+                .build())
+
+        then:
+        actual.size() == 10
+    }
 }

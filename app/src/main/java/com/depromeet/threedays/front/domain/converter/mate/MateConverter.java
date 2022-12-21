@@ -5,7 +5,6 @@ import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.model.mate.Mate;
 import com.depromeet.threedays.front.support.MateBubble;
 import com.depromeet.threedays.front.web.request.mate.SaveMateRequest;
-import java.time.LocalDateTime;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -42,7 +41,6 @@ public class MateConverter {
 				.memberId(data.getMemberId())
 				.habitId(data.getHabitId())
 				.levelUpAt(data.getLevelUpAt())
-				.updateAt(LocalDateTime.now())
 				.build();
 	}
 
