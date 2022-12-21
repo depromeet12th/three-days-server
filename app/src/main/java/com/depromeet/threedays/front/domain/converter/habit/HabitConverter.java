@@ -139,7 +139,11 @@ public class HabitConverter {
 	}
 
 	public static HabitOverview from(
-			HabitEntity entity, HabitAchievement achievementData, Long rewardCount, Mate mate) {
+			HabitEntity entity,
+			HabitAchievement achievementData,
+			Long rewardCount,
+			Mate mate,
+			Long totalHabitAchievement) {
 		if (entity == null) {
 			return null;
 		}
@@ -154,6 +158,7 @@ public class HabitConverter {
 				.createAt(entity.getCreateAt())
 				.reward(rewardCount)
 				.status(entity.getStatus())
+				.totalAchievementCount(totalHabitAchievement.intValue())
 				.todayHabitAchievementId(achievementData.getId())
 				.sequence(achievementData.getSequence())
 				.mate(mate)
