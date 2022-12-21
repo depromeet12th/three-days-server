@@ -33,6 +33,8 @@ public class NotificationHistoryEntity {
 	@Column(nullable = false)
 	private Long notificationId;
 
+	@Column private String title;
+
 	@Column(length = 100)
 	private String contents;
 
