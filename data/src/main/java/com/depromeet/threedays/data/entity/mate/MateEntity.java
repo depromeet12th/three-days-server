@@ -45,14 +45,6 @@ public class MateEntity {
 	@Column(nullable = false)
 	private MateType characterType;
 
-	@Column(nullable = false, updatable = false)
-	@CreatedDate
-	private LocalDateTime createAt;
-
-	@Column(nullable = false)
-	@LastModifiedDate
-	private LocalDateTime updateAt;
-
 	@Column(nullable = false)
 	@Builder.Default
 	private Boolean deleted = false;
@@ -61,4 +53,13 @@ public class MateEntity {
 	@Column(nullable = false)
 	@Builder.Default
 	private MateStatus status = MateStatus.ACTIVE;
+	@Column(nullable = false, updatable = false)
+	@CreatedDate
+	private LocalDateTime createAt;
+
+	@Column(nullable = false)
+	@LastModifiedDate
+	private LocalDateTime updateAt;
+
+
 }
