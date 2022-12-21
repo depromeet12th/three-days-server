@@ -322,7 +322,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Mate'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Mate'
         '500':
           description: INTERNAL SERVER ERROR
           content:

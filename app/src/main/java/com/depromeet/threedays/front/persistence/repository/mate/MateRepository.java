@@ -1,6 +1,7 @@
 package com.depromeet.threedays.front.persistence.repository.mate;
 
 import com.depromeet.threedays.data.entity.mate.MateEntity;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -16,5 +17,5 @@ public interface MateRepository extends JpaRepository<MateEntity, Long> {
 
 	void deleteAllByMemberId(final Long memberId);
 
-	Optional<MateEntity> findByMemberIdAndDeletedFalse(final Long memberId);
+	List<MateEntity> findByMemberIdAndDeletedFalse(final Long memberId);
 }
