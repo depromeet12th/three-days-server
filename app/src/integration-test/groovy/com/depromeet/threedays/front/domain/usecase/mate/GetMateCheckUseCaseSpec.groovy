@@ -22,6 +22,7 @@ class GetMateCheckUseCaseSpec extends IntegrationTestSpecification {
         def actual = getUseCase.execute()
 
         then:
+        actual.size() >= 1
         actual[0].id == habitDataInitializer.associationData.id
         actual[0].title == habitDataInitializer.associationData.title
     }
