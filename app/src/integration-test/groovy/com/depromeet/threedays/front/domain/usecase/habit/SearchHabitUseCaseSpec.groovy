@@ -63,7 +63,7 @@ class SearchHabitUseCaseSpec extends IntegrationTestSpecification {
         actual.first().mate.status == MateStatus.ACTIVE
     }
 
-    def "사용자가 현재 보관함에 있는 습관 목록을 조회할 때, "() {
+    def "사용자가 현재 보관함에 있는 습관 목록을 조회할 때, 현재 보관함에 있는 짝꿍을 조회한다."() {
         given:
         repository.deleteAll()
         mateRepository.deleteAll()
