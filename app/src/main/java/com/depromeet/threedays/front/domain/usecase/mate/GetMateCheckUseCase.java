@@ -21,17 +21,11 @@ public class GetMateCheckUseCase {
 	private final MateRepository repository;
 
 	public List<MateResponse> execute() {
+		return repository.findByMemberIdAndDeletedFalse(AuditorHolder.get())
+						  .stream()
+						  .map(MateConverter::from)
+						  .map(MateResponseConverter::from)
+						  .collect(Collectors.toList());
 
-		List<MateResponse> mateResponses = new ArrayList<>();
-		List<Mate> mates =
-				repository.findAllByMemberIdAndDeletedFalse(AuditorHolder.get()).stream()
-						.map(MateConverter::from)
-						.collect(Collectors.toList());
-
-		for (Mate mate : mates) {
-			mateResponses.add(MateResponseConverter.from(mate));
-		}
-
-		return mateResponses;
 	}
 }
