@@ -11,18 +11,22 @@ public class FakeMateEntity {
     private FakeMateEntity() {
     }
 
-    public static MateEntity create(Long habitId) {
+    static MateEntity create(Long habitId) {
+        return from(habitId);
+    }
+
+    private static MateEntity from(Long habitId) {
         return MateEntity.builder()
-                .memberId(0L)
-                .title(RandomString.make())
-                .habitId(habitId)
-                .level(3)
-                .levelUpAt(LocalDateTime.now())
-                .characterType(MateType.CARROT)
-                .createAt(LocalDateTime.now())
-                .updateAt(LocalDateTime.now())
-                .deleted(false)
-                .status(MateStatus.ACTIVE)
-                .build();
+                  .memberId(0L)
+                  .title(RandomString.make())
+                  .habitId(habitId)
+                  .level(3)
+                  .levelUpAt(LocalDateTime.now())
+                  .characterType(MateType.CARROT)
+                  .createAt(LocalDateTime.now())
+                  .updateAt(LocalDateTime.now())
+                  .deleted(false)
+                  .status(MateStatus.ACTIVE)
+                  .build();
     }
 }
