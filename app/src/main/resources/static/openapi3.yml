@@ -222,7 +222,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Mate'
+                $ref: '#/components/schemas/MateResponse'
         '400':
           description: BAD REQUEST
           content:
@@ -324,7 +324,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Mate'
+                  $ref: '#/components/schemas/MateResponse'
         '500':
           description: INTERNAL SERVER ERROR
           content:
@@ -917,7 +917,7 @@ components:
           example: "ACTIVE"
         createAt:
           type: string
-          example: "2022-11-30 21:40:18.668458"
+          example: "2022-11-30T21:40:18.668458"
         sequence:
           type: integer
           example: 0
@@ -928,7 +928,7 @@ components:
           type: integer
           example: 0
         mate:
-          $ref: '#/components/schemas/Mate'
+          $ref: '#/components/schemas/MateResponse'
         notification:
           $ref: '#/components/schemas/Notification'
     HabitAchievement:
@@ -987,7 +987,7 @@ components:
           example: "ACTIVE"
         createAt:
           type: string
-          example: "2022-11-30 21:40:18.668458"
+          example: "2022-11-30T21:40:18.668458"
         todayHabitAchievementId:
           type: integer
           format: int64
@@ -996,7 +996,7 @@ components:
           type: integer
           example: 1
         mate:
-          $ref: '#/components/schemas/Mate'
+          $ref: '#/components/schemas/MateResponse'
     SaveHabitRequest:
       required: [ title, imojiPath, dayOfWeeks, color ]
       type: object
@@ -1118,41 +1118,6 @@ components:
           example: true
         resource:
           type: object
-    Mate:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 1
-        memberId:
-          type: integer
-          format: int64
-          example: 1
-        habitId:
-          type: integer
-          format: int64
-          example: 1
-        title:
-          type: string
-          example: "짝꿍이"
-        level:
-          type: integer
-          example: 1
-        characterType:
-          enum: [ "WHIP", "CARROT" ]
-          example: "WHIP"
-        bubble:
-          type: string
-          example: "오늘도 열심히 하쟈"
-        levelUpAt:
-          type: string
-          format: date-time
-          example: "2022-11-30 21:40:18.668458"
-        createAt:
-          type: string
-          format: date-time
-          example: "2022-11-30 21:40:18.668458"
     MateResponse:
       type: object
       properties:
@@ -1160,48 +1125,44 @@ components:
           type: integer
           format: int64
           example: 1
-        memberId:
+        habitId:
           type: integer
           format: int64
           example: 1
-        habitId:
+        memberId:
           type: integer
           format: int64
           example: 1
         title:
           type: string
           example: "짝꿍이"
+        createAt:
+          type: string
+          format: date-time
+          example: "2022-11-30T21:40:18.668458"
         level:
           type: integer
           example: 1
-        characterType:
-          enum: [ "WHIP", "CARROT" ]
-          example: "WHIP"
-        bubble:
-          type: string
-          example: "오늘도 열심히 하쟈"
         reward:
           type: integer
           example: 6
         rewardHistory:
           type: array
           items:
-            properties:
-              createAt:
-                type: string
-                format: date-time
-                example: "2022-11-30 21:40:18.668458"
-        levelUpSection:
-          type: array
-          example: [ 1,4,8,14,22 ]
+            $ref: '#/components/schemas/RewardHistory'
         levelUpAt:
           type: string
           format: date-time
-          example: "2022-11-30 21:40:18.668458"
-        createAt:
+          example: "2022-11-30T21:40:18.668458"
+        characterType:
+          enum: [ "WHIP", "CARROT" ]
+          example: "WHIP"
+        levelUpSection:
+          type: array
+          example: [ 1,4,8,14,22 ]
+        bubble:
           type: string
-          format: date-time
-          example: "2022-11-30 21:40:18.668458"
+          example: "오늘도 열심히 하쟈"
     Record:
       required: [ rewardCount, achievementCount, frequentHabit ]
       properties:
@@ -1245,7 +1206,7 @@ components:
           example: 12
         createAt:
           type: string
-          example: "2022-11-30 21:40:18.668458"
+          example: "2022-11-30T21:40:18.668458"
     Notification:
       type: object
       nullable: true
@@ -1316,6 +1277,13 @@ components:
         type:
           type: string
           enum: [ "GLOBAL", "HABIT", "NOTICE" ]
+        createAt:
+          type: string
+          format: date-time
+          example: "2022-11-30T21:40:18.668458"
+    RewardHistory:
+      type: object
+      properties:
         createAt:
           type: string
           format: date-time
