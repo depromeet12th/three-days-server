@@ -14,7 +14,7 @@ tags:
   - name: Habit
     description: 습관
   - name: Member
-    description: 유저
+    description: 회원
   - name: Habit Achievement
     description: 습관 성취
   - name: Mate
@@ -388,27 +388,6 @@ paths:
               example:
                 - code: "uncaught error"
                   message: "서버 에러"
-    get:
-      tags:
-        - Member
-      summary: 회원 상세 정보 API
-      operationId: getMember
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Member'
-        '500':
-          description: INTERNAL SERVER ERROR
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
-              example:
-                - code: "uncaught error"
-                  message: "서버 에러"
     delete:
       tags:
         - Member
@@ -421,6 +400,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponse'
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
+  /api/v1/members/me:
+    get:
+      tags:
+        - Member
+      summary: 회원 상세 정보 API
+      operationId: getMember
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
         '500':
           description: INTERNAL SERVER ERROR
           content:
