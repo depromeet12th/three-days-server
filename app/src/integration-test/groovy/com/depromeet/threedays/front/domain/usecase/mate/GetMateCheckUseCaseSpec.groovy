@@ -22,8 +22,8 @@ class GetMateCheckUseCaseSpec extends IntegrationTestSpecification {
         def actual = getUseCase.execute()
 
         then:
-        actual.id == habitDataInitializer.associationData.id
-        actual.title == habitDataInitializer.associationData.title
+        actual[0].id == habitDataInitializer.associationData.id
+        actual[0].title == habitDataInitializer.associationData.title
     }
 
     def "사용자는 짝꿍이 없을 경우 짝꿍 정보를 볼 수 없다"() {
@@ -31,6 +31,6 @@ class GetMateCheckUseCaseSpec extends IntegrationTestSpecification {
         when:
         def actual = getUseCase.execute()
         then:
-        actual == null
+        actual.size() == 0
     }
 }
