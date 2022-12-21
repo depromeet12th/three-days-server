@@ -76,6 +76,7 @@ public class SendHabitNotificationUseCase {
 	}
 
 	private List<Long> getMemberIds() {
+		// FIXME: chunk 단위 처리
 		List<MemberEntity> members = memberRepository.findAllByNotificationConsent(true).orElse(null);
 		if (members == null) {
 			return Collections.emptyList();

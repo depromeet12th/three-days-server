@@ -891,6 +891,7 @@ components:
           example: 1
         memberId:
           type: integer
+          format: int64
           example: 1
         title:
           type: string
@@ -941,6 +942,7 @@ components:
           example: 1
         memberId:
           type: integer
+          format: int64
           example: 1
         achievementDate:
           type: string
@@ -959,6 +961,7 @@ components:
           example: 1
         memberId:
           type: integer
+          format: int64
           example: 1
         title:
           type: string
@@ -984,6 +987,7 @@ components:
           example: "2022-11-30 21:40:18.668458"
         todayHabitAchievementId:
           type: integer
+          format: int64
           example: 81
         sequence:
           type: integer
@@ -1081,10 +1085,12 @@ components:
       properties:
         id:
           type: integer
-          example: "1"
+          format: int64
+          example: 1
         memberId:
           type: integer
-          example: "1"
+          format: int64
+          example: 1
         fcmToken:
           type: string
           example: "fcmToken"
@@ -1096,7 +1102,8 @@ components:
       properties:
         id:
           type: integer
-          example: "1"
+          format: int64
+          example: 1
         name:
           type: string
           example: "depromeet8manager"
@@ -1113,12 +1120,15 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           example: 1
         memberId:
           type: integer
+          format: int64
           example: 1
         habitId:
           type: integer
+          format: int64
           example: 1
         title:
           type: string
@@ -1145,12 +1155,15 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           example: 1
         memberId:
           type: integer
+          format: int64
           example: 1
         habitId:
           type: integer
+          format: int64
           example: 1
         title:
           type: string
@@ -1209,6 +1222,7 @@ components:
           example: 1
         memberId:
           type: integer
+          format: int64
           example: 1
         title:
           type: string
@@ -1277,23 +1291,29 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           example: 1
         memberId:
           type: integer
+          format: int64
           example: 1
         notificationId:
           type: integer
+          format: int64
           example: 1
+        title:
+          type: string
+          example: 짝심삼일 소식
         contents:
           type: string
-          example: 짝심삼일 ver.2 출시
+          example: 기다리고 기다리던 짝심삼일 ver.2가 출시되었습니다. 업데이트해보세요!
         status:
           type: string
-          enum: [ "SUCCESS", "CHECKED" ]
+          enum: [ "SUCCESS", "FAILURE", "CHECKED" ]
         type:
           type: string
-          enum: [ "GLOBAL", "HABIT" ]
+          enum: [ "GLOBAL", "HABIT", "NOTICE" ]
         createAt:
           type: string
           format: date-time
-          example: "2022-11-30 21:40:18.668458"
+          example: "2022-11-30T21:40:18.668458"
