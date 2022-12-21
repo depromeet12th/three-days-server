@@ -31,10 +31,7 @@ public class DeleteHabitUseCase {
 		}
 
 		Mate mate =
-				mateRepository
-						.findByHabitIdAndDeletedFalse(habitId)
-						.map(MateConverter::from)
-						.orElse(null);
+				mateRepository.findByHabitIdAndDeletedFalse(habitId).map(MateConverter::from).orElse(null);
 
 		if (source.getStatus().equals(HabitStatus.ACTIVE)) {
 			Long achievementCount = habitAchievementRepository.countByHabitId(habitId);

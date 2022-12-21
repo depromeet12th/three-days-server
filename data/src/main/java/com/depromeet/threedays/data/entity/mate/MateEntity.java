@@ -1,6 +1,5 @@
 package com.depromeet.threedays.data.entity.mate;
 
-import com.depromeet.threedays.data.enums.HabitStatus;
 import com.depromeet.threedays.data.enums.MateStatus;
 import com.depromeet.threedays.data.enums.MateType;
 import java.time.LocalDateTime;
