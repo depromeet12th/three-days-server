@@ -24,7 +24,7 @@ class SearchHabitUseCaseSpec extends IntegrationTestSpecification {
     private SearchHabitUseCase searchUseCase
 
     @Autowired
-    private HabitDataInitializer dataInitialize
+    private HabitDataInitializer dataInitializer
 
     @Autowired
     private HabitRepository repository
@@ -33,7 +33,7 @@ class SearchHabitUseCaseSpec extends IntegrationTestSpecification {
     private MateRepository mateRepository
 
     def setup() {
-        dataInitialize.initialize()
+        dataInitializer.initialize()
     }
 
     def "사용자는 자신의 습관 목록을 조회할 수 있다."() {
