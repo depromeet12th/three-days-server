@@ -1,5 +1,6 @@
 package com.depromeet.threedays.front.domain.usecase.mate;
 
+import com.depromeet.threedays.data.enums.MateStatus;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.converter.mate.MateConverter;
 import com.depromeet.threedays.front.domain.model.mate.Mate;
@@ -20,7 +21,7 @@ public class GetMateCheckUseCase {
 	public MateResponse execute() {
 		Mate mate =
 				repository
-						.findByMemberIdAndDeletedFalse(AuditorHolder.get())
+						.findByMemberIdAndDeletedFalseAndStatus(AuditorHolder.get(), MateStatus.ACTIVE)
 						.map(MateConverter::from)
 						.orElse(null);
 
