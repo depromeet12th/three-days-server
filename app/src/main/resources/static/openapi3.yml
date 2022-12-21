@@ -310,6 +310,28 @@ paths:
               example:
                 - code: "uncaught error"
                   message: "서버 에러"
+  /api/v1/mates:
+    get:
+      tags:
+        - Mate
+      summary: 사용자의 짝꿍 정보를 조회한다.
+      operationId: getMateCheck
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Mate'
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
   /api/v1/members:
     post:
       tags:
