@@ -1,6 +1,7 @@
 package com.depromeet.threedays.front.domain.usecase.habit;
 
 import com.depromeet.threedays.data.enums.HabitStatus;
+import com.depromeet.threedays.data.enums.MateStatus;
 import com.depromeet.threedays.front.domain.converter.habit.HabitConverter;
 import com.depromeet.threedays.front.domain.converter.mate.MateConverter;
 import com.depromeet.threedays.front.domain.model.habit.Habit;
@@ -29,12 +30,13 @@ public class DeleteHabitUseCase {
 			return;
 		}
 
+		Mate mate =
+				mateRepository
+						.findByHabitIdAndDeletedFalse(habitId)
+						.map(MateConverter::from)
+						.orElse(null);
+
 		if (source.getStatus().equals(HabitStatus.ACTIVE)) {
-			Mate mate =
-					mateRepository
-							.findByHabitIdAndDeletedFalse(habitId)
-							.map(MateConverter::from)
-							.orElse(null);
 			Long achievementCount = habitAchievementRepository.countByHabitId(habitId);
 
 			if (mate != null || achievementCount != 0L) {
@@ -43,16 +45,25 @@ public class DeleteHabitUseCase {
 			}
 		}
 
-		this.delete(source);
+		this.delete(source, mate);
 	}
 
-	private void delete(final Habit source) {
+	private void delete(final Habit source, final Mate mate) {
 		repository.save(HabitConverter.to(source).toBuilder().deleted(true).build());
+		this.deleteMate(mate);
 	}
 
 	private void archive(final Habit source, final Mate mate) {
 		repository.save(HabitConverter.to(source).toBuilder().status(HabitStatus.ARCHIVED).build());
-		this.deleteMate(mate);
+		this.archiveMate(mate);
+	}
+
+	private void archiveMate(final Mate mate) {
+		if (mate == null) {
+			return;
+		}
+
+		mateRepository.save(MateConverter.to(mate).toBuilder().status(MateStatus.ARCHIVED).build());
 	}
 
 	private void deleteMate(final Mate mate) {
