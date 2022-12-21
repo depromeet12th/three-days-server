@@ -1140,6 +1140,12 @@ components:
           type: string
           format: date-time
           example: "2022-11-30 21:40:18.668458"
+        status:
+          enum: ["ACTIVE", "ARCHIVED"]
+          example: "ACTIVE"
+        deleted:
+          type: boolean
+          example: false
     MateResponse:
       type: object
       properties:
