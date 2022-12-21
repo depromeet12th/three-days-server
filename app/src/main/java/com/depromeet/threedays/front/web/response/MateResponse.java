@@ -28,4 +28,5 @@ public class MateResponse {
 	private LocalDateTime levelUpAt;
 	private MateType characterType;
 	private List<Integer> levelUpSection;
+	private String bubble;
 }
