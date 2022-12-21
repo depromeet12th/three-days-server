@@ -17,5 +17,5 @@ public interface MateRepository extends JpaRepository<MateEntity, Long> {
 
 	void deleteAllByMemberId(final Long memberId);
 
-	List<MateEntity> findAllByMemberIdAndDeletedFalse(final Long memberId);
+	List<MateEntity> findByMemberIdAndDeletedFalse(final Long memberId);
 }
