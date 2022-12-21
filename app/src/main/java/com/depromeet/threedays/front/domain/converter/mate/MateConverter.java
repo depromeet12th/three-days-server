@@ -25,6 +25,8 @@ public class MateConverter {
 				.title(entity.getTitle())
 				.levelUpAt(entity.getLevelUpAt())
 				.bubble(MateBubble.randomBubble().getBubble())
+				.status(entity.getStatus())
+				.deleted(entity.getDeleted())
 				.build();
 	}
 
