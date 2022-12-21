@@ -53,6 +53,7 @@ public class MateEntity {
 	@Column(nullable = false)
 	@Builder.Default
 	private MateStatus status = MateStatus.ACTIVE;
+
 	@Column(nullable = false, updatable = false)
 	@CreatedDate
 	private LocalDateTime createAt;
@@ -60,6 +61,4 @@ public class MateEntity {
 	@Column(nullable = false)
 	@LastModifiedDate
 	private LocalDateTime updateAt;
-
-
 }
