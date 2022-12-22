@@ -92,6 +92,6 @@ public class MemberController {
 	public ApiResponse<ApiResponse.SuccessBody<Void>> deleteClient(
 			@RequestBody @Valid DeleteClientRequest request) {
 		deleteClientUseCase.execute(request);
-		return ApiResponseGenerator.success(HttpStatus.NO_CONTENT);
+		return ApiResponseGenerator.success(HttpStatus.OK);
 	}
 }
