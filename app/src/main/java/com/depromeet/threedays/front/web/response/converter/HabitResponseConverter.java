@@ -29,6 +29,7 @@ public class HabitResponseConverter {
 				.mate(habit.getMate())
 				.notification(habit.getNotification())
 				.createAt(habit.getCreateAt())
+				.archiveAt(habit.getArchiveAt())
 				.build();
 	}
 }

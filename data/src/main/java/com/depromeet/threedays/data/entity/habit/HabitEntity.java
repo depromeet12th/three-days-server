@@ -62,4 +62,10 @@ public class HabitEntity {
 	@Column(nullable = false)
 	@Builder.Default
 	private Boolean deleted = false;
+
+	// FIXME: archiveAt 컬럼 및 기능 추가
+	@Transient
+	public LocalDateTime getArchiveAt() {
+		return updateAt;
+	}
 }
