@@ -34,13 +34,13 @@ public class NotificationController {
 
 	private final SaveNotificationUseCase saveUseCase;
 
-	// FIXME: 응답 모델 NotificationHistory 로 변경
+	// FIXME: 응답 모델 NotificationHistoryResponse 로 변경
 	@GetMapping
 	public ApiResponse<ApiResponse.SuccessBody<List<NotificationHistory>>> browse() {
 		return ApiResponseGenerator.success(searchUseCase.execute(), HttpStatus.OK);
 	}
 
-	// FIXME: 응답 모델 NotificationHistory 로 변경
+	// FIXME: 응답 모델 NotificationHistoryResponse 로 변경
 	@PatchMapping("/{notificationHistoryId}")
 	public ApiResponse<ApiResponse.SuccessBody<NotificationHistory>> editStatus(
 			@PathVariable final Long notificationHistoryId,

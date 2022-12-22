@@ -833,7 +833,7 @@ paths:
               example:
                 - code: "uncaught error"
                   message: "서버 에러"
-  /api/v1/notifications/{notificationId}/status:
+  /api/v1/notifications/{notificationId}:
     patch:
       tags:
         - Notification
@@ -1063,8 +1063,8 @@ components:
       properties:
         status:
           type: string
-          enum: [ SENDED, CHECK ]
-          example: CHECK
+          enum: [ SUCCESS, FAILURE, CHECKED ]
+          example: CHECKED
     MemberNotificationConsentUpdateRequest:
       type: object
       properties:

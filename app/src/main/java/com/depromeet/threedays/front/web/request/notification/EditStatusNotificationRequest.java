@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 
 @Getter
 @AllArgsConstructor
@@ -14,7 +13,5 @@ import org.hibernate.validator.constraints.Length;
 @Builder(toBuilder = true)
 public class EditStatusNotificationRequest {
 
-	@NotNull
-	@Length(max = 100)
-	private NotificationStatus status;
+	@NotNull private NotificationStatus status;
 }
