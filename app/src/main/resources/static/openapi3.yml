@@ -852,7 +852,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponse'
+                $ref: '#/components/schemas/NotificationHistory'
         '400':
           description: BAD REQUEST
           content:
