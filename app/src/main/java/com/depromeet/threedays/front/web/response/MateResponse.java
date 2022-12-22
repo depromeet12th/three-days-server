@@ -1,5 +1,6 @@
 package com.depromeet.threedays.front.web.response;
 
+import com.depromeet.threedays.data.enums.MateStatus;
 import com.depromeet.threedays.data.enums.MateType;
 import com.depromeet.threedays.front.domain.model.RewardHistory;
 import java.time.LocalDateTime;
@@ -29,4 +30,5 @@ public class MateResponse {
 	private MateType characterType;
 	private List<Integer> levelUpSection;
 	private String bubble;
+	private MateStatus status;
 }

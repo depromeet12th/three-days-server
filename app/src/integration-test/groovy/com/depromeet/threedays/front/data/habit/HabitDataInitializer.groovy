@@ -2,12 +2,16 @@ package com.depromeet.threedays.front.data.habit
 
 import com.depromeet.threedays.data.entity.habit.HabitEntity
 import com.depromeet.threedays.data.entity.mate.MateEntity
+import com.depromeet.threedays.data.enums.MateStatus
 import com.depromeet.threedays.data.enums.MateType
+import com.depromeet.threedays.front.data.mate.FakeMateEntity
 import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository
 import com.depromeet.threedays.front.persistence.repository.mate.MateRepository
 import net.bytebuddy.utility.RandomString
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+
+import java.time.LocalDateTime
 
 @Component
 class HabitDataInitializer {
@@ -59,12 +63,17 @@ class HabitDataInitializer {
 
     private void setAssociation(final Long habitId) {
         def mateEntity = MateEntity.builder()
-                .title(RandomString.make())
-                .level(0)
-                .characterType(MateType.CARROT)
-                .habitId(habitId)
                 .memberId(0L)
-                .build()
+                .title(RandomString.make())
+                .habitId(habitId)
+                .level(3)
+                .levelUpAt(LocalDateTime.now())
+                .characterType(MateType.CARROT)
+                .createAt(LocalDateTime.now())
+                .updateAt(LocalDateTime.now())
+                .deleted(false)
+                .status(MateStatus.ACTIVE)
+                .build();
 
         this.associationData = mateRepository.save(mateEntity)
     }

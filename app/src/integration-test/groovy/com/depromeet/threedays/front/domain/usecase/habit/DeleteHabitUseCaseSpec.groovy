@@ -1,6 +1,7 @@
 package com.depromeet.threedays.front.domain.usecase.habit
 
 import com.depromeet.threedays.data.enums.HabitStatus
+import com.depromeet.threedays.data.enums.MateStatus
 import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.data.habit.HabitAchievementDataInitializer
 import com.depromeet.threedays.front.data.habit.HabitDataInitializer
@@ -35,7 +36,7 @@ class DeleteHabitUseCaseSpec extends IntegrationTestSpecification {
         habitDataInitializer.initialize()
     }
 
-    def "사용자가 짝꿍과 연결된 습관에 삭제를 요청한 경우, 습관은 보관함으로 이동하고 짝꿍은 완전 삭제된다."() {
+    def "사용자가 짝꿍과 연결된 습관에 삭제를 요청한 경우, 습관과 짝꿍이 보관함으로 이동된다."() {
         given:
         def criterionHabit = habitDataInitializer.data.first()
 
@@ -49,7 +50,7 @@ class DeleteHabitUseCaseSpec extends IntegrationTestSpecification {
 
         then:
         actual.status == HabitStatus.ARCHIVED
-        actualMate.deleted
+        actualMate.status == MateStatus.ARCHIVED
     }
 
     def "사용자가 습관 달성 이력이 없는 습관에 삭제를 요청한 경우, 습관은 완전 삭제 된다."() {

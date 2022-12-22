@@ -23,6 +23,7 @@ public class MateResponseConverter {
 				.title(mate.getTitle())
 				.levelUpAt(mate.getLevelUpAt())
 				.bubble(MateBubble.randomBubble().getBubble())
+				.status(mate.getStatus())
 				.build();
 	}
 }

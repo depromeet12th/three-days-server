@@ -1,5 +1,6 @@
 package com.depromeet.threedays.data.entity.mate;
 
+import com.depromeet.threedays.data.enums.MateStatus;
 import com.depromeet.threedays.data.enums.MateType;
 import java.time.LocalDateTime;
 import javax.persistence.*;
@@ -44,6 +45,15 @@ public class MateEntity {
 	@Column(nullable = false)
 	private MateType characterType;
 
+	@Column(nullable = false)
+	@Builder.Default
+	private Boolean deleted = false;
+
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	@Builder.Default
+	private MateStatus status = MateStatus.ACTIVE;
+
 	@Column(nullable = false, updatable = false)
 	@CreatedDate
 	private LocalDateTime createAt;
@@ -51,8 +61,4 @@ public class MateEntity {
 	@Column(nullable = false)
 	@LastModifiedDate
 	private LocalDateTime updateAt;
-
-	@Column(nullable = false)
-	@Builder.Default
-	private Boolean deleted = false;
 }

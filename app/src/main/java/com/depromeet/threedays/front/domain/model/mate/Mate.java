@@ -1,5 +1,6 @@
 package com.depromeet.threedays.front.domain.model.mate;
 
+import com.depromeet.threedays.data.enums.MateStatus;
 import com.depromeet.threedays.data.enums.MateType;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -23,4 +24,6 @@ public class Mate implements Serializable {
 	private LocalDateTime levelUpAt;
 	private MateType characterType;
 	private String bubble;
+	private MateStatus status;
+	private Boolean deleted;
 }

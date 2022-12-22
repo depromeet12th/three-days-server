@@ -1134,11 +1134,11 @@ components:
           type: integer
           format: int64
           example: 1
-        habitId:
+        memberId:
           type: integer
           format: int64
           example: 1
-        memberId:
+        habitId:
           type: integer
           format: int64
           example: 1
@@ -1172,6 +1172,9 @@ components:
         bubble:
           type: string
           example: "오늘도 열심히 하쟈"
+        status:
+          enum: [ "ACTIVE", "ARCHIVED" ]
+          example: "ACTIVE"
     Record:
       required: [ rewardCount, achievementCount, frequentHabit ]
       properties:
