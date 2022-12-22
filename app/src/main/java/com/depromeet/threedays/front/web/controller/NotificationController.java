@@ -44,7 +44,7 @@ public class NotificationController {
 			@PathVariable final Long id,
 			@RequestBody @Valid final EditStatusNotificationRequest request) {
 		saveUseCase.execute(id, request);
-		return ApiResponseGenerator.success(HttpStatus.NO_CONTENT);
+		return ApiResponseGenerator.success(HttpStatus.OK);
 	}
 
 	@PostMapping("/global")

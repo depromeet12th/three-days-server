@@ -181,8 +181,8 @@ paths:
             type: integer
             format: int64
       responses:
-        '204':
-          description: NO CONTENT
+        '200':
+          description: OK
           content:
             application/json:
               schema:
@@ -295,8 +295,8 @@ paths:
             type: integer
             format: int64
       responses:
-        '204':
-          description: NO CONTENT
+        '200':
+          description: OK
           content:
             application/json:
               schema:
@@ -394,8 +394,8 @@ paths:
       summary: 회원 탈퇴 API
       operationId: deleteMember
       responses:
-        '204':
-          description: NO CONTENT
+        '200':
+          description: OK
           content:
             application/json:
               schema:
@@ -448,8 +448,8 @@ paths:
                   type: string
                   example: identificationKey
       responses:
-        '204':
-          description: NO CONTENT
+        '200':
+          description: OK
           content:
             application/json:
               schema:
@@ -847,8 +847,8 @@ paths:
             schema:
               $ref: '#/components/schemas/NotificationUpdateStatusRequest'
       responses:
-        '204':
-          description: NO CONTENT
+        '200':
+          description: OK
           content:
             application/json:
               schema:
