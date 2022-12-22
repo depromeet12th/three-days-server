@@ -56,15 +56,21 @@ public class SearchHabitUseCase {
 	}
 
 	private HabitOverview setAssociation(final HabitEntity entity) {
+		Long habitId = entity.getId();
 		HabitAchievementEntity achievementEntity =
 				habitAchievementRepository
-						.findFirstByHabitIdOrderByAchievementDateDesc(entity.getId())
+						.findFirstByHabitIdOrderByAchievementDateDesc(habitId)
 						.orElse(null);
 		HabitAchievement achievementData = this.calculateSequence(achievementEntity);
-		Long rewardCount = rewardHistoryRepository.countByHabitId(entity.getId());
+		Long rewardCount = rewardHistoryRepository.countByHabitId(habitId);
+		Long totalAchievementCount = habitAchievementRepository.countByHabitId(habitId);
 
 		return HabitConverter.from(
-				entity, achievementData, rewardCount, getMate(entity.getStatus(), entity.getId()));
+				entity,
+				achievementData,
+				rewardCount,
+				getMate(entity.getStatus(), entity.getId()),
+				totalAchievementCount);
 	}
 
 	private Mate getMate(final HabitStatus status, final Long habitId) {

@@ -31,4 +31,5 @@ public class HabitResponse {
 	private Mate mate;
 	private Notification notification;
 	private LocalDateTime createAt;
+	private LocalDateTime archiveAt;
 }

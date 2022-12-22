@@ -3,10 +3,11 @@ package com.depromeet.threedays.front.domain.usecase.mate;
 import com.depromeet.threedays.data.enums.MateStatus;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.converter.mate.MateConverter;
-import com.depromeet.threedays.front.domain.model.mate.Mate;
 import com.depromeet.threedays.front.persistence.repository.mate.MateRepository;
 import com.depromeet.threedays.front.web.response.MateResponse;
 import com.depromeet.threedays.front.web.response.converter.MateResponseConverter;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,13 +19,10 @@ public class GetMateCheckUseCase {
 
 	private final MateRepository repository;
 
-	public MateResponse execute() {
-		Mate mate =
-				repository
-						.findByMemberIdAndDeletedFalseAndStatus(AuditorHolder.get(), MateStatus.ACTIVE)
-						.map(MateConverter::from)
-						.orElse(null);
-
-		return MateResponseConverter.from(mate);
+	public List<MateResponse> execute() {
+		return repository.findByMemberIdAndDeletedFalseAndStatus(AuditorHolder.get(), MateStatus.ACTIVE).stream()
+				.map(MateConverter::from)
+				.map(MateResponseConverter::from)
+				.collect(Collectors.toList());
 	}
 }

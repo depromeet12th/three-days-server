@@ -26,6 +26,8 @@ public class HabitOverview implements Serializable {
 	private String color;
 	private HabitStatus status;
 	private LocalDateTime createAt;
+	private LocalDateTime archiveAt;
+	private Integer totalAchievementCount;
 	private Long todayHabitAchievementId;
 	private Integer sequence;
 	private Mate mate;

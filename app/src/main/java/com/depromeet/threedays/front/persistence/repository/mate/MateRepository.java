@@ -2,6 +2,7 @@ package com.depromeet.threedays.front.persistence.repository.mate;
 
 import com.depromeet.threedays.data.entity.mate.MateEntity;
 import com.depromeet.threedays.data.enums.MateStatus;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -21,6 +22,9 @@ public interface MateRepository extends JpaRepository<MateEntity, Long> {
 
 	void deleteAllByMemberId(final Long memberId);
 
+
 	Optional<MateEntity> findByMemberIdAndDeletedFalseAndStatus(
 			final Long memberId, final MateStatus status);
+
+  List<MateEntity> findByMemberIdAndDeletedFalse(final Long memberId);
 }

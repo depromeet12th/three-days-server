@@ -34,6 +34,7 @@ public class MemberController {
 	private final DeleteClientUseCase deleteClientUseCase;
 	private final GetMemberUseCase getUseCase;
 
+	/** 로그인 또는 회원가입 */
 	@PostMapping
 	public ApiResponse<ApiResponse.SuccessBody<SaveMemberResponse>> add(
 			@RequestBody @Valid SignMemberRequest request) {
@@ -46,44 +47,51 @@ public class MemberController {
 		}
 	}
 
+	/** 닉네임 변경 */
 	@PatchMapping("/name")
 	public ApiResponse<ApiResponse.SuccessBody<Member>> updateName(
 			@RequestBody @Valid MemberNameUpdateRequest request) {
 		return ApiResponseGenerator.success(saveNameUseCase.execute(request), HttpStatus.OK);
 	}
 
+	/** 알림 수신 설정 변경 */
 	@PatchMapping("/consents")
 	public ApiResponse<ApiResponse.SuccessBody<Member>> updateConsent(
 			@RequestBody @Valid MemberNotificationConsentUpdateRequest request) {
 		return ApiResponseGenerator.success(saveConsentUseCase.execute(request), HttpStatus.OK);
 	}
 
+	/** 사용자 정보 업데이트 */
 	@PatchMapping("/resources")
 	public ApiResponse<ApiResponse.SuccessBody<Member>> updateResource(
 			@RequestBody @Valid MemberResourceUpdateRequest request) {
 		return ApiResponseGenerator.success(saveResourceUseCase.execute(request), HttpStatus.OK);
 	}
 
+	/** 토근 발급 */
 	@PostMapping("/tokens")
 	public ApiResponse<ApiResponse.SuccessBody<Token>> refreshToken(@RequestBody Token token) {
 		return ApiResponseGenerator.success(getTokenUseCase.execute(token), HttpStatus.CREATED);
 	}
 
+	/** 회원 탈퇴 */
 	@DeleteMapping
 	public ApiResponse<ApiResponse.SuccessBody<Void>> deleteMember() {
 		deleteUseCase.execute();
 		return ApiResponseGenerator.success(HttpStatus.OK, MessageCode.RESOURCE_DELETED);
 	}
 
-	@GetMapping
+	/** 내 정보 조회 */
+	@GetMapping("/me")
 	public ApiResponse<ApiResponse.SuccessBody<Member>> readMember() {
 		return ApiResponseGenerator.success(getUseCase.execute(), HttpStatus.OK);
 	}
 
+	/** 로그아웃 */
 	@PostMapping("/logout")
 	public ApiResponse<ApiResponse.SuccessBody<Void>> deleteClient(
 			@RequestBody @Valid DeleteClientRequest request) {
 		deleteClientUseCase.execute(request);
-		return ApiResponseGenerator.success(HttpStatus.NO_CONTENT);
+		return ApiResponseGenerator.success(HttpStatus.OK);
 	}
 }

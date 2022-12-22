@@ -24,7 +24,7 @@ public class SearchNotificationUseCase {
 		return repository
 				.findAllByMemberIdAndStatusInAndCreateAtBetweenOrderByCreateAtDesc(
 						AuditorHolder.get(),
-						List.of(NotificationStatus.SUCCESS, NotificationStatus.CHECKED),
+						NotificationStatus.visibleStatuses(),
 						LocalDateTime.now().minusDays(30),
 						LocalDateTime.now())
 				.stream()

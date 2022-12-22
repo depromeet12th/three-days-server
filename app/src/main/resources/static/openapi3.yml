@@ -14,7 +14,7 @@ tags:
   - name: Habit
     description: 습관
   - name: Member
-    description: 유저
+    description: 회원
   - name: Habit Achievement
     description: 습관 성취
   - name: Mate
@@ -181,8 +181,8 @@ paths:
             type: integer
             format: int64
       responses:
-        '204':
-          description: NO CONTENT
+        '200':
+          description: OK
           content:
             application/json:
               schema:
@@ -222,7 +222,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Mate'
+                $ref: '#/components/schemas/MateResponse'
         '400':
           description: BAD REQUEST
           content:
@@ -295,8 +295,8 @@ paths:
             type: integer
             format: int64
       responses:
-        '204':
-          description: NO CONTENT
+        '200':
+          description: OK
           content:
             application/json:
               schema:
@@ -322,7 +322,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Mate'
+                type: array
+                items:
+                  $ref: '#/components/schemas/MateResponse'
         '500':
           description: INTERNAL SERVER ERROR
           content:
@@ -386,6 +388,28 @@ paths:
               example:
                 - code: "uncaught error"
                   message: "서버 에러"
+    delete:
+      tags:
+        - Member
+      summary: 회원 탈퇴 API
+      operationId: deleteMember
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
+  /api/v1/members/me:
     get:
       tags:
         - Member
@@ -398,27 +422,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Member'
-        '500':
-          description: INTERNAL SERVER ERROR
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
-              example:
-                - code: "uncaught error"
-                  message: "서버 에러"
-    delete:
-      tags:
-        - Member
-      summary: 회원 탈퇴 API
-      operationId: deleteMember
-      responses:
-        '204':
-          description: NO CONTENT
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
         '500':
           description: INTERNAL SERVER ERROR
           content:
@@ -445,8 +448,8 @@ paths:
                   type: string
                   example: identificationKey
       responses:
-        '204':
-          description: NO CONTENT
+        '200':
+          description: OK
           content:
             application/json:
               schema:
@@ -844,12 +847,12 @@ paths:
             schema:
               $ref: '#/components/schemas/NotificationUpdateStatusRequest'
       responses:
-        '204':
-          description: NO CONTENT
+        '200':
+          description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResponse'
+                $ref: '#/components/schemas/NotificationHistory'
         '400':
           description: BAD REQUEST
           content:
@@ -891,6 +894,7 @@ components:
           example: 1
         memberId:
           type: integer
+          format: int64
           example: 1
         title:
           type: string
@@ -913,7 +917,10 @@ components:
           example: "ACTIVE"
         createAt:
           type: string
-          example: "2022-11-30 21:40:18.668458"
+          example: "2022-11-30T21:40:18.668458"
+        archiveAt:
+          type: string
+          example: "2022-11-30T21:40:18.668458"
         sequence:
           type: integer
           example: 0
@@ -924,7 +931,7 @@ components:
           type: integer
           example: 0
         mate:
-          $ref: '#/components/schemas/Mate'
+          $ref: '#/components/schemas/MateResponse'
         notification:
           $ref: '#/components/schemas/Notification'
     HabitAchievement:
@@ -941,6 +948,7 @@ components:
           example: 1
         memberId:
           type: integer
+          format: int64
           example: 1
         achievementDate:
           type: string
@@ -959,6 +967,7 @@ components:
           example: 1
         memberId:
           type: integer
+          format: int64
           example: 1
         title:
           type: string
@@ -981,15 +990,22 @@ components:
           example: "ACTIVE"
         createAt:
           type: string
-          example: "2022-11-30 21:40:18.668458"
+          example: "2022-11-30T21:40:18.668458"
+        archiveAt:
+          type: string
+          example: "2022-11-30T21:40:18.668458"
+        totalAchievementCount:
+          type: integer
+          example: 0
         todayHabitAchievementId:
           type: integer
+          format: int64
           example: 81
         sequence:
           type: integer
           example: 1
         mate:
-          $ref: '#/components/schemas/Mate'
+          $ref: '#/components/schemas/MateResponse'
     SaveHabitRequest:
       required: [ title, imojiPath, dayOfWeeks, color ]
       type: object
@@ -1081,10 +1097,12 @@ components:
       properties:
         id:
           type: integer
-          example: "1"
+          format: int64
+          example: 1
         memberId:
           type: integer
-          example: "1"
+          format: int64
+          example: 1
         fcmToken:
           type: string
           example: "fcmToken"
@@ -1096,7 +1114,8 @@ components:
       properties:
         id:
           type: integer
-          example: "1"
+          format: int64
+          example: 1
         name:
           type: string
           example: "depromeet8manager"
@@ -1108,34 +1127,24 @@ components:
           example: true
         resource:
           type: object
-    Mate:
+    MateResponse:
       type: object
       properties:
         id:
           type: integer
-          example: 1
-        memberId:
-          type: integer
+          format: int64
           example: 1
         habitId:
           type: integer
+          format: int64
+          example: 1
+        memberId:
+          type: integer
+          format: int64
           example: 1
         title:
           type: string
           example: "짝꿍이"
-        level:
-          type: integer
-          example: 1
-        characterType:
-          enum: [ "WHIP", "CARROT" ]
-          example: "WHIP"
-        bubble:
-          type: string
-          example: "오늘도 열심히 하쟈"
-        levelUpAt:
-          type: string
-          format: date-time
-          example: "2022-11-30 21:40:18.668458"
         createAt:
           type: string
           format: date-time
@@ -1164,34 +1173,26 @@ components:
         level:
           type: integer
           example: 1
-        characterType:
-          enum: [ "WHIP", "CARROT" ]
-          example: "WHIP"
-        bubble:
-          type: string
-          example: "오늘도 열심히 하쟈"
         reward:
           type: integer
           example: 6
         rewardHistory:
           type: array
           items:
-            properties:
-              createAt:
-                type: string
-                format: date-time
-                example: "2022-11-30 21:40:18.668458"
-        levelUpSection:
-          type: array
-          example: [ 1,4,8,14,22 ]
+            $ref: '#/components/schemas/RewardHistory'
         levelUpAt:
           type: string
           format: date-time
-          example: "2022-11-30 21:40:18.668458"
-        createAt:
+          example: "2022-11-30T21:40:18.668458"
+        characterType:
+          enum: [ "WHIP", "CARROT" ]
+          example: "WHIP"
+        levelUpSection:
+          type: array
+          example: [ 1,4,8,14,22 ]
+        bubble:
           type: string
-          format: date-time
-          example: "2022-11-30 21:40:18.668458"
+          example: "오늘도 열심히 하쟈"
     Record:
       required: [ rewardCount, achievementCount, frequentHabit ]
       properties:
@@ -1215,6 +1216,7 @@ components:
           example: 1
         memberId:
           type: integer
+          format: int64
           example: 1
         title:
           type: string
@@ -1234,7 +1236,7 @@ components:
           example: 12
         createAt:
           type: string
-          example: "2022-11-30 21:40:18.668458"
+          example: "2022-11-30T21:40:18.668458"
     Notification:
       type: object
       nullable: true
@@ -1283,23 +1285,36 @@ components:
       properties:
         id:
           type: integer
+          format: int64
           example: 1
         memberId:
           type: integer
+          format: int64
           example: 1
         notificationId:
           type: integer
+          format: int64
           example: 1
+        title:
+          type: string
+          example: 짝심삼일 소식
         contents:
           type: string
-          example: 짝심삼일 ver.2 출시
+          example: 기다리고 기다리던 짝심삼일 ver.2가 출시되었습니다. 업데이트해보세요!
         status:
           type: string
-          enum: [ "SUCCESS", "CHECKED" ]
+          enum: [ "SUCCESS", "FAILURE", "CHECKED" ]
         type:
           type: string
-          enum: [ "GLOBAL", "HABIT" ]
+          enum: [ "GLOBAL", "HABIT", "NOTICE" ]
         createAt:
           type: string
           format: date-time
-          example: "2022-11-30 21:40:18.668458"
+          example: "2022-11-30T21:40:18.668458"
+    RewardHistory:
+      type: object
+      properties:
+        createAt:
+          type: string
+          format: date-time
+          example: "2022-11-30T21:40:18.668458"
