@@ -1,5 +1,6 @@
 package com.depromeet.threedays.front.domain.usecase.notification;
 
+import com.depromeet.threedays.data.entity.history.NotificationHistoryEntity;
 import com.depromeet.threedays.front.domain.converter.NotificationHistoryConverter;
 import com.depromeet.threedays.front.domain.model.notification.NotificationHistory;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
@@ -16,14 +17,16 @@ public class SaveNotificationUseCase {
 
 	private final NotificationHistoryRepository repository;
 
-	public void execute(final Long id, final EditStatusNotificationRequest request) {
-
+	public NotificationHistory execute(
+			final Long notificationHistoryId, final EditStatusNotificationRequest request) {
 		NotificationHistory history =
 				repository
-						.findById(id)
+						.findById(notificationHistoryId)
 						.map(NotificationHistoryConverter::from)
 						.orElseThrow(ResourceNotFoundException::new);
-
-		repository.save(NotificationHistoryConverter.to(history.withStatus(request.getStatus())));
+		NotificationHistoryEntity notificationHistoryEntity =
+				NotificationHistoryConverter.to(history.withStatus(request.getStatus()));
+		repository.save(notificationHistoryEntity);
+		return NotificationHistoryConverter.from(notificationHistoryEntity);
 	}
 }
