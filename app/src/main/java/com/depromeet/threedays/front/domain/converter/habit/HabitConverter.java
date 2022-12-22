@@ -47,6 +47,7 @@ public class HabitConverter {
 				.dayOfWeeks(habit.getDayOfWeeks())
 				.reward(reward)
 				.createAt(habit.getCreateAt())
+				.archiveAt(habit.getArchiveAt())
 				.habitAchievement(habitAchievement)
 				.mate(habit.getMate())
 				.build();
@@ -67,6 +68,7 @@ public class HabitConverter {
 				.color(habit.getColor())
 				.reward(reward)
 				.createAt(habit.getCreateAt())
+				.archiveAt(habit.getArchiveAt())
 				.habitAchievement(habitAchievement)
 				.mate(mate)
 				.build();
@@ -102,6 +104,7 @@ public class HabitConverter {
 				.imojiPath(entity.getImojiPath())
 				.dayOfWeeks(entity.getDayOfWeeks())
 				.createAt(entity.getCreateAt())
+				.archiveAt(entity.getArchiveAt())
 				.habitAchievement(data)
 				.build();
 	}
@@ -115,6 +118,7 @@ public class HabitConverter {
 				.dayOfWeeks(data.getDayOfWeeks())
 				.reward(reward)
 				.createAt(data.getCreateAt())
+				.archiveAt(data.getArchiveAt())
 				.habitAchievement(data.getHabitAchievement())
 				.build();
 	}
@@ -135,6 +139,7 @@ public class HabitConverter {
 				.archiveNumberOfDate(entity.getArchiveNumberOfDate())
 				.notification(notification)
 				.createAt(entity.getCreateAt())
+				.archiveAt(entity.getArchiveAt())
 				.build();
 	}
 
@@ -156,6 +161,7 @@ public class HabitConverter {
 				.dayOfWeeks(entity.getDayOfWeeks())
 				.color(entity.getColor())
 				.createAt(entity.getCreateAt())
+				.archiveAt(entity.getArchiveAt())
 				.reward(rewardCount)
 				.status(entity.getStatus())
 				.totalAchievementCount(totalHabitAchievement.intValue())
@@ -176,6 +182,7 @@ public class HabitConverter {
 				.color(entity.getColor())
 				.status(entity.getStatus())
 				.createAt(entity.getCreateAt())
+				.archiveAt(entity.getArchiveAt())
 				.deleted(entity.getDeleted())
 				.build();
 	}
@@ -195,6 +202,7 @@ public class HabitConverter {
 				.color(request.getColor())
 				.status(source.getStatus())
 				.createAt(source.getCreateAt())
+				.archiveAt(source.getArchiveAt())
 				.deleted(source.getDeleted())
 				.build();
 	}

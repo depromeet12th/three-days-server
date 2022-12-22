@@ -918,6 +918,9 @@ components:
         createAt:
           type: string
           example: "2022-11-30T21:40:18.668458"
+        archiveAt:
+          type: string
+          example: "2022-11-30T21:40:18.668458"
         sequence:
           type: integer
           example: 0
@@ -986,6 +989,9 @@ components:
           enum: [ "ACTIVE", "ARCHIVED" ]
           example: "ACTIVE"
         createAt:
+          type: string
+          example: "2022-11-30T21:40:18.668458"
+        archiveAt:
           type: string
           example: "2022-11-30T21:40:18.668458"
         totalAchievementCount:

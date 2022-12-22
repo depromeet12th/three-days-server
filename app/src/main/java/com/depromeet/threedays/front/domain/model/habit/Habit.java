@@ -33,6 +33,7 @@ public class Habit {
 	private HabitStatus status;
 	private HabitAchievement habitAchievement;
 	private LocalDateTime createAt;
+	private LocalDateTime archiveAt;
 	private Boolean deleted;
 	private Mate mate;
 	private Notification notification;
