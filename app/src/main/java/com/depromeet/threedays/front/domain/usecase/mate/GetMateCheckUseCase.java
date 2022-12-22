@@ -20,7 +20,9 @@ public class GetMateCheckUseCase {
 	private final MateRepository repository;
 
 	public List<MateResponse> execute() {
-		return repository.findByMemberIdAndDeletedFalseAndStatus(AuditorHolder.get(), MateStatus.ACTIVE).stream()
+		return repository
+				.findByMemberIdAndDeletedFalseAndStatus(AuditorHolder.get(), MateStatus.ACTIVE)
+				.stream()
 				.map(MateConverter::from)
 				.map(MateResponseConverter::from)
 				.collect(Collectors.toList());

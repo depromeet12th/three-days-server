@@ -43,6 +43,7 @@ public class MateConverter {
 				.memberId(data.getMemberId())
 				.habitId(data.getHabitId())
 				.levelUpAt(data.getLevelUpAt())
+				.status(data.getStatus())
 				.build();
 	}
 
