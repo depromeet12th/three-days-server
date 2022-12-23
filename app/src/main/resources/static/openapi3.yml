@@ -1262,7 +1262,7 @@ components:
         identificationKey:
           type: string
           example: identificationKey
-    NotificationHistory:
+    NotificationHistoryResponse:
       type: object
       properties:
         id:

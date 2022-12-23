@@ -1,6 +1,5 @@
 package com.depromeet.threedays.front.web.controller;
 
-import com.depromeet.threedays.front.domain.model.notification.NotificationHistory;
 import com.depromeet.threedays.front.domain.usecase.notification.SaveNotificationUseCase;
 import com.depromeet.threedays.front.domain.usecase.notification.SearchNotificationUseCase;
 import com.depromeet.threedays.front.domain.usecase.notification.SendGlobalNotificationUseCase;
@@ -9,18 +8,14 @@ import com.depromeet.threedays.front.support.ApiResponse;
 import com.depromeet.threedays.front.support.ApiResponseGenerator;
 import com.depromeet.threedays.front.web.request.notification.EditStatusNotificationRequest;
 import com.depromeet.threedays.front.web.response.NotificationBatchResponse;
+import com.depromeet.threedays.front.web.response.NotificationHistoryResponse;
 import com.google.firebase.messaging.BatchResponse;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/v1/notifications")
 @RequiredArgsConstructor
@@ -34,19 +29,22 @@ public class NotificationController {
 
 	private final SaveNotificationUseCase saveUseCase;
 
-	// FIXME: 응답 모델 NotificationHistoryResponse 로 변경
 	@GetMapping
-	public ApiResponse<ApiResponse.SuccessBody<List<NotificationHistory>>> browse() {
-		return ApiResponseGenerator.success(searchUseCase.execute(), HttpStatus.OK);
+	public ApiResponse<ApiResponse.SuccessBody<List<NotificationHistoryResponse>>> browse() {
+		return ApiResponseGenerator.success(
+				searchUseCase.execute().stream()
+						.map(NotificationHistoryResponse::from)
+						.collect(Collectors.toList()),
+				HttpStatus.OK);
 	}
 
-	// FIXME: 응답 모델 NotificationHistoryResponse 로 변경
 	@PatchMapping("/{notificationHistoryId}")
-	public ApiResponse<ApiResponse.SuccessBody<NotificationHistory>> editStatus(
+	public ApiResponse<ApiResponse.SuccessBody<NotificationHistoryResponse>> editStatus(
 			@PathVariable final Long notificationHistoryId,
 			@RequestBody @Valid final EditStatusNotificationRequest request) {
 		return ApiResponseGenerator.success(
-				saveUseCase.execute(notificationHistoryId, request), HttpStatus.OK);
+				NotificationHistoryResponse.from(saveUseCase.execute(notificationHistoryId, request)),
+				HttpStatus.OK);
 	}
 
 	@PostMapping("/global")
