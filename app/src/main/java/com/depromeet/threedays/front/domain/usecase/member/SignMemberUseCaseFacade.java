@@ -48,11 +48,12 @@ public class SignMemberUseCaseFacade {
 			AuthRequestProperty property = getMemberProperty(subject);
 			final String bearerToken = "Bearer " + oAuthToken;
 
-			return authClient.getInfo(new URI(property.getHost()+property.getUri()), bearerToken);
+			return authClient.getInfo(new URI(property.getHost() + property.getUri()), bearerToken);
 		} catch (URISyntaxException e) {
 			throw new ExternalIntegrationException("social.login.error");
 		}
 	}
+
 
 	public AuthRequestProperty getMemberProperty(CertificationSubject subject) {
 		Collection<String> authRequestProperties = authRequestPropertyMap.keySet();

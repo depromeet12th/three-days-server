@@ -1,6 +1,6 @@
 package com.depromeet.threedays.front.client;
 
-import com.depromeet.threedays.front.client.model.GoogleMemberInfo;
+import com.depromeet.threedays.front.client.model.MemberInfo;
 import java.net.URI;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpHeaders;
@@ -11,6 +11,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public interface AuthClient {
 	String TOKEN_HEADER = HttpHeaders.AUTHORIZATION;
 
-	@GetMapping(path = "/")
-	GoogleMemberInfo getInfo(URI uri, @RequestHeader(TOKEN_HEADER) String token);
+	@GetMapping
+	MemberInfo getInfo(URI uri, @RequestHeader(TOKEN_HEADER) String token);
 }
