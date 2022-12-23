@@ -5,7 +5,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class KakaoAuthRequestProperty extends AuthRequestProperty {
-	public KakaoAuthRequestProperty(@Value("${kakao.user.uri}") String uri) {
-		super(uri);
+	public KakaoAuthRequestProperty(
+			@Value("${kakao.host}") String host, @Value("${kakao.user.uri}") String uri) {
+		super(host, uri);
 	}
 }

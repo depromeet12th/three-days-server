@@ -16,7 +16,7 @@ public class MemberCommandConverter {
 
 		return SaveMemberCommand.builder()
 				.resource(new JsonObject().toString())
-				.name(data.getName())
+				.name(data.getName(request.getCertificationSubject()))
 				.certificationSubject(request.getCertificationSubject())
 				.memberInfo(data)
 				.certificationId(data.getId())
