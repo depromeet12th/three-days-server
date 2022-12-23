@@ -15,6 +15,7 @@ public class HabitNotificationMessage {
 	private Long memberId;
 	private List<Client> clients;
 	private Long habitId;
+	private String title;
 	private String content;
 	private LocalTime notificationTime;
 }
