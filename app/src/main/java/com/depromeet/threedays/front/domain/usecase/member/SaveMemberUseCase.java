@@ -20,8 +20,8 @@ public class SaveMemberUseCase {
 	private final TokenGenerator tokenGenerator;
 
 	public SaveMemberUseCaseResponse execute(SaveMemberCommand command) {
-		MemberEntity member = memberRepository.save(MemberConverter.to(command));
-		Token token = tokenGenerator.generateToken(member.getId());
-		return MemberConverter.from(member, true, token);
+		MemberEntity memberEntity = memberRepository.save(MemberConverter.to(command));
+		Token token = tokenGenerator.generateToken(memberEntity.getId());
+		return MemberConverter.from(memberEntity, true, token);
 	}
 }

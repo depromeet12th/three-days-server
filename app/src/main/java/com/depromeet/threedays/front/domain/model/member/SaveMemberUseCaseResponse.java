@@ -21,6 +21,6 @@ public class SaveMemberUseCaseResponse {
 	private Boolean isNew;
 	private Token token;
 	private String resource;
-	public Boolean notificationConsent;
-	public CertificationSubject certificationSubject;
+	private Boolean notificationConsent;
+	private CertificationSubject certificationSubject;
 }

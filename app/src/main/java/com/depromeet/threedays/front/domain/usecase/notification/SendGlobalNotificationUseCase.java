@@ -13,8 +13,8 @@ import com.depromeet.threedays.front.web.response.NotificationBatchResponse;
 import com.google.firebase.messaging.BatchResponse;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -69,23 +69,19 @@ public class SendGlobalNotificationUseCase {
 		return responses;
 	}
 
-	private List<Long> getMemberIds() {
-		List<MemberEntity> members = memberRepository.findAllByNotificationConsent(true).orElse(null);
-		if (members == null) {
-			return Collections.emptyList();
-		}
-		return members.stream().map(MemberEntity::getId).collect(Collectors.toList());
+	private Set<Long> getNotificationConsentMemberIds() {
+		return memberRepository.findAllByNotificationConsent(true).stream()
+				.map(MemberEntity::getId)
+				.collect(Collectors.toSet());
 	}
 
 	private Collection<List<ClientEntity>> makeGroups() {
 		List<ClientEntity> clients = clientRepository.findAll();
-		List<Long> memberIds = getMemberIds();
-		if (memberIds == null) {
-			return Collections.emptyList();
-		}
+		Set<Long> memberIds = getNotificationConsentMemberIds();
 
 		AtomicInteger counter = new AtomicInteger();
 
+		// FIXME: 쿼리로 join 하기
 		return clients.stream()
 				.filter(m -> memberIds.contains(m.getMemberId()))
 				.collect(

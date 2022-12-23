@@ -53,8 +53,9 @@ public class MemberConverter {
 				.certificationSubject(entity.getCertificationSubject())
 				.id(entity.getId())
 				.name(entity.getName())
-				.resource(MemberInfoJsonConverter.from(entity.getResource()))
 				.notificationConsent(entity.getNotificationConsent())
+				.status(entity.getStatus())
+				.resource(MemberInfoJsonConverter.from(entity.getResource()))
 				.build();
 	}
 

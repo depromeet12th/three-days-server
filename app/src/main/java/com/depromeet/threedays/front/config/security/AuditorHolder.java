@@ -9,6 +9,7 @@ public class AuditorHolder {
 
 	public static Long get() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		// FIXME: 0 대신 예외던지기
 		if (authentication == null
 				|| !authentication.isAuthenticated()
 				|| authentication.getPrincipal().equals("anonymousUser")) {

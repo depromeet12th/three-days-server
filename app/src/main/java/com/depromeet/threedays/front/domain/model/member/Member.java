@@ -1,6 +1,7 @@
 package com.depromeet.threedays.front.domain.model.member;
 
 import com.depromeet.threedays.data.enums.CertificationSubject;
+import com.depromeet.threedays.data.enums.MemberStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,6 +16,7 @@ public class Member {
 	private Long id;
 	private String name;
 	private CertificationSubject certificationSubject;
+	private MemberStatus status;
 	private boolean notificationConsent;
 	private JSONObject resource;
 }

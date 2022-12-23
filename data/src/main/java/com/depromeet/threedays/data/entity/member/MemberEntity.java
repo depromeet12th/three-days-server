@@ -1,6 +1,7 @@
 package com.depromeet.threedays.data.entity.member;
 
 import com.depromeet.threedays.data.enums.CertificationSubject;
+import com.depromeet.threedays.data.enums.MemberStatus;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.*;
@@ -35,6 +36,11 @@ public class MemberEntity implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private CertificationSubject certificationSubject;
 
+	@SuppressWarnings("FieldMayBeFinal")
+	@Enumerated(EnumType.STRING)
+	@Builder.Default
+	private MemberStatus status = MemberStatus.REGULAR;
+
 	@Column(name = "resource", columnDefinition = "json")
 	private String resource;
 
@@ -48,15 +54,23 @@ public class MemberEntity implements Serializable {
 	@LastModifiedDate
 	private LocalDateTime updateAt;
 
-	public void updateName(String name) {
+	public MemberEntity updateName(String name) {
 		this.name = name;
+		return this;
 	}
 
-	public void updateNotificationConsent(Boolean consent) {
+	public MemberEntity updateNotificationConsent(Boolean consent) {
 		this.notificationConsent = consent;
+		return this;
 	}
 
-	public void updateResource(String resource) {
+	public MemberEntity updateResource(String resource) {
 		this.resource = resource;
+		return this;
+	}
+
+	public MemberEntity withdraw() {
+		status = MemberStatus.WITHDRAWN;
+		return this;
 	}
 }
