@@ -5,8 +5,19 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class KakaoAuthRequestProperty extends AuthRequestProperty {
+
+	@Value("${kakao.adminKey}")
+	String adminKey;
+
 	public KakaoAuthRequestProperty(
-			@Value("${kakao.host}") String host, @Value("${kakao.user.uri}") String uri) {
-		super(host, uri);
+			@Value("${kakao.host}") String host,
+			@Value("${kakao.user.uri}") String uri,
+			@Value("${kakao.unlink.uri}") String unlink) {
+		super(host, uri, unlink);
+	}
+
+	@Override
+	public String getAdminKey() {
+		return "KakaoAK " + this.adminKey;
 	}
 }

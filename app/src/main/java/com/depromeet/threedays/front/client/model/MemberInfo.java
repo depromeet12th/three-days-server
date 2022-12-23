@@ -23,9 +23,9 @@ public class MemberInfo {
 	}
 
 	public String getName(CertificationSubject subject) {
-		if (subject.equals(CertificationSubject.KAKAO)) {
+		if (CertificationSubject.KAKAO.equals(subject)) {
 			return this.getProperties().getNickname();
-		} else if (subject.equals(CertificationSubject.GOOGLE)) {
+		} else if (CertificationSubject.GOOGLE.equals(subject)) {
 			return this.name;
 		}
 		return name;
