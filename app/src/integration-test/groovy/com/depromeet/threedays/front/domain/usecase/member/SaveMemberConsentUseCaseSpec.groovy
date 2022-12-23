@@ -1,5 +1,6 @@
 package com.depromeet.threedays.front.domain.usecase.member
 
+import com.depromeet.threedays.data.enums.MemberStatus
 import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.data.member.MemberInitializer
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository
@@ -27,7 +28,7 @@ class SaveMemberConsentUseCaseSpec extends IntegrationTestSpecification {
         def actual = useCase.execute(expected)
 
         then:
-        mockRepo.findById(_ as Long) >> Optional.of(id)
+        mockRepo.findByIdAndStatus(_ as Long, _ as MemberStatus) >> Optional.of(id)
         !actual.notificationConsent
     }
 }
