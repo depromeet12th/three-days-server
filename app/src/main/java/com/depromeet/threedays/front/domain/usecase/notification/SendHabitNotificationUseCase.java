@@ -14,8 +14,8 @@ import com.depromeet.threedays.front.persistence.repository.member.MemberReposit
 import com.depromeet.threedays.front.support.NotificationLogger;
 import com.google.firebase.messaging.BatchResponse;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -55,7 +55,7 @@ public class SendHabitNotificationUseCase {
 	}
 
 	private List<HabitNotificationMessage> getNotificationFilterByNotificationConsent() {
-		List<Long> memberIds = this.getMemberIds();
+		Set<Long> memberIds = this.getNotificationConsentMemberIds();
 		List<HabitNotificationEntity> list = getUseCase.execute();
 		return list.stream()
 				.filter(m -> memberIds.contains(m.getMemberId()))
@@ -75,13 +75,10 @@ public class SendHabitNotificationUseCase {
 		return messages;
 	}
 
-	private List<Long> getMemberIds() {
-		// FIXME: chunk 단위 처리
-		List<MemberEntity> members = memberRepository.findAllByNotificationConsent(true).orElse(null);
-		if (members == null) {
-			return Collections.emptyList();
-		}
-		return members.stream().map(MemberEntity::getId).collect(Collectors.toList());
+	private Set<Long> getNotificationConsentMemberIds() {
+		return memberRepository.findAllByNotificationConsent(true).stream()
+				.map(MemberEntity::getId)
+				.collect(Collectors.toSet());
 	}
 
 	private List<BatchResponse> sendMessage(final List<HabitNotificationMessage> messages) {

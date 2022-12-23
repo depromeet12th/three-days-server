@@ -1,6 +1,7 @@
 package com.depromeet.threedays.front.domain.usecase.member;
 
 import com.depromeet.threedays.data.entity.member.MemberEntity;
+import com.depromeet.threedays.data.enums.MemberStatus;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.converter.member.MemberConverter;
 import com.depromeet.threedays.front.domain.model.member.Member;
@@ -24,11 +25,9 @@ public class SaveNameUseCase {
 	}
 
 	public MemberEntity updateName(final Long memberId, final MemberNameUpdateRequest request) {
-		MemberEntity member =
-				memberRepository
-						.findById(memberId)
-						.orElseThrow(() -> new ResourceNotFoundException("member.not.found"));
-		member.updateName(request.getName());
-		return member;
+		return memberRepository
+				.findByIdAndStatus(memberId, MemberStatus.REGULAR)
+				.map(it -> it.updateName(request.getName()))
+				.orElseThrow(() -> new ResourceNotFoundException("member.not.found"));
 	}
 }

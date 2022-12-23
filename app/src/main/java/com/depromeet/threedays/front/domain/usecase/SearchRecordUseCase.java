@@ -2,6 +2,7 @@ package com.depromeet.threedays.front.domain.usecase;
 
 import com.depromeet.threedays.data.entity.habit.HabitAchievementEntity;
 import com.depromeet.threedays.data.entity.member.MemberEntity;
+import com.depromeet.threedays.data.enums.MemberStatus;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.converter.habit.HabitConverter;
 import com.depromeet.threedays.front.domain.model.DatePeriod;
@@ -41,7 +42,9 @@ public class SearchRecordUseCase {
 	public RecordResponse execute(final SearchRecordRequest request) {
 
 		MemberEntity memberEntity =
-				memberRepository.findById(AuditorHolder.get()).orElseThrow(IllegalArgumentException::new);
+				memberRepository
+						.findByIdAndStatus(AuditorHolder.get(), MemberStatus.REGULAR)
+						.orElseThrow(IllegalArgumentException::new);
 
 		DatePeriod datePeriod =
 				Optional.ofNullable(request.getDatePeriod())

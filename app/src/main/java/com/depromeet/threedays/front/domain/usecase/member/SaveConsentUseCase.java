@@ -1,6 +1,7 @@
 package com.depromeet.threedays.front.domain.usecase.member;
 
 import com.depromeet.threedays.data.entity.member.MemberEntity;
+import com.depromeet.threedays.data.enums.MemberStatus;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.converter.member.MemberConverter;
 import com.depromeet.threedays.front.domain.model.member.Member;
@@ -20,16 +21,14 @@ public class SaveConsentUseCase {
 
 	public Member execute(final MemberNotificationConsentUpdateRequest request) {
 		Long memberId = AuditorHolder.get();
-		return MemberConverter.from(this.updateNotificationConsent(memberId, request));
+		return MemberConverter.from(updateNotificationConsent(memberId, request));
 	}
 
 	public MemberEntity updateNotificationConsent(
 			final Long memberId, final MemberNotificationConsentUpdateRequest request) {
-		MemberEntity member =
-				memberRepository
-						.findById(memberId)
-						.orElseThrow(() -> new ResourceNotFoundException("member.not.found"));
-		member.updateNotificationConsent(request.isNotificationConsent());
-		return member;
+		return memberRepository
+				.findByIdAndStatus(memberId, MemberStatus.REGULAR)
+				.map(it -> it.updateNotificationConsent(request.isNotificationConsent()))
+				.orElseThrow(() -> new ResourceNotFoundException("member.not.found"));
 	}
 }
