@@ -1,11 +1,7 @@
 package com.depromeet.threedays.front.web.controller;
 
 import com.depromeet.threedays.front.domain.model.habit.HabitOverview;
-import com.depromeet.threedays.front.domain.usecase.habit.DeleteHabitUseCase;
-import com.depromeet.threedays.front.domain.usecase.habit.GetHabitUseCase;
-import com.depromeet.threedays.front.domain.usecase.habit.SaveHabitUseCase;
-import com.depromeet.threedays.front.domain.usecase.habit.SearchHabitUseCase;
-import com.depromeet.threedays.front.domain.usecase.habit.UpdateHabitUseCase;
+import com.depromeet.threedays.front.domain.usecase.habit.*;
 import com.depromeet.threedays.front.support.ApiResponse;
 import com.depromeet.threedays.front.support.ApiResponseGenerator;
 import com.depromeet.threedays.front.support.MessageCode;
@@ -13,19 +9,12 @@ import com.depromeet.threedays.front.web.request.habit.SaveHabitRequest;
 import com.depromeet.threedays.front.web.request.habit.SearchHabitRequest;
 import com.depromeet.threedays.front.web.request.habit.UpdateHabitRequest;
 import com.depromeet.threedays.front.web.response.HabitResponse;
-import com.depromeet.threedays.front.web.response.converter.HabitResponseConverter;
+import com.depromeet.threedays.front.web.response.assembler.HabitAssembler;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -41,11 +30,13 @@ public class HabitController {
 
 	private final UpdateHabitUseCase updateUseCase;
 
+	private final HabitAssembler habitAssembler;
+
 	@PostMapping
 	public ApiResponse<ApiResponse.SuccessBody<HabitResponse>> add(
 			@RequestBody @Valid final SaveHabitRequest request) {
 		return ApiResponseGenerator.success(
-				HabitResponseConverter.from(saveUseCase.execute(request)),
+				habitAssembler.toHabitResponse(saveUseCase.execute(request)),
 				HttpStatus.CREATED,
 				MessageCode.RESOURCE_CREATED);
 	}
@@ -54,7 +45,7 @@ public class HabitController {
 	public ApiResponse<ApiResponse.SuccessBody<HabitResponse>> edit(
 			@PathVariable final Long id, @RequestBody @Valid final UpdateHabitRequest request) {
 		return ApiResponseGenerator.success(
-				HabitResponseConverter.from(updateUseCase.execute(id, request)), HttpStatus.OK);
+				habitAssembler.toHabitResponse(updateUseCase.execute(id, request)), HttpStatus.OK);
 	}
 
 	@GetMapping
@@ -66,7 +57,7 @@ public class HabitController {
 	@GetMapping("/{id}")
 	public ApiResponse<ApiResponse.SuccessBody<HabitResponse>> read(@PathVariable final Long id) {
 		return ApiResponseGenerator.success(
-				HabitResponseConverter.from(getUseCase.execute(id)), HttpStatus.OK);
+				habitAssembler.toHabitResponse(getUseCase.execute(id)), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")

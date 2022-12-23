@@ -1,5 +1,6 @@
 package com.depromeet.threedays.front.domain.model.mate;
 
+import com.depromeet.threedays.data.enums.LevelUpSection;
 import com.depromeet.threedays.data.enums.MateStatus;
 import com.depromeet.threedays.data.enums.MateType;
 import com.depromeet.threedays.front.domain.model.RewardHistory;
@@ -31,4 +32,8 @@ public class Mate implements Serializable {
 	private String bubble;
 	private MateStatus status;
 	private Boolean deleted;
+
+	public List<Integer> getLevelUpSection() {
+		return LevelUpSection.MATE.getSectionList();
+	}
 }

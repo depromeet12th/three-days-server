@@ -37,4 +37,8 @@ public class Habit {
 	private Boolean deleted;
 	private Mate mate;
 	private Notification notification;
+
+	public boolean hasMate() {
+		return mate != null;
+	}
 }
