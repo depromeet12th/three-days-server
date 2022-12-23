@@ -69,7 +69,8 @@ public class MemberEntity implements Serializable {
 		return this;
 	}
 
-	public void withdraw() {
+	public MemberEntity withdraw() {
 		status = MemberStatus.WITHDRAWN;
+		return this;
 	}
 }

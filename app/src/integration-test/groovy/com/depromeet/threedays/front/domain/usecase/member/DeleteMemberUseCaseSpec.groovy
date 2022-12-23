@@ -35,6 +35,6 @@ class DeleteMemberUseCaseSpec extends IntegrationTestSpecification {
 
         then:
         memberRepository.findByIdAndStatus(_ as Long, _ as MemberStatus) >> Optional.of(criterionMember)
-        actual.status == MemberStatus.REGULAR
+        actual.status == MemberStatus.WITHDRAWN
     }
 }
