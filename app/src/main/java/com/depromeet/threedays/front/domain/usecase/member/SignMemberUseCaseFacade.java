@@ -47,13 +47,7 @@ public class SignMemberUseCaseFacade {
 		try {
 			AuthRequestProperty property = getMemberProperty(subject);
 			final String bearerToken = "Bearer " + oAuthToken;
-			if (subject.equals(CertificationSubject.KAKAO)) {
-				return authClient.getkakaoInfo(
-						new URI(property.getHost() + property.getUri()), bearerToken);
-			} else if(subject.equals(CertificationSubject.GOOGLE)){
-				return authClient.getInfo(new URI(property.getHost() + property.getUri()), bearerToken);
-			}
-			return null;
+			return authClient.getInfo(new URI(property.getHost() + property.getUri()), bearerToken);
 		} catch (URISyntaxException e) {
 			throw new ExternalIntegrationException("social.login.error");
 		}
