@@ -2,7 +2,6 @@ package com.depromeet.threedays.front.client.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class KakaoMemberInfo extends MemberInfo {
-	private LocalDateTime connectedAt;
 	private Properties properties;
 	private KakaoAccount kakaoAccount;
 
