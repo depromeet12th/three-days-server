@@ -10,18 +10,12 @@ import com.depromeet.threedays.front.support.MessageCode;
 import com.depromeet.threedays.front.web.request.habit.SaveHabitAchievementRequest;
 import com.depromeet.threedays.front.web.request.habit.SearchHabitAchievementRequest;
 import com.depromeet.threedays.front.web.response.HabitResponse;
-import com.depromeet.threedays.front.web.response.converter.HabitResponseConverter;
+import com.depromeet.threedays.front.web.response.assembler.HabitAssembler;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,11 +28,13 @@ public class HabitAchievementController {
 
 	private final DeleteHabitAchievementUseCase deleteUseCase;
 
+	private final HabitAssembler habitAssembler;
+
 	@PostMapping
 	public ApiResponse<ApiResponse.SuccessBody<HabitResponse>> add(
 			@PathVariable Long habitId, @RequestBody @Valid final SaveHabitAchievementRequest request) {
 		return ApiResponseGenerator.success(
-				HabitResponseConverter.from(saveUseCase.execute(habitId, request)),
+				habitAssembler.toHabitResponse(saveUseCase.execute(habitId, request)),
 				HttpStatus.CREATED,
 				MessageCode.RESOURCE_CREATED);
 	}
@@ -53,7 +49,7 @@ public class HabitAchievementController {
 	public ApiResponse<ApiResponse.SuccessBody<HabitResponse>> delete(
 			@PathVariable Long habitId, @PathVariable Long habitAchievementId) {
 		return ApiResponseGenerator.success(
-				HabitResponseConverter.from(deleteUseCase.execute(habitId, habitAchievementId)),
+				habitAssembler.toHabitResponse(deleteUseCase.execute(habitId, habitAchievementId)),
 				HttpStatus.OK);
 	}
 }

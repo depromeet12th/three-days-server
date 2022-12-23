@@ -1,7 +1,7 @@
 package com.depromeet.threedays.front.web.response;
 
 import com.depromeet.threedays.data.enums.CertificationSubject;
-import com.depromeet.threedays.front.domain.model.member.Token;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Getter
@@ -14,8 +14,11 @@ public class SaveMemberResponse {
 
 	private Long id;
 	private String name;
-	private Token token;
+
+	@JsonProperty("token")
+	private TokenResponse tokenResponse;
+
 	private String resource;
-	public Boolean notificationConsent;
-	public CertificationSubject certificationSubject;
+	private Boolean notificationConsent;
+	private CertificationSubject certificationSubject;
 }

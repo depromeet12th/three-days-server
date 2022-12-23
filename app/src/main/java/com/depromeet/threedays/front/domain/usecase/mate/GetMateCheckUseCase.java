@@ -5,7 +5,7 @@ import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.converter.mate.MateConverter;
 import com.depromeet.threedays.front.persistence.repository.mate.MateRepository;
 import com.depromeet.threedays.front.web.response.MateResponse;
-import com.depromeet.threedays.front.web.response.converter.MateResponseConverter;
+import com.depromeet.threedays.front.web.response.assembler.MateAssembler;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +17,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class GetMateCheckUseCase {
 
-	private final MateRepository repository;
+	private final MateRepository mateRepository;
+	private final MateAssembler mateAssembler;
 
 	public List<MateResponse> execute() {
-		return repository
+		return mateRepository
 				.findByMemberIdAndDeletedFalseAndStatus(AuditorHolder.get(), MateStatus.ACTIVE)
 				.stream()
 				.map(MateConverter::from)
-				.map(MateResponseConverter::from)
+				.map(mateAssembler::toMateResponse)
 				.collect(Collectors.toList());
 	}
 }

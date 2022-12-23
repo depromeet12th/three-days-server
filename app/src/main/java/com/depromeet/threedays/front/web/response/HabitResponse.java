@@ -1,8 +1,7 @@
 package com.depromeet.threedays.front.web.response;
 
 import com.depromeet.threedays.data.enums.HabitStatus;
-import com.depromeet.threedays.front.domain.model.mate.Mate;
-import com.depromeet.threedays.front.domain.model.notification.Notification;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.EnumSet;
@@ -28,8 +27,13 @@ public class HabitResponse {
 	private HabitStatus status;
 	private Long totalAchievementCount;
 	private Long todayHabitAchievementId;
-	private Mate mate;
-	private Notification notification;
+
+	@JsonProperty("mate")
+	private MateResponse mateResponse;
+
+	@JsonProperty("notification")
+	private NotificationResponse notificationResponse;
+
 	private LocalDateTime createAt;
 	private LocalDateTime archiveAt;
 }
