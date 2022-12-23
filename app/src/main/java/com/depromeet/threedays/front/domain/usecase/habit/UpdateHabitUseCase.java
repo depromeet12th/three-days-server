@@ -14,41 +14,45 @@ import java.util.EnumSet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 @Component
 @Transactional
 @RequiredArgsConstructor
 public class UpdateHabitUseCase {
 
-	private final HabitRepository repository;
+	private final HabitRepository habitRepository;
 
 	private final HabitNotificationRepository habitNotificationRepository;
 
-	private final HabitValidator validator;
+	private final HabitValidator habitValidator;
 
-	public Habit execute(final Long id, final UpdateHabitRequest request) {
-		validator.validateUpdateConstraints(request);
-		Habit source =
-				repository
-						.findById(id)
+	public Habit execute(final Long habitId, final UpdateHabitRequest request) {
+		habitValidator.validateUpdateConstraints(request);
+		Habit habit =
+				habitRepository
+						.findById(habitId)
 						.map(HabitConverter::from)
 						.orElseThrow(ResourceNotFoundException::new);
 
-		updateAssociation(id, request.getNotification(), request.getDayOfWeeks());
+		updateAssociation(habit, request.getNotification(), request.getDayOfWeeks());
 
 		return HabitConverter.from(
-				repository.save(HabitConverter.to(source, request)), request.getNotification());
+				habitRepository.save(HabitConverter.to(habit, request)), request.getNotification());
 	}
 
-	private void updateAssociation(Long habitId, Notification data, EnumSet<DayOfWeek> dayOfWeeks) {
-		if (data == null) {
+	private void updateAssociation(
+			Habit habit, Notification notification, EnumSet<DayOfWeek> dayOfWeeks) {
+		Assert.notNull(habit, "'habit' must not be null");
+		if (notification == null) {
 			return;
 		}
 
-		habitNotificationRepository.deleteAllByHabitId(habitId);
+		habitNotificationRepository.deleteAllByHabitId(habit.getId());
 
 		for (DayOfWeek dayOfWeek : dayOfWeeks) {
-			habitNotificationRepository.save(HabitNotificationConverter.to(data, habitId, dayOfWeek));
+			habitNotificationRepository.save(
+					HabitNotificationConverter.to(habit, notification, dayOfWeek));
 		}
 	}
 }

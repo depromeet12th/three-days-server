@@ -21,6 +21,7 @@ public class NotificationController {
 	private final SendHabitNotificationUseCase sendHabitNotificationUseCase;
 
 	// FIXME: 관리자 권한 검증 필요
+	// FIXME: dto 에서 firebase BatchResponse 사용하지 않게 변경
 	@PostMapping("/global")
 	public ApiResponse<ApiResponse.SuccessBody<List<NotificationBatchResponse>>>
 			sendGlobalNotification() {
@@ -28,6 +29,7 @@ public class NotificationController {
 	}
 
 	// FIXME: 관리자 권한 검증 필요
+	// FIXME: dto 에서 firebase BatchResponse 사용하지 않게 변경
 	@PostMapping("/habit")
 	public ApiResponse<ApiResponse.SuccessBody<List<BatchResponse>>> sendHabitNotification() {
 		return ApiResponseGenerator.success(sendHabitNotificationUseCase.execute(), HttpStatus.OK);

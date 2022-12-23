@@ -41,4 +41,8 @@ public class Habit {
 	public boolean hasMate() {
 		return mate != null;
 	}
+
+	public String resolveNotificationTitle() {
+		return imojiPath + " " + title;
+	}
 }

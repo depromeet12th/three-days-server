@@ -35,19 +35,21 @@ public class SaveHabitUseCase {
 	private Habit save(Habit data) {
 		HabitEntity entity = repository.save(HabitConverter.to(data));
 
-		this.saveAssociation(entity.getId(), data.getNotification(), data.getDayOfWeeks());
+		this.saveAssociation(data, data.getNotification(), data.getDayOfWeeks());
 		return HabitConverter.from(entity, data.getNotification()).toBuilder()
 				.totalAchievementCount(0L)
 				.build();
 	}
 
-	private void saveAssociation(Long habitId, Notification data, EnumSet<DayOfWeek> dayOfWeeks) {
-		if (data == null) {
+	private void saveAssociation(
+			Habit habit, Notification notification, EnumSet<DayOfWeek> dayOfWeeks) {
+		if (notification == null) {
 			return;
 		}
 
 		for (DayOfWeek dayOfWeek : dayOfWeeks) {
-			habitNotificationRepository.save(HabitNotificationConverter.to(data, habitId, dayOfWeek));
+			habitNotificationRepository.save(
+					HabitNotificationConverter.to(habit, notification, dayOfWeek));
 		}
 	}
 }
