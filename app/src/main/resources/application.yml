@@ -43,11 +43,13 @@ security:
       secretkey: ${TOKEN_SECRETKEY}
 
 google:
+  host: https://www.googleapis.com/oauth2
   user:
-    uri: https://www.googleapis.com/oauth2/v2/userinfo#profile
+    uri: /v2/userinfo#profile
 kakao:
+  host: https://kapi.kakao.com
   user:
-    uri: https://kapi.kakao.com/v2/user/me
+    uri: /v2/user/me
 
 firebase:
   multicast-message:
