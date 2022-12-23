@@ -3,6 +3,7 @@ package com.depromeet.threedays.front.web.response.converter;
 import com.depromeet.threedays.front.domain.model.habit.Habit;
 import com.depromeet.threedays.front.domain.model.habit.HabitAchievement;
 import com.depromeet.threedays.front.web.response.HabitResponse;
+import com.depromeet.threedays.front.web.response.NotificationResponse;
 import java.util.Optional;
 import lombok.experimental.UtilityClass;
 
@@ -26,8 +27,8 @@ public class HabitResponseConverter {
 				.totalAchievementCount(habit.getTotalAchievementCount())
 				.sequence(habitAchievement.getSequence())
 				.todayHabitAchievementId(habitAchievement.getId())
-				.mate(habit.getMate())
-				.notification(habit.getNotification())
+				.mateResponse(MateResponseConverter.from(habit.getMate()))
+				.notificationResponse(NotificationResponse.from(habit.getNotification()))
 				.createAt(habit.getCreateAt())
 				.archiveAt(habit.getArchiveAt())
 				.build();
