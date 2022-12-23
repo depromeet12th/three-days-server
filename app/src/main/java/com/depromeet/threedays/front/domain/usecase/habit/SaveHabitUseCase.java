@@ -33,10 +33,10 @@ public class SaveHabitUseCase {
 	}
 
 	private Habit save(Habit data) {
-		HabitEntity entity = repository.save(HabitConverter.to(data));
-
-		this.saveAssociation(data, data.getNotification(), data.getDayOfWeeks());
-		return HabitConverter.from(entity, data.getNotification()).toBuilder()
+		HabitEntity habitEntity = repository.save(HabitConverter.to(data));
+		Habit habit = HabitConverter.from(habitEntity);
+		this.saveAssociation(habit, habit.getNotification(), habit.getDayOfWeeks());
+		return HabitConverter.from(habitEntity, habit.getNotification()).toBuilder()
 				.totalAchievementCount(0L)
 				.build();
 	}
