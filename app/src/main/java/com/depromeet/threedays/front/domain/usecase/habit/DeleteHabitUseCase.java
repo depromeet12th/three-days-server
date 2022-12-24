@@ -9,6 +9,7 @@ import com.depromeet.threedays.front.domain.model.mate.Mate;
 import com.depromeet.threedays.front.persistence.repository.habit.HabitAchievementRepository;
 import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository;
 import com.depromeet.threedays.front.persistence.repository.mate.MateRepository;
+import com.depromeet.threedays.front.persistence.repository.notification.HabitNotificationRepository;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,8 @@ public class DeleteHabitUseCase {
 	private final HabitRepository repository;
 	private final HabitAchievementRepository habitAchievementRepository;
 	private final MateRepository mateRepository;
+
+	private final HabitNotificationRepository habitNotificationRepository;
 
 	public void execute(Long habitId) {
 		Habit source =
@@ -45,14 +48,24 @@ public class DeleteHabitUseCase {
 		this.delete(source, mate);
 	}
 
+	private void deleteNotification(final Habit source) {
+		if (source == null || source.getNotification() == null) {
+			return;
+		}
+
+		habitNotificationRepository.deleteAllByHabitId(source.getId());
+	}
+
 	private void delete(final Habit source, final Mate mate) {
 		repository.save(HabitConverter.to(source).toBuilder().deleted(true).build());
 		this.deleteMate(mate);
+		this.deleteNotification(source);
 	}
 
 	private void archive(final Habit source, final Mate mate) {
 		repository.save(HabitConverter.to(source).toBuilder().status(HabitStatus.ARCHIVED).build());
 		this.archiveMate(mate);
+		this.deleteNotification(source);
 	}
 
 	private void archiveMate(final Mate mate) {
