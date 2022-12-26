@@ -51,72 +51,22 @@ public class ApiControllerExceptionHandler {
 		return ApiResponseGenerator.fail(FAIL_CODE, BAD_REQUEST_MESSAGE, HttpStatus.BAD_REQUEST);
 	}
 
-	@ExceptionHandler(PolicyViolationException.class)
+	@ExceptionHandler({
+		PolicyViolationException.class,
+		MethodArgumentTypeMismatchException.class,
+		TypeMismatchException.class,
+		ServletRequestBindingException.class,
+		BindException.class,
+		MethodArgumentNotValidException.class,
+		ConstraintViolationException.class,
+		HttpRequestMethodNotSupportedException.class,
+		HttpMediaTypeNotSupportedException.class,
+		HttpMediaTypeNotAcceptableException.class,
+		HttpMessageNotReadableException.class,
+		MissingServletRequestPartException.class
+	})
 	public final ApiResponse<ApiResponse.FailureBody> handleBadRequest(
-			final PolicyViolationException ex, final WebRequest request) {
-		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FAIL_CODE, BAD_REQUEST_MESSAGE, HttpStatus.BAD_REQUEST);
-	}
-
-	@ExceptionHandler({MethodArgumentTypeMismatchException.class, TypeMismatchException.class})
-	public final ApiResponse<ApiResponse.FailureBody> handleBadRequest(
-			final TypeMismatchException ex, final WebRequest request) {
-		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FAIL_CODE, BAD_REQUEST_MESSAGE, HttpStatus.BAD_REQUEST);
-	}
-
-	@ExceptionHandler(ServletRequestBindingException.class)
-	public final ApiResponse<ApiResponse.FailureBody> handleBadRequest(
-			final ServletRequestBindingException ex, final WebRequest request) {
-		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FAIL_CODE, BAD_REQUEST_MESSAGE, HttpStatus.BAD_REQUEST);
-	}
-
-	@ExceptionHandler({BindException.class, MethodArgumentNotValidException.class})
-	public final ApiResponse<ApiResponse.FailureBody> handleBadRequest(
-			final BindException ex, final WebRequest request) {
-		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FAIL_CODE, BAD_REQUEST_MESSAGE, HttpStatus.BAD_REQUEST);
-	}
-
-	@ExceptionHandler(ConstraintViolationException.class)
-	public final ApiResponse<ApiResponse.FailureBody> handleBadRequest(
-			final ConstraintViolationException ex, final WebRequest request) {
-		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FAIL_CODE, BAD_REQUEST_MESSAGE, HttpStatus.BAD_REQUEST);
-	}
-
-	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(
-			final HttpRequestMethodNotSupportedException ex, final WebRequest request) {
-		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FAIL_CODE, BAD_REQUEST_MESSAGE, HttpStatus.BAD_REQUEST);
-	}
-
-	@ExceptionHandler(HttpMediaTypeNotSupportedException.class)
-	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(
-			final HttpMediaTypeNotSupportedException ex, final WebRequest request) {
-		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FAIL_CODE, BAD_REQUEST_MESSAGE, HttpStatus.BAD_REQUEST);
-	}
-
-	@ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
-	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(
-			final HttpMediaTypeNotAcceptableException ex, final WebRequest request) {
-		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FAIL_CODE, BAD_REQUEST_MESSAGE, HttpStatus.BAD_REQUEST);
-	}
-
-	@ExceptionHandler(HttpMessageNotReadableException.class)
-	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(
-			final HttpMessageNotReadableException ex, final WebRequest request) {
-		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FAIL_CODE, BAD_REQUEST_MESSAGE, HttpStatus.BAD_REQUEST);
-	}
-
-	@ExceptionHandler(MissingServletRequestPartException.class)
-	public ApiResponse<ApiResponse.FailureBody> handleBadRequest(
-			final MissingServletRequestPartException ex, final WebRequest request) {
+			final Exception ex, final WebRequest request) {
 		this.writeLog(ex, request);
 		return ApiResponseGenerator.fail(FAIL_CODE, BAD_REQUEST_MESSAGE, HttpStatus.BAD_REQUEST);
 	}
@@ -128,16 +78,9 @@ public class ApiControllerExceptionHandler {
 		return ApiResponseGenerator.fail(FAIL_CODE, NOT_FOUND_MESSAGE, HttpStatus.NOT_FOUND);
 	}
 
-	@ExceptionHandler(AccessDeniedException.class)
+	@ExceptionHandler({AccessDeniedException.class, InsufficientAuthenticationException.class})
 	public ApiResponse<ApiResponse.FailureBody> handleForbidden(
-			final AccessDeniedException ex, final WebRequest request) {
-		this.writeLog(ex, request);
-		return ApiResponseGenerator.fail(FAIL_CODE, FORBIDDEN_MESSAGE, HttpStatus.FORBIDDEN);
-	}
-
-	@ExceptionHandler(InsufficientAuthenticationException.class)
-	public ApiResponse<ApiResponse.FailureBody> handleForbidden(
-			final InsufficientAuthenticationException ex, final WebRequest request) {
+			final Exception ex, final WebRequest request) {
 		this.writeLog(ex, request);
 		return ApiResponseGenerator.fail(FAIL_CODE, FORBIDDEN_MESSAGE, HttpStatus.FORBIDDEN);
 	}
