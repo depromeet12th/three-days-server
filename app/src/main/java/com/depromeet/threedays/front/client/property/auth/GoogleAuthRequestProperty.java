@@ -7,6 +7,11 @@ import org.springframework.stereotype.Component;
 public class GoogleAuthRequestProperty extends AuthRequestProperty {
 	public GoogleAuthRequestProperty(
 			@Value("${google.host}") String host, @Value("${google.user.uri}") String uri) {
-		super(host, uri);
+		super(host, uri, "");
+	}
+
+	@Override
+	public String getAdminKey() {
+		return null;
 	}
 }

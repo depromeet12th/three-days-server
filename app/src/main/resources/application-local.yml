@@ -24,7 +24,9 @@ kakao:
   host: https://kapi.kakao.com
   user:
     uri: /v2/user/me
-
+  unlink:
+    uri: /v1/user/unlink
+  adminKey: thisIsAdminKey
 firebase:
   multicast-message:
     size: 500
