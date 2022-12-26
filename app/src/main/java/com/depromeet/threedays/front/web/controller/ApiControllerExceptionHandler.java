@@ -13,6 +13,7 @@ import org.hibernate.TypeMismatchException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -87,9 +88,9 @@ public class ApiControllerExceptionHandler {
 		return ApiResponseGenerator.fail(FAIL_CODE, FORBIDDEN_MESSAGE, HttpStatus.FORBIDDEN);
 	}
 
-	@ExceptionHandler({AuthenticationException.class})
+	@ExceptionHandler({InsufficientAuthenticationException.class, AuthenticationException.class})
 	public ApiResponse<ApiResponse.FailureBody> handle(
-			final AuthenticationException ex, final WebRequest request) {
+			final Exception ex, final WebRequest request) {
 		this.writeLog(ex, request);
 		return ApiResponseGenerator.fail(FAIL_CODE, UNAUTHORIZED_MESSAGE, HttpStatus.UNAUTHORIZED);
 	}
