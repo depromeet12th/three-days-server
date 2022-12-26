@@ -5,6 +5,7 @@ import com.depromeet.threedays.front.exception.PolicyViolationException;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import com.depromeet.threedays.front.support.ApiResponse;
 import com.depromeet.threedays.front.support.ApiResponseGenerator;
+import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +13,6 @@ import org.hibernate.TypeMismatchException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -39,6 +39,8 @@ public class ApiControllerExceptionHandler {
 	private static final String BAD_REQUEST_MESSAGE = "잘못된 요청입니다.";
 
 	private static final String FORBIDDEN_MESSAGE = "접근 권한이 없습니다.";
+
+	private static final String UNAUTHORIZED_MESSAGE = "인증이 필요합니다.";
 
 	private static final String NOT_FOUND_MESSAGE = "요청과 일치하는 결과를 찾을 수 없습니다.";
 
@@ -78,11 +80,18 @@ public class ApiControllerExceptionHandler {
 		return ApiResponseGenerator.fail(FAIL_CODE, NOT_FOUND_MESSAGE, HttpStatus.NOT_FOUND);
 	}
 
-	@ExceptionHandler({AccessDeniedException.class, InsufficientAuthenticationException.class})
+	@ExceptionHandler({AccessDeniedException.class})
 	public ApiResponse<ApiResponse.FailureBody> handleForbidden(
-			final Exception ex, final WebRequest request) {
+			final AccessDeniedException ex, final WebRequest request) {
 		this.writeLog(ex, request);
 		return ApiResponseGenerator.fail(FAIL_CODE, FORBIDDEN_MESSAGE, HttpStatus.FORBIDDEN);
+	}
+
+	@ExceptionHandler({AuthenticationException.class})
+	public ApiResponse<ApiResponse.FailureBody> handle(
+			final AuthenticationException ex, final WebRequest request) {
+		this.writeLog(ex, request);
+		return ApiResponseGenerator.fail(FAIL_CODE, UNAUTHORIZED_MESSAGE, HttpStatus.UNAUTHORIZED);
 	}
 
 	@ExceptionHandler({JsonParsingException.class})
