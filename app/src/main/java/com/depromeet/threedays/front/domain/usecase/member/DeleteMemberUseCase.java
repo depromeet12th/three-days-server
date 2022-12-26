@@ -72,7 +72,7 @@ public class DeleteMemberUseCase {
 					.map(MemberEntity::withdraw)
 					.map(MemberConverter::from)
 					.orElseThrow(ResourceNotFoundException::new);
-		}else{
+		} else {
 			throw new ResourceNotFoundException();
 		}
 	}
