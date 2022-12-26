@@ -49,20 +49,16 @@ threedays:
           batch_versioned_data: true
 ##SOCIAL
 google:
-  access:
-    token:
-      uri: https://oauth2.googleapis.com/token
+  host: https://www.googleapis.com/oauth2
   user:
-    uri: https://www.googleapis.com/oauth2/v1/userinfo
-  web:
-    redirect:
-      uri: googleDummy
-    client:
-      id: googleDummy
-      secret: googleDummy
+    uri: /v2/userinfo#profile
 kakao:
+  host: https://kapi.kakao.com
   user:
-    uri: https://kapi.kakao.com/v2/user/me
+    uri: /v2/user/me
+  unlink:
+    uri: /v1/user/unlink
+  adminKey: thisIsAdminKey
 
 security:
   jwt:
