@@ -33,12 +33,12 @@ class SaveHabitUseCaseSpec extends IntegrationTestSpecification {
                 .build()
 
         when:
-        def acutal = saveUseCase.execute(expected)
+        def actual = saveUseCase.execute(expected)
 
         then:
-        acutal != null
+        actual != null
 
-        acutal.id > 0L
+        actual.id > 0L
     }
 
     def "사용자는 세 개 이하의 요일을 습관 수행일자로 선택했을 경우 습관을 생성할 수 없다."() {

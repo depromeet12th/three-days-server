@@ -12,8 +12,6 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class NotificationHistoryConverter {
 
-	private static final String TITLE_EMPTY = "";
-
 	public static NotificationHistoryEntity from(
 			NotificationMessage message, ClientEntity client, NotificationStatus status) {
 		return NotificationHistoryEntity.builder()
@@ -30,7 +28,7 @@ public class NotificationHistoryConverter {
 			HabitNotificationMessage message, Client client, NotificationStatus status) {
 		return NotificationHistoryEntity.builder()
 				.notificationId(message.getNotificationId())
-				.title(TITLE_EMPTY)
+				.title(message.getTitle())
 				.contents(message.getContent())
 				.status(status)
 				.type(NotificationType.HABIT)

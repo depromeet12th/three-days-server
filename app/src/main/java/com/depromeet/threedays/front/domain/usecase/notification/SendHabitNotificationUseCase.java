@@ -15,6 +15,7 @@ import com.depromeet.threedays.front.support.NotificationLogger;
 import com.google.firebase.messaging.BatchResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,7 @@ public class SendHabitNotificationUseCase {
 
 	private final MessageClient messageClient;
 
+	/** 습관 알림 발송 */
 	public List<BatchResponse> execute() {
 		List<HabitNotificationMessage> messages = makeHabitNotificationMessage();
 		return sendMessage(messages);
@@ -54,6 +56,7 @@ public class SendHabitNotificationUseCase {
 		return addClientList(groupedClient, messages);
 	}
 
+	/** 습관 알림 대상 중 발송가능한 알림 정보 목록 조회 (알림 수신 허용한 회원들의 습관) */
 	private List<HabitNotificationMessage> getNotificationFilterByNotificationConsent() {
 		Set<Long> memberIds = this.getNotificationConsentMemberIds();
 		List<HabitNotificationEntity> list = getUseCase.execute();
@@ -63,11 +66,12 @@ public class SendHabitNotificationUseCase {
 				.collect(Collectors.toList());
 	}
 
+	/** 습관 메시지에 그 회원이 가진 fcmToken 정보 매핑 */
 	private List<HabitNotificationMessage> addClientList(
 			List<List<Client>> groupedClient, List<HabitNotificationMessage> messages) {
 		for (HabitNotificationMessage message : messages) {
 			for (List<Client> client : groupedClient) {
-				if (message.getMemberId().equals(client.get(0).getMemberId())) {
+				if (Objects.equals(message.getMemberId(), client.get(0).getMemberId())) {
 					message.setClients(client);
 				}
 			}
@@ -75,12 +79,14 @@ public class SendHabitNotificationUseCase {
 		return messages;
 	}
 
+	/** 알림 받을 회원 목록 조회 */
 	private Set<Long> getNotificationConsentMemberIds() {
 		return memberRepository.findAllByNotificationConsent(true).stream()
 				.map(MemberEntity::getId)
 				.collect(Collectors.toSet());
 	}
 
+	/** 알림 발송 */
 	private List<BatchResponse> sendMessage(final List<HabitNotificationMessage> messages) {
 		List<BatchResponse> responses = new ArrayList<>();
 		for (HabitNotificationMessage message : messages) {

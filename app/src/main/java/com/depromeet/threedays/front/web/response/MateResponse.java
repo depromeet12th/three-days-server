@@ -2,7 +2,7 @@ package com.depromeet.threedays.front.web.response;
 
 import com.depromeet.threedays.data.enums.MateStatus;
 import com.depromeet.threedays.data.enums.MateType;
-import com.depromeet.threedays.front.domain.model.RewardHistory;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -25,7 +25,10 @@ public class MateResponse {
 	private LocalDateTime createAt;
 	private Integer level;
 	private Integer reward;
-	private List<RewardHistory> rewardHistory;
+
+	@JsonProperty("rewardHistory")
+	private List<RewardHistoryResponse> rewardHistoryResponse;
+
 	private LocalDateTime levelUpAt;
 	private MateType characterType;
 	private List<Integer> levelUpSection;

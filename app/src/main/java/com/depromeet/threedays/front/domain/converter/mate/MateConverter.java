@@ -15,15 +15,17 @@ public class MateConverter {
 			return null;
 		}
 
+		// FIXME: reward
 		return Mate.builder()
 				.id(entity.getId())
 				.memberId(entity.getMemberId())
 				.habitId(entity.getHabitId())
+				.title(entity.getTitle())
 				.createAt(entity.getCreateAt())
 				.level(entity.getLevel())
-				.characterType(entity.getCharacterType())
-				.title(entity.getTitle())
 				.levelUpAt(entity.getLevelUpAt())
+				.characterType(entity.getCharacterType())
+				.levelUpSection(entity.getLevelUpSection())
 				.bubble(MateBubble.randomBubble().getBubble())
 				.status(entity.getStatus())
 				.deleted(entity.getDeleted())
@@ -37,12 +39,12 @@ public class MateConverter {
 
 		return MateEntity.builder()
 				.id(data.getId())
-				.characterType(data.getCharacterType())
-				.level(data.getLevel())
-				.title(data.getTitle())
 				.memberId(data.getMemberId())
+				.title(data.getTitle())
 				.habitId(data.getHabitId())
+				.level(data.getLevel())
 				.levelUpAt(data.getLevelUpAt())
+				.characterType(data.getCharacterType())
 				.status(data.getStatus())
 				.build();
 	}

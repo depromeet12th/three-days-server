@@ -7,6 +7,7 @@ import com.depromeet.threedays.front.domain.model.member.SaveMemberUseCaseRespon
 import com.depromeet.threedays.front.domain.model.member.Token;
 import com.depromeet.threedays.front.support.converter.MemberInfoJsonConverter;
 import com.depromeet.threedays.front.web.response.SaveMemberResponse;
+import com.depromeet.threedays.front.web.response.TokenResponse;
 
 public class MemberConverter {
 
@@ -59,17 +60,17 @@ public class MemberConverter {
 				.build();
 	}
 
-	public static SaveMemberResponse to(SaveMemberUseCaseResponse member) {
-		if (member == null) {
+	public static SaveMemberResponse to(SaveMemberUseCaseResponse saveMemberUseCaseResponse) {
+		if (saveMemberUseCaseResponse == null) {
 			return null;
 		}
 		return SaveMemberResponse.builder()
-				.token(member.getToken())
-				.id(member.getId())
-				.name(member.getName())
-				.certificationSubject(member.getCertificationSubject())
-				.resource(member.getResource())
-				.notificationConsent(member.getNotificationConsent())
+				.id(saveMemberUseCaseResponse.getId())
+				.name(saveMemberUseCaseResponse.getName())
+				.tokenResponse(TokenResponse.from(saveMemberUseCaseResponse.getToken()))
+				.certificationSubject(saveMemberUseCaseResponse.getCertificationSubject())
+				.resource(saveMemberUseCaseResponse.getResource())
+				.notificationConsent(saveMemberUseCaseResponse.getNotificationConsent())
 				.build();
 	}
 }

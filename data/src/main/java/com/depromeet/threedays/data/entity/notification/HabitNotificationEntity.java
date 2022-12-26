@@ -36,6 +36,8 @@ public class HabitNotificationEntity {
 	@Column(nullable = false)
 	private LocalTime notificationTime;
 
+	@Column private String title;
+
 	@Column(name = "contents", length = 100)
 	private String contents;
 
