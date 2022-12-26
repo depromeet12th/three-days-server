@@ -4,7 +4,6 @@ import com.depromeet.threedays.data.entity.member.MemberEntity;
 import com.depromeet.threedays.data.enums.CertificationSubject;
 import com.depromeet.threedays.data.enums.MemberStatus;
 import com.depromeet.threedays.front.client.AuthClient;
-import com.depromeet.threedays.front.client.model.UnlinkRequest;
 import com.depromeet.threedays.front.client.property.auth.AuthRequestProperty;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.converter.member.MemberConverter;
@@ -15,6 +14,7 @@ import com.depromeet.threedays.front.persistence.repository.member.MemberReposit
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -50,13 +50,13 @@ public class DeleteMemberUseCase {
 		if (CertificationSubject.KAKAO.equals(member.getCertificationSubject())) {
 			try {
 				AuthRequestProperty property = getMemberProperty(member.getCertificationSubject());
-				UnlinkRequest request =
-						UnlinkRequest.builder()
-								.targetIdType("user_id")
-								.targetId(member.getCertificationId())
-								.build();
+
+				Map<String, Object> form = new HashMap<>();
+				form.put("target_id_type", "user_id");
+				form.put("target_id", Long.parseLong(member.getCertificationId()));
+				String adminKey = "KakaoAK " + property.getAdminKey();
 				authClient.unlink(
-						new URI(property.getHost() + property.getUnlink()), property.getAdminKey(), request);
+						new URI(property.getHost() + property.getUnlink()), adminKey, form);
 			} catch (URISyntaxException e) {
 				throw new ExternalIntegrationException("social.login.error");
 			}
