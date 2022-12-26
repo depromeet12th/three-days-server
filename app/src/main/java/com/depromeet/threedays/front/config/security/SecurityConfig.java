@@ -60,8 +60,12 @@ public class SecurityConfig {
 
 		http.addFilterAt(
 				generateAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class);
-		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+		http.exceptionHandling()
+				.authenticationEntryPoint(authenticationEntryPoint)
+				.accessDeniedHandler(accessDeniedHandler);
+
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		return http.build();
 	}
 
