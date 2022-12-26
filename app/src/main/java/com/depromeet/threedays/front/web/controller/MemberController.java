@@ -1,5 +1,7 @@
 package com.depromeet.threedays.front.web.controller;
 
+import com.depromeet.threedays.data.enums.CertificationSubject;
+import com.depromeet.threedays.front.client.model.KakaoReferrerType;
 import com.depromeet.threedays.front.domain.converter.member.MemberConverter;
 import com.depromeet.threedays.front.domain.model.member.Member;
 import com.depromeet.threedays.front.domain.model.member.SaveMemberUseCaseResponse;
@@ -17,6 +19,7 @@ import com.depromeet.threedays.front.web.request.member.SignMemberRequest;
 import com.depromeet.threedays.front.web.response.SaveMemberResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -93,5 +96,15 @@ public class MemberController {
 			@RequestBody @Valid DeleteClientRequest request) {
 		deleteClientUseCase.execute(request);
 		return ApiResponseGenerator.success(HttpStatus.OK);
+	}
+
+	/** 카카오 연결끊기 알림 엔드포인트 */
+	@GetMapping("/kakao/unlink")
+	public void kakaoUnlinkCallback(
+			@RequestHeader(HttpHeaders.AUTHORIZATION) String key,
+			@RequestParam("app_id") String appId,
+			@RequestParam("user_id") String userId,
+			@RequestParam("referrer_type") KakaoReferrerType referrerType) {
+		deleteUseCase.executeCallback(CertificationSubject.KAKAO, key, userId);
 	}
 }

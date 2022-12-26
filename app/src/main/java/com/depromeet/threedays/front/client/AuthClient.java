@@ -1,10 +1,8 @@
 package com.depromeet.threedays.front.client;
 
 import com.depromeet.threedays.front.client.model.MemberInfo;
-
 import java.net.URI;
 import java.util.Map;
-
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -21,5 +19,6 @@ public interface AuthClient {
 	MemberInfo getInfo(URI uri, @RequestHeader(TOKEN_HEADER) String token);
 
 	@PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-	String unlink(URI uri, @RequestHeader(TOKEN_HEADER) String adminToken, @RequestBody Map<String, ?> form);
+	String unlink(
+			URI uri, @RequestHeader(TOKEN_HEADER) String adminToken, @RequestBody Map<String, ?> form);
 }

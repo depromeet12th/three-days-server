@@ -4,6 +4,7 @@ import com.depromeet.threedays.data.entity.member.MemberEntity;
 import com.depromeet.threedays.data.enums.CertificationSubject;
 import com.depromeet.threedays.data.enums.MemberStatus;
 import com.depromeet.threedays.front.client.AuthClient;
+import com.depromeet.threedays.front.client.property.auth.AuthPropertyManager;
 import com.depromeet.threedays.front.client.property.auth.AuthRequestProperty;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.converter.member.MemberConverter;
@@ -13,7 +14,6 @@ import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class DeleteMemberUseCase {
 
 	private final MemberRepository memberRepository;
 	private final AuthClient authClient;
-	private final Map<String, AuthRequestProperty> authRequestPropertyMap;
+	private final AuthPropertyManager propertyManager;
 
 	public Member execute() {
 		Long memberId = AuditorHolder.get();
@@ -49,27 +49,31 @@ public class DeleteMemberUseCase {
 				memberRepository.findById(memberId).orElseThrow(ResourceNotFoundException::new);
 		if (CertificationSubject.KAKAO.equals(member.getCertificationSubject())) {
 			try {
-				AuthRequestProperty property = getMemberProperty(member.getCertificationSubject());
+				AuthRequestProperty property =
+						propertyManager.getMemberProperty(member.getCertificationSubject());
 
 				Map<String, Object> form = new HashMap<>();
 				form.put("target_id_type", "user_id");
 				form.put("target_id", Long.parseLong(member.getCertificationId()));
 				String adminKey = "KakaoAK " + property.getAdminKey();
-				authClient.unlink(
-						new URI(property.getHost() + property.getUnlink()), adminKey, form);
+				authClient.unlink(new URI(property.getHost() + property.getUnlink()), adminKey, form);
 			} catch (URISyntaxException e) {
 				throw new ExternalIntegrationException("social.login.error");
 			}
 		}
 	}
 
-	public AuthRequestProperty getMemberProperty(CertificationSubject subject) {
-		Collection<String> authRequestProperties = authRequestPropertyMap.keySet();
-		String clientName =
-				authRequestProperties.stream()
-						.filter(property -> property.contains(subject.name().toLowerCase()))
-						.findFirst()
-						.orElseThrow(NoSuchFieldError::new);
-		return authRequestPropertyMap.get(clientName);
+	public Member executeCallback(CertificationSubject subject, String key, String userId) {
+		AuthRequestProperty property = propertyManager.getMemberProperty(subject);
+		if (key != null && key.equals(property.getAdminKey())) {
+			return memberRepository
+					.findByCertificationIdAndCertificationSubjectAndStatus(
+							userId, subject, MemberStatus.REGULAR)
+					.map(MemberEntity::withdraw)
+					.map(MemberConverter::from)
+					.orElseThrow(ResourceNotFoundException::new);
+		}else{
+			throw new ResourceNotFoundException();
+		}
 	}
 }
