@@ -62,8 +62,8 @@ public class SecurityConfig {
 				generateAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class);
 
 		http.exceptionHandling()
-			.authenticationEntryPoint(authenticationEntryPoint)
-			.accessDeniedHandler(accessDeniedHandler);
+				.authenticationEntryPoint(authenticationEntryPoint)
+				.accessDeniedHandler(accessDeniedHandler);
 
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		return http.build();
