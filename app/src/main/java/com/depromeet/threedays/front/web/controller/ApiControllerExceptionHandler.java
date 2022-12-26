@@ -89,8 +89,7 @@ public class ApiControllerExceptionHandler {
 	}
 
 	@ExceptionHandler({InsufficientAuthenticationException.class, AuthenticationException.class})
-	public ApiResponse<ApiResponse.FailureBody> handle(
-			final Exception ex, final WebRequest request) {
+	public ApiResponse<ApiResponse.FailureBody> handle(final Exception ex, final WebRequest request) {
 		this.writeLog(ex, request);
 		return ApiResponseGenerator.fail(FAIL_CODE, UNAUTHORIZED_MESSAGE, HttpStatus.UNAUTHORIZED);
 	}
