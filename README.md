@@ -1,7 +1,50 @@
-# three-days-server
-three-days
+<div align="center">
 
-## local
-server(1888): [http://localhost:18888/](http://localhost:18888)
-swagger-ui: [http://localhost:18888/swagger-ui/index.html](http://localhost:18888/swagger-ui/index.html)
-dbadminer(18080): [http://localhost:18080/](http://localhost:18080)
+## 🙋Backend Developers
+
+|                           Backend                            |                           Backend                            |                           Backend                            |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| ![img](https://avatars.githubusercontent.com/u/64529208?v=4) | ![img](https://avatars.githubusercontent.com/u/45715824?v=4) | ![img](https://avatars.githubusercontent.com/u/78407939?v=4) |
+|             [김주현](https://github.com/KJH-Sun)             |             [정구아](https://github.com/gojung)              |            [채상엽](https://github.com/saint6839)            |
+
+
+
+## 🛠️ Tech Stack
+
+**Communication**
+
+<img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/> <img src="https://img.shields.io/badge/Jira-0052CC?style=flat-square&logo=Jira&logoColor=white"/> <img src="https://img.shields.io/badge/Slack-4A154B?style=flat-square&logo=Slack&logoColor=white"/> <img src="https://img.shields.io/badge/Notion-000000?style=flat-square&logo=Notion&logoColor=white"/>
+
+**Server**
+
+<img src="https://img.shields.io/badge/Java-FF9E0F?style=flat-square&logo=&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat-square&logo=springboot&logoColor=white"/> <img src="https://img.shields.io/badge/Pinpoint-40AEF0?style=flat-square&logo=&logoColor=white"/> <img src="https://img.shields.io/badge/Spock-85EA2D?style=flat-square&logo=Spock&logoColor=white"/>
+
+**Api Spec**
+
+<a href="https://api.jjaksim.com/swagger-ui/index.html"><img src="https://img.shields.io/badge/Swagger-85EA2D?style=flat-square&logo=Swagger&logoColor=white"/></a>
+
+**Database**
+
+<img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white"/> <img src="https://img.shields.io/badge/Adminer-34567C?style=flat-square&logo=Adminer&logoColor=white"/> <img src="https://img.shields.io/badge/Flyway-CC0200?style=flat-square&logo=Flyway&logoColor=white"/>
+
+**Deployment**
+
+<img src="https://img.shields.io/badge/AWS EC2-FF9900?style=flat-square&logo=Amazon-EC2&logoColor=white"/> <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=Docker&logoColor=white"/> <img src="https://img.shields.io/badge/Terraform-7B42BC?style=flat-square&logo=Terraform&logoColor=white"/> <img src="https://img.shields.io/badge/AWS RDS-527FFF?style=flat-square&logo=Amazon-RDS&logoColor=white"/>
+
+## 🗒️Entity Relationship Diagram(ERD)
+
+![image-20221226161933634](/Users/chaesang-yeob/Library/Application Support/typora-user-images/image-20221226161933634.png)
+
+## Information Architecture(IA)
+
+![I.A](/Users/chaesang-yeob/Desktop/I.A.png)
+
+## Service Structure
+짝심삼일의 서비스 구성도입니다.
+비용 절감을 위해 AWS 프리티어를 한정된 자원 속에서 가장 효율적으로 이용할 수 있는 구조를 채택하였습니다. <br>
+외부 서비스는 로그인시 Kakao API를 이용하고, 푸시 알림 전달시 FCM을 이용합니다. <br>
+배치 기능 동작을 위해 EventBridge를 사용하였으며, 편의를 위해 Private, Public Subnet을 엄격하게 구분하지는 않았습니다
+
+![image-20221226162452166](/Users/chaesang-yeob/Library/Application Support/typora-user-images/image-20221226162452166.png)
+
+</div>
