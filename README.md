@@ -35,11 +35,11 @@
 
 <img width="1017" alt="image" src="https://user-images.githubusercontent.com/78407939/209675671-0bd70e93-a773-4005-9000-5ed8a78755a8.png">
 
-## Information Architecture(IA)
+## 🗺️Information Architecture(IA)
 
 ![I A](https://user-images.githubusercontent.com/78407939/209675815-7e1e6669-16b2-4944-aaae-baaf5cf8f485.png)
 
-## Service Structure
+## 🏢Service Structure
 짝심삼일의 서비스 구성도입니다.
 비용 절감을 위해 AWS 프리티어를 한정된 자원 속에서 가장 효율적으로 이용할 수 있는 구조를 채택하였습니다. <br>
 외부 서비스는 로그인시 Kakao API를 이용하고, 푸시 알림 전달시 FCM을 이용합니다. <br>
