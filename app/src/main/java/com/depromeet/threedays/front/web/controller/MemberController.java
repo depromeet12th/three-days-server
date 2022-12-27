@@ -12,10 +12,7 @@ import com.depromeet.threedays.front.support.ApiResponse;
 import com.depromeet.threedays.front.support.ApiResponseGenerator;
 import com.depromeet.threedays.front.support.MessageCode;
 import com.depromeet.threedays.front.web.request.client.DeleteClientRequest;
-import com.depromeet.threedays.front.web.request.member.MemberNameUpdateRequest;
-import com.depromeet.threedays.front.web.request.member.MemberNotificationConsentUpdateRequest;
-import com.depromeet.threedays.front.web.request.member.MemberResourceUpdateRequest;
-import com.depromeet.threedays.front.web.request.member.SignMemberRequest;
+import com.depromeet.threedays.front.web.request.member.*;
 import com.depromeet.threedays.front.web.response.SaveMemberResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,9 +26,7 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
 	private final SignMemberUseCaseFacade signUseCase;
-	private final SaveNameUseCase saveNameUseCase;
-	private final SaveConsentUseCase saveConsentUseCase;
-	private final SaveResourceUseCase saveResourceUseCase;
+	private final UpdateMemberUseCase updateMemberUsecase;
 	private final GetTokenUseCase getTokenUseCase;
 	private final DeleteMemberUseCase deleteUseCase;
 	private final DeleteClientUseCase deleteClientUseCase;
@@ -50,25 +45,10 @@ public class MemberController {
 		}
 	}
 
-	/** 닉네임 변경 */
-	@PatchMapping("/name")
-	public ApiResponse<ApiResponse.SuccessBody<Member>> updateName(
-			@RequestBody @Valid MemberNameUpdateRequest request) {
-		return ApiResponseGenerator.success(saveNameUseCase.execute(request), HttpStatus.OK);
-	}
-
-	/** 알림 수신 설정 변경 */
-	@PatchMapping("/consents")
-	public ApiResponse<ApiResponse.SuccessBody<Member>> updateConsent(
-			@RequestBody @Valid MemberNotificationConsentUpdateRequest request) {
-		return ApiResponseGenerator.success(saveConsentUseCase.execute(request), HttpStatus.OK);
-	}
-
-	/** 사용자 정보 업데이트 */
-	@PatchMapping("/resources")
-	public ApiResponse<ApiResponse.SuccessBody<Member>> updateResource(
-			@RequestBody @Valid MemberResourceUpdateRequest request) {
-		return ApiResponseGenerator.success(saveResourceUseCase.execute(request), HttpStatus.OK);
+	@PatchMapping("/me")
+	public ApiResponse<ApiResponse.SuccessBody<Member>> updateMember(
+			@RequestBody @Valid MemberUpdateRequest request) {
+		return ApiResponseGenerator.success(updateMemberUsecase.execute(request), HttpStatus.OK);
 	}
 
 	/** 토근 발급 */
