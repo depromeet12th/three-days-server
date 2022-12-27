@@ -24,7 +24,8 @@ public class SaveMateUseCase {
 
 	public Mate execute(final Long habitId, final SaveMateRequest request) {
 
-		Mate data = MateConverter.from(habitId, request).toBuilder().level(0).status(MateStatus.ACTIVE).build();
+		Mate data =
+				MateConverter.from(habitId, request).toBuilder().level(0).status(MateStatus.ACTIVE).build();
 
 		validator.validateCreateConstraints(data);
 
