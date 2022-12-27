@@ -33,7 +33,7 @@
 
 ## 🗒️Entity Relationship Diagram(ERD)
 
-![image-20221226161933634](/Users/chaesang-yeob/Library/Application Support/typora-user-images/image-20221226161933634.png)
+<img width="1017" alt="image" src="https://user-images.githubusercontent.com/78407939/209675671-0bd70e93-a773-4005-9000-5ed8a78755a8.png">
 
 ## Information Architecture(IA)
 
@@ -44,7 +44,6 @@
 비용 절감을 위해 AWS 프리티어를 한정된 자원 속에서 가장 효율적으로 이용할 수 있는 구조를 채택하였습니다. <br>
 외부 서비스는 로그인시 Kakao API를 이용하고, 푸시 알림 전달시 FCM을 이용합니다. <br>
 배치 기능 동작을 위해 EventBridge를 사용하였으며, 편의를 위해 Private, Public Subnet을 엄격하게 구분하지는 않았습니다
-
-![image-20221226162452166](/Users/chaesang-yeob/Library/Application Support/typora-user-images/image-20221226162452166.png)
+<img width="1009" alt="image" src="https://user-images.githubusercontent.com/78407939/209675697-75b5b0b5-33ff-4eeb-86c9-947c260ccc7f.png">
 
 </div>
