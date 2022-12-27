@@ -431,6 +431,42 @@ paths:
               example:
                 - code: "uncaught error"
                   message: "서버 에러"
+    patch:
+      tags:
+        - Member
+      summary: 사용자 관련 정보 수정 API
+      operationId: patchMember
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberUpdateRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+        '400':
+          description: BAD REQUEST
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "invalid.id"
+                  message: "id는 숫자여야만 합니다."
+        '500':
+          description: INTERNAL SERVER ERROR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiFailureResponse'
+              example:
+                - code: "uncaught error"
+                  message: "서버 에러"
   /api/v1/members/logout:
     post:
       tags:
@@ -454,118 +490,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponse'
-        '500':
-          description: INTERNAL SERVER ERROR
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
-              example:
-                - code: "uncaught error"
-                  message: "서버 에러"
-  /api/v1/members/name:
-    patch:
-      tags:
-        - Member
-      summary: 닉네임 수정 API
-      operationId: patchMemberName
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/MemberNameUpdateRequest'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Member'
-        '400':
-          description: BAD REQUEST
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
-              example:
-                - code: "invalid.id"
-                  message: "id는 숫자여야만 합니다."
-        '500':
-          description: INTERNAL SERVER ERROR
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
-              example:
-                - code: "uncaught error"
-                  message: "서버 에러"
-  /api/v1/members/consents:
-    patch:
-      tags:
-        - Member
-      summary: 알림수신여부 수정 API
-      operationId: patchMemberNotificationConsent
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/MemberNotificationConsentUpdateRequest'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Member'
-        '400':
-          description: BAD REQUEST
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
-              example:
-                - code: "invalid.id"
-                  message: "id는 숫자여야만 합니다."
-        '500':
-          description: INTERNAL SERVER ERROR
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
-              example:
-                - code: "uncaught error"
-                  message: "서버 에러"
-  /api/v1/members/resource:
-    patch:
-      tags:
-        - Member
-      summary: 리소스 수정 API
-      description: 멤버용 리소스를 저장하기 위한 API입니다. 전송한 키값이 기존에 존재하는 경우 새로운 값으로 덮어써지며, 새로운 키값의 경우에는 추가됩니다(리소스 오브젝트가 전체 교체되지 않습니다)
-      operationId: patchMemberResource
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/MemberResourceRequest'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Member'
-        '400':
-          description: BAD REQUEST
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiFailureResponse'
-              example:
-                - code: "invalid.id"
-                  message: "id는 숫자여야만 합니다."
         '500':
           description: INTERNAL SERVER ERROR
           content:
@@ -1052,6 +976,17 @@ components:
         socialToken:
           type: string
           example: "oauth access token"
+    MemberUpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: admin
+        notificationConsent:
+          type: boolean
+          example: false
+        resource:
+          type: object
     MemberNameUpdateRequest:
       type: object
       properties:
