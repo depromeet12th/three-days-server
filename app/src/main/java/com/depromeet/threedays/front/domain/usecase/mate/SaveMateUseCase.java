@@ -1,5 +1,6 @@
 package com.depromeet.threedays.front.domain.usecase.mate;
 
+import com.depromeet.threedays.data.enums.MateStatus;
 import com.depromeet.threedays.front.domain.converter.mate.MateConverter;
 import com.depromeet.threedays.front.domain.model.mate.Mate;
 import com.depromeet.threedays.front.domain.validation.MateValidator;
@@ -23,7 +24,7 @@ public class SaveMateUseCase {
 
 	public Mate execute(final Long habitId, final SaveMateRequest request) {
 
-		Mate data = MateConverter.from(habitId, request).toBuilder().level(0).build();
+		Mate data = MateConverter.from(habitId, request).toBuilder().level(0).status(MateStatus.ACTIVE).build();
 
 		validator.validateCreateConstraints(data);
 
