@@ -3,7 +3,6 @@ package com.depromeet.threedays.front.domain.converter.mate;
 import com.depromeet.threedays.data.entity.mate.MateEntity;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.model.mate.Mate;
-import com.depromeet.threedays.front.support.MateBubble;
 import com.depromeet.threedays.front.web.request.mate.SaveMateRequest;
 import lombok.experimental.UtilityClass;
 
@@ -26,7 +25,28 @@ public class MateConverter {
 				.levelUpAt(entity.getLevelUpAt())
 				.characterType(entity.getCharacterType())
 				.levelUpSection(entity.getLevelUpSection())
-				.bubble(MateBubble.randomBubble().getBubble())
+				.status(entity.getStatus())
+				.deleted(entity.getDeleted())
+				.build();
+	}
+
+	public static Mate from(final MateEntity entity, String bubbleMessage) {
+		if (entity == null) {
+			return null;
+		}
+
+		// FIXME: reward
+		return Mate.builder()
+				.id(entity.getId())
+				.memberId(entity.getMemberId())
+				.habitId(entity.getHabitId())
+				.title(entity.getTitle())
+				.createAt(entity.getCreateAt())
+				.level(entity.getLevel())
+				.levelUpAt(entity.getLevelUpAt())
+				.characterType(entity.getCharacterType())
+				.levelUpSection(entity.getLevelUpSection())
+				.bubble(bubbleMessage)
 				.status(entity.getStatus())
 				.deleted(entity.getDeleted())
 				.build();
