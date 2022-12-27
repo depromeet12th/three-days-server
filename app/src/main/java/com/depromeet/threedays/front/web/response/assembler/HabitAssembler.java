@@ -39,12 +39,12 @@ public class HabitAssembler {
 						.map(RewardHistoryConverter::from)
 						.collect(Collectors.toList());
 		return HabitResponseConverter.from(
-				habit, rewardHistories, getRandomMateBubble(habit.getMate().getCharacterType()));
+				habit, rewardHistories, getRandomMateBubble(mate.getCharacterType(), mate.getId()));
 	}
 
-	private String getRandomMateBubble(MateType type) {
+	private String getRandomMateBubble(MateType type, Long mateId) {
 		List<MateBubbleEntity> bubbles = mateBubbleRepository.findAllByCharacterType(type);
-		Random random = new Random(LocalDate.now().toEpochDay());
+		Random random = new Random(LocalDate.now().toEpochDay() - mateId);
 		return bubbles.get(random.nextInt(bubbles.size())).getMessage();
 	}
 }

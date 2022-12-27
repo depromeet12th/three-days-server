@@ -35,19 +35,20 @@ public class MateAssembler {
 						.map(RewardHistoryConverter::from)
 						.collect(Collectors.toList());
 		return MateResponseConverter.from(
-				mate, rewardHistories, getRandomMateBubble(mate.getCharacterType()));
+				mate, rewardHistories, getRandomMateBubble(mate.getCharacterType(), mate.getId()));
 	}
 
 	public Mate toMate(MateEntity entity) {
 		if (entity == null) {
 			return null;
 		}
-		return MateConverter.from(entity, getRandomMateBubble(entity.getCharacterType()));
+		return MateConverter.from(
+				entity, getRandomMateBubble(entity.getCharacterType(), entity.getId()));
 	}
 
-	private String getRandomMateBubble(MateType type) {
+	private String getRandomMateBubble(MateType type, Long mateId) {
 		List<MateBubbleEntity> bubbles = mateBubbleRepository.findAllByCharacterType(type);
-		Random random = new Random(LocalDate.now().toEpochDay());
+		Random random = new Random(LocalDate.now().toEpochDay() - mateId);
 		return bubbles.get(random.nextInt(bubbles.size())).getMessage();
 	}
 }
