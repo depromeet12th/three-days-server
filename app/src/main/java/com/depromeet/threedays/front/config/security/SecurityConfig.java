@@ -8,6 +8,7 @@ import com.depromeet.threedays.front.config.security.filter.token.TokenResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -53,7 +54,7 @@ public class SecurityConfig {
 		http.authorizeRequests()
 				.antMatchers("/swagger-ui/index.html#/")
 				.permitAll()
-				.antMatchers("/api/v1/members")
+				.antMatchers(HttpMethod.POST, "/api/v1/members", "/api/v1/members/tokens")
 				.permitAll()
 				.antMatchers("/api/v1/**")
 				.authenticated();

@@ -5,7 +5,9 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import java.util.Base64;
 import java.util.Date;
+import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -14,6 +16,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class TokenResolver {
 
@@ -32,6 +35,22 @@ public class TokenResolver {
 			return parseBearerToken(jwtToken);
 		}
 		return null;
+	}
+
+	/** 토큰에서 memberId 조회 */
+	public Optional<Long> resolveToken(String token) {
+		try {
+			return Optional.ofNullable(
+					Jwts.parserBuilder()
+							.setSigningKey(secretKey.getBytes())
+							.build()
+							.parseClaimsJws(token)
+							.getBody()
+							.get("memberId", Long.class));
+		} catch (Exception e) {
+			log.warn("Failed to get memberId. token: {}", token);
+			return Optional.empty();
+		}
 	}
 
 	private boolean validateToken(String jwtToken) {
