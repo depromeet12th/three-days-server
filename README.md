@@ -37,7 +37,7 @@
 
 ## Information Architecture(IA)
 
-![I.A](/Users/chaesang-yeob/Desktop/I.A.png)
+![I A](https://user-images.githubusercontent.com/78407939/209675815-7e1e6669-16b2-4944-aaae-baaf5cf8f485.png)
 
 ## Service Structure
 짝심삼일의 서비스 구성도입니다.
