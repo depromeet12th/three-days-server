@@ -2,6 +2,7 @@ package com.depromeet.threedays.front.web.controller;
 
 import com.depromeet.threedays.front.exception.JsonParsingException;
 import com.depromeet.threedays.front.exception.PolicyViolationException;
+import com.depromeet.threedays.front.exception.RefreshTokenInvalidException;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import com.depromeet.threedays.front.support.ApiResponse;
 import com.depromeet.threedays.front.support.ApiResponseGenerator;
@@ -39,6 +40,8 @@ public class ApiControllerExceptionHandler {
 
 	private static final String BAD_REQUEST_MESSAGE = "잘못된 요청입니다.";
 
+	private static final String REFRESH_TOKEN_INVALID_MESSAGE = "로그인이 필요합니다.";
+
 	private static final String FORBIDDEN_MESSAGE = "접근 권한이 없습니다.";
 
 	private static final String UNAUTHORIZED_MESSAGE = "인증이 필요합니다.";
@@ -72,6 +75,14 @@ public class ApiControllerExceptionHandler {
 			final Exception ex, final WebRequest request) {
 		this.writeLog(ex, request);
 		return ApiResponseGenerator.fail(FAIL_CODE, BAD_REQUEST_MESSAGE, HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(RefreshTokenInvalidException.class)
+	public final ApiResponse<ApiResponse.FailureBody> handleRefreshTokenInvalidException(
+			final RefreshTokenInvalidException ex, final WebRequest request) {
+		this.writeLog(ex, request);
+		return ApiResponseGenerator.fail(
+				"INVALID_REFRESH_TOKEN", REFRESH_TOKEN_INVALID_MESSAGE, HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler({ResourceNotFoundException.class, NoHandlerFoundException.class})
