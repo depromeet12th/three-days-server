@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 public class NotificationController {
+
 	private final SendGlobalNotificationUseCase sendGlobalNotificationUseCase;
 	private final SendHabitNotificationUseCase sendHabitNotificationUseCase;
 
@@ -24,7 +25,7 @@ public class NotificationController {
 	// FIXME: dto 에서 firebase BatchResponse 사용하지 않게 변경
 	@PostMapping("/global")
 	public ApiResponse<ApiResponse.SuccessBody<List<NotificationBatchResponse>>>
-			sendGlobalNotification() {
+	sendGlobalNotification() {
 		return ApiResponseGenerator.success(sendGlobalNotificationUseCase.execute(), HttpStatus.OK);
 	}
 
@@ -35,8 +36,4 @@ public class NotificationController {
 		return ApiResponseGenerator.success(sendHabitNotificationUseCase.execute(), HttpStatus.OK);
 	}
 
-	@PostMapping("/test")
-	public ApiResponse<ApiResponse.SuccessBody<Void>> test() {
-		return ApiResponseGenerator.success(HttpStatus.OK);
-	}
 }

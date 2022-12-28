@@ -1,0 +1,56 @@
+name: Dev - Deploy to Amazon EC2
+
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: development
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Docker build & push to prod
+        run: |
+          GIT_HASH=$(git rev-parse --short HEAD)
+          ./gradlew :app:buildDockerImage -PimageName=${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest
+          docker tag ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:${GIT_HASH}
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }} --all-tags
+      - name: Deploy to prod
+        uses: appleboy/ssh-action@v0.1.4
+        id: deploy-prod
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          envs: GITHUB_SHA
+          script: |
+            sudo docker rm -f $(sudo docker ps -qa)
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
+            sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+            sudo docker run -p 80:8080 -d -e DB_HOSTNAME=${{ secrets.DB_HOSTNAME }} -e DB_USERNAME=${{ secrets.DB_USERNAME }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -e TOKEN_VALIDTIME=${{ secrets.TOKEN_VALIDTIME }} -e TOKEN_SECRETKEY=${{ secrets.TOKEN_SECRETKEY }} -e 'FIREBASE_PRIVATE_KEY=${{ secrets.FIREBASE_PRIVATE_KEY }}' -e FIREBASE_PRIVATE_KEY_ID=${{ secrets.FIREBASE_PRIVATE_KEY_ID }} -e KAKAO_ADMINKEY=${{ secrets.KAKAO_ADMINKEY }} ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest 
+            sudo docker image prune -f
