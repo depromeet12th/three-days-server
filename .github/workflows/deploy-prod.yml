@@ -5,6 +5,9 @@ on:
     branches:
       - master
 
+env:
+  AWS_REGION: ap-northeast-2
+  ECR_REPOSITORY: three-days/be-api
 
 jobs:
   build-and-push-docker-image:
