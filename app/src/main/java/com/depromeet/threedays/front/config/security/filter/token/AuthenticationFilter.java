@@ -3,12 +3,8 @@ package com.depromeet.threedays.front.config.security.filter.token;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 
-@Slf4j
-@RequiredArgsConstructor
 public class AuthenticationFilter extends AbstractPreAuthenticatedProcessingFilter {
 
 	private static final Pattern PATTERN_AUTHORIZATION_HEADER = Pattern.compile("^[Bb]earer (.*)$");
