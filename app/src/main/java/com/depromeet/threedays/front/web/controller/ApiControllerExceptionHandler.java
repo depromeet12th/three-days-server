@@ -6,6 +6,7 @@ import com.depromeet.threedays.front.exception.RefreshTokenInvalidException;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import com.depromeet.threedays.front.support.ApiResponse;
 import com.depromeet.threedays.front.support.ApiResponseGenerator;
+import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +14,7 @@ import org.hibernate.TypeMismatchException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -98,9 +99,8 @@ public class ApiControllerExceptionHandler {
 		return ApiResponseGenerator.fail(FAIL_CODE, FORBIDDEN_MESSAGE, HttpStatus.FORBIDDEN);
 	}
 
-	@ExceptionHandler(AuthenticationException.class)
-	public ApiResponse<ApiResponse.FailureBody> handle(
-			final AuthenticationException ex, final WebRequest request) {
+	@ExceptionHandler({InsufficientAuthenticationException.class, AuthenticationException.class})
+	public ApiResponse<ApiResponse.FailureBody> handle(final Exception ex, final WebRequest request) {
 		this.writeLog(ex, request);
 		return ApiResponseGenerator.fail(FAIL_CODE, UNAUTHORIZED_MESSAGE, HttpStatus.UNAUTHORIZED);
 	}

@@ -71,7 +71,7 @@ public class SecurityConfig {
 	}
 
 	public AuthenticationFilter generateAuthenticationFilter() {
-		AuthenticationFilter authenticationFilter = new AuthenticationFilter();
+		AuthenticationFilter authenticationFilter = new AuthenticationFilter(tokenResolver);
 		authenticationFilter.setAuthenticationManager(new ProviderManager(authProvider));
 		return authenticationFilter;
 	}
