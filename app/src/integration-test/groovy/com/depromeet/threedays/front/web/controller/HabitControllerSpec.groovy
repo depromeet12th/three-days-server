@@ -3,7 +3,6 @@ package com.depromeet.threedays.front.web.controller
 import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.web.request.member.MemberNameUpdateRequest
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.hamcrest.Matchers
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
@@ -25,6 +24,7 @@ class HabitControllerSpec extends IntegrationTestSpecification {
         when:
         def resultActions = mockMvc.perform(
                 MockMvcRequestBuilders.post("/api/v1/habits")
+                        .header("Authorization", "Bearer accessToken")
                         .contentType(MediaType.TEXT_PLAIN)
         )
         then:
@@ -39,6 +39,7 @@ class HabitControllerSpec extends IntegrationTestSpecification {
 
         when:
         def resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/habits")
+                .header("Authorization", "Bearer accessToken")
                 .content(content)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -51,6 +52,7 @@ class HabitControllerSpec extends IntegrationTestSpecification {
         given:
         when:
         def resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/habits/1")
+                .header("Authorization", "Bearer accessToken")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
 
@@ -64,6 +66,7 @@ class HabitControllerSpec extends IntegrationTestSpecification {
         given:
         when:
         def resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/habits/1")
+                .header("Authorization", "Bearer accessToken")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
 
