@@ -1,8 +1,10 @@
 package com.depromeet.threedays.front.config.security.filter.token;
 
 import java.util.Collections;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
@@ -18,21 +20,23 @@ public class AuthProvider implements AuthenticationProvider {
 
 	private static final String ROLE_USER = "ROLE_USER";
 	private static final String PREAUTH_TOKEN_CREDENTIAL = "";
+	private static final String MEMBER_ID_CLAIM_KEY = "memberId";
 
 	private final TokenResolver tokenResolver;
 
 	@Override
 	public Authentication authenticate(Authentication authentication)
 			throws AuthenticationException, AccessDeniedException {
+		final String payload = tokenResolver.decodeTokenPayload(authentication);
+		JSONParser jsonParser = new JSONParser();
 
-		Long memberId =
-				Optional.ofNullable(authentication.getPrincipal())
-						.map(String.class::cast)
-						.flatMap(tokenResolver::resolveToken)
-						.orElseThrow(
-								() ->
-										new AccessTokenInvalidException(
-												"Invalid access token. accessToken: " + authentication.getPrincipal()));
+		Long memberId;
+		try {
+			JSONObject jsonObject = (JSONObject) jsonParser.parse(payload);
+			memberId = (Long) jsonObject.get(MEMBER_ID_CLAIM_KEY);
+		} catch (ParseException e) {
+			throw new AccessDeniedException(e.getMessage());
+		}
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
