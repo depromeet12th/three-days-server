@@ -1,0 +1,9 @@
+version: 0.0
+Resources:
+  - TargetService:
+      Type: AWS::ECS::Service
+      Properties:
+        TaskDefinition: "arn:aws:ecs:ap-northeast-2:576650588976:task-definition/three-days-be-api"
+        LoadBalancerInfo:
+          ContainerName: "three-days-be-api"
+          ContainerPort: 8080
