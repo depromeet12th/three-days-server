@@ -21,6 +21,9 @@ public class AuthenticationFilter extends AbstractPreAuthenticatedProcessingFilt
 
 	private String resolveAccessToken(HttpServletRequest request) {
 		String authorization = request.getHeader("Authorization");
+		if (authorization == null) {
+			return null;
+		}
 		Matcher matcher = PATTERN_AUTHORIZATION_HEADER.matcher(authorization);
 		if (!matcher.matches()) {
 			return null;
