@@ -13,7 +13,9 @@ spring:
 security:
   jwt:
     token:
-      validtime: 72000000
+      validtime:
+        access: 31557600000
+        refresh: 31557600000
       secretkey: localkeyyyyyyyyyyyyyyyyyyyyyyyyy
 
 google:
