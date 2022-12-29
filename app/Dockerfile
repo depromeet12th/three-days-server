@@ -16,4 +16,5 @@ ENTRYPOINT ["java", \
 			"-XX:MaxGCPauseMillis=100", \
 			"-XX:InitialRAMPercentage=50.0", \
 			"-XX:MaxRAMPercentage=80.0", \
+			"-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", \
 			"-jar", "app.jar" ]
