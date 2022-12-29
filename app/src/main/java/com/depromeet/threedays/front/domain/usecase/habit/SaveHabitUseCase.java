@@ -33,10 +33,13 @@ public class SaveHabitUseCase {
 	}
 
 	private Habit save(Habit data) {
+		Notification notification = data.getNotification();
+		EnumSet<DayOfWeek> dayOfWeeks = data.getDayOfWeeks();
 		HabitEntity habitEntity = repository.save(HabitConverter.to(data));
+		// Habit data 는 id 가 없어서 habitEntity.id 가져오기위함
 		Habit habit = HabitConverter.from(habitEntity);
-		this.saveAssociation(habit, habit.getNotification(), habit.getDayOfWeeks());
-		return HabitConverter.from(habitEntity, habit.getNotification()).toBuilder()
+		this.saveAssociation(habit, notification, dayOfWeeks);
+		return HabitConverter.from(habitEntity, notification).toBuilder()
 				.totalAchievementCount(0L)
 				.build();
 	}
