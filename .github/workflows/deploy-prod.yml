@@ -58,35 +58,35 @@ jobs:
           docker tag ${ECR_REGISTRY}/${ECR_REPOSITORY}:latest ${ECR_REGISTRY}/${ECR_REPOSITORY}:${GIT_HASH}
           docker push ${ECR_REGISTRY}/${ECR_REPOSITORY} --all-tags
 
-      - name: Get ECR Repository image path
-        id: get-docker-image-path
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        run: |
-          GIT_HASH=$(git rev-parse --short HEAD)
-          echo ${ECR_REGISTRY}/${ECR_REPOSITORY}:${GIT_HASH}
-          echo "::set-output name=image::${ECR_REGISTRY}/${ECR_REPOSITORY}:${GIT_HASH}"
+#      - name: Get ECR Repository image path
+#        id: get-docker-image-path
+#        env:
+#          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+#        run: |
+#          GIT_HASH=$(git rev-parse --short HEAD)
+#          echo ${ECR_REGISTRY}/${ECR_REPOSITORY}:${GIT_HASH}
+#          echo "::set-output name=image::${ECR_REGISTRY}/${ECR_REPOSITORY}:${GIT_HASH}"
 
-      - name: Download task definition
-        run: |
-          aws ecs describe-task-definition --task-definition ${CONTAINER_NAME} --query taskDefinition > task-definition.json
+#      - name: Download task definition
+#        run: |
+#          aws ecs describe-task-definition --task-definition ${CONTAINER_NAME} --query taskDefinition > task-definition.json
+#
+#      - name: Fill in the new image ID in the Amazon ECS task definition
+#        id: task-definition
+#        uses: aws-actions/amazon-ecs-render-task-definition@v1
+#        with:
+#          task-definition: ${{ env.ECS_TASK_DEFINITION }}
+#          container-name: ${{ env.CONTAINER_NAME }}
+#          image: ${{ steps.get-docker-image-path.outputs.image }}
 
-      - name: Fill in the new image ID in the Amazon ECS task definition
-        id: task-definition
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: ${{ env.ECS_TASK_DEFINITION }}
-          container-name: ${{ env.CONTAINER_NAME }}
-          image: ${{ steps.get-docker-image-path.outputs.image }}
-
-      - name: Deploy Amazon ECS task definition
-        id: ecs-deployment
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: ${{ steps.task-definition.outputs.task-definition }}
-          service: ${{ env.ECS_SERVICE }}
-          cluster: ${{ env.ECS_CLUSTER }}
-          wait-for-service-stability: true
+#      - name: Deploy Amazon ECS task definition
+#        id: ecs-deployment
+#        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+#        with:
+#          task-definition: ${{ steps.task-definition.outputs.task-definition }}
+#          service: ${{ env.ECS_SERVICE }}
+#          cluster: ${{ env.ECS_CLUSTER }}
+#          wait-for-service-stability: true
 #          codedeploy-appspec: ${{ env.CODEDEPLOY_APPSPEC }}
 #          codedeploy-application: ${{ env.CODEDEPLOY_APPLICATION }}
 #          codedeploy-deployment-group: ${{ env.CODEDEPLOY_DEPLOYMENT_GROUP }}
