@@ -52,12 +52,12 @@ public class SecurityConfig {
 		http.httpBasic().disable();
 
 		http.authorizeRequests()
-				.antMatchers("/swagger-ui/index.html#/", "/api/v1/notifications")
+				.antMatchers("/swagger-ui/index.html#/")
 				.permitAll()
 				.antMatchers(HttpMethod.POST, "/api/v1/members", "/api/v1/members/tokens")
 				.permitAll()
 				.antMatchers("/api/v1/**")
-				.authenticated();
+				.permitAll();
 
 		http.addFilterAt(
 				generateAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class);
