@@ -1,4 +1,4 @@
-name: [ DEV ] Deploy to Amazon EC2
+name: Deploy to Amazon EC2 - DEV
 
 on:
   push:
