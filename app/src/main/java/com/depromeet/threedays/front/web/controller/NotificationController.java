@@ -9,6 +9,7 @@ import com.google.firebase.messaging.BatchResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,6 +35,11 @@ public class NotificationController {
 	@PostMapping("/habit")
 	public ApiResponse<ApiResponse.SuccessBody<List<BatchResponse>>> sendHabitNotification() {
 		return ApiResponseGenerator.success(sendHabitNotificationUseCase.execute(), HttpStatus.OK);
+	}
+
+	@GetMapping()
+	public String read() {
+		return "update success";
 	}
 
 }
