@@ -1,4 +1,4 @@
-name: Deploy to Amazon EC2
+name: [ DEV ] Deploy to Amazon EC2
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       logLevel:
-        description: 'Log level'     
+        description: 'Log level'
         required: true
         default: 'warning'
 
