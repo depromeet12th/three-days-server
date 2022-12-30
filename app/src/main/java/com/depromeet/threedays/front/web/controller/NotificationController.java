@@ -37,7 +37,7 @@ public class NotificationController {
 		return ApiResponseGenerator.success(sendHabitNotificationUseCase.execute(), HttpStatus.OK);
 	}
 
-	@GetMapping()
+	@GetMapping("/test")
 	public String read() {
 		return "update success";
 	}
