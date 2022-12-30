@@ -8,6 +8,7 @@ on:
 env:
   AWS_REGION: ap-northeast-2
   ECR_REPOSITORY: three-days/be-api
+  ECS_SERVICE: three-days-be-api
   ECS_CLUSTER: three-days-cluster
   ECS_TASK_DEFINITION: task-definition.json
   CONTAINER_NAME: three-days-be-api
