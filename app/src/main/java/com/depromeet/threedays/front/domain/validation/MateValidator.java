@@ -1,5 +1,6 @@
 package com.depromeet.threedays.front.domain.validation;
 
+import com.depromeet.threedays.data.enums.MateStatus;
 import com.depromeet.threedays.front.domain.model.mate.Mate;
 import com.depromeet.threedays.front.exception.PolicyViolationException;
 import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository;
@@ -33,7 +34,9 @@ public class MateValidator {
 		final String ALREADY_EXIST_MATE = "already.exist.mate";
 
 		this.throwIf(
-				repository.existsByMemberIdAndDeletedFalse(target.getMemberId()), ALREADY_EXIST_MATE);
+				repository.existsByMemberIdAndStatusAndDeletedFalse(
+						target.getMemberId(), MateStatus.ACTIVE),
+				ALREADY_EXIST_MATE);
 	}
 
 	private void throwIf(final boolean condition, final String messageCodeSuffix) {
