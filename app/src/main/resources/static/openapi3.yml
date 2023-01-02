@@ -4,8 +4,10 @@ info:
   description: description
   version: '1.0.1'
 servers:
-  - url: https://api.jjaksim.com
+  - url: https://api.zzaksim.com
     description: prod
+  - url: https://api.jjaksim.com
+    description: dev
   - url: http://localhost:8080
     description: local
   - url: https://1f70f9e5-cebb-4d8e-8b33-f590a74edacf.mock.pstmn.io/
