@@ -1,0 +1,38 @@
+spring:
+  profiles:
+    active: prod
+    include:
+      - data-prod
+
+security:
+  jwt:
+    token:
+      validtime:
+        access: 21600000
+        refresh: 2073600000
+      secretkey: ${TOKEN_SECRETKEY}
+
+google:
+  host: https://www.googleapis.com/oauth2
+  user:
+    uri: /v2/userinfo#profile
+kakao:
+  host: https://kapi.kakao.com
+  user:
+    uri: /v2/user/me
+  unlink:
+    uri: /v1/user/unlink
+  adminKey: ${KAKAO_ADMINKEY}
+
+firebase:
+  multicast-message:
+    size: 500
+  projectId: three-days-bd5f3
+  private:
+    keyId: ${FIREBASE_PRIVATE_KEY_ID}
+    key: ${FIREBASE_PRIVATE_KEY}
+  client:
+    id: 115789865759617169410
+    email: firebase-adminsdk-v3brd@three-days-bd5f3.iam.gserviceaccount.com
+  token:
+    uri: https://oauth2.googleapis.com/token

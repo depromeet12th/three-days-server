@@ -1,0 +1,44 @@
+spring:
+  config:
+    use-legacy-processing: true
+  profiles:
+    active: dev
+    include:
+      - data
+  redis:
+    host: localhost
+    password:
+    port: 16379
+
+security:
+  jwt:
+    token:
+      validtime:
+        access: 31557600000
+        refresh: 31557600000
+      secretkey: secretKeyForDepromeetJaksimsamilProjectdcreatedBySangyeop
+
+google:
+  host: https://www.googleapis.com/oauth2
+  user:
+    uri: /v2/userinfo#profile
+kakao:
+  host: https://kapi.kakao.com
+  user:
+    uri: /v2/user/me
+  unlink:
+    uri: /v1/user/unlink
+  adminKey: ${KAKAO_ADMINKEY_DEV}
+
+firebase:
+  multicast-message:
+    size: 500
+  projectId: three-days-developer
+  private:
+    keyId: ${FIREBASE_PRIVATE_KEY_ID_DEV}
+    key: ${FIREBASE_PRIVATE_KEY_DEV}
+  client:
+    id: 101929051198596598209
+    email: firebase-adminsdk-qeb7a@three-days-develop.iam.gserviceaccount.com
+  token:
+    uri: https://oauth2.googleapis.com/token
