@@ -26,7 +26,7 @@ public class SecurityConfig {
 	private final TokenResolver tokenResolver;
 
 	@Bean
-	@Profile({"local", "integration-test"})
+	@Profile({"local", "dev", "integration-test"})
 	public SecurityFilterChain localSecurityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 		http.formLogin().disable();
@@ -45,19 +45,21 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	@Profile(value = "default")
+	@Profile({"prod", "default"})
 	public SecurityFilterChain prodSecurityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 		http.formLogin().disable();
 		http.httpBasic().disable();
 
 		http.authorizeRequests()
-				.antMatchers(HttpMethod.GET, "/swagger-ui/index.html#/", "/actuator/health", "/error")
-				.permitAll()
-				.antMatchers(HttpMethod.POST, "/api/v1/members", "/api/v1/members/tokens")
-				.permitAll()
-				.antMatchers("/api/v1/**")
-				.authenticated();
+			.antMatchers(HttpMethod.GET, "/actuator/health", "/error")
+			.permitAll()
+			.antMatchers("/swagger-ui/index.html#/")
+			.denyAll()
+			.antMatchers(HttpMethod.POST, "/api/v1/members", "/api/v1/members/tokens")
+			.permitAll()
+			.antMatchers("/api/v1/**")
+			.authenticated();
 
 		http.addFilterAt(
 				generateAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class);
