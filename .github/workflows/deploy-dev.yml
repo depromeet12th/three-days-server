@@ -15,10 +15,10 @@ on:
         default: '-Dserver.tomcat.accesslog.enabled=true -Dserver.tomcat.basedir=/ -Dlogging.file.path=/logs'
       HOST_LOG_DIR:
         descrption: "Host's log directory"
-        default: /home/ec2-user/apps/three-days-api/logs
+        default: '/home/ec2-user/apps/three-days-api/logs'
       CONTAINER_LOG_DIR:
         descrption: "Container's log directory"
-          default: '/logs'
+        default: '/logs'
 
 permissions:
   contents: read
