@@ -28,14 +28,14 @@ kakao:
     uri: /v2/user/me
   unlink:
     uri: /v1/user/unlink
-  adminKey: thisIsAdminKey
+  adminKey: ${KAKAO_ADMINKEY_DEV}
 firebase:
   multicast-message:
     size: 500
   projectId: project
   private:
-    keyId: privateKeyId
-    key: privateKey
+    keyId: ${FIREBASE_PRIVATE_KEY_ID_DEV}
+    key: ${FIREBASE_PRIVATE_KEY_DEV}
   client:
     id: clientId
     email: clientEmail
