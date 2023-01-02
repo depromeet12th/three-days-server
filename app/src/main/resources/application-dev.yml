@@ -28,15 +28,15 @@ kakao:
     uri: /v2/user/me
   unlink:
     uri: /v1/user/unlink
-  adminKey: ${KAKAO_ADMINKEY_DEV}
+  adminKey: ${KAKAO_ADMINKEY}
 
 firebase:
   multicast-message:
     size: 500
   projectId: three-days-developer
   private:
-    keyId: ${FIREBASE_PRIVATE_KEY_ID_DEV}
-    key: ${FIREBASE_PRIVATE_KEY_DEV}
+    keyId: ${FIREBASE_PRIVATE_KEY_ID}
+    key: ${FIREBASE_PRIVATE_KEY}
   client:
     id: 101929051198596598209
     email: firebase-adminsdk-qeb7a@three-days-develop.iam.gserviceaccount.com
