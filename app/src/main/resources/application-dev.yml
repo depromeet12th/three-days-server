@@ -2,7 +2,6 @@ spring:
   config:
     use-legacy-processing: true
   profiles:
-    active: dev
     include:
       - data
   redis:
