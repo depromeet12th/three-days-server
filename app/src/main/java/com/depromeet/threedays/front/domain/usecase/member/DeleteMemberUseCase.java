@@ -16,10 +16,13 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Transactional
 @RequiredArgsConstructor
 @Service
@@ -32,11 +35,17 @@ public class DeleteMemberUseCase {
 	public Member execute() {
 		Long memberId = AuditorHolder.get();
 		Member member = quit(memberId);
+		// XXX: 앱 심사동안 테스트계정 탈퇴시 에러 안나게 임시 조치. 심사마치고 카카오 개발/운영환경 분리하면 삭제해야함
+		if (Objects.equals(9L, memberId)) {
+			log.warn("Ignored to unlink social account. member: {}", member);
+			return member;
+		}
 		unlinkSocialAccount(memberId);
 		return member;
 	}
 
-	public Member quit(Long memberId) {
+	/** 짝심삼일 앱에서 회원 탈퇴 */
+	Member quit(Long memberId) {
 		return memberRepository
 				.findByIdAndStatus(memberId, MemberStatus.REGULAR)
 				.map(MemberEntity::withdraw)
@@ -44,7 +53,8 @@ public class DeleteMemberUseCase {
 				.orElseThrow(ResourceNotFoundException::new);
 	}
 
-	public void unlinkSocialAccount(Long memberId) {
+	/** 카카오 계정 연결끊기 */
+	private void unlinkSocialAccount(Long memberId) {
 		MemberEntity member =
 				memberRepository.findById(memberId).orElseThrow(ResourceNotFoundException::new);
 		if (CertificationSubject.KAKAO.equals(member.getCertificationSubject())) {
