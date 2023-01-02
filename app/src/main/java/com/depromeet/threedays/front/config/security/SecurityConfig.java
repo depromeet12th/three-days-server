@@ -54,12 +54,12 @@ public class SecurityConfig {
 		http.authorizeRequests()
 				.antMatchers(HttpMethod.GET, "/actuator/health", "/error")
 				.permitAll()
-				.antMatchers("/swagger-ui/index.html#/")
-				.denyAll()
 				.antMatchers(HttpMethod.POST, "/api/v1/members", "/api/v1/members/tokens")
 				.permitAll()
 				.antMatchers("/api/v1/**")
-				.authenticated();
+				.authenticated()
+				.antMatchers("/swagger-ui/*")
+				.denyAll();
 
 		http.addFilterAt(
 				generateAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class);
