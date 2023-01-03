@@ -47,3 +47,13 @@
 <img width="1009" alt="image" src="https://user-images.githubusercontent.com/78407939/209675697-75b5b0b5-33ff-4eeb-86c9-947c260ccc7f.png">
 
 </div>
+
+
+### local 환경 서버 구동 방법
+1. 로컬 DB 구동
+  - `/resources/local-develop-environment/README.md` 참고
+2. 환경변수 추가
+  - ${TOKEN_SECRETKEY}
+  - ${FIREBASE_PRIVATE_KEY_ID}
+  - ${FIREBASE_PRIVATE_KEY}
+3. 실행
