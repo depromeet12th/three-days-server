@@ -32,12 +32,12 @@ public class SecurityConfig {
 		http.formLogin().disable();
 		http.httpBasic().disable();
 		http.authorizeRequests()
-			.antMatchers(HttpMethod.GET, "/swagger-ui/index.html#/", "/actuator/health", "/error")
-			.permitAll()
-			.antMatchers(HttpMethod.POST, "/api/v1/members", "/api/v1/members/tokens")
-			.permitAll()
-			.antMatchers("/api/v1/**")
-			.authenticated();
+				.antMatchers(HttpMethod.GET, "/swagger-ui/index.html#/", "/actuator/health", "/error")
+				.permitAll()
+				.antMatchers(HttpMethod.POST, "/api/v1/members", "/api/v1/members/tokens")
+				.permitAll()
+				.antMatchers("/api/v1/**")
+				.authenticated();
 
 		http.addFilterAt(
 				generateAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class);
