@@ -15,7 +15,7 @@ security:
       validtime:
         access: 31557600000
         refresh: 31557600000
-      secretkey: secretKeyForDepromeetJaksimsamilProjectdcreatedBySangyeop
+      secretkey: ${TOKEN_SECRETKEY}
 
 google:
   host: https://www.googleapis.com/oauth2
