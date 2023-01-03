@@ -53,7 +53,14 @@
 1. 로컬 DB 구동
   - `/resources/local-develop-environment/README.md` 참고
 2. 환경변수 추가
-  - ${TOKEN_SECRETKEY}
-  - ${FIREBASE_PRIVATE_KEY_ID}
-  - ${FIREBASE_PRIVATE_KEY}
-3. 실행
+  - `${TOKEN_SECRETKEY}`
+  - `${FIREBASE_PRIVATE_KEY_ID}`
+  - `${FIREBASE_PRIVATE_KEY}`
+  - `${KAKAO_ADMINKEY}`
+  - `${DB_HOSTNAME}`
+  - `${DB_USERNAME}`
+  - `${DB_PASSWORD}`
+3. 프로필 설정
+  - `Edit Configurations...` -> `Add VM Options` -> `-Dspring.profiles.active=local` 추가. 또는
+  - `Edit Configurations...` -> `Active profiles` -> `local` 추가
+4. 애플리케이션 실행
