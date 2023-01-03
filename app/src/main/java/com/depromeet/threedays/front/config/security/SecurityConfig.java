@@ -59,7 +59,7 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	@Profile({"prod", "default"})
+	@Profile(value = "prod")
 	public SecurityFilterChain prodSecurityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 		http.formLogin().disable();
