@@ -18,13 +18,13 @@ public class FirebaseConfig {
 		return new FirebaseProperty();
 	}
 
-	@Profile(value = "integration-test")
+	@Profile({"local", "integration-test"})
 	@Bean
 	public FirebaseApp localFireBaseApp() {
 		return null;
 	}
 
-	@Profile({"local", "dev", "prod"})
+	@Profile(value = "default")
 	@Bean
 	public FirebaseApp fireBaseApp(FirebaseProperty firebaseProperty) throws IOException {
 		FirebaseOptions options =
