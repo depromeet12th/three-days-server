@@ -24,7 +24,7 @@ public class TokenGenerator {
 
 	private static final String MEMBER_ID_CLAIM_KEY = "memberId";
 
-	public String generateAccessToken(Long memberId) {
+	String generateAccessToken(Long memberId) {
 		Date now = new Date();
 
 		return Jwts.builder()
@@ -36,7 +36,7 @@ public class TokenGenerator {
 				.compact();
 	}
 
-	public String generateRefreshToken(Long memberId) {
+	String generateRefreshToken(Long memberId) {
 		Date now = new Date();
 
 		return Jwts.builder()
