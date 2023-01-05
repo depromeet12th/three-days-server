@@ -69,6 +69,13 @@ public class MemberEntity implements Serializable {
 		return this;
 	}
 
+	public MemberEntity update(String name, Boolean consent, String resource) {
+		this.name = name;
+		this.notificationConsent = consent;
+		this.resource = resource;
+		return this;
+	}
+
 	public MemberEntity withdraw() {
 		status = MemberStatus.WITHDRAWN;
 		return this;
