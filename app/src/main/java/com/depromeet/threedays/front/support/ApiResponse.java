@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @Getter
-public class ApiResponse<B> extends ResponseEntity<B> implements Serializable {
+public class ApiResponse<B> extends ResponseEntity<B> {
 
 	public ApiResponse(final HttpStatus status) {
 		super(status);
