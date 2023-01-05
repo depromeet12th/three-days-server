@@ -6,7 +6,6 @@ import com.depromeet.threedays.data.enums.HabitStatus;
 import com.depromeet.threedays.data.enums.MateStatus;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.converter.habit.HabitConverter;
-import com.depromeet.threedays.front.domain.converter.mate.MateConverter;
 import com.depromeet.threedays.front.domain.model.habit.HabitAchievement;
 import com.depromeet.threedays.front.domain.model.habit.HabitOverview;
 import com.depromeet.threedays.front.domain.model.mate.Mate;
@@ -15,6 +14,7 @@ import com.depromeet.threedays.front.persistence.repository.habit.HabitAchieveme
 import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository;
 import com.depromeet.threedays.front.persistence.repository.mate.MateRepository;
 import com.depromeet.threedays.front.web.request.habit.SearchHabitRequest;
+import com.depromeet.threedays.front.web.response.assembler.MateAssembler;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +33,7 @@ public class SearchHabitUseCase {
 
 	private final RewardHistoryRepository rewardHistoryRepository;
 	private final MateRepository mateRepository;
+	private final MateAssembler mateAssembler;
 
 	public List<HabitOverview> execute(final SearchHabitRequest request) {
 		List<HabitEntity> habitEntities = new ArrayList<>();
@@ -74,16 +75,17 @@ public class SearchHabitUseCase {
 	}
 
 	private Mate getMate(final HabitStatus status, final Long habitId) {
+
 		if (status.equals(HabitStatus.ACTIVE)) {
 			return mateRepository
 					.findFirstByHabitIdAndStatusAndDeletedFalseOrderByCreateAtDesc(habitId, MateStatus.ACTIVE)
-					.map(MateConverter::from)
+					.map(mateAssembler::toMate)
 					.orElse(null);
 		}
 
 		return mateRepository
 				.findFirstByHabitIdAndStatusOrderByCreateAtDesc(habitId, MateStatus.ARCHIVED)
-				.map(MateConverter::from)
+				.map(mateAssembler::toMate)
 				.orElse(null);
 	}
 

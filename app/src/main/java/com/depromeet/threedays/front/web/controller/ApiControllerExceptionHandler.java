@@ -2,10 +2,10 @@ package com.depromeet.threedays.front.web.controller;
 
 import com.depromeet.threedays.front.exception.JsonParsingException;
 import com.depromeet.threedays.front.exception.PolicyViolationException;
+import com.depromeet.threedays.front.exception.RefreshTokenInvalidException;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import com.depromeet.threedays.front.support.ApiResponse;
 import com.depromeet.threedays.front.support.ApiResponseGenerator;
-import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +13,7 @@ import org.hibernate.TypeMismatchException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.InsufficientAuthenticationException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -38,6 +38,8 @@ public class ApiControllerExceptionHandler {
 	private static final String FAIL_CODE = "fail";
 
 	private static final String BAD_REQUEST_MESSAGE = "잘못된 요청입니다.";
+
+	private static final String REFRESH_TOKEN_INVALID_MESSAGE = "로그인이 필요합니다.";
 
 	private static final String FORBIDDEN_MESSAGE = "접근 권한이 없습니다.";
 
@@ -74,6 +76,14 @@ public class ApiControllerExceptionHandler {
 		return ApiResponseGenerator.fail(FAIL_CODE, BAD_REQUEST_MESSAGE, HttpStatus.BAD_REQUEST);
 	}
 
+	@ExceptionHandler(RefreshTokenInvalidException.class)
+	public final ApiResponse<ApiResponse.FailureBody> handleRefreshTokenInvalidException(
+			final RefreshTokenInvalidException ex, final WebRequest request) {
+		this.writeLog(ex, request);
+		return ApiResponseGenerator.fail(
+				"INVALID_REFRESH_TOKEN", REFRESH_TOKEN_INVALID_MESSAGE, HttpStatus.BAD_REQUEST);
+	}
+
 	@ExceptionHandler({ResourceNotFoundException.class, NoHandlerFoundException.class})
 	public ApiResponse<ApiResponse.FailureBody> handleNotFound(
 			final Exception ex, final WebRequest request) {
@@ -88,8 +98,9 @@ public class ApiControllerExceptionHandler {
 		return ApiResponseGenerator.fail(FAIL_CODE, FORBIDDEN_MESSAGE, HttpStatus.FORBIDDEN);
 	}
 
-	@ExceptionHandler({InsufficientAuthenticationException.class, AuthenticationException.class})
-	public ApiResponse<ApiResponse.FailureBody> handle(final Exception ex, final WebRequest request) {
+	@ExceptionHandler(AuthenticationException.class)
+	public ApiResponse<ApiResponse.FailureBody> handle(
+			final AuthenticationException ex, final WebRequest request) {
 		this.writeLog(ex, request);
 		return ApiResponseGenerator.fail(FAIL_CODE, UNAUTHORIZED_MESSAGE, HttpStatus.UNAUTHORIZED);
 	}

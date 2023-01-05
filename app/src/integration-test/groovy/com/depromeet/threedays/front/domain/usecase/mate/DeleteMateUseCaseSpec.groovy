@@ -1,6 +1,6 @@
 package com.depromeet.threedays.front.domain.usecase.mate
 
-
+import com.depromeet.threedays.data.enums.MateStatus
 import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.data.habit.HabitDataInitializer
 import com.depromeet.threedays.front.persistence.repository.mate.MateRepository
@@ -31,7 +31,7 @@ class DeleteMateUseCaseSpec extends IntegrationTestSpecification {
         deleteUseCase.execute(criterionHabit.id, habitDataInitializer.associationData.id)
 
         then:
-        !repository.existsByMemberIdAndDeletedFalse(0L)
+        !repository.existsByMemberIdAndStatusAndDeletedFalse(0L, MateStatus.ACTIVE)
     }
 
 

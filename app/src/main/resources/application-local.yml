@@ -13,8 +13,10 @@ spring:
 security:
   jwt:
     token:
-      validtime: 72000000
-      secretkey: localkeyyyyyyyyyyyyyyyyyyyyyyyyy
+      validtime:
+        access: 31557600000
+        refresh: 31557600000
+      secretkey: secretKeyForDepromeetZzaksimsamilProjectUpdatedAt28Dec2022
 
 google:
   host: https://www.googleapis.com/oauth2

@@ -39,8 +39,11 @@ server:
 security:
   jwt:
     token:
-      validtime: ${TOKEN_VALIDTIME}
       secretkey: ${TOKEN_SECRETKEY}
+      validtime:
+        access: 21600000
+        refresh: 2073600000
+
 
 google:
   host: https://www.googleapis.com/oauth2

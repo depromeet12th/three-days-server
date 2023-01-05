@@ -44,12 +44,14 @@ public class UpdateHabitUseCase {
 	private void updateAssociation(
 			Habit habit, Notification notification, EnumSet<DayOfWeek> dayOfWeeks) {
 		Assert.notNull(habit, "'habit' must not be null");
+		// 이전 알림 삭제
+		habitNotificationRepository.deleteAllByHabitId(habit.getId());
+
+		// 새로 저장할 알림이 없음
 		if (notification == null) {
 			return;
 		}
-
-		habitNotificationRepository.deleteAllByHabitId(habit.getId());
-
+		// 새로 저장할 알림이 있음
 		for (DayOfWeek dayOfWeek : dayOfWeeks) {
 			habitNotificationRepository.save(
 					HabitNotificationConverter.to(habit, notification, dayOfWeek));

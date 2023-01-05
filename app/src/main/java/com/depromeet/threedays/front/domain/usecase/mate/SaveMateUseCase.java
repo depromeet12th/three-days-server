@@ -1,10 +1,12 @@
 package com.depromeet.threedays.front.domain.usecase.mate;
 
+import com.depromeet.threedays.data.enums.MateStatus;
 import com.depromeet.threedays.front.domain.converter.mate.MateConverter;
 import com.depromeet.threedays.front.domain.model.mate.Mate;
 import com.depromeet.threedays.front.domain.validation.MateValidator;
 import com.depromeet.threedays.front.persistence.repository.mate.MateRepository;
 import com.depromeet.threedays.front.web.request.mate.SaveMateRequest;
+import com.depromeet.threedays.front.web.response.assembler.MateAssembler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,9 +20,12 @@ public class SaveMateUseCase {
 
 	private final MateValidator validator;
 
+	private final MateAssembler mateAssembler;
+
 	public Mate execute(final Long habitId, final SaveMateRequest request) {
 
-		Mate data = MateConverter.from(habitId, request).toBuilder().level(0).build();
+		Mate data =
+				MateConverter.from(habitId, request).toBuilder().level(0).status(MateStatus.ACTIVE).build();
 
 		validator.validateCreateConstraints(data);
 
@@ -28,6 +33,6 @@ public class SaveMateUseCase {
 	}
 
 	private Mate save(final Mate data) {
-		return MateConverter.from(repository.save(MateConverter.to(data)));
+		return mateAssembler.toMate(repository.save(MateConverter.to(data)));
 	}
 }

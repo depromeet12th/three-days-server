@@ -53,8 +53,9 @@ public class MemberController {
 
 	/** 토근 발급 */
 	@PostMapping("/tokens")
-	public ApiResponse<ApiResponse.SuccessBody<Token>> refreshToken(@RequestBody Token token) {
-		return ApiResponseGenerator.success(getTokenUseCase.execute(token), HttpStatus.CREATED);
+	public ApiResponse<ApiResponse.SuccessBody<Token>> refreshToken(
+			@RequestHeader("X-THREE-DAYS-REFRESH-TOKEN") String refreshToken) {
+		return ApiResponseGenerator.success(getTokenUseCase.execute(refreshToken), HttpStatus.CREATED);
 	}
 
 	/** 회원 탈퇴 */

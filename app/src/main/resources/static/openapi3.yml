@@ -505,11 +505,12 @@ paths:
         - Member
       summary: 토큰 만료시 재발급을 위한 API
       operationId: refreshToken
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Token'
+      parameters:
+        - in: header
+          name: X-THREE-DAYS-REFRESH-TOKEN
+          schema:
+            type: string
+          required: true
       responses:
         '201':
           description: OK

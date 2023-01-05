@@ -174,6 +174,7 @@ public class HabitConverter {
 				.build();
 	}
 
+	// FIXME: 주의 !! 이 메서드로 만들어지는 Habit 은 notification 이 없음.
 	public static Habit from(HabitEntity entity) {
 		return Habit.builder()
 				.id(entity.getId())

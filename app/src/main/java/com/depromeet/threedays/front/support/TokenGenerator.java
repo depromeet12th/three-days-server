@@ -16,31 +16,34 @@ public class TokenGenerator {
 	@Value("${security.jwt.token.secretkey}")
 	private String secretKey;
 
-	@Value("${security.jwt.token.validtime}")
-	private Long tokenValidTime;
+	@Value("${security.jwt.token.validtime.access}")
+	private Long accessTokenValidTime;
+
+	@Value("${security.jwt.token.validtime.refresh}")
+	private Long refreshTokenValidTime;
 
 	private static final String MEMBER_ID_CLAIM_KEY = "memberId";
 
-	public String generateAccessToken(Long memberId) {
+	String generateAccessToken(Long memberId) {
 		Date now = new Date();
 
 		return Jwts.builder()
 				.setHeaderParam(Header.TYPE, Header.JWT_TYPE)
 				.claim(MEMBER_ID_CLAIM_KEY, memberId)
 				.setIssuedAt(now)
-				.setExpiration(new Date(now.getTime() + tokenValidTime))
+				.setExpiration(new Date(now.getTime() + accessTokenValidTime))
 				.signWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
 				.compact();
 	}
 
-	public String generateRefreshToken(Long memberId) {
+	String generateRefreshToken(Long memberId) {
 		Date now = new Date();
 
 		return Jwts.builder()
 				.setHeaderParam(Header.TYPE, Header.JWT_TYPE)
 				.claim(MEMBER_ID_CLAIM_KEY, memberId)
 				.setIssuedAt(now)
-				.setExpiration(new Date(now.getTime() + tokenValidTime * 10))
+				.setExpiration(new Date(now.getTime() + refreshTokenValidTime))
 				.signWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
 				.compact();
 	}
