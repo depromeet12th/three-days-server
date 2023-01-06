@@ -10,15 +10,6 @@ on:
         description: 'Log level'
         required: true
         default: 'warning'
-      JAVA_OPTS:
-        descrption: 'JVM Parameters'
-        default: '-Dserver.tomcat.accesslog.enabled=true -Dserver.tomcat.basedir=/ -Dlogging.file.path=/logs'
-      HOST_LOG_DIR:
-        descrption: "Host's log directory"
-        default: '/home/ec2-user/apps/three-days-api/logs'
-      CONTAINER_LOG_DIR:
-        descrption: "Container's log directory"
-        default: '/logs'
 
 permissions:
   contents: read
@@ -28,6 +19,10 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     environment: development
+    env:
+      JAVA_OPTS: '-Dserver.tomcat.accesslog.enabled=true -Dserver.tomcat.basedir=/ -Dlogging.file.path=/logs'
+      HOST_LOG_DIR: '/home/ec2-user/apps/three-days-api/logs'
+      CONTAINER_LOG_DIR: '/logs'
 
     steps:
       - name: Checkout
@@ -61,5 +56,5 @@ jobs:
             sudo docker rm -f $(sudo docker ps -qa)
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}
             sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-            sudo docker run -p 80:8080 -p 5005:5005 -v ${{ inputs.HOST_LOG_DIR}}:${{ inputs.CONTAINER_LOG_DIR }} -d -e DB_HOSTNAME=${{ secrets.DB_HOSTNAME }} -e DB_USERNAME=${{ secrets.DB_USERNAME }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -e TOKEN_VALIDTIME=${{ secrets.TOKEN_VALIDTIME }} -e TOKEN_SECRETKEY=${{ secrets.TOKEN_SECRETKEY }} -e 'FIREBASE_PRIVATE_KEY=${{ secrets.FIREBASE_PRIVATE_KEY }}' -e FIREBASE_PRIVATE_KEY_ID=${{ secrets.FIREBASE_PRIVATE_KEY_ID }} -e KAKAO_ADMINKEY=${{ secrets.KAKAO_ADMINKEY }} -e JAVA_OPTS="${{ inputs.JAVA_OPTS }}" ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest
+            sudo docker run -p 80:8080 -p 5005:5005 -v ${{ env.HOST_LOG_DIR}}:${{ env.CONTAINER_LOG_DIR }} -d -e DB_HOSTNAME=${{ secrets.DB_HOSTNAME }} -e DB_USERNAME=${{ secrets.DB_USERNAME }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -e TOKEN_VALIDTIME=${{ secrets.TOKEN_VALIDTIME }} -e TOKEN_SECRETKEY=${{ secrets.TOKEN_SECRETKEY }} -e 'FIREBASE_PRIVATE_KEY=${{ secrets.FIREBASE_PRIVATE_KEY }}' -e FIREBASE_PRIVATE_KEY_ID=${{ secrets.FIREBASE_PRIVATE_KEY_ID }} -e KAKAO_ADMINKEY=${{ secrets.KAKAO_ADMINKEY }} -e JAVA_OPTS="${{ env.JAVA_OPTS }}" ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO }}:latest
             sudo docker image prune -f
