@@ -4,7 +4,6 @@ import com.depromeet.threedays.data.enums.LevelUpSection;
 import com.depromeet.threedays.data.enums.MateStatus;
 import com.depromeet.threedays.data.enums.MateType;
 import com.depromeet.threedays.front.domain.model.RewardHistory;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -16,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class Mate implements Serializable {
+public class Mate {
 
 	private Long id;
 	private Long habitId;

@@ -1,12 +1,11 @@
 package com.depromeet.threedays.front.support;
 
-import java.io.Serializable;
 import java.util.List;
 import lombok.Getter;
 import org.springframework.data.domain.Pageable;
 
 @Getter
-public class Page<T> implements Serializable {
+public class Page<T> {
 
 	private final int pageSize;
 	private final int pageNumber;
