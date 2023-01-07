@@ -44,7 +44,7 @@
 비용 절감을 위해 AWS 프리티어를 한정된 자원 속에서 가장 효율적으로 이용할 수 있는 구조를 채택하였습니다. <br>
 외부 서비스는 로그인시 Kakao API를 이용하고, 푸시 알림 전달시 FCM을 이용합니다. <br>
 배치 기능 동작을 위해 EventBridge를 사용하였으며, 편의를 위해 Private, Public Subnet을 엄격하게 구분하지는 않았습니다
-<img width="1009" alt="image" src="https://user-images.githubusercontent.com/78407939/209675697-75b5b0b5-33ff-4eeb-86c9-947c260ccc7f.png">
+![짝심삼일_인프라](https://user-images.githubusercontent.com/78407939/211133346-1198b65c-b293-4cf6-81da-c7ac7513a5c9.png)
 
 </div>
 
