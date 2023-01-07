@@ -54,7 +54,7 @@ public class SaveHabitAchievementUseCase {
 						.map(MateConverter::from)
 						.orElse(null);
 
-		final Habit habit = HabitConverter.from(source).toBuilder().mate(mate).build();
+		final Habit habit = HabitConverter.from(source).toBuilder().totalAchievementCount(repository.countByHabitId(habitId)).mate(mate).build();
 
 		if (lastHabitAchievement == null) {
 			return HabitConverter.from(

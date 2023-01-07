@@ -48,6 +48,8 @@ public class HabitConverter {
 				.dayOfWeeks(habit.getDayOfWeeks())
 				.reward(reward)
 				.createAt(habit.getCreateAt())
+				.status(habit.getStatus())
+				.totalAchievementCount(habit.getTotalAchievementCount())
 				.archiveAt(habit.getArchiveAt())
 				.habitAchievement(habitAchievement)
 				.mate(habit.getMate())
