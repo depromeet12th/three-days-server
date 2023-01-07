@@ -40,16 +40,20 @@ public class UpdateHabitUseCase {
 						.orElseThrow(ResourceNotFoundException::new);
 
 		Long totalAchievementCount = habitAchievementRepository.countByHabitId(habitId);
-		HabitAchievement habitAchievement = habitAchievementRepository
-				.findFirstByHabitIdOrderByAchievementDateDesc(habitId)
-				.map(HabitAchievementConverter::from)
-				.orElse(null);
+		HabitAchievement habitAchievement =
+				habitAchievementRepository
+						.findFirstByHabitIdOrderByAchievementDateDesc(habitId)
+						.map(HabitAchievementConverter::from)
+						.orElse(null);
 
 		updateAssociation(habit, request.getNotification(), request.getDayOfWeeks());
 
 		return HabitConverter.from(
-				repository.save(HabitConverter.to(habit, request)), request.getNotification()).toBuilder()
-				.totalAchievementCount(totalAchievementCount).habitAchievement(habitAchievement).build();
+						repository.save(HabitConverter.to(habit, request)), request.getNotification())
+				.toBuilder()
+				.totalAchievementCount(totalAchievementCount)
+				.habitAchievement(habitAchievement)
+				.build();
 	}
 
 	private void updateAssociation(

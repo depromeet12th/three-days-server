@@ -37,7 +37,8 @@ public class DeleteHabitAchievementUseCase {
 		Habit habit = HabitConverter.from(habitEntity, this.delete(target));
 
 		return HabitConverter.from(habit, rewardHistoryRepository.countByHabitId(habitId)).toBuilder()
-				.totalAchievementCount(repository.countByHabitId(habitId)).build();
+				.totalAchievementCount(repository.countByHabitId(habitId))
+				.build();
 	}
 
 	private HabitAchievement delete(final HabitAchievement target) {
