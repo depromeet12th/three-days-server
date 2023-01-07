@@ -12,6 +12,8 @@ import com.depromeet.threedays.front.web.request.habit.SaveHabitRequest;
 import com.depromeet.threedays.front.web.request.habit.UpdateHabitRequest;
 import lombok.experimental.UtilityClass;
 
+import java.time.LocalDateTime;
+
 @UtilityClass
 public class HabitConverter {
 
@@ -221,15 +223,17 @@ public class HabitConverter {
 		}
 
 		return HabitEntity.builder()
-				.id(source.getId())
-				.memberId(source.getMemberId())
-				.title(request.getTitle())
-				.imojiPath(request.getImojiPath())
-				.dayOfWeeks(request.getDayOfWeeks())
-				.archiveNumberOfDate(source.getArchiveNumberOfDate())
-				.color(request.getColor())
-				.status(source.getStatus())
-				.deleted(source.getDeleted())
-				.build();
+						  .id(source.getId())
+						  .memberId(source.getMemberId())
+						  .title(request.getTitle())
+						  .imojiPath(request.getImojiPath())
+						  .dayOfWeeks(request.getDayOfWeeks())
+						  .archiveNumberOfDate(source.getArchiveNumberOfDate())
+						  .color(request.getColor())
+						  .status(source.getStatus())
+						  .deleted(source.getDeleted())
+						  .createAt(source.getCreateAt())
+						  .updateAt(source.getArchiveAt())
+						  .build();
 	}
 }
