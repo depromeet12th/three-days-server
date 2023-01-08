@@ -50,7 +50,7 @@ class HabitControllerDocsSpec extends RestDocsSpecification {
 
     @SpringBean
     GetHabitUseCase getUseCase = Stub() {
-        execute(_ as Long) >> null
+        execute(_ as Long) >> new Habit()
     }
 
     @SpringBean
