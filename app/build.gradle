@@ -4,6 +4,7 @@ dependencyManagement {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
+
 dependencies {
 
     implementation project(':data')
@@ -30,8 +31,11 @@ dependencies {
     //fcm push notification
     implementation "com.google.firebase:firebase-admin:${firebaseAdminVersion}"
 
-    testImplementation('org.springframework.restdocs:spring-restdocs-mockmvc')
 
+//    testImplementation('org.springframework.restdocs:spring-restdocs-mockmvc')
+//    implementation "org.codehaus.groovy.modules.http-builder:http-builder:0.7.1"
+//    testImplementation 'org.springframework.security:spring-security-test'
+//    testImplementation('com.epages:restdocs-api-spec-mockmvc:0.16.2')
 }
 
 def imageName = project.hasProperty('imageName') ? imageName : "app:local"
@@ -46,4 +50,17 @@ task buildDockerImage {
             commandLine 'docker', 'build', '-t', "${imageName}", '--build-arg', "RELEASE_VERSION=${releaseVersion}", '.'
         }
     }
+}
+
+
+/*convert snippet to swagger*/
+openapi3 {
+    servers = [ { url = "https://api.jjaksim.com" } , { url = "http://localhost:8080" }, { url = "https://1f70f9e5-cebb-4d8e-8b33-f590a74edacf.mock.pstmn.io/" }]
+    title = 'ThreeDays'
+    version = '1.0.1'
+    format = 'yaml'
+    tagDescriptionsPropertiesFile = 'src/integration-test/resources/docs/tag-descriptions.yaml'
+    snippetsDirectory = "build/generated-snippets/"
+//    outputDirectory = outputDirectory
+    outputFileNamePrefix = 'openapi-app'
 }

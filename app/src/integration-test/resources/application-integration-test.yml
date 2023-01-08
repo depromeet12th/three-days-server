@@ -10,6 +10,8 @@ spring:
     include:
       - data-local
 
+endpoint: http://localhost:%s
+
 threedays:
   datasource:
     write:

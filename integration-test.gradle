@@ -1,3 +1,4 @@
+apply plugin: 'com.epages.restdocs-api-spec'
 sourceSets {
     integrationTest {
         groovy {
@@ -9,6 +10,16 @@ sourceSets {
 
         resources.srcDir file('src/integration-test/resources')
     }
+}
+ext {
+    snippetsDir = file('app/build/generated-snippets')
+    snippetsDir = file('app/build/api-docs')
+}
+dependencies {
+    testImplementation('org.springframework.restdocs:spring-restdocs-mockmvc')
+    implementation "org.codehaus.groovy.modules.http-builder:http-builder:0.7.1"
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation('com.epages:restdocs-api-spec-mockmvc:0.16.2')
 }
 
 configurations {
@@ -37,3 +48,19 @@ task integrationTest(type: Test) {
 integrationTest {
     useJUnitPlatform()
 }
+
+/**
+ * convert snippet to swagger
+ */
+
+
+//openapi3 {
+//    server = 'https://localhost:8080'
+//    title = 'SOSO'
+//    description = 'My API description'
+//    tagDescriptionsPropertiesFile = 'src/docs/tag-descriptions.yaml'
+//    version = '0.1.0'
+//    format = 'json'
+////    snippetsDirectory = snippetsDir
+////    outputDirectory = outputDirectory
+//}

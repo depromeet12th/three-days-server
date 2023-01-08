@@ -47,4 +47,4 @@ batch:
   habit: 30
 
 server:
-  port: 8080
+  port: 11113
