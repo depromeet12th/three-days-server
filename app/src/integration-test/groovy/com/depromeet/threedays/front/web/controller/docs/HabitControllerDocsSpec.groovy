@@ -12,6 +12,7 @@ import com.depromeet.threedays.front.web.request.habit.UpdateHabitRequest
 import com.depromeet.threedays.front.web.response.assembler.HabitAssembler
 import com.epages.restdocs.apispec.ResourceSnippetParameters
 import com.epages.restdocs.apispec.Schema
+import com.epages.restdocs.apispec.SimpleType
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
@@ -45,12 +46,12 @@ class HabitControllerDocsSpec extends RestDocsSpecification {
 
     @SpringBean
     SaveHabitUseCase saveUseCase = Stub() {
-        execute(_ as SaveHabitRequest) >> new Habit()
+        execute(_ as SaveHabitRequest) >> CustomSchema.habit()
     }
 
     @SpringBean
     GetHabitUseCase getUseCase = Stub() {
-        execute(_ as Long) >> new Habit()
+        execute(_ as Long) >> CustomSchema.habit()
     }
 
     @SpringBean
@@ -65,7 +66,7 @@ class HabitControllerDocsSpec extends RestDocsSpecification {
 
     @SpringBean
     UpdateHabitUseCase updateUseCase = Stub() {
-        execute(_) >> new Habit()
+        execute(_) >> CustomSchema.habit()
     }
 
     @SpringBean
@@ -89,7 +90,7 @@ class HabitControllerDocsSpec extends RestDocsSpecification {
                         document("saveHabit",
                                 resource(
                                         ResourceSnippetParameters.builder()
-                                                .description("습관 생성시 사용되는 API")
+                                                .summary("습관 생성시 사용되는 API")
                                                 .tag(TAG)
                                                 .requestSchema(Schema.schema("SaveHabitRequest"))
                                                 .responseSchema(Schema.schema("HabitResponse"))
@@ -124,15 +125,15 @@ class HabitControllerDocsSpec extends RestDocsSpecification {
                         document("updateHabit",
                                 resource(
                                         ResourceSnippetParameters.builder()
-                                                .description("습관 수정시 사용되는 API")
+                                                .summary("습관 수정시 사용되는 API")
                                                 .tag(TAG)
                                                 .pathParameters(
-                                                        parameterWithName("id").description("습관 id")
+                                                        parameterWithName("id").description("습관 id").type(SimpleType.INTEGER)
                                                 )
                                                 .requestSchema(Schema.schema("UpdateHabitRequest"))
-//                                                .responseSchema(Schema.schema("HabitResponse"))
+                                                .responseSchema(Schema.schema("HabitResponse"))
                                                 .requestFields(Descriptor.updateHabitRequest())
-//                                                .responseFields(Descriptor.successResponse(Descriptor.habitResponse()))
+                                                .responseFields(Descriptor.successResponse(Descriptor.habitResponse()))
                                                 .build()
                                 )
                         )
@@ -144,27 +145,66 @@ class HabitControllerDocsSpec extends RestDocsSpecification {
         def request = SearchHabitRequest.builder().status(HabitStatus.ACTIVE).build()
         def content = objectMapper.writeValueAsString(request)
 
+
         expect:
         mockMvc.perform(get("/api/v1/habits")
-                .content(content)
+                .param("status", "ACTIVE")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful())
                 .andDo(
-                        document("searchHabit",
+                        document("browseMultipleHabits",
                                 resource(
                                         ResourceSnippetParameters.builder()
-                                                .description("습관 조회")
+                                                .summary("모든 습관 목록을 가져오는 API")
+                                                .description("모든 habit list를 반환한다.")
                                                 .tag(TAG)
-                                                .requestSchema(Schema.schema("SearchHabitRequest"))
-//TODO field descriptor 수정
-//                                                .responseSchema(Schema.schema("HabitResponse"))
-                                                .requestFields(Descriptor.searchHabitRequest())
-//                                                .responseFields(Descriptor.successResponse(Descriptor.habitOverview()))
+//                                                .requestSchema(Schema.schema("SearchHabitRequest"))
+                                                .responseSchema(Schema.schema("HabitOverview"))
+//                                                .requestFields(Descriptor.searchHabitRequest())
+                                                .responseFields(Descriptor.habitOverviewList())
                                                 .build()
                                 )
                         )
                 )
     }
 
+    def '습관 조회(read)'() {
+        given:
+        expect:
+        mockMvc.perform(get("/api/v1/habits/{id}", 0)
+                .content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is2xxSuccessful())
+                .andDo(document("readHabit",
+                        resource(
+                                ResourceSnippetParameters.builder()
+                                        .summary("습관 상세정보 API (나의 기록 - 상세기록에서 특정 습관 정보 확인 시 사용, 습관 삭제 시 어떤 모달을 띄울지 판별하기 위해서도 사용합니다.)")
+                                        .description("todayHabitAchievementId 가 null인 경우 오늘 수행한 기록이 없는 경우. totalAchievementCount 를 통해 그동안 수행한 기록이 있는지 판별하고, mate가 null인지 아닌지로 짝꿍 여부를 판별할 수 있습니다.")
+                                        .tag(TAG)
+                                        .pathParameters(
+                                                parameterWithName("id").description("습관 id").type(SimpleType.INTEGER)
+                                        )
+                                        .responseSchema(Schema.schema("HabitResponse"))
+                                        .responseFields(Descriptor.successResponse(Descriptor.habitResponse()))
+                                        .build()
+                        )
+                ))
+    }
 
+    def '습관 삭제'() {
+        given:
+        expect:
+        mockMvc.perform(delete("/api/v1/habits/{id}", 0)
+                .content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is2xxSuccessful())
+                .andDo(document("deleteHabit",
+                        resource(
+                                ResourceSnippetParameters.builder()
+                                        .summary("습관 삭제 API")
+                                        .tag(TAG)
+                                        .pathParameters(
+                                                parameterWithName("id").description("습관 id").type(SimpleType.INTEGER)
+                                        )
+                                        .build()
+                        )))
+    }
 }
