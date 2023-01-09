@@ -26,12 +26,26 @@ public class SecurityConfig {
 	private final TokenResolver tokenResolver;
 
 	@Bean
-	@Profile({"local", "integration-test"})
+	@Profile({"local", "dev", "integration-test"})
 	public SecurityFilterChain localSecurityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 		http.formLogin().disable();
 		http.httpBasic().disable();
-		http.authorizeRequests().anyRequest().permitAll();
+		http.authorizeRequests()
+				.antMatchers(
+						HttpMethod.GET,
+						"/swagger-ui/*",
+						"/api-docs/*",
+						"/openapi3.yml",
+						"/actuator/health",
+						"/error")
+				.permitAll()
+				.antMatchers(HttpMethod.POST, "/api/v1/members", "/api/v1/members/tokens")
+				.permitAll()
+				.antMatchers("/api/v1/**")
+				.authenticated()
+				.anyRequest()
+				.denyAll();
 
 		http.addFilterAt(
 				generateAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class);
@@ -45,19 +59,21 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	@Profile(value = "default")
+	@Profile(value = "prod")
 	public SecurityFilterChain prodSecurityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 		http.formLogin().disable();
 		http.httpBasic().disable();
 
 		http.authorizeRequests()
-				.antMatchers(HttpMethod.GET, "/swagger-ui/index.html#/", "/actuator/health", "/error")
+				.antMatchers(HttpMethod.GET, "/actuator/health", "/error")
 				.permitAll()
 				.antMatchers(HttpMethod.POST, "/api/v1/members", "/api/v1/members/tokens")
 				.permitAll()
 				.antMatchers("/api/v1/**")
-				.authenticated();
+				.authenticated()
+				.anyRequest()
+				.denyAll();
 
 		http.addFilterAt(
 				generateAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class);

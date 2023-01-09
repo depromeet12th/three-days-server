@@ -12,7 +12,6 @@ spring:
       maxRequestSize: 100MB
   session.jdbc.initialize-schema: never
   profiles:
-    active: default
     include:
       - data
 
@@ -34,6 +33,9 @@ springdoc:
     - /api/**
 server:
   port: 8080
+  tomcat:
+    accesslog:
+      pattern: "\"%{X-Forwarded-For}i\" %h %t \"%r\" %s %b %D"
 
 
 security:

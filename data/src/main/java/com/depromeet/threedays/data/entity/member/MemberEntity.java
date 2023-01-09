@@ -2,7 +2,6 @@ package com.depromeet.threedays.data.entity.member;
 
 import com.depromeet.threedays.data.enums.CertificationSubject;
 import com.depromeet.threedays.data.enums.MemberStatus;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.*;
 import lombok.AccessLevel;
@@ -21,7 +20,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Builder(toBuilder = true)
 @Table(name = "member")
 @EntityListeners(AuditingEntityListener.class)
-public class MemberEntity implements Serializable {
+public class MemberEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

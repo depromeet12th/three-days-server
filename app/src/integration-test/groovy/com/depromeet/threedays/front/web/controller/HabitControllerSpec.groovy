@@ -1,6 +1,7 @@
 package com.depromeet.threedays.front.web.controller
 
 import com.depromeet.threedays.front.IntegrationTestSpecification
+import com.depromeet.threedays.front.support.TokenGenerator
 import com.depromeet.threedays.front.web.request.member.MemberNameUpdateRequest
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired
@@ -17,14 +18,21 @@ class HabitControllerSpec extends IntegrationTestSpecification {
     @Autowired
     private ObjectMapper objectMapper
 
+    @Autowired
+    private TokenGenerator tokenGenerator
+
     private String BAD_REQUEST_MESSAGE = "잘못된 요청입니다."
+    private String token;
+    def setup() {
+        token = tokenGenerator.generateAccessToken(1L)
+    }
 
     def "HttpMediaTypeNotSupportedException 이 핸들링 되는지 테스트"() {
         given:
         when:
         def resultActions = mockMvc.perform(
                 MockMvcRequestBuilders.post("/api/v1/habits")
-                        .header("Authorization", "Bearer accessToken")
+                        .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.TEXT_PLAIN)
         )
         then:
@@ -39,7 +47,7 @@ class HabitControllerSpec extends IntegrationTestSpecification {
 
         when:
         def resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/habits")
-                .header("Authorization", "Bearer accessToken")
+                .header("Authorization", "Bearer " + token)
                 .content(content)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -52,7 +60,7 @@ class HabitControllerSpec extends IntegrationTestSpecification {
         given:
         when:
         def resultActions = mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/habits/1")
-                .header("Authorization", "Bearer accessToken")
+                .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
 
@@ -66,7 +74,7 @@ class HabitControllerSpec extends IntegrationTestSpecification {
         given:
         when:
         def resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/habits/1")
-                .header("Authorization", "Bearer accessToken")
+                .header("Authorization", "Bearer " + token)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
 
