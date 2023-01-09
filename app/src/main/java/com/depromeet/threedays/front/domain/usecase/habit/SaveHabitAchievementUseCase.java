@@ -54,6 +54,7 @@ public class SaveHabitAchievementUseCase {
 						.map(MateConverter::from)
 						.orElse(null);
 
+		// TODO : /api/v2 에서 totalAchievementCount는 삭제 되어야함
 		final Habit habit =
 				HabitConverter.from(source).toBuilder()
 						.totalAchievementCount(repository.countByHabitId(habitId))
