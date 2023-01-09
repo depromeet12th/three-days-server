@@ -3,7 +3,7 @@ spring:
     use-legacy-processing: true
   profiles:
     include:
-      - data-local
+      - data
   redis:
     host: localhost
     password:
@@ -28,22 +28,16 @@ kakao:
   unlink:
     uri: /v1/user/unlink
   adminKey: ${KAKAO_ADMINKEY}
+
 firebase:
   multicast-message:
     size: 500
-  projectId: project
+  projectId: three-days-develop
   private:
     keyId: ${FIREBASE_PRIVATE_KEY_ID}
     key: ${FIREBASE_PRIVATE_KEY}
   client:
-    id: clientId
-    email: clientEmail
+    id: 101929051198596598209
+    email: firebase-adminsdk-qeb7a@three-days-develop.iam.gserviceaccount.com
   token:
     uri: https://oauth2.googleapis.com/token
-
-batch:
-  global: 30
-  habit: 30
-
-server:
-  port: 8080
