@@ -4,6 +4,7 @@ import com.depromeet.threedays.front.RestDocsSpecification
 import com.depromeet.threedays.front.domain.usecase.mate.GetMateCheckUseCase
 import com.depromeet.threedays.front.web.controller.MateCheckController
 import com.epages.restdocs.apispec.ResourceSnippetParameters
+import com.epages.restdocs.apispec.Schema
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -34,7 +35,7 @@ class MateCheckControllerDocsSpec extends RestDocsSpecification {
 
     private final static TAG = "Mate"
 
-    def '토큰 발급'() {
+    def '짝꿍 간편 조회'() {
         given:
 
         expect:
@@ -46,13 +47,10 @@ class MateCheckControllerDocsSpec extends RestDocsSpecification {
                         document("checkMate",
                                 resource(
                                         ResourceSnippetParameters.builder()
-                                                .description("모든 짝꿍 조회")
+                                                .description("모든 짝꿍 간편 조회")
                                                 .tag(TAG)
-//                                        TODO openapi3 변환할 때 outOfBound발생
-//                                                .responseFields(
-//                                                        Descriptor.successResponse(Descriptor.mateResponseList())
-//                                                )
-//                                                .responseSchema(Schema.schema("MateResponse"))
+                                                .responseSchema(Schema.schema("MateResponse"))
+                                                .responseFields(Descriptor.mateResponseList())
                                                 .build()
                                 )
                         )
