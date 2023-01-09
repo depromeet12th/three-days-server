@@ -1,18 +1,29 @@
 package com.depromeet.threedays.front.web.controller.docs
 
 import com.depromeet.threedays.data.enums.*
+import com.depromeet.threedays.front.domain.model.DatePeriod
 import com.depromeet.threedays.front.domain.model.RewardHistory
+import com.depromeet.threedays.front.domain.model.habit.Habit
+import com.depromeet.threedays.front.domain.model.habit.HabitAchievement
 import com.depromeet.threedays.front.domain.model.habit.HabitOverview
 import com.depromeet.threedays.front.domain.model.mate.Mate
 import com.depromeet.threedays.front.domain.model.member.Member
 import com.depromeet.threedays.front.domain.model.member.SaveMemberUseCaseResponse
 import com.depromeet.threedays.front.domain.model.member.Token
 import com.depromeet.threedays.front.domain.model.notification.Notification
+import com.depromeet.threedays.front.domain.model.notification.NotificationHistory
+import com.depromeet.threedays.front.web.request.habit.SaveHabitAchievementRequest
 import com.depromeet.threedays.front.web.request.habit.SaveHabitRequest
+import com.depromeet.threedays.front.web.request.habit.SearchHabitAchievementRequest
 import com.depromeet.threedays.front.web.response.*
+import com.google.firebase.ErrorCode
+import com.google.firebase.messaging.BatchResponse
+import com.google.firebase.messaging.FirebaseMessagingException
+import com.google.firebase.messaging.SendResponse
 import org.json.simple.JSONObject
 
 import java.time.DayOfWeek
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
@@ -170,7 +181,7 @@ class CustomSchema {
                         .memberId(0L)
                         .title("물무")
                         .imojiPath("imoji")
-                        .dayOfWeeks(EnumSet.of(DayOfWeek.MONDAY))
+                        .dayOfWeeks(EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.FRIDAY))
                         .reward(0)
                         .color("red")
                         .status(HabitStatus.ACTIVE)
@@ -182,5 +193,112 @@ class CustomSchema {
                         .mate(mate())
                         .build())
         return list
+    }
+
+    static List<HabitAchievement> habitAchievementList() {
+        def list = new ArrayList<HabitAchievement>()
+        list.add(
+                HabitAchievement.builder()
+                        .id(0L)
+                        .habitId(0L)
+                        .sequence(1)
+                        .achievementDate(LocalDate.now())
+                        .nextAchievementDate(LocalDate.now().plusDays(1))
+                        .build())
+        println list.first().achievementDate
+        return list
+    }
+
+    static SaveHabitAchievementRequest saveHabitAchievementRequest() {
+        return SaveHabitAchievementRequest.builder().achievementDate(LocalDate.now()).build()
+    }
+
+    static Habit habit() {
+        return Habit.builder()
+                .id(0L)
+                .memberId(0L)
+                .title("title")
+                .imojiPath("imojiPath")
+                .color("color")
+                .dayOfWeeks(EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.FRIDAY))
+                .reward(0L)
+                .archiveNumberOfDate(0)
+                .totalAchievementCount(0L)
+                .status(HabitStatus.ACTIVE)
+                .habitAchievement(this.habitAchievementList().first())
+                .createAt(LocalDateTime.now())
+                .archiveAt(LocalDateTime.now())
+                .deleted(false)
+                .mate(this.mate())
+                .notification(this.notification())
+                .build()
+    }
+
+    static Notification notification() {
+        return Notification.builder()
+                .notificationTime(LocalTime.now())
+                .contents("contents")
+                .build()
+    }
+
+    static SearchHabitAchievementRequest searchHabitAchievementRequest() {
+        def period = new DatePeriod(LocalDate.now(), LocalDate.now().plusDays(1))
+        return SearchHabitAchievementRequest.builder().datePeriod(period).build()
+    }
+
+    static List<NotificationBatchResponse> notificationBatchResponseList() {
+        def messageResponse = new ArrayList<BatchResponse>()
+        messageResponse.add(new BatchResponse() {
+            @Override
+            List<SendResponse> getResponses() {
+                def sendResponses = new ArrayList<SendResponse>()
+                sendResponses.add(new SendResponse("messageId", new FirebaseMessagingException(ErrorCode.ABORTED, "message")))
+                return sendResponses
+            }
+
+            @Override
+            int getSuccessCount() {
+                return 1
+            }
+
+            @Override
+            int getFailureCount() {
+                return 1
+            }
+        })
+        def list = new ArrayList<NotificationBatchResponse>()
+        list.add(NotificationBatchResponse.builder().title("title").content("content").messageResponse(messageResponse).build())
+        return list
+    }
+
+    static List<BatchResponse> batchResponseList() {
+        def batchResponses = new ArrayList<BatchResponse>()
+        batchResponses.add(new BatchResponse() {
+            @Override
+            List<SendResponse> getResponses() {
+                def sendResponses = new ArrayList<SendResponse>()
+                sendResponses.add(new SendResponse("messageId", new FirebaseMessagingException(ErrorCode.ABORTED, "message")))
+                return sendResponses
+            }
+
+            @Override
+            int getSuccessCount() {
+                return 1
+            }
+
+            @Override
+            int getFailureCount() {
+                return 1
+            }
+        })
+        return batchResponses
+    }
+
+    static List<NotificationHistory> notificationHistoryList() {
+        def notificationHistories = new ArrayList<NotificationHistory>()
+        notificationHistories().add(
+                NotificationHistory.builder().id(0L).memberId(0L).notificationId(0L).title("title").contents("contents").status(NotificationStatus.SUCCESS).type(NotificationType.HABIT).createAt(LocalDateTime.now()).build()
+        )
+        return notificationHistories
     }
 }
