@@ -3,7 +3,7 @@ spring:
     use-legacy-processing: true
   profiles:
     include:
-      - data
+      - data-dev
   redis:
     host: localhost
     password:
