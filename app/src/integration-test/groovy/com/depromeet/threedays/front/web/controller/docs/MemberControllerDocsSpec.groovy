@@ -3,6 +3,7 @@ package com.depromeet.threedays.front.web.controller.docs
 import com.depromeet.threedays.data.enums.CertificationSubject
 import com.depromeet.threedays.data.enums.MemberStatus
 import com.depromeet.threedays.front.RestDocsSpecification
+import com.depromeet.threedays.front.client.model.KakaoReferrerType
 import com.depromeet.threedays.front.domain.model.member.Member
 import com.depromeet.threedays.front.domain.model.member.Token
 import com.depromeet.threedays.front.domain.usecase.client.DeleteClientUseCase
@@ -26,6 +27,7 @@ import org.springframework.http.MediaType
 import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.http.*
 
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document
 import static com.epages.restdocs.apispec.ResourceDocumentation.headerWithName
@@ -78,6 +80,11 @@ class MemberControllerDocsSpec extends RestDocsSpecification {
         execute(_) >> null
     }
     @SpringBean
+    DeleteMemberUseCase deleteUseCaseForKakaoUnlink = Stub() {
+        executeCallback(_) >> null
+    }
+
+    @SpringBean
     DeleteClientUseCase deleteClientUseCase = Stub() {
         execute(_) >> null
     }
@@ -85,6 +92,7 @@ class MemberControllerDocsSpec extends RestDocsSpecification {
     GetMemberUseCase getUseCase = Stub() {
         execute() >> CustomSchema.memberConsentFalse()
     }
+
 
     static final TAG = "Member"
 
@@ -252,7 +260,7 @@ class MemberControllerDocsSpec extends RestDocsSpecification {
                 )
     }
 
-    def '회원 조회'() {
+    def '내 정보 조회'() {
         given:
 
         expect:
@@ -264,7 +272,7 @@ class MemberControllerDocsSpec extends RestDocsSpecification {
                         document("GetMember",
                                 resource(
                                         ResourceSnippetParameters.builder()
-                                                .description("회원 단건조회")
+                                                .description("내 정보 조회")
                                                 .tag(TAG)
                                                 .responseFields(
                                                         Descriptor.successResponse(Descriptor.member())
@@ -280,7 +288,6 @@ class MemberControllerDocsSpec extends RestDocsSpecification {
         given:
         def request = new DeleteClientRequest("identificationKey")
         def content = new ObjectMapper().writeValueAsString(request)
-
 
         expect:
         mockMvc.perform(post("/api/v1/members/logout")
