@@ -32,7 +32,7 @@ kakao:
 firebase:
   multicast-message:
     size: 500
-  projectId: three-days-developer
+  projectId: three-days-develop
   private:
     keyId: ${FIREBASE_PRIVATE_KEY_ID}
     key: ${FIREBASE_PRIVATE_KEY}
