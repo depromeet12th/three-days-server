@@ -9,13 +9,13 @@ import com.depromeet.threedays.front.web.controller.MateController
 import com.depromeet.threedays.front.web.request.mate.SaveMateRequest
 import com.epages.restdocs.apispec.ResourceSnippetParameters
 import com.epages.restdocs.apispec.Schema
+import com.epages.restdocs.apispec.SimpleType
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
-import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
@@ -24,7 +24,6 @@ import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.docume
 import static com.epages.restdocs.apispec.ResourceDocumentation.parameterWithName
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @AutoConfigureMockMvc(addFilters = false)
@@ -35,6 +34,9 @@ class MateControllerDocsSpec extends RestDocsSpecification {
 
     @Autowired
     private MockMvc mockMvc
+
+    @Autowired
+    private ObjectMapper objectMapper
 
     @SpringBean
     SaveMateUseCase saveUseCase = Stub() {
@@ -57,8 +59,7 @@ class MateControllerDocsSpec extends RestDocsSpecification {
                 .characterType(MateType.CARROT)
                 .title("짝꿍이")
                 .build()
-        def content = new ObjectMapper().writeValueAsString(request)
-
+        def content = objectMapper.writeValueAsString(request)
 
         expect:
         mockMvc.perform(post("/api/v1/habits/{habitId}/mates", 0)
@@ -72,17 +73,11 @@ class MateControllerDocsSpec extends RestDocsSpecification {
                                                 .description("mate 추가")
                                                 .tag(TAG)
                                                 .pathParameters(
-                                                        parameterWithName("habitId").description("연결된 습관 id"))
-//
+                                                        parameterWithName("habitId").description("연결된 습관 id").type(SimpleType.INTEGER)
+                                                )
                                                 .requestSchema(Schema.schema("SaveMateRequest"))
                                                 .responseSchema(Schema.schema("Mate"))
-                                                .requestFields(
-                                                        fieldWithPath("title").description("data"),
-                                                        fieldWithPath("characterType").type(JsonFieldType.STRING).description("code"),
-
-                                                )
-                                        //FIXME openapi3 failed
-//                                        .responseFields(Descriptor.successResponse(Descriptor.mate()))
+                                                .responseFields(Descriptor.successResponse(Descriptor.mate()))
                                                 .build()
                                 )
                         )
@@ -91,8 +86,6 @@ class MateControllerDocsSpec extends RestDocsSpecification {
 
     def '짝꿍 삭제'() {
         given:
-
-
         expect:
         mockMvc.perform(delete("/api/v1/habits/{habitId}/mates/{id}", 0, 0)
                 .content()
@@ -105,8 +98,8 @@ class MateControllerDocsSpec extends RestDocsSpecification {
                                                 .description("mate 삭제")
                                                 .tag(TAG)
                                                 .pathParameters(
-                                                        parameterWithName("habitId").description("연결된 습관 id"),
-                                                        parameterWithName("id").description("짝꿍 id")
+                                                        parameterWithName("habitId").description("연결된 습관 id").type(SimpleType.INTEGER),
+                                                        parameterWithName("id").description("짝꿍 id").type(SimpleType.INTEGER)
                                                 )
                                                 .build()
                                 )
@@ -116,7 +109,6 @@ class MateControllerDocsSpec extends RestDocsSpecification {
 
     def '짝꿍 조회'() {
         given:
-
         expect:
         mockMvc.perform(get("/api/v1/habits/{habitId}/mates/{id}", 0, 0)
                 .content()
@@ -129,9 +121,11 @@ class MateControllerDocsSpec extends RestDocsSpecification {
                                                 .description("mate 조회")
                                                 .tag(TAG)
                                                 .pathParameters(
-                                                        parameterWithName("habitId").description("연결된 습관 id"),
-                                                        parameterWithName("id").description("짝꿍 id")
+                                                        parameterWithName("habitId").description("연결된 습관 id").type(SimpleType.INTEGER),
+                                                        parameterWithName("id").description("짝꿍 id").type(SimpleType.INTEGER)
                                                 )
+                                                .responseSchema(Schema.schema("MateResponse"))
+                                                .responseFields(Descriptor.successResponse(Descriptor.mateResponse()))
                                                 .build()
                                 )
                         )
