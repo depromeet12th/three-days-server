@@ -38,7 +38,7 @@ class RecordControllerDocsSpec extends RestDocsSpecification {
 
     static final TAG = "Record"
 
-    def '기록 조회'() {
+    def '전체 기록 조회'() {
         given:
         def request = new SearchRecordRequest(new DatePeriod())
         def content = new ObjectMapper().writeValueAsString(request)
@@ -52,12 +52,10 @@ class RecordControllerDocsSpec extends RestDocsSpecification {
                         document("readRecords",
                                 resource(
                                         ResourceSnippetParameters.builder()
-                                                .description("기록 조회")
+                                                .summary("전체 기록 조회 API")
                                                 .tag(TAG)
                                                 .responseSchema(Schema.schema("RecordResponse"))
-                                                .responseFields(
-                                                        Descriptor.successResponse(Descriptor.recordResponse())
-                                                )
+                                                .responseFields(Descriptor.successResponse(Descriptor.recordResponse()))
                                                 .build()
                                 )
                         )
