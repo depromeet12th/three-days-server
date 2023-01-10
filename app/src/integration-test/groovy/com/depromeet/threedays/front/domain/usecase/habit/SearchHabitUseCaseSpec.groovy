@@ -2,16 +2,21 @@ package com.depromeet.threedays.front.domain.usecase.habit
 
 import com.depromeet.threedays.data.entity.habit.HabitEntity
 import com.depromeet.threedays.data.entity.mate.MateEntity
+import com.depromeet.threedays.data.entity.member.MemberEntity
 import com.depromeet.threedays.data.enums.HabitStatus
 import com.depromeet.threedays.data.enums.MateStatus
 import com.depromeet.threedays.data.enums.MateType
+import com.depromeet.threedays.data.enums.MemberStatus
 import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.data.habit.HabitDataInitializer
 import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository
 import com.depromeet.threedays.front.persistence.repository.mate.MateRepository
+import com.depromeet.threedays.front.persistence.repository.member.MemberRepository
 import com.depromeet.threedays.front.web.request.habit.SearchHabitRequest
 import net.bytebuddy.utility.RandomString
+import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.mock.mockito.MockBean
 import spock.lang.Subject
 
 import java.time.DayOfWeek
@@ -32,8 +37,16 @@ class SearchHabitUseCaseSpec extends IntegrationTestSpecification {
     @Autowired
     private MateRepository mateRepository
 
+    @MockBean
+    private MemberRepository memberRepository
+
     def setup() {
         dataInitializer.initialize()
+        Mockito.when(
+                memberRepository.findByIdAndStatus(Mockito.any(Long.class), Mockito.any(MemberStatus.class))
+        ).thenReturn(
+                Optional.of(MemberEntity.builder().build())
+        )
     }
 
     def "사용자는 자신의 습관 목록을 조회할 수 있다."() {

@@ -3,6 +3,8 @@ package com.depromeet.threedays.front.domain.usecase.habit;
 import com.depromeet.threedays.data.entity.habit.HabitAchievementEntity;
 import com.depromeet.threedays.data.entity.habit.HabitEntity;
 import com.depromeet.threedays.data.enums.LevelUpSection;
+import com.depromeet.threedays.data.enums.MemberStatus;
+import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.converter.RewardHistoryConverter;
 import com.depromeet.threedays.front.domain.converter.habit.HabitAchievementConverter;
 import com.depromeet.threedays.front.domain.converter.habit.HabitConverter;
@@ -11,11 +13,13 @@ import com.depromeet.threedays.front.domain.model.habit.Habit;
 import com.depromeet.threedays.front.domain.model.habit.HabitAchievement;
 import com.depromeet.threedays.front.domain.model.mate.Mate;
 import com.depromeet.threedays.front.domain.validation.HabitAchievementValidator;
+import com.depromeet.threedays.front.exception.MemberNotFoundException;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import com.depromeet.threedays.front.persistence.repository.RewardHistoryRepository;
 import com.depromeet.threedays.front.persistence.repository.habit.HabitAchievementRepository;
 import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository;
 import com.depromeet.threedays.front.persistence.repository.mate.MateRepository;
+import com.depromeet.threedays.front.persistence.repository.member.MemberRepository;
 import com.depromeet.threedays.front.support.DateCalculator;
 import com.depromeet.threedays.front.web.request.habit.SaveHabitAchievementRequest;
 import java.time.LocalDate;
@@ -30,6 +34,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class SaveHabitAchievementUseCase {
 
 	private static final int PROVIDE_REWARD_COUNT = 3;
+
+	private final MemberRepository memberRepository;
 	private final HabitAchievementRepository repository;
 	private final HabitRepository habitRepository;
 
@@ -38,6 +44,10 @@ public class SaveHabitAchievementUseCase {
 	private final HabitAchievementValidator validator;
 
 	public Habit execute(Long habitId, final SaveHabitAchievementRequest request) {
+		Long memberId = AuditorHolder.get();
+		memberRepository
+				.findByIdAndStatus(memberId, MemberStatus.REGULAR)
+				.orElseThrow(() -> new MemberNotFoundException(memberId));
 
 		validator.validateCreateConstraints(HabitAchievementConverter.from(request));
 

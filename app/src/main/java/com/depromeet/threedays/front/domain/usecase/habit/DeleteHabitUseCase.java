@@ -2,13 +2,17 @@ package com.depromeet.threedays.front.domain.usecase.habit;
 
 import com.depromeet.threedays.data.enums.HabitStatus;
 import com.depromeet.threedays.data.enums.MateStatus;
+import com.depromeet.threedays.data.enums.MemberStatus;
+import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.converter.habit.HabitConverter;
 import com.depromeet.threedays.front.domain.converter.mate.MateConverter;
 import com.depromeet.threedays.front.domain.model.habit.Habit;
 import com.depromeet.threedays.front.domain.model.mate.Mate;
+import com.depromeet.threedays.front.exception.MemberNotFoundException;
 import com.depromeet.threedays.front.persistence.repository.habit.HabitAchievementRepository;
 import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository;
 import com.depromeet.threedays.front.persistence.repository.mate.MateRepository;
+import com.depromeet.threedays.front.persistence.repository.member.MemberRepository;
 import com.depromeet.threedays.front.persistence.repository.notification.HabitNotificationRepository;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +23,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DeleteHabitUseCase {
 
+	private final MemberRepository memberRepository;
 	private final HabitRepository repository;
 	private final HabitAchievementRepository habitAchievementRepository;
 	private final MateRepository mateRepository;
@@ -26,6 +31,11 @@ public class DeleteHabitUseCase {
 	private final HabitNotificationRepository habitNotificationRepository;
 
 	public void execute(Long habitId) {
+		Long memberId = AuditorHolder.get();
+		memberRepository
+				.findByIdAndStatus(memberId, MemberStatus.REGULAR)
+				.orElseThrow(() -> new MemberNotFoundException(memberId));
+
 		Habit source =
 				repository.findByIdAndDeletedFalse(habitId).map(HabitConverter::from).orElse(null);
 

@@ -1,12 +1,16 @@
 package com.depromeet.threedays.front.domain.usecase.habit;
 
 import com.depromeet.threedays.data.entity.habit.HabitEntity;
+import com.depromeet.threedays.data.enums.MemberStatus;
+import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.converter.habit.HabitConverter;
 import com.depromeet.threedays.front.domain.converter.notification.HabitNotificationConverter;
 import com.depromeet.threedays.front.domain.model.habit.Habit;
 import com.depromeet.threedays.front.domain.model.notification.Notification;
 import com.depromeet.threedays.front.domain.validation.HabitValidator;
+import com.depromeet.threedays.front.exception.MemberNotFoundException;
 import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository;
+import com.depromeet.threedays.front.persistence.repository.member.MemberRepository;
 import com.depromeet.threedays.front.persistence.repository.notification.HabitNotificationRepository;
 import com.depromeet.threedays.front.web.request.habit.SaveHabitRequest;
 import java.time.DayOfWeek;
@@ -20,12 +24,18 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class SaveHabitUseCase {
 
+	private final MemberRepository memberRepository;
 	private final HabitRepository repository;
 	private final HabitNotificationRepository habitNotificationRepository;
 
 	private final HabitValidator validator;
 
 	public Habit execute(final SaveHabitRequest request) {
+		Long memberId = AuditorHolder.get();
+		memberRepository
+				.findByIdAndStatus(memberId, MemberStatus.REGULAR)
+				.orElseThrow(() -> new MemberNotFoundException(memberId));
+
 		Habit data = HabitConverter.from(request);
 		validator.validateCreateConstraints(data);
 

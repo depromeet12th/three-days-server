@@ -4,15 +4,18 @@ import com.depromeet.threedays.data.entity.habit.HabitAchievementEntity;
 import com.depromeet.threedays.data.entity.habit.HabitEntity;
 import com.depromeet.threedays.data.enums.HabitStatus;
 import com.depromeet.threedays.data.enums.MateStatus;
+import com.depromeet.threedays.data.enums.MemberStatus;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.converter.habit.HabitConverter;
 import com.depromeet.threedays.front.domain.model.habit.HabitAchievement;
 import com.depromeet.threedays.front.domain.model.habit.HabitOverview;
 import com.depromeet.threedays.front.domain.model.mate.Mate;
+import com.depromeet.threedays.front.exception.MemberNotFoundException;
 import com.depromeet.threedays.front.persistence.repository.RewardHistoryRepository;
 import com.depromeet.threedays.front.persistence.repository.habit.HabitAchievementRepository;
 import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository;
 import com.depromeet.threedays.front.persistence.repository.mate.MateRepository;
+import com.depromeet.threedays.front.persistence.repository.member.MemberRepository;
 import com.depromeet.threedays.front.web.request.habit.SearchHabitRequest;
 import com.depromeet.threedays.front.web.response.assembler.MateAssembler;
 import java.time.LocalDate;
@@ -27,15 +30,19 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class SearchHabitUseCase {
 
+	private final MemberRepository memberRepository;
 	private final HabitRepository repository;
-
 	private final HabitAchievementRepository habitAchievementRepository;
-
 	private final RewardHistoryRepository rewardHistoryRepository;
 	private final MateRepository mateRepository;
 	private final MateAssembler mateAssembler;
 
 	public List<HabitOverview> execute(final SearchHabitRequest request) {
+		Long memberId = AuditorHolder.get();
+		memberRepository
+				.findByIdAndStatus(memberId, MemberStatus.REGULAR)
+				.orElseThrow(() -> new MemberNotFoundException(memberId));
+
 		List<HabitEntity> habitEntities = new ArrayList<>();
 		List<HabitOverview> habitOverviews = new ArrayList<>();
 
