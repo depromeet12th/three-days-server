@@ -1,12 +1,17 @@
 package com.depromeet.threedays.front.domain.usecase.habit
 
+import com.depromeet.threedays.data.entity.member.MemberEntity
+import com.depromeet.threedays.data.enums.MemberStatus
 import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.data.habit.HabitDataInitializer
 import com.depromeet.threedays.front.data.habit.HabitNotificationDataInitializer
 import com.depromeet.threedays.front.domain.model.notification.Notification
 import com.depromeet.threedays.front.exception.PolicyViolationException
+import com.depromeet.threedays.front.persistence.repository.member.MemberRepository
 import com.depromeet.threedays.front.web.request.habit.UpdateHabitRequest
+import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.mock.mockito.MockBean
 import spock.lang.Subject
 
 import java.time.DayOfWeek
@@ -24,8 +29,16 @@ class UpdateHabitUseCaseSpec extends IntegrationTestSpecification {
     @Autowired
     private HabitNotificationDataInitializer notificationDataInitializer
 
+    @MockBean
+    private MemberRepository memberRepository
+
     def setup() {
         dataInitializer.initialize()
+        Mockito.when(
+                memberRepository.findByIdAndStatus(Mockito.any(Long.class), Mockito.any(MemberStatus.class))
+        ).thenReturn(
+                Optional.of(MemberEntity.builder().build())
+        )
     }
 
     def "사용자는 정해진 명세에 맞춰 습관 정보를 갱신할 수 있다"() {

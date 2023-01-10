@@ -1,14 +1,19 @@
 package com.depromeet.threedays.front.domain.usecase.habit
 
+import com.depromeet.threedays.data.entity.member.MemberEntity
 import com.depromeet.threedays.data.enums.HabitStatus
 import com.depromeet.threedays.data.enums.MateStatus
+import com.depromeet.threedays.data.enums.MemberStatus
 import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.data.habit.HabitAchievementDataInitializer
 import com.depromeet.threedays.front.data.habit.HabitDataInitializer
 import com.depromeet.threedays.front.data.mate.MateDataInitializer
 import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository
 import com.depromeet.threedays.front.persistence.repository.mate.MateRepository
+import com.depromeet.threedays.front.persistence.repository.member.MemberRepository
+import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.mock.mockito.MockBean
 import spock.lang.Subject
 
 class DeleteHabitUseCaseSpec extends IntegrationTestSpecification {
@@ -32,8 +37,16 @@ class DeleteHabitUseCaseSpec extends IntegrationTestSpecification {
     @Autowired
     private MateRepository mateRepository
 
+    @MockBean
+    private MemberRepository memberRepository
+
     def setup() {
         habitDataInitializer.initialize()
+        Mockito.when(
+                memberRepository.findByIdAndStatus(Mockito.any(Long.class), Mockito.any(MemberStatus.class))
+        ).thenReturn(
+                Optional.of(MemberEntity.builder().build())
+        )
     }
 
     def "사용자가 짝꿍과 연결된 습관에 삭제를 요청한 경우, 습관과 짝꿍이 보관함으로 이동된다."() {

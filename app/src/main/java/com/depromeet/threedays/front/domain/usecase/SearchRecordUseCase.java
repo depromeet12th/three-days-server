@@ -7,6 +7,7 @@ import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.converter.habit.HabitConverter;
 import com.depromeet.threedays.front.domain.model.DatePeriod;
 import com.depromeet.threedays.front.domain.model.habit.Habit;
+import com.depromeet.threedays.front.exception.MemberNotFoundException;
 import com.depromeet.threedays.front.persistence.repository.RewardHistoryRepository;
 import com.depromeet.threedays.front.persistence.repository.habit.HabitAchievementRepository;
 import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository;
@@ -40,6 +41,10 @@ public class SearchRecordUseCase {
 	private final RewardHistoryRepository rewardHistoryRepository;
 
 	public RecordResponse execute(final SearchRecordRequest request) {
+		Long memberId = AuditorHolder.get();
+		memberRepository
+				.findByIdAndStatus(memberId, MemberStatus.REGULAR)
+				.orElseThrow(() -> new MemberNotFoundException(memberId));
 
 		MemberEntity memberEntity =
 				memberRepository

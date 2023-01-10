@@ -1,10 +1,16 @@
 package com.depromeet.threedays.front.domain.usecase.member
 
+import com.depromeet.threedays.data.entity.member.MemberEntity
+import com.depromeet.threedays.data.enums.MemberStatus
 import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.domain.usecase.client.SaveClientUseCase
 import com.depromeet.threedays.front.persistence.repository.client.ClientRepository
+import com.depromeet.threedays.front.persistence.repository.member.MemberRepository
+import org.mockito.Mockito
+
 import com.depromeet.threedays.front.web.request.client.ClientRequest
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.mock.mockito.MockBean
 import spock.lang.Subject
 
 //TODO: TestCode Refactor by jh
@@ -16,8 +22,16 @@ class SaveClientUseCaseSpec extends IntegrationTestSpecification {
     @Autowired
     private ClientRepository repository
 
+    @MockBean
+    private MemberRepository memberRepository
+
     def setup() {
         repository.deleteAll()
+        Mockito.when(
+                memberRepository.findByIdAndStatus(Mockito.any(Long.class), Mockito.any(MemberStatus.class))
+        ).thenReturn(
+                Optional.of(MemberEntity.builder().build())
+        )
     }
 
     def "사용자는 기기의 identificationKey와 fcmToken을 등록할 수 있다"() {

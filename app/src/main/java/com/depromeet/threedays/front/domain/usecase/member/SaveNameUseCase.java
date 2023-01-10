@@ -5,6 +5,7 @@ import com.depromeet.threedays.data.enums.MemberStatus;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.converter.member.MemberConverter;
 import com.depromeet.threedays.front.domain.model.member.Member;
+import com.depromeet.threedays.front.exception.MemberNotFoundException;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository;
 import com.depromeet.threedays.front.web.request.member.MemberNameUpdateRequest;
@@ -21,10 +22,13 @@ public class SaveNameUseCase {
 
 	public Member execute(final MemberNameUpdateRequest request) {
 		Long memberId = AuditorHolder.get();
+		memberRepository
+				.findByIdAndStatus(memberId, MemberStatus.REGULAR)
+				.orElseThrow(() -> new MemberNotFoundException(memberId));
 		return MemberConverter.from(this.updateName(memberId, request));
 	}
 
-	public MemberEntity updateName(final Long memberId, final MemberNameUpdateRequest request) {
+	private MemberEntity updateName(final Long memberId, final MemberNameUpdateRequest request) {
 		return memberRepository
 				.findByIdAndStatus(memberId, MemberStatus.REGULAR)
 				.map(it -> it.updateName(request.getName()))
