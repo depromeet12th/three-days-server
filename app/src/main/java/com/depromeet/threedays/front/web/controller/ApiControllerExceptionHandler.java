@@ -96,8 +96,7 @@ public class ApiControllerExceptionHandler {
 	}
 
 	@ExceptionHandler({AuthenticationException.class, MemberNotFoundException.class})
-	public ApiResponse<ApiResponse.FailureBody> handle(
-			final AuthenticationException ex, final WebRequest request) {
+	public ApiResponse<ApiResponse.FailureBody> handle(final Exception ex, final WebRequest request) {
 		this.writeLog(ex, request);
 		return ApiResponseGenerator.fail(FAIL_CODE, UNAUTHORIZED_MESSAGE, HttpStatus.UNAUTHORIZED);
 	}
