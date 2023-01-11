@@ -1,13 +1,18 @@
 package com.depromeet.threedays.front.domain.usecase.habit.achievement
 
 import com.depromeet.threedays.data.entity.habit.HabitAchievementEntity
+import com.depromeet.threedays.data.entity.member.MemberEntity
+import com.depromeet.threedays.data.enums.MemberStatus
 import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.data.habit.HabitAchievementDataInitializer
 import com.depromeet.threedays.front.data.habit.HabitDataInitializer
 import com.depromeet.threedays.front.domain.usecase.habit.SaveHabitAchievementUseCase
 import com.depromeet.threedays.front.exception.PolicyViolationException
+import com.depromeet.threedays.front.persistence.repository.member.MemberRepository
 import com.depromeet.threedays.front.web.request.habit.SaveHabitAchievementRequest
+import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.mock.mockito.MockBean
 import spock.lang.Subject
 
 import java.time.LocalDate
@@ -24,9 +29,17 @@ class SaveHabitAchievementUseCaseSpec extends IntegrationTestSpecification {
     @Autowired
     private HabitAchievementDataInitializer dataInitializer
 
+    @MockBean
+    private MemberRepository memberRepository
+
     def setup() {
         habitDataInitializer.initialize()
         dataInitializer.initialize(habitDataInitializer.data.first().id)
+        Mockito.when(
+                memberRepository.findByIdAndStatus(Mockito.any(Long.class), Mockito.any(MemberStatus.class))
+        ).thenReturn(
+                Optional.of(MemberEntity.builder().build())
+        )
     }
 
     def "사용자는 오늘의 습관 달성 여부를 체크할 수 있다"() {

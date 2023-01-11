@@ -48,6 +48,8 @@ public class HabitConverter {
 				.dayOfWeeks(habit.getDayOfWeeks())
 				.reward(reward)
 				.createAt(habit.getCreateAt())
+				.status(habit.getStatus())
+				.totalAchievementCount(habit.getTotalAchievementCount())
 				.archiveAt(habit.getArchiveAt())
 				.habitAchievement(habitAchievement)
 				.mate(habit.getMate())
@@ -106,6 +108,7 @@ public class HabitConverter {
 				.imojiPath(entity.getImojiPath())
 				.dayOfWeeks(entity.getDayOfWeeks())
 				.createAt(entity.getCreateAt())
+				.status(entity.getStatus())
 				.archiveAt(entity.getArchiveAt())
 				.habitAchievement(data)
 				.build();
@@ -120,6 +123,7 @@ public class HabitConverter {
 				.imojiPath(data.getImojiPath())
 				.dayOfWeeks(data.getDayOfWeeks())
 				.reward(reward)
+				.status(data.getStatus())
 				.createAt(data.getCreateAt())
 				.archiveAt(data.getArchiveAt())
 				.habitAchievement(data.getHabitAchievement())
@@ -226,6 +230,8 @@ public class HabitConverter {
 				.color(request.getColor())
 				.status(source.getStatus())
 				.deleted(source.getDeleted())
+				.createAt(source.getCreateAt())
+				.updateAt(source.getArchiveAt())
 				.build();
 	}
 }

@@ -3,18 +3,14 @@ spring:
     use-legacy-processing: true
   profiles:
     include:
-      - data-local
-  redis:
-    host: localhost
-    password:
-    port: 16379
+      - data-prod
 
 security:
   jwt:
     token:
       validtime:
-        access: 31557600000
-        refresh: 31557600000
+        access: 21600000
+        refresh: 2073600000
       secretkey: ${TOKEN_SECRETKEY}
 
 google:
@@ -28,22 +24,16 @@ kakao:
   unlink:
     uri: /v1/user/unlink
   adminKey: ${KAKAO_ADMINKEY}
+
 firebase:
   multicast-message:
     size: 500
-  projectId: project
+  projectId: three-days-bd5f3
   private:
     keyId: ${FIREBASE_PRIVATE_KEY_ID}
     key: ${FIREBASE_PRIVATE_KEY}
   client:
-    id: clientId
-    email: clientEmail
+    id: 115789865759617169410
+    email: firebase-adminsdk-v3brd@three-days-bd5f3.iam.gserviceaccount.com
   token:
     uri: https://oauth2.googleapis.com/token
-
-batch:
-  global: 30
-  habit: 30
-
-server:
-  port: 8080

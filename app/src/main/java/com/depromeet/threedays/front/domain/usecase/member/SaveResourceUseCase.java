@@ -5,6 +5,7 @@ import com.depromeet.threedays.data.enums.MemberStatus;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.converter.member.MemberConverter;
 import com.depromeet.threedays.front.domain.model.member.Member;
+import com.depromeet.threedays.front.exception.MemberNotFoundException;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository;
 import com.depromeet.threedays.front.support.converter.MemberInfoJsonConverter;
@@ -26,6 +27,9 @@ public class SaveResourceUseCase {
 
 	public Member execute(final MemberResourceUpdateRequest request) {
 		Long memberId = AuditorHolder.get();
+		memberRepository
+				.findByIdAndStatus(memberId, MemberStatus.REGULAR)
+				.orElseThrow(() -> new MemberNotFoundException(memberId));
 		return MemberConverter.from(this.updateResource(memberId, request));
 	}
 
