@@ -56,6 +56,7 @@ public class UpdateHabitUseCase {
 
 		updateAssociation(habit, request.getNotification(), request.getDayOfWeeks());
 
+		// TODO : /api/v2 에서 totalAchievementCount는 삭제 되어야함, habitAchievement는 Converter로 포함되어야함
 		return HabitConverter.from(
 						repository.save(HabitConverter.to(habit, request)), request.getNotification())
 				.toBuilder()

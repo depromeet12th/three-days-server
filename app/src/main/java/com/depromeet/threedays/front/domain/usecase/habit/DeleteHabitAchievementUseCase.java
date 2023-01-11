@@ -46,6 +46,7 @@ public class DeleteHabitAchievementUseCase {
 		validator.validateDeleteConstraints(habitEntity, target);
 		Habit habit = HabitConverter.from(habitEntity, this.delete(target));
 
+		// TODO : /api/v2 에서 totalAchievementCount는 삭제 되어야함
 		return HabitConverter.from(habit, rewardHistoryRepository.countByHabitId(habitId)).toBuilder()
 				.totalAchievementCount(repository.countByHabitId(habitId))
 				.build();
