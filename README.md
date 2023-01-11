@@ -17,19 +17,19 @@
 
 **Server**
 
-<img src="https://img.shields.io/badge/Java-FF9E0F?style=flat-square&logo=&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat-square&logo=springboot&logoColor=white"/> <img src="https://img.shields.io/badge/Pinpoint-40AEF0?style=flat-square&logo=&logoColor=white"/> <img src="https://img.shields.io/badge/Spock-85EA2D?style=flat-square&logo=Spock&logoColor=white"/>
+<img src="https://img.shields.io/badge/Java-FF9E0F?style=flat-square&logo=&logoColor=white"/> <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat-square&logo=springboot&logoColor=white"/> <img src="https://img.shields.io/badge/Spock-85EA2D?style=flat-square&logo=Spock&logoColor=white"/>
 
 **Api Spec**
 
-<a href="https://api.jjaksim.com/swagger-ui/index.html"><img src="https://img.shields.io/badge/Swagger-85EA2D?style=flat-square&logo=Swagger&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/Swagger-85EA2D?style=flat-square&logo=Swagger&logoColor=white"/> <img src="https://img.shields.io/badge/Rest Docs-85EA2D?style=flat-square&logo=Rest Docs&logoColor=white"/>
 
 **Database**
 
 <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white"/> <img src="https://img.shields.io/badge/Adminer-34567C?style=flat-square&logo=Adminer&logoColor=white"/> <img src="https://img.shields.io/badge/Flyway-CC0200?style=flat-square&logo=Flyway&logoColor=white"/>
 
-**Deployment**
+**Infrastructure**
 
-<img src="https://img.shields.io/badge/AWS EC2-FF9900?style=flat-square&logo=Amazon-EC2&logoColor=white"/> <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=Docker&logoColor=white"/> <img src="https://img.shields.io/badge/Terraform-7B42BC?style=flat-square&logo=Terraform&logoColor=white"/> <img src="https://img.shields.io/badge/AWS RDS-527FFF?style=flat-square&logo=Amazon-RDS&logoColor=white"/>
+<img src="https://img.shields.io/badge/AWS EC2-FF9900?style=flat-square&logo=Amazon-EC2&logoColor=white"/> <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=Docker&logoColor=white"/> <img src="https://img.shields.io/badge/Terraform-7B42BC?style=flat-square&logo=Terraform&logoColor=white"/> <img src="https://img.shields.io/badge/AWS RDS-527FFF?style=flat-square&logo=Amazon-RDS&logoColor=white"/> <img src="https://img.shields.io/badge/AWS ECS-FF9900?style=flat-square&logo=Amazon-ECS&logoColor=white"/> <img src="https://img.shields.io/badge/AWS Event Bridge-FF9900?style=flat-square&logo=Amazon-EventBridge&logoColor=white"/>
 
 ## 🗒️Entity Relationship Diagram(ERD)
 
@@ -43,8 +43,8 @@
 짝심삼일의 서비스 구성도입니다.
 비용 절감을 위해 AWS 프리티어를 한정된 자원 속에서 가장 효율적으로 이용할 수 있는 구조를 채택하였습니다. <br>
 외부 서비스는 로그인시 Kakao API를 이용하고, 푸시 알림 전달시 FCM을 이용합니다. <br>
-배치 기능 동작을 위해 EventBridge를 사용하였으며, 편의를 위해 Private, Public Subnet을 엄격하게 구분하지는 않았습니다
-![짝심삼일_인프라](https://user-images.githubusercontent.com/78407939/211133346-1198b65c-b293-4cf6-81da-c7ac7513a5c9.png)
+배치성 기능 구현을 위해 EventBridge를 사용하였습니다.
+<img width="1495" alt="image" src="https://user-images.githubusercontent.com/78407939/211797940-50db3e8e-af23-4497-812f-8602eb9341e5.png">
 
 </div>
 
