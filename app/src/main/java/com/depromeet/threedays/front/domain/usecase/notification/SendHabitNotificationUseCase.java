@@ -3,6 +3,7 @@ package com.depromeet.threedays.front.domain.usecase.notification;
 import com.depromeet.threedays.data.entity.client.ClientEntity;
 import com.depromeet.threedays.data.entity.member.MemberEntity;
 import com.depromeet.threedays.data.entity.notification.HabitNotificationEntity;
+import com.depromeet.threedays.data.enums.NotificationStatus;
 import com.depromeet.threedays.front.client.MessageClient;
 import com.depromeet.threedays.front.client.builder.FireBaseMessageBuilder;
 import com.depromeet.threedays.front.domain.converter.client.ClientConverter;
@@ -76,6 +77,7 @@ public class SendHabitNotificationUseCase {
 				}
 			}
 			if (null == message.getClients()) {
+				saveHistoryUseCase.execute(message, NotificationStatus.FAILURE);
 				messages.remove(message);
 			}
 		}
