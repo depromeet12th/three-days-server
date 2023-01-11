@@ -75,7 +75,7 @@ public class SendHabitNotificationUseCase {
 					message.setClients(client);
 				}
 			}
-			if(null == message.getClients()){
+			if (null == message.getClients()) {
 				messages.remove(message);
 			}
 		}
