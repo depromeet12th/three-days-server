@@ -1,6 +1,7 @@
 package com.depromeet.threedays.front.domain.usecase;
 
 import com.depromeet.threedays.data.entity.habit.HabitAchievementEntity;
+import com.depromeet.threedays.data.entity.habit.HabitEntity;
 import com.depromeet.threedays.data.entity.member.MemberEntity;
 import com.depromeet.threedays.data.enums.MemberStatus;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
@@ -66,8 +67,11 @@ public class SearchRecordUseCase {
 						memberEntity.getId(), datePeriod.getFrom(), datePeriod.getTo());
 
 		List<Long> habitIds =
-				habitAchievementEntities.stream()
-						.map(HabitAchievementEntity::getHabitId)
+				habitRepository
+						.findAllByMemberIdAndDeletedFalse(memberId)
+						.orElseThrow(IllegalArgumentException::new)
+						.stream()
+						.map(HabitEntity::getId)
 						.collect(Collectors.toList());
 
 		Long frequentHabitId = this.getFrequentId(this.calculateFrequentHabit(habitIds));
