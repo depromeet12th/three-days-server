@@ -72,8 +72,8 @@ class CustomSchema {
                 .id(0L)
                 .habitId(0L)
                 .memberId(0L)
-                .title("짝꿍이").
-                createAt(LocalDateTime.now())
+                .title("짝꿍이")
+                .createAt(LocalDateTime.now())
                 .level(0)
                 .reward(0)
                 .rewardHistoryResponse(rewardHistoryResponse())
