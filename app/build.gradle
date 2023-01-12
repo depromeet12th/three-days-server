@@ -31,11 +31,6 @@ dependencies {
     //fcm push notification
     implementation "com.google.firebase:firebase-admin:${firebaseAdminVersion}"
 
-
-//    testImplementation('org.springframework.restdocs:spring-restdocs-mockmvc')
-//    implementation "org.codehaus.groovy.modules.http-builder:http-builder:0.7.1"
-//    testImplementation 'org.springframework.security:spring-security-test'
-//    testImplementation('com.epages:restdocs-api-spec-mockmvc:0.16.2')
 }
 
 def imageName = project.hasProperty('imageName') ? imageName : "app:local"
@@ -61,6 +56,5 @@ openapi3 {
     format = 'yaml'
     tagDescriptionsPropertiesFile = 'src/integration-test/resources/docs/tag-descriptions.yaml'
     snippetsDirectory = "build/generated-snippets/"
-//    outputDirectory = outputDirectory
     outputFileNamePrefix = 'openapi-app'
 }
