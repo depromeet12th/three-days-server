@@ -6,6 +6,7 @@ import com.depromeet.threedays.front.data.member.MemberInitializer
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository
 import com.depromeet.threedays.front.web.request.member.MemberNameUpdateRequest
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.mock.mockito.MockBean
 
 class SaveMemberNameUseCaseSpec extends IntegrationTestSpecification {
 

@@ -1,9 +1,6 @@
 package com.depromeet.threedays.front.web.controller;
 
-import com.depromeet.threedays.front.exception.JsonParsingException;
-import com.depromeet.threedays.front.exception.PolicyViolationException;
-import com.depromeet.threedays.front.exception.RefreshTokenInvalidException;
-import com.depromeet.threedays.front.exception.ResourceNotFoundException;
+import com.depromeet.threedays.front.exception.*;
 import com.depromeet.threedays.front.support.ApiResponse;
 import com.depromeet.threedays.front.support.ApiResponseGenerator;
 import javax.servlet.http.HttpServletRequest;
@@ -98,9 +95,8 @@ public class ApiControllerExceptionHandler {
 		return ApiResponseGenerator.fail(FAIL_CODE, FORBIDDEN_MESSAGE, HttpStatus.FORBIDDEN);
 	}
 
-	@ExceptionHandler(AuthenticationException.class)
-	public ApiResponse<ApiResponse.FailureBody> handle(
-			final AuthenticationException ex, final WebRequest request) {
+	@ExceptionHandler({AuthenticationException.class, MemberNotFoundException.class})
+	public ApiResponse<ApiResponse.FailureBody> handle(final Exception ex, final WebRequest request) {
 		this.writeLog(ex, request);
 		return ApiResponseGenerator.fail(FAIL_CODE, UNAUTHORIZED_MESSAGE, HttpStatus.UNAUTHORIZED);
 	}

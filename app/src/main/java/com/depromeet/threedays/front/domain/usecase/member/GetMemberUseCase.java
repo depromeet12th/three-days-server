@@ -8,7 +8,7 @@ import com.depromeet.threedays.front.domain.model.member.Member;
 import com.depromeet.threedays.front.domain.model.member.SaveMemberUseCaseResponse;
 import com.depromeet.threedays.front.domain.model.member.Token;
 import com.depromeet.threedays.front.domain.query.GetMemberQuery;
-import com.depromeet.threedays.front.exception.ResourceNotFoundException;
+import com.depromeet.threedays.front.exception.MemberNotFoundException;
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository;
 import com.depromeet.threedays.front.support.TokenGenerator;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +41,6 @@ public class GetMemberUseCase {
 		return memberRepository
 				.findByIdAndStatus(memberId, MemberStatus.REGULAR)
 				.map(MemberConverter::from)
-				.orElseThrow(ResourceNotFoundException::new);
+				.orElseThrow(() -> new MemberNotFoundException(memberId));
 	}
 }

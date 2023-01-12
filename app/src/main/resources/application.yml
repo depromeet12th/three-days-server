@@ -12,7 +12,6 @@ spring:
       maxRequestSize: 100MB
   session.jdbc.initialize-schema: never
   profiles:
-    active: default
     include:
       - data
 

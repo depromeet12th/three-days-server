@@ -1,12 +1,17 @@
 package com.depromeet.threedays.front.domain.usecase.habit.achievement
 
+import com.depromeet.threedays.data.entity.member.MemberEntity
+import com.depromeet.threedays.data.enums.MemberStatus
 import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.data.habit.HabitAchievementDataInitializer
 import com.depromeet.threedays.front.data.habit.HabitDataInitializer
 import com.depromeet.threedays.front.domain.model.DatePeriod
 import com.depromeet.threedays.front.domain.usecase.habit.SearchHabitAchievementUseCase
+import com.depromeet.threedays.front.persistence.repository.member.MemberRepository
 import com.depromeet.threedays.front.web.request.habit.SearchHabitAchievementRequest
+import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.mock.mockito.MockBean
 import spock.lang.Subject
 
 import java.time.LocalDate
@@ -23,9 +28,17 @@ class SearchHabitAchievementUseCaseSpec extends IntegrationTestSpecification {
     @Autowired
     HabitAchievementDataInitializer dataInitializer
 
+    @MockBean
+    private MemberRepository memberRepository
+
     def setup() {
         habitDataInitializer.initialize()
         dataInitializer.initialize(habitDataInitializer.data.first().id)
+        Mockito.when(
+                memberRepository.findByIdAndStatus(Mockito.any(Long.class), Mockito.any(MemberStatus.class))
+        ).thenReturn(
+                Optional.of(MemberEntity.builder().build())
+        )
     }
 
     def "사용자는 자신의 전체 습관 성취 기록을 조회할 수 있다"() {
