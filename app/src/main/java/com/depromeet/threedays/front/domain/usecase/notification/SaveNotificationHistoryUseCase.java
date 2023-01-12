@@ -36,6 +36,10 @@ public class SaveNotificationHistoryUseCase {
 		}
 	}
 
+	public void execute(HabitNotificationMessage message, NotificationStatus status) {
+		repository.save(NotificationHistoryConverter.from(message, status));
+	}
+
 	public List<NotificationHistoryEntity> createList(
 			NotificationStatus status, NotificationMessage message, List<ClientEntity> group) {
 		return group.stream()
