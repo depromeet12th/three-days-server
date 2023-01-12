@@ -30,7 +30,6 @@ dependencies {
 
     //fcm push notification
     implementation "com.google.firebase:firebase-admin:${firebaseAdminVersion}"
-
 }
 
 def imageName = project.hasProperty('imageName') ? imageName : "app:local"
@@ -50,11 +49,12 @@ task buildDockerImage {
 
 /*convert snippet to swagger*/
 openapi3 {
-    servers = [ { url = "https://api.jjaksim.com" } , { url = "http://localhost:8080" }, { url = "https://1f70f9e5-cebb-4d8e-8b33-f590a74edacf.mock.pstmn.io/" }]
+    servers = [ { url = "https://api.jjaksim.com" } , { url = "http://localhost:8080" }]
     title = 'ThreeDays'
     version = '1.0.1'
     format = 'yaml'
     tagDescriptionsPropertiesFile = 'src/integration-test/resources/docs/tag-descriptions.yaml'
     snippetsDirectory = "build/generated-snippets/"
-    outputFileNamePrefix = 'openapi-app'
+    outputDirectory = "src/main/resources/static/"
+    outputFileNamePrefix = 'openapi3'
 }
