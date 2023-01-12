@@ -2,7 +2,9 @@ package com.depromeet.threedays.front.exception;
 
 import com.depromeet.threedays.front.support.MessageSourceAccessor;
 import javax.validation.constraints.NotEmpty;
+import lombok.Getter;
 
+@Getter
 public class JsonParsingException extends RuntimeException {
 
 	private final String code;
