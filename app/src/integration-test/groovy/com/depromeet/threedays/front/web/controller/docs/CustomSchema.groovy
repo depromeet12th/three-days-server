@@ -71,8 +71,8 @@ class CustomSchema {
         return MateResponse.builder()
                 .id(0L)
                 .habitId(0L)
-                .memberId(0L).
-                title("짝꿍이").
+                .memberId(0L)
+                .title("짝꿍이").
                 createAt(LocalDateTime.now())
                 .level(0)
                 .reward(0)
