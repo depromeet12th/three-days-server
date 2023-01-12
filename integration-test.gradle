@@ -48,19 +48,3 @@ task integrationTest(type: Test) {
 integrationTest {
     useJUnitPlatform()
 }
-
-/**
- * convert snippet to swagger
- */
-
-
-//openapi3 {
-//    server = 'https://localhost:8080'
-//    title = 'SOSO'
-//    description = 'My API description'
-//    tagDescriptionsPropertiesFile = 'src/docs/tag-descriptions.yaml'
-//    version = '0.1.0'
-//    format = 'json'
-////    snippetsDirectory = snippetsDir
-////    outputDirectory = outputDirectory
-//}
