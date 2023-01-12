@@ -16,8 +16,6 @@ public class MateConverter {
 
 		// FIXME: reward, rewardHistory
 		return Mate.builder()
-				.reward(0)
-				.rewardHistory(null)
 				.id(entity.getId())
 				.memberId(entity.getMemberId())
 				.habitId(entity.getHabitId())
@@ -39,8 +37,6 @@ public class MateConverter {
 
 		// FIXME: reward, rewardHistory
 		return Mate.builder()
-				.reward(0)
-				.rewardHistory(null)
 				.id(entity.getId())
 				.memberId(entity.getMemberId())
 				.habitId(entity.getHabitId())
