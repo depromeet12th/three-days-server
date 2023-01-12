@@ -1,3 +1,50 @@
+CREATE TABLE `mate_bubble`
+(
+    `mate_bubble_id`        bigint       NOT NULL AUTO_INCREMENT,
+    `message`       varchar(1000)       NOT NULL,
+    `character_type` varchar(255) NOT NULL,
+    `level`          int,
+    PRIMARY KEY (`mate_bubble_id`)
+);
+
+insert into `mate_bubble` (message, character_type, level) values ('실천하지 않으면 아무것도 달라지지 않아!', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('또 또 누워있는 거 아니지? 자~ 움직이라고!', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('언제까지 말만 할 건데? 이제 실천할 때야', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('정신 차려 이 각박한 세상 속에서!', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('지금 못하면 다음에도 못하게 될걸?', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('날 실망시킬 건 아니지?', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('나 레벨업하고 싶은데.. 실천 안 할 거야?', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('지금 당장 습관을 실천한다 실시!', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('어? -_-...? 너 안 하고 뭐 하는..?', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('지.금.당.장.하.라.고', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('그래 오늘은 쉬어도 돼!..라고 할 줄 알았지?', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('오늘도 실천할 거지? 할 거지? 할 거지?', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('스스로 약속했잖아! 미루지 마~', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('‘오늘쯤은’같은 마인드는 넣어둬~^^', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('내.가.지.켜.보.고.있.다 👁👁', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('조금 지쳤나요? (아니요)', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('실천하세요. 용사여…', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('후속 실천 원해요~', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('하루만 더 진짜 하루만 짝꿍 소원!', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('뭘 망설여 걍 하는거지', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('👥(웅성웅성)실천했대?👥(웅성웅성)안 했대?', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('휴식은 할 일을 하고 나서 하는 거라고!', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('정각에 시작하는 습관을 버리자', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('목표를 위해서 계속 움직여야 해! 뭐해~ 움직여', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('기회는 스스로 만드는 거야 🔥', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('생각할 시간에 바로 실천하는 건 어때?', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('불안하다고 해결되는 건 없어 그냥 해 봐 🤨', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('아무것도 하지 않으면 얻는 것도 없어!', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('생각만으로는 아무것도 할 수 없어.', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('스스로 원하는 모습이 될 때까지 멈추지 마!', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('잠깐, 오늘 목표들 모두 실천했어? 지켜본다~', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('귀찮음은 잠시지만, 실천은 성공의 지름길!', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('지금 필요한 건 실천. 실천. 실천! 빨리 해!', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('정말 포기할 거야?', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('이 정도는 껌 아니야?', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('시간은 너를 기다려주지 않는다구', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('못하는 게 아니고 안 하는 건 아니겠지..?', 'WHIP', 0);
+insert into `mate_bubble` (message, character_type, level) values ('마음만으로는 안된다구, 실천해야지!', 'WHIP', 0);
 insert into `mate_bubble` (message, character_type, level) values ('지금 하지 않으면 1년 뒤에도 그대로일걸?', 'WHIP', 0);
 insert into `mate_bubble` (message, character_type, level) values ('힘들다고 포기할 거야? 의지력이 그 정도?ㅎ', 'WHIP', 0);
 insert into `mate_bubble` (message, character_type, level) values ('엥? 이 정도는 난 쉽던데~', 'WHIP', 0);
