@@ -69,6 +69,7 @@ public class DeleteHabitUseCase {
 	private void delete(final Habit source, final Mate mate) {
 		repository.save(HabitConverter.to(source).toBuilder().deleted(true).build());
 		this.deleteMate(mate);
+		this.deleteAchievement(source);
 		this.deleteNotification(source);
 	}
 
@@ -92,5 +93,12 @@ public class DeleteHabitUseCase {
 		}
 
 		mateRepository.save(MateConverter.to(mate).toBuilder().deleted(true).build());
+	}
+
+	private void deleteAchievement(final Habit source) {
+		if (source == null) {
+			return;
+		}
+		habitAchievementRepository.deleteAllByHabitId(source.getId());
 	}
 }
