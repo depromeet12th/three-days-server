@@ -114,7 +114,7 @@ class MemberControllerDocsSpec extends RestDocsSpecification {
                                                 )
                                                 .requestFields(Descriptor.signMemberRequest())
                                                 .responseSchema(Schema.schema("Member"))
-                                                .requestSchema(Schema.schema("signMemberRequest"))
+                                                .requestSchema(Schema.schema("SignMemberRequest"))
                                                 .build()
                                 )
                         )
