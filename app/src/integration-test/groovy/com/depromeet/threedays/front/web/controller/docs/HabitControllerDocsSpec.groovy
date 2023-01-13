@@ -158,9 +158,10 @@ class HabitControllerDocsSpec extends RestDocsSpecification {
                                                 .summary("모든 습관 목록을 가져오는 API")
                                                 .description("모든 habit list를 반환한다.")
                                                 .tag(TAG)
-//                                                .requestSchema(Schema.schema("SearchHabitRequest"))
                                                 .responseSchema(Schema.schema("HabitOverview"))
-//                                                .requestFields(Descriptor.searchHabitRequest())
+                                                .requestParameters(
+                                                        parameterWithName("status").description("조회하고자 하는 습관의 상태")
+                                                )
                                                 .responseFields(Descriptor.habitOverviewList())
                                                 .build()
                                 )
