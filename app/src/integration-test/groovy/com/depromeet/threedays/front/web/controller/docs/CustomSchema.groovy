@@ -35,8 +35,8 @@ class CustomSchema {
     static SaveHabitRequest saveHabitRequest() {
         return SaveHabitRequest.builder()
                 .title("물마셔..")
-                .imojiPath("imoji")
-                .color("pink")
+                .imojiPath("😀")
+                .color("GREEN")
                 .dayOfWeeks(EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.FRIDAY))
                 .notification(Notification.builder()
                         .contents("알림짝짝")
@@ -52,8 +52,8 @@ class CustomSchema {
                 .id(0L)
                 .memberId(0L)
                 .title("물마셔...")
-                .imojiPath("imoji")
-                .color("pink")
+                .imojiPath("😀")
+                .color("GREEN")
                 .dayOfWeeks(EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.FRIDAY))
                 .reward(1)
                 .sequence(0)
@@ -80,7 +80,7 @@ class CustomSchema {
                 .levelUpAt(LocalDateTime.now())
                 .characterType(MateType.CARROT)
                 .levelUpSection([1, 4, 8, 14, 22])
-                .bubble("물안마시면클나")
+                .bubble("5252! 믿고 있었다구~ 오늘도 파이팅")
                 .status(MateStatus.ACTIVE)
                 .build()
     }
@@ -127,7 +127,10 @@ class CustomSchema {
                 .isNew(true)
                 .name("admin")
                 .certificationSubject(CertificationSubject.KAKAO)
-                .token(Token.builder().refreshToken("asd").accessToken("asd").build())
+                .token(Token.builder()
+                        .refreshToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzM4NCJ9.eyJtZW1iZXJJZCI6MSwiaWF0IjoxNjcwNTc4MzAzLCJleHAiOjE2NzI3MjU3ODZ9._eQlJYPHHaruePkVFvA6vD8zy2qj9dNLjtI0rCCQ5jLBia5Xiz5QouSRdtawHkUF")
+                        .accessToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtZW1iZXJJZCI6MSwiaWF0IjoxNjY5Nzc4NjQwLCJleHAiOjE2NzAwNTEwNzN9.qRYwNldwTJCBdcRa13zm9At-NKTnqM6K8FQzsnUHcPY")
+                        .build())
                 .build()
     }
 
@@ -146,7 +149,7 @@ class CustomSchema {
                 .levelUpAt(LocalDateTime.now())
                 .characterType(MateType.CARROT)
                 .levelUpSection([1, 4, 8, 14, 22])
-                .bubble("쉬지뭬")
+                .bubble("5252! 믿고 있었다구~ 오늘도 파이팅")
                 .status(MateStatus.ACTIVE)
                 .deleted(false)
                 .build()
@@ -157,8 +160,8 @@ class CustomSchema {
                 .id(0L)
                 .memberId(0L)
                 .title("물을 마시쟈")
-                .imojiPath("imoji")
-                .color("pink")
+                .imojiPath("😀")
+                .color("GREEN")
                 .dayOfWeeks(EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.FRIDAY))
                 .status(HabitStatus.ACTIVE)
                 .createAt(LocalDateTime.now())
@@ -180,10 +183,10 @@ class CustomSchema {
                         .id(0L)
                         .memberId(0L)
                         .title("물무")
-                        .imojiPath("imoji")
+                        .imojiPath("😀")
                         .dayOfWeeks(EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.FRIDAY))
                         .reward(0)
-                        .color("red")
+                        .color("GREEN")
                         .status(HabitStatus.ACTIVE)
                         .createAt(LocalDateTime.now())
                         .archiveAt(LocalDateTime.now())
@@ -218,8 +221,8 @@ class CustomSchema {
                 .id(0L)
                 .memberId(0L)
                 .title("title")
-                .imojiPath("imojiPath")
-                .color("color")
+                .imojiPath("😀")
+                .color("GREEN")
                 .dayOfWeeks(EnumSet.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.FRIDAY))
                 .reward(0L)
                 .archiveNumberOfDate(0)
@@ -296,9 +299,33 @@ class CustomSchema {
 
     static List<NotificationHistory> notificationHistoryList() {
         def notificationHistories = new ArrayList<NotificationHistory>()
-        notificationHistories().add(
-                NotificationHistory.builder().id(0L).memberId(0L).notificationId(0L).title("title").contents("contents").status(NotificationStatus.SUCCESS).type(NotificationType.HABIT).createAt(LocalDateTime.now()).build()
+        notificationHistories.add(
+                NotificationHistory
+                        .builder()
+                        .id(0L)
+                        .memberId(0L)
+                        .notificationId(0L)
+                        .title("title")
+                        .contents("contents")
+                        .status(NotificationStatus.SUCCESS)
+                        .type(NotificationType.HABIT)
+                        .createAt(LocalDateTime.now())
+                        .build()
         )
         return notificationHistories
+    }
+
+    static NotificationHistory notificationHistory() {
+        return NotificationHistory
+                .builder()
+                .id(0L)
+                .memberId(0L)
+                .notificationId(0L)
+                .title("title")
+                .contents("contents")
+                .status(NotificationStatus.SUCCESS)
+                .type(NotificationType.HABIT)
+                .createAt(LocalDateTime.now())
+                .build()
     }
 }

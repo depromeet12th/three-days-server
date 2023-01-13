@@ -3,7 +3,6 @@ package com.depromeet.threedays.front.web.controller.docs
 import com.depromeet.threedays.data.enums.CertificationSubject
 import com.depromeet.threedays.data.enums.MemberStatus
 import com.depromeet.threedays.front.RestDocsSpecification
-import com.depromeet.threedays.front.client.model.KakaoReferrerType
 import com.depromeet.threedays.front.domain.model.member.Member
 import com.depromeet.threedays.front.domain.model.member.Token
 import com.depromeet.threedays.front.domain.usecase.client.DeleteClientUseCase
@@ -23,11 +22,9 @@ import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import org.springframework.http.MediaType
 import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.http.*
 
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document
 import static com.epages.restdocs.apispec.ResourceDocumentation.headerWithName
@@ -71,8 +68,8 @@ class MemberControllerDocsSpec extends RestDocsSpecification {
     @SpringBean
     GetTokenUseCase getTokenUseCase = Stub() {
         execute(_) >> Token.builder()
-                .accessToken("accessToken")
-                .refreshToken("refreshToken")
+                .accessToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzM4NCJ9.eyJtZW1iZXJJZCI6MSwiaWF0IjoxNjcwNTc4MzAzLCJleHAiOjE2NzI3MjU3ODZ9._eQlJYPHHaruePkVFvA6vD8zy2qj9dNLjtI0rCCQ5jLBia5Xiz5QouSRdtawHkUF")
+                .refreshToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtZW1iZXJJZCI6MSwiaWF0IjoxNjY5Nzc4NjQwLCJleHAiOjE2NzAwNTEwNzN9.qRYwNldwTJCBdcRa13zm9At-NKTnqM6K8FQzsnUHcPY")
                 .build()
     }
     @SpringBean
