@@ -423,4 +423,38 @@ class Descriptor {
                 fieldWithPath("data[].successful").type(JsonFieldType.BOOLEAN).description("").optional()
         }
     }
+
+    static FieldDescriptor[] notificationHistoryResponseList() {
+        return new FieldDescriptor[]{
+                fieldWithPath("code").type(JsonFieldType.STRING).description("code"),
+                fieldWithPath("message").description("message"),
+                fieldWithPath("data[].id").type(JsonFieldType.NUMBER).description("알림 이력 id"),
+                fieldWithPath("data[].memberId").type(JsonFieldType.NUMBER).description("사용자 id"),
+                fieldWithPath("data[].notificationId").type(JsonFieldType.NUMBER).description("알림 id"),
+                fieldWithPath("data[].title").type(JsonFieldType.STRING).description("알림 제목"),
+                fieldWithPath("data[].contents").type(JsonFieldType.STRING).description("알림 내용"),
+                fieldWithPath("data[].status").type(JsonFieldType.STRING).description("알림 성공 여부"),
+                fieldWithPath("data[].type").type(JsonFieldType.STRING).description("알림 타입"),
+                fieldWithPath("data[].createAt").type(JsonFieldType.STRING).description("알림 이력 생성 시간")
+        }
+    }
+
+    static FieldDescriptor[] editStatusNotificationRequest() {
+        return new FieldDescriptor[]{
+                fieldWithPath("status").type(JsonFieldType.STRING).description("알림 이력 상태")
+        }
+    }
+
+    static FieldDescriptor[] notificationHistoryResponse() {
+        return new FieldDescriptor[]{
+                fieldWithPath("data.id").type(JsonFieldType.NUMBER).description("알림 이력 id"),
+                fieldWithPath("data.memberId").type(JsonFieldType.NUMBER).description("사용자 id"),
+                fieldWithPath("data.notificationId").type(JsonFieldType.NUMBER).description("알림 id"),
+                fieldWithPath("data.title").type(JsonFieldType.STRING).description("알림 제목"),
+                fieldWithPath("data.contents").type(JsonFieldType.STRING).description("알림 내용"),
+                fieldWithPath("data.status").type(JsonFieldType.STRING).description("알림 성공 여부"),
+                fieldWithPath("data.type").type(JsonFieldType.STRING).description("알림 타입"),
+                fieldWithPath("data.createAt").type(JsonFieldType.STRING).description("알림 이력 생성 시간")
+        }
+    }
 }
