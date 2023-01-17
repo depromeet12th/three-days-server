@@ -78,8 +78,6 @@ batch:
 
 logging:
   exception-conversion-word: '%wEx'
-  pattern:
-    console: '%d{yyyy-MM-dd HH:mm:ss.SSS, Asia/Seoul} %-10level [%L] [%.-24thread] %logger{50} %ex{30} - %msg%n'
   level:
     org:
       springframework:
