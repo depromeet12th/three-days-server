@@ -16,5 +16,6 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
 			final CertificationSubject certificationSubject,
 			final MemberStatus status);
 
-	List<MemberEntity> findAllByNotificationConsent(final boolean consent);
+	List<MemberEntity> findAllByNotificationConsentAndStatus(
+			final boolean consent, final MemberStatus status);
 }
