@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,7 +52,8 @@ public class DeleteMemberUseCase {
 				.orElseThrow(ResourceNotFoundException::new);
 	}
 
-	void deleteFcmToken(Long memberId) {
+	@Async
+	public void deleteFcmToken(Long memberId) {
 		ClientEntity clientEntity =
 				clientRepository.findByMemberId(memberId).orElseThrow(ResourceNotFoundException::new);
 		clientRepository.save(clientEntity.toBuilder().fcmToken("").build());
