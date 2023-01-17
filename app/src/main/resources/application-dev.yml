@@ -4,10 +4,6 @@ spring:
   profiles:
     include:
       - data-dev
-  redis:
-    host: localhost
-    password:
-    port: 16379
 
 security:
   jwt:
