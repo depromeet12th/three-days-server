@@ -31,6 +31,8 @@ dependencies {
     //fcm push notification
     implementation 'com.google.firebase:firebase-admin:9.1.1'
 
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3'
+
 }
 
 def imageName = project.hasProperty('imageName') ? imageName : "app:local"
