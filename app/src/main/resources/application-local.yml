@@ -15,8 +15,7 @@ security:
       validtime:
         access: 31557600000
         refresh: 31557600000
-      secretkey: ${TOKEN_SECRETKEY}
-
+      secretkey: ENC(hL8s+Y0aTusUISK+0EIsOsqZ0lAX9b75Lvr/ouhpY1eHkd0Obb1yyopeNPgmlv3NBfe70T75yArdavd+HkBp1IlJDoHijG6/)
 google:
   host: https://www.googleapis.com/oauth2
   user:
@@ -27,14 +26,14 @@ kakao:
     uri: /v2/user/me
   unlink:
     uri: /v1/user/unlink
-  adminKey: ${KAKAO_ADMINKEY}
+  adminKey: ENC(4wC/jyuomP+b7iZ6kteY0nc5l+PZ6dX2DTvFR4ZKGO51KmBbxEcPNf5IrVD/nBeS)
 firebase:
   multicast-message:
     size: 500
   projectId: project
   private:
-    keyId: ${FIREBASE_PRIVATE_KEY_ID}
-    key: ${FIREBASE_PRIVATE_KEY}
+    keyId: ENC(yG1+pvl3s30DCmWmfWplUgDQWgJ9bUZ2U0gZxDvE/GY8GsJ7DDbAkSRQICmLf5DdvoVlTtlWlGw=)
+    key: ${FIREBASE_PRIVATE_KEY:#{null}}
   client:
     id: clientId
     email: clientEmail

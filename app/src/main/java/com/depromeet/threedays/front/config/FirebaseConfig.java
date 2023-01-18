@@ -27,6 +27,9 @@ public class FirebaseConfig {
 	@Profile("!integration-test")
 	@Bean
 	public FirebaseApp firebaseApp(FirebaseProperty firebaseProperty) throws IOException {
+		if(firebaseProperty.getPrivateKey() == null){
+			return null;
+		}
 		FirebaseOptions options =
 				FirebaseOptions.builder()
 						.setCredentials(
