@@ -24,8 +24,6 @@ class DeleteMemberUseCaseSpec extends IntegrationTestSpecification {
     AuthClient authClient
 
     @Autowired
-    ClientRepository clientRepository
-    @Autowired
     MemberInitializer initializer
     @Autowired
     HabitDataInitializer habitDataInitializer
@@ -39,7 +37,7 @@ class DeleteMemberUseCaseSpec extends IntegrationTestSpecification {
         propertyManager = Mock(AuthPropertyManager.class)
         authClient = Mock(AuthClient.class)
 
-        useCase = new DeleteMemberUseCase(repository,  clientRepository, authClient, propertyManager)
+        useCase = new DeleteMemberUseCase(repository, authClient, propertyManager)
     }
 
     def "사용자를 삭제하면 상태가 WITHDRAWN."() {
@@ -53,26 +51,5 @@ class DeleteMemberUseCaseSpec extends IntegrationTestSpecification {
         then:
         repository.findByIdAndStatus(_ as Long, _ as MemberStatus) >> Optional.of(criterionMember)
         actual.status == MemberStatus.WITHDRAWN
-    }
-
-    def "사용자를 삭제하면 해당 사용자의 fcmToken도 함께 사라진다."() {
-        setup:
-        def criterionMember = initializer.data.first()
-        def criterionClient = ClientEntity
-                .builder()
-                .updateAt(LocalDateTime.now())
-                .createAt(LocalDateTime.now())
-                .memberId(criterionMember.id)
-                .fcmToken("fcmToken")
-                .identificationKey("identificationKey")
-                .build()
-        clientRepository.save(criterionClient)
-
-        when:
-        useCase.deleteFcmToken(criterionMember.id)
-
-        then:
-        def client = clientRepository.findByMemberId(criterionMember.id).get()
-        client.fcmToken == ""
     }
 }
