@@ -2,6 +2,7 @@ package com.depromeet.threedays.front.web.controller;
 
 import com.depromeet.threedays.data.enums.CertificationSubject;
 import com.depromeet.threedays.front.client.model.KakaoReferrerType;
+import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.converter.member.MemberConverter;
 import com.depromeet.threedays.front.domain.model.member.Member;
 import com.depromeet.threedays.front.domain.model.member.SaveMemberUseCaseResponse;
@@ -82,6 +83,7 @@ public class MemberController {
 	@DeleteMapping
 	public ApiResponse<ApiResponse.SuccessBody<Void>> deleteMember() {
 		deleteUseCase.execute();
+		deleteUseCase.deleteFcmToken(AuditorHolder.get());
 		return ApiResponseGenerator.success(HttpStatus.OK, MessageCode.RESOURCE_DELETED);
 	}
 
