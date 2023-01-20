@@ -40,14 +40,15 @@ class MemberControllerSpec extends AsyncIntegrationTestSpecification {
         def id = initializer.data.first().id
         token = tokenGenerator.generateToken(id).getAccessToken()
 
-        def client = clientRepository.save(ClientEntity
-                .builder()
-                .identificationKey("identificationKey")
-                .fcmToken("fcmToken")
-                .memberId(id)
-                .createAt(LocalDateTime.now())
-                .updateAt(LocalDateTime.now())
-                .build()
+        clientRepository.save(
+                ClientEntity
+                        .builder()
+                        .identificationKey("identificationKey")
+                        .fcmToken("fcmToken")
+                        .memberId(id)
+                        .createAt(LocalDateTime.now())
+                        .updateAt(LocalDateTime.now())
+                        .build()
         )
 
         when:
