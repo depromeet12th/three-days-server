@@ -1,6 +1,5 @@
 package com.depromeet.threedays.front.domain.usecase.member;
 
-import com.depromeet.threedays.data.entity.client.ClientEntity;
 import com.depromeet.threedays.data.entity.member.MemberEntity;
 import com.depromeet.threedays.data.enums.CertificationSubject;
 import com.depromeet.threedays.data.enums.MemberStatus;
@@ -20,7 +19,6 @@ import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class DeleteMemberUseCase {
 
 	private final MemberRepository repository;
-	private final ClientRepository clientRepository;
 	private final AuthClient authClient;
 	private final AuthPropertyManager propertyManager;
 
@@ -48,13 +45,6 @@ public class DeleteMemberUseCase {
 				.map(MemberEntity::withdraw)
 				.map(MemberConverter::from)
 				.orElseThrow(ResourceNotFoundException::new);
-	}
-
-	@Async
-	public void deleteFcmToken(Long memberId) {
-		ClientEntity clientEntity =
-				clientRepository.findByMemberId(memberId).orElseThrow(ResourceNotFoundException::new);
-		clientRepository.save(clientEntity.toBuilder().fcmToken("").build());
 	}
 
 	/** 카카오 계정 연결끊기 */

@@ -83,7 +83,7 @@ public class MemberController {
 	@DeleteMapping
 	public ApiResponse<ApiResponse.SuccessBody<Void>> deleteMember() {
 		deleteUseCase.execute();
-		deleteUseCase.deleteFcmToken(AuditorHolder.get());
+		deleteClientUseCase.execute(AuditorHolder.get());
 		return ApiResponseGenerator.success(HttpStatus.OK, MessageCode.RESOURCE_DELETED);
 	}
 

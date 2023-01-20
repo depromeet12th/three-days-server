@@ -8,9 +8,12 @@ import com.depromeet.threedays.front.persistence.repository.member.MemberReposit
 import com.depromeet.threedays.front.web.request.client.DeleteClientRequest;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Transactional
 @RequiredArgsConstructor
 @Service
@@ -26,5 +29,13 @@ public class DeleteClientUseCase {
 				.orElseThrow(() -> new MemberNotFoundException(memberId));
 
 		clientRepository.deleteByIdentificationKey(query.getIdentificationKey());
+	}
+
+	@Async
+	public void execute(Long memberId) {
+		log.info("deleteClientUseCase execute() thread name : " + Thread.currentThread().getName());
+		memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException(memberId));
+
+		clientRepository.deleteAllByMemberId(memberId);
 	}
 }
