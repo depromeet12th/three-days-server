@@ -11,7 +11,6 @@ import com.depromeet.threedays.front.domain.converter.member.MemberConverter;
 import com.depromeet.threedays.front.domain.model.member.Member;
 import com.depromeet.threedays.front.exception.ExternalIntegrationException;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
-import com.depromeet.threedays.front.persistence.repository.client.ClientRepository;
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository;
 import java.net.URI;
 import java.net.URISyntaxException;
