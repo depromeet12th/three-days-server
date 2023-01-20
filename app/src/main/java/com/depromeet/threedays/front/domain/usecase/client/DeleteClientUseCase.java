@@ -2,6 +2,8 @@ package com.depromeet.threedays.front.domain.usecase.client;
 
 import com.depromeet.threedays.data.enums.MemberStatus;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
+import com.depromeet.threedays.front.domain.converter.member.MemberConverter;
+import com.depromeet.threedays.front.domain.model.member.Member;
 import com.depromeet.threedays.front.exception.MemberNotFoundException;
 import com.depromeet.threedays.front.persistence.repository.client.ClientRepository;
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository;
@@ -32,10 +34,15 @@ public class DeleteClientUseCase {
 	}
 
 	@Async
-	public void execute(Long memberId) {
+	public Member execute(Long memberId) {
 		log.info("deleteClientUseCase execute() thread name : " + Thread.currentThread().getName());
-		memberRepository.findById(memberId).orElseThrow(() -> new MemberNotFoundException(memberId));
+		Member member =
+				memberRepository
+						.findById(memberId)
+						.map(MemberConverter::from)
+						.orElseThrow(() -> new MemberNotFoundException(memberId));
 
 		clientRepository.deleteAllByMemberId(memberId);
+		return member;
 	}
 }
