@@ -37,10 +37,8 @@ public class DeleteMemberUseCase {
 
 	public Member execute() {
 		Long memberId = AuditorHolder.get();
-		Member member = quit(memberId);
-		deleteFcmToken(memberId);
 		unlinkSocialAccount(memberId);
-		return member;
+		return quit(memberId);
 	}
 
 	/** 짝심삼일 앱에서 회원 탈퇴 */
