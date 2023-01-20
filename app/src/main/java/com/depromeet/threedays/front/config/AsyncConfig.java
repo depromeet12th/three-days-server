@@ -1,9 +1,9 @@
 package com.depromeet.threedays.front.config;
 
+import com.depromeet.threedays.front.web.controller.AsyncExceptionHandler;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
-import org.springframework.aop.interceptor.SimpleAsyncUncaughtExceptionHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
@@ -28,6 +28,6 @@ public class AsyncConfig implements AsyncConfigurer {
 
 	@Override
 	public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
-		return new SimpleAsyncUncaughtExceptionHandler();
+		return new AsyncExceptionHandler();
 	}
 }
