@@ -8,12 +8,11 @@ import com.depromeet.threedays.front.client.AuthClient
 import com.depromeet.threedays.front.client.property.auth.AuthPropertyManager
 import com.depromeet.threedays.front.data.habit.HabitDataInitializer
 import com.depromeet.threedays.front.data.member.MemberInitializer
-import com.depromeet.threedays.front.persistence.repository.client.ClientRepository
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.ApplicationEventPublisher
 import spock.lang.Subject
 
-import java.time.LocalDateTime
 
 class DeleteMemberUseCaseSpec extends IntegrationTestSpecification {
 
@@ -22,12 +21,12 @@ class DeleteMemberUseCaseSpec extends IntegrationTestSpecification {
     MemberRepository repository
     AuthPropertyManager propertyManager
     AuthClient authClient
+    ApplicationEventPublisher eventPublisher
 
     @Autowired
     MemberInitializer initializer
     @Autowired
     HabitDataInitializer habitDataInitializer
-
 
     def setup() {
         initializer.initialize()
@@ -36,8 +35,8 @@ class DeleteMemberUseCaseSpec extends IntegrationTestSpecification {
         repository = Mock(MemberRepository.class)
         propertyManager = Mock(AuthPropertyManager.class)
         authClient = Mock(AuthClient.class)
-
-        useCase = new DeleteMemberUseCase(repository, authClient, propertyManager)
+        eventPublisher = Mock(ApplicationEventPublisher.class)
+        useCase = new DeleteMemberUseCase(repository, authClient, propertyManager, eventPublisher)
     }
 
     def "사용자를 삭제하면 상태가 WITHDRAWN."() {
