@@ -3,6 +3,7 @@ package com.depromeet.threedays.front.config;
 import com.depromeet.threedays.front.web.controller.AsyncExceptionHandler;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +13,10 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 @Configuration
 @EnableAsync
+@RequiredArgsConstructor
 public class AsyncConfig implements AsyncConfigurer {
+	private final AsyncExceptionHandler asyncExceptionHandler;
+
 	@Bean(name = "threadPoolTaskExecutor")
 	public Executor threadPoolTaskExecutor() {
 		ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
@@ -28,6 +32,6 @@ public class AsyncConfig implements AsyncConfigurer {
 
 	@Override
 	public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
-		return new AsyncExceptionHandler();
+		return asyncExceptionHandler;
 	}
 }
