@@ -9,6 +9,7 @@ import com.depromeet.threedays.front.client.property.auth.AuthRequestProperty;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.converter.member.MemberConverter;
 import com.depromeet.threedays.front.domain.model.member.Member;
+import com.depromeet.threedays.front.domain.model.member.MemberEvent;
 import com.depromeet.threedays.front.exception.ExternalIntegrationException;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,11 +32,13 @@ public class DeleteMemberUseCase {
 	private final MemberRepository repository;
 	private final AuthClient authClient;
 	private final AuthPropertyManager propertyManager;
+	private final ApplicationEventPublisher eventPublisher;
 
 	public Member execute() {
 		log.info("deleteMemberUseCase execute() thread name : " + Thread.currentThread().getName());
 		Long memberId = AuditorHolder.get();
 		unlinkSocialAccount(memberId);
+		eventPublisher.publishEvent(new MemberEvent(this, memberId));
 		return quit(memberId);
 	}
 

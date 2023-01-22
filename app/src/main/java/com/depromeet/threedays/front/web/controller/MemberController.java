@@ -36,7 +36,6 @@ public class MemberController {
 	private final DeleteMemberUseCase deleteUseCase;
 	private final DeleteClientUseCase deleteClientUseCase;
 	private final GetMemberUseCase getUseCase;
-	private final DeleteMemberUseCaseFacade deleteUseCaseFacade;
 
 	/** 로그인 또는 회원가입 */
 	@PostMapping
@@ -82,7 +81,7 @@ public class MemberController {
 	/** 회원 탈퇴 */
 	@DeleteMapping
 	public ApiResponse<ApiResponse.SuccessBody<Void>> deleteMember() {
-		deleteUseCaseFacade.execute();
+		deleteUseCase.execute();
 		return ApiResponseGenerator.success(HttpStatus.OK, MessageCode.RESOURCE_DELETED);
 	}
 
