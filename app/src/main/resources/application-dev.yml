@@ -41,3 +41,6 @@ firebase:
     email: ${FIREBASE_CLIENT_EMAIL}
   token:
     uri: https://oauth2.googleapis.com/token
+slack:
+  api:
+    token: ${SLACK_API_TOKEN}
