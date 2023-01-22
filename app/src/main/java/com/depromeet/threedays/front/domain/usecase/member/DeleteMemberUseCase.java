@@ -32,6 +32,7 @@ public class DeleteMemberUseCase {
 	private final AuthPropertyManager propertyManager;
 
 	public Member execute() {
+		log.info("deleteMemberUseCase execute() thread name : " + Thread.currentThread().getName());
 		Long memberId = AuditorHolder.get();
 		unlinkSocialAccount(memberId);
 		return quit(memberId);

@@ -2,7 +2,6 @@ package com.depromeet.threedays.front.web.controller;
 
 import com.depromeet.threedays.data.enums.CertificationSubject;
 import com.depromeet.threedays.front.client.model.KakaoReferrerType;
-import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.converter.member.MemberConverter;
 import com.depromeet.threedays.front.domain.model.member.Member;
 import com.depromeet.threedays.front.domain.model.member.SaveMemberUseCaseResponse;
@@ -37,6 +36,7 @@ public class MemberController {
 	private final DeleteMemberUseCase deleteUseCase;
 	private final DeleteClientUseCase deleteClientUseCase;
 	private final GetMemberUseCase getUseCase;
+	private final DeleteMemberUseCaseFacade deleteUseCaseFacade;
 
 	/** 로그인 또는 회원가입 */
 	@PostMapping
@@ -82,8 +82,7 @@ public class MemberController {
 	/** 회원 탈퇴 */
 	@DeleteMapping
 	public ApiResponse<ApiResponse.SuccessBody<Void>> deleteMember() {
-		deleteUseCase.execute();
-		deleteClientUseCase.execute(AuditorHolder.get());
+		deleteUseCaseFacade.execute();
 		return ApiResponseGenerator.success(HttpStatus.OK, MessageCode.RESOURCE_DELETED);
 	}
 

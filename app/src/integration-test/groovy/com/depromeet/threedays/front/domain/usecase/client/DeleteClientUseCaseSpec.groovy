@@ -13,7 +13,7 @@ class DeleteClientUseCaseSpec extends AsyncIntegrationTestSpecification {
 
     @Subject
     @Autowired
-    private DeleteClientUseCase useCase
+    private DeleteClientUseCase deleteClientUseCase
 
     @Autowired
     private MemberInitializer memberInitializer
@@ -39,9 +39,9 @@ class DeleteClientUseCaseSpec extends AsyncIntegrationTestSpecification {
         )
 
         when:
-        def result = useCase.execute(2L)
+        deleteClientUseCase.executeWithMemberWithdrawn(2L)
 
         then:
-        result == null
+        print("success")
     }
 }

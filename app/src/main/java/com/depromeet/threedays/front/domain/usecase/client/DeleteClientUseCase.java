@@ -34,7 +34,7 @@ public class DeleteClientUseCase {
 	}
 
 	@Async
-	public Member execute(Long memberId) {
+	public Member executeWithMemberWithdrawn(Long memberId) {
 		log.info("deleteClientUseCase execute() thread name : " + Thread.currentThread().getName());
 		Member member =
 				memberRepository
