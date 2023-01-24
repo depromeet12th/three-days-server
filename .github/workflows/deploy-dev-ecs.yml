@@ -11,7 +11,7 @@ env:
   ECS_SERVICE: three-days-be-api-develop
   ECS_CLUSTER: three-days-cluster-develop
   ECS_TASK_DEFINITION: task-definition.json
-  CONTAINER_NAME: three-days-cluster-develop
+  CONTAINER_NAME: three-days-be-api-develop
 
 jobs:
   build-and-push-docker-image:
