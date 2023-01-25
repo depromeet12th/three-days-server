@@ -67,10 +67,7 @@ public class SearchRecordUseCase {
 						memberEntity.getId(), datePeriod.getFrom(), datePeriod.getTo());
 
 		List<Long> habitIds =
-				habitRepository
-						.findAllByMemberIdAndDeletedFalse(memberId)
-						.orElseThrow(IllegalArgumentException::new)
-						.stream()
+				habitRepository.findAllByMemberIdAndDeletedFalse(memberId).stream()
 						.map(HabitEntity::getId)
 						.collect(Collectors.toList());
 
