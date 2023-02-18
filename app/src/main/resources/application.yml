@@ -23,7 +23,7 @@ springdoc:
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
   swagger-ui:
-    url: /openapi3.yml
+    url: /openapi3.yaml
     operations-sorter: alpha
     tags-sorter: alpha
     path: /

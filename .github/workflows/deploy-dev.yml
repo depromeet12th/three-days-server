@@ -37,6 +37,12 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Run IntegrationTest
+        run : ./gradlew :app:integrationTest
+
+      - name: Generate Docs
+        run: ./gradlew :app:openapi3
+
       - name: Docker build & push to dev
         run: |
           GIT_HASH=$(git rev-parse --short HEAD)
