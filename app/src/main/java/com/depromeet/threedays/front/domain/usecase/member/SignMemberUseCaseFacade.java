@@ -8,6 +8,7 @@ import com.depromeet.threedays.front.domain.converter.member.MemberCommandConver
 import com.depromeet.threedays.front.domain.converter.member.MemberQueryConverter;
 import com.depromeet.threedays.front.domain.model.member.SaveMemberUseCaseResponse;
 import com.depromeet.threedays.front.exception.ExternalIntegrationException;
+import com.depromeet.threedays.front.web.request.member.AppleSignMemberRequest;
 import com.depromeet.threedays.front.web.request.member.SignMemberRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -61,5 +62,13 @@ public class SignMemberUseCaseFacade {
 						.findFirst()
 						.orElseThrow(NoSuchFieldError::new);
 		return authRequestPropertyMap.get(clientName);
+	}
+
+	public SaveMemberUseCaseResponse execute(final AppleSignMemberRequest request) {
+		if (request == null) {
+			return null;
+		}
+
+		return null;
 	}
 }
