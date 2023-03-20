@@ -30,6 +30,9 @@ dependencies {
 
     //fcm push notification
     implementation "com.google.firebase:firebase-admin:${firebaseAdminVersion}"
+
+    //slack incoming hooks
+    implementation 'net.gpedro.integrations.slack:slack-webhook:1.4.0'
 }
 
 def imageName = project.hasProperty('imageName') ? imageName : "app:local"

@@ -3,6 +3,7 @@ package com.depromeet.threedays.front.domain.usecase.notification;
 import com.depromeet.threedays.data.entity.client.ClientEntity;
 import com.depromeet.threedays.data.entity.member.MemberEntity;
 import com.depromeet.threedays.data.entity.notification.HabitNotificationEntity;
+import com.depromeet.threedays.data.enums.MemberStatus;
 import com.depromeet.threedays.data.enums.NotificationStatus;
 import com.depromeet.threedays.front.client.MessageClient;
 import com.depromeet.threedays.front.client.builder.FireBaseMessageBuilder;
@@ -86,7 +87,9 @@ public class SendHabitNotificationUseCase {
 
 	/** 알림 받을 회원 목록 조회 */
 	private Set<Long> getNotificationConsentMemberIds() {
-		return memberRepository.findAllByNotificationConsent(true).stream()
+		return memberRepository
+				.findAllByNotificationConsentAndStatus(true, MemberStatus.REGULAR)
+				.stream()
 				.map(MemberEntity::getId)
 				.collect(Collectors.toSet());
 	}

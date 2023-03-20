@@ -80,7 +80,9 @@ firebase:
     email: clientEmail
   token:
     uri: https://oauth2.googleapis.com/token
-
+slack:
+  api:
+    token: slackapitoken
 batch:
   global: 15
   habit: 15

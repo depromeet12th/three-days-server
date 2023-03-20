@@ -7,9 +7,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ClientRepository extends JpaRepository<ClientEntity, Long> {
 
 	Optional<ClientEntity> findByMemberIdAndIdentificationKey(
-			final Long MemberId, final String identificationKey);
+			final Long memberId, final String identificationKey);
 
 	void deleteAllByMemberId(Long memberId);
 
 	void deleteByIdentificationKey(final String identificationKey);
+
+	Optional<ClientEntity> findByMemberId(final Long memberId);
 }

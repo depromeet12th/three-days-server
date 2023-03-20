@@ -17,6 +17,12 @@ abstract class IntegrationTestSpecification extends Specification {
 
 }
 
+@AutoConfigureMockMvc
+@ActiveProfiles("integration-test")
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = [ApplicationConfig, ApplicationTestConfig])
+abstract class AsyncIntegrationTestSpecification extends Specification {
+
+}
 
 @Configuration
 @ComponentScan
