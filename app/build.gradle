@@ -19,6 +19,9 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
     implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+    // todo 기존 의존성 활용방안 조사
+    implementation 'com.nimbusds:nimbus-jose-jwt:3.10'
+
     //json
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
     //spring security
