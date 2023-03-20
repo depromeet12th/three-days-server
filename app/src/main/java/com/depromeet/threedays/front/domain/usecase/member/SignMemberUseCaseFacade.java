@@ -3,6 +3,7 @@ package com.depromeet.threedays.front.domain.usecase.member;
 import com.depromeet.threedays.data.enums.CertificationSubject;
 import com.depromeet.threedays.front.client.AuthClient;
 import com.depromeet.threedays.front.client.model.MemberInfo;
+import com.depromeet.threedays.front.client.property.auth.AppleAuthProperty;
 import com.depromeet.threedays.front.client.property.auth.AuthRequestProperty;
 import com.depromeet.threedays.front.domain.converter.member.MemberCommandConverter;
 import com.depromeet.threedays.front.domain.converter.member.MemberQueryConverter;
@@ -69,6 +70,18 @@ public class SignMemberUseCaseFacade {
 			return null;
 		}
 
+		AppleAuthProperty property = getAppleProperty(request.getCertificationSubject());
+		if (property == null) {
+			return null;
+		}
+
 		return null;
+	}
+
+	private AppleAuthProperty getAppleProperty(CertificationSubject subject) {
+		if (subject != CertificationSubject.APPLE) {
+			return null;
+		}
+		return (AppleAuthProperty) getMemberProperty(subject);
 	}
 }
