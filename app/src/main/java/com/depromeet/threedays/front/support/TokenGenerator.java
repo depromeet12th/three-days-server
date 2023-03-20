@@ -1,5 +1,6 @@
 package com.depromeet.threedays.front.support;
 
+import com.depromeet.threedays.front.client.property.auth.AppleAuthProperty;
 import com.depromeet.threedays.front.domain.model.member.Token;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -21,6 +22,9 @@ public class TokenGenerator {
 
 	@Value("${security.jwt.token.validtime.refresh}")
 	private Long refreshTokenValidTime;
+
+	@Value("${security.jwt.token.validtime.clientSecret}")
+	private Long clientSecretValidTime;
 
 	private static final String MEMBER_ID_CLAIM_KEY = "memberId";
 
@@ -45,6 +49,19 @@ public class TokenGenerator {
 				.setIssuedAt(now)
 				.setExpiration(new Date(now.getTime() + refreshTokenValidTime))
 				.signWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
+				.compact();
+	}
+
+	public String generateClientSecret(AppleAuthProperty property) {
+		Date now = new Date();
+
+		return Jwts.builder()
+				.setIssuer(property.getTeamId())
+				.setIssuedAt(now)
+				.setExpiration(new Date(now.getTime() + clientSecretValidTime))
+				.setAudience(property.getHost())
+				.setSubject(property.getClientId())
+				.signWith(Keys.hmacShaKeyFor(property.getKeyId().getBytes()), SignatureAlgorithm.ES256)
 				.compact();
 	}
 
