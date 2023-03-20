@@ -1,5 +1,7 @@
 package com.depromeet.threedays.front.config.security.filter.token;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import java.util.Base64;
 import java.util.Optional;
@@ -35,6 +37,25 @@ public class TokenResolver {
 		} catch (Exception e) {
 			log.warn("Failed to get memberId. token: {}", token);
 			return Optional.empty();
+		}
+	}
+
+	public IdTokenProperties extractPropertiesByToken(String token) {
+		Base64.Decoder decoder = Base64.getUrlDecoder();
+
+		String[] split = token.split("\\.");
+		String s = new String(decoder.decode(split[PAYLOAD_INDEX].getBytes()));
+
+		JSONParser jsonParser = new JSONParser();
+		try {
+			JSONObject jsonObject = (JSONObject) jsonParser.parse(s);
+
+			ObjectMapper objectMapper = new ObjectMapper();
+			return objectMapper.readValue(jsonObject.toJSONString(), IdTokenProperties.class);
+		} catch (ParseException e) {
+			throw new AccessDeniedException(e.getMessage());
+		} catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
 		}
 	}
 
