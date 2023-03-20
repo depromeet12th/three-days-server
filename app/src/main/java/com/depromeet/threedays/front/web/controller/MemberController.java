@@ -12,6 +12,7 @@ import com.depromeet.threedays.front.support.ApiResponse;
 import com.depromeet.threedays.front.support.ApiResponseGenerator;
 import com.depromeet.threedays.front.support.MessageCode;
 import com.depromeet.threedays.front.web.request.client.DeleteClientRequest;
+import com.depromeet.threedays.front.web.request.member.AppleSignMemberRequest;
 import com.depromeet.threedays.front.web.request.member.MemberNameUpdateRequest;
 import com.depromeet.threedays.front.web.request.member.MemberNotificationConsentUpdateRequest;
 import com.depromeet.threedays.front.web.request.member.MemberResourceUpdateRequest;
@@ -41,6 +42,18 @@ public class MemberController {
 	@PostMapping
 	public ApiResponse<ApiResponse.SuccessBody<SaveMemberResponse>> add(
 			@RequestBody @Valid SignMemberRequest request) {
+		SaveMemberUseCaseResponse member = signUseCase.execute(request);
+		if (Boolean.TRUE.equals(member.getIsNew())) {
+			return ApiResponseGenerator.success(
+					MemberConverter.to(member), HttpStatus.CREATED, MessageCode.RESOURCE_CREATED);
+		} else {
+			return ApiResponseGenerator.success(MemberConverter.to(member), HttpStatus.OK);
+		}
+	}
+
+	@PostMapping("/apple")
+	public ApiResponse<ApiResponse.SuccessBody<SaveMemberResponse>> addApple(
+			@RequestBody @Valid AppleSignMemberRequest request) {
 		SaveMemberUseCaseResponse member = signUseCase.execute(request);
 		if (Boolean.TRUE.equals(member.getIsNew())) {
 			return ApiResponseGenerator.success(
