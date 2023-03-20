@@ -17,6 +17,7 @@ public class TokenResolver {
 
 	private static final int PAYLOAD_INDEX = 1;
 	private static final String MEMBER_ID_CLAIM_KEY = "memberId";
+	private static final String SUB_CLAIM_KEY = "sub";
 
 	@Value("${security.jwt.token.secretkey}")
 	private String secretKey;
@@ -34,6 +35,22 @@ public class TokenResolver {
 		} catch (Exception e) {
 			log.warn("Failed to get memberId. token: {}", token);
 			return Optional.empty();
+		}
+	}
+
+	public String extractSubByToken(String token) {
+		Base64.Decoder decoder = Base64.getUrlDecoder();
+
+		String[] split = token.split("\\.");
+		String s = new String(decoder.decode(split[PAYLOAD_INDEX].getBytes()));
+
+		JSONParser jsonParser = new JSONParser();
+
+		try {
+			JSONObject jsonObject = (JSONObject) jsonParser.parse(s);
+			return (String) jsonObject.get(SUB_CLAIM_KEY);
+		} catch (ParseException e) {
+			throw new AccessDeniedException(e.getMessage());
 		}
 	}
 
