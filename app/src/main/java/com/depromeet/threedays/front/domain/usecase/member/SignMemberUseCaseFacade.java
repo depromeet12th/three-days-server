@@ -2,6 +2,7 @@ package com.depromeet.threedays.front.domain.usecase.member;
 
 import com.depromeet.threedays.data.enums.CertificationSubject;
 import com.depromeet.threedays.front.client.AuthClient;
+import com.depromeet.threedays.front.client.model.KeyProperties;
 import com.depromeet.threedays.front.client.model.MemberInfo;
 import com.depromeet.threedays.front.client.property.auth.AppleAuthProperty;
 import com.depromeet.threedays.front.client.property.auth.AuthRequestProperty;
@@ -9,6 +10,7 @@ import com.depromeet.threedays.front.domain.converter.member.MemberCommandConver
 import com.depromeet.threedays.front.domain.converter.member.MemberQueryConverter;
 import com.depromeet.threedays.front.domain.model.member.SaveMemberUseCaseResponse;
 import com.depromeet.threedays.front.exception.ExternalIntegrationException;
+import com.depromeet.threedays.front.support.TokenValidator;
 import com.depromeet.threedays.front.web.request.member.AppleSignMemberRequest;
 import com.depromeet.threedays.front.web.request.member.SignMemberRequest;
 import java.net.URI;
@@ -27,6 +29,7 @@ public class SignMemberUseCaseFacade {
 	private final GetMemberUseCase getUseCase;
 	private final SaveMemberUseCase saveUseCase;
 	private final AuthClient authClient;
+	private final TokenValidator tokenValidator;
 
 	public SaveMemberUseCaseResponse execute(final SignMemberRequest request) {
 		if (request == null) {
@@ -75,6 +78,8 @@ public class SignMemberUseCaseFacade {
 			return null;
 		}
 
+		validateToken(property, request);
+
 		return null;
 	}
 
@@ -83,5 +88,19 @@ public class SignMemberUseCaseFacade {
 			return null;
 		}
 		return (AppleAuthProperty) getMemberProperty(subject);
+	}
+
+	private void validateToken(AppleAuthProperty property, AppleSignMemberRequest request) {
+		KeyProperties keyProperties = getKey(property);
+		tokenValidator.validateIdToken(
+			property, keyProperties, request);
+	}
+
+	private KeyProperties getKey(AppleAuthProperty property) {
+		try {
+			return authClient.getKey(new URI(property.getHost() + property.getKeyURI()));
+		} catch (URISyntaxException e) {
+			throw new ExternalIntegrationException("social.login.error");
+		}
 	}
 }
