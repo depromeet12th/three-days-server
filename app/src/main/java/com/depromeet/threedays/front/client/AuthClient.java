@@ -23,6 +23,10 @@ public interface AuthClient {
 	@GetMapping
 	KeyProperties getKey(URI uri);
 
+	@PostMapping
+	AppleToken getToken(URI uri, @RequestBody Map<String, String> authBody);
+
+
 	@PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	String unlink(
 			URI uri, @RequestHeader(TOKEN_HEADER) String adminToken, @RequestBody Map<String, ?> form);
