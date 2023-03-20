@@ -2,6 +2,7 @@ package com.depromeet.threedays.front.domain.usecase.member;
 
 import com.depromeet.threedays.data.enums.CertificationSubject;
 import com.depromeet.threedays.front.client.AuthClient;
+import com.depromeet.threedays.front.client.model.AppleToken;
 import com.depromeet.threedays.front.client.model.KeyProperties;
 import com.depromeet.threedays.front.client.model.MemberInfo;
 import com.depromeet.threedays.front.client.property.auth.AppleAuthProperty;
@@ -10,12 +11,14 @@ import com.depromeet.threedays.front.domain.converter.member.MemberCommandConver
 import com.depromeet.threedays.front.domain.converter.member.MemberQueryConverter;
 import com.depromeet.threedays.front.domain.model.member.SaveMemberUseCaseResponse;
 import com.depromeet.threedays.front.exception.ExternalIntegrationException;
+import com.depromeet.threedays.front.support.TokenGenerator;
 import com.depromeet.threedays.front.support.TokenValidator;
 import com.depromeet.threedays.front.web.request.member.AppleSignMemberRequest;
 import com.depromeet.threedays.front.web.request.member.SignMemberRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,6 +33,7 @@ public class SignMemberUseCaseFacade {
 	private final SaveMemberUseCase saveUseCase;
 	private final AuthClient authClient;
 	private final TokenValidator tokenValidator;
+	private final TokenGenerator tokenGenerator;
 
 	public SaveMemberUseCaseResponse execute(final SignMemberRequest request) {
 		if (request == null) {
@@ -80,6 +84,8 @@ public class SignMemberUseCaseFacade {
 
 		validateToken(property, request);
 
+		AppleToken newIdToken = getToken(property, request.getCode());
+
 		return null;
 	}
 
@@ -102,5 +108,26 @@ public class SignMemberUseCaseFacade {
 		} catch (URISyntaxException e) {
 			throw new ExternalIntegrationException("social.login.error");
 		}
+	}
+
+	public AppleToken getToken(AppleAuthProperty property, String code) {
+		String clientSecret = tokenGenerator.generateClientSecret(property);
+
+		Map<String, String> authBody = getAuthBody(property, code, clientSecret);
+		try {
+			return authClient.getToken(new URI(property.getHost() + property.getUri()), authBody);
+		} catch (URISyntaxException e) {
+			throw new ExternalIntegrationException("social.login.error");
+		}
+	}
+
+	private Map<String, String> getAuthBody(
+		AppleAuthProperty property, String code, String clientSecret) {
+		Map<String, String> authBody = new HashMap<>();
+		authBody.put("client_id", property.getClientId());
+		authBody.put("client_secret", clientSecret);
+		authBody.put("code", code);
+		authBody.put("grant_type", "authorization_code");
+		return authBody;
 	}
 }
