@@ -4,10 +4,6 @@ spring:
   profiles:
     include:
       - data-local
-  redis:
-    host: localhost
-    password:
-    port: 16379
 
 security:
   jwt:
@@ -31,13 +27,13 @@ kakao:
 firebase:
   multicast-message:
     size: 500
-  projectId: project
+  projectId: three-days-develop
   private:
     keyId: ${FIREBASE_PRIVATE_KEY_ID}
     key: ${FIREBASE_PRIVATE_KEY}
   client:
-    id: clientId
-    email: clientEmail
+    id: 101929051198596598209
+    email: firebase-adminsdk-qeb7a@three-days-develop.iam.gserviceaccount.com
   token:
     uri: https://oauth2.googleapis.com/token
 

@@ -17,5 +17,5 @@ public interface HabitRepository extends JpaRepository<HabitEntity, Long> {
 
 	void deleteAllByMemberId(final Long memberId);
 
-	Optional<List<HabitEntity>> findAllByMemberIdAndDeletedFalse(final Long memberId);
+	List<HabitEntity> findAllByMemberIdAndDeletedFalse(final Long memberId);
 }
