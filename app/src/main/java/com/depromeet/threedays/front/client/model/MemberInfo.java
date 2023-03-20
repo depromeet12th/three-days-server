@@ -13,6 +13,10 @@ public class MemberInfo {
 	private String name;
 	private Properties properties;
 
+	public static MemberInfo of(String id, String name) {
+		return new MemberInfo(id, name, new Properties());
+	}
+
 	@Getter
 	@AllArgsConstructor
 	@NoArgsConstructor
@@ -26,6 +30,8 @@ public class MemberInfo {
 		if (CertificationSubject.KAKAO.equals(subject)) {
 			return this.getProperties().getNickname();
 		} else if (CertificationSubject.GOOGLE.equals(subject)) {
+			return this.name;
+		} else if (CertificationSubject.APPLE.equals(subject)) {
 			return this.name;
 		}
 		return name;
