@@ -7,6 +7,7 @@ import com.depromeet.threedays.front.client.model.KeyProperties;
 import com.depromeet.threedays.front.client.model.MemberInfo;
 import com.depromeet.threedays.front.client.property.auth.AppleAuthProperty;
 import com.depromeet.threedays.front.client.property.auth.AuthRequestProperty;
+import com.depromeet.threedays.front.config.security.filter.token.TokenResolver;
 import com.depromeet.threedays.front.domain.converter.member.MemberCommandConverter;
 import com.depromeet.threedays.front.domain.converter.member.MemberQueryConverter;
 import com.depromeet.threedays.front.domain.model.member.SaveMemberUseCaseResponse;
@@ -34,6 +35,7 @@ public class SignMemberUseCaseFacade {
 	private final AuthClient authClient;
 	private final TokenValidator tokenValidator;
 	private final TokenGenerator tokenGenerator;
+	private final TokenResolver tokenResolver;
 
 	public SaveMemberUseCaseResponse execute(final SignMemberRequest request) {
 		if (request == null) {
@@ -84,7 +86,9 @@ public class SignMemberUseCaseFacade {
 
 		validateToken(property, request);
 
-		AppleToken newIdToken = getToken(property, request.getCode());
+		AppleToken newToken = getToken(property, request.getCode());
+
+		String certificationId = tokenResolver.extractSubByToken(newToken.getIdToken());
 
 		return null;
 	}
