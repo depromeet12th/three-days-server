@@ -90,7 +90,16 @@ public class SignMemberUseCaseFacade {
 
 		String certificationId = tokenResolver.extractSubByToken(newToken.getIdToken());
 
-		return null;
+		MemberInfo info = MemberInfo.of(certificationId, request.getName());
+
+		SaveMemberUseCaseResponse member =
+			getUseCase.execute(MemberQueryConverter.from(info.getId(), request));
+
+		if (member == null) {
+			return saveUseCase.execute(MemberCommandConverter.from(info, request));
+		}
+
+		return member;
 	}
 
 	private AppleAuthProperty getAppleProperty(CertificationSubject subject) {
