@@ -1,5 +1,7 @@
 package com.depromeet.threedays.front.client;
 
+import com.depromeet.threedays.front.client.model.AppleToken;
+import com.depromeet.threedays.front.client.model.KeyProperties;
 import com.depromeet.threedays.front.client.model.MemberInfo;
 import java.net.URI;
 import java.util.Map;
@@ -17,6 +19,9 @@ public interface AuthClient {
 
 	@GetMapping
 	MemberInfo getInfo(URI uri, @RequestHeader(TOKEN_HEADER) String token);
+
+	@GetMapping
+	KeyProperties getKey(URI uri);
 
 	@PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	String unlink(
