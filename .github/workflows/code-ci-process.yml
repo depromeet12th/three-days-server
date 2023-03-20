@@ -32,3 +32,6 @@ jobs:
           export SPRING_PROFILES_ACTIVE=integration-test
           
           ./gradlew integrationTest
+      - name: Create Swagger API Spec
+        run: |
+          ./gradlew :app:openapi3
