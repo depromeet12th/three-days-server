@@ -33,7 +33,7 @@ firebase:
     keyId: ${FIREBASE_PRIVATE_KEY_ID}
     key: ${FIREBASE_PRIVATE_KEY}
   client:
-    id: 101929051198596598209
-    email: firebase-adminsdk-qeb7a@three-days-develop.iam.gserviceaccount.com
+    id: ${FIREBASE_CLIENT_ID}
+    email: ${FIREBASE_CLIENT_EMAIL}
   token:
     uri: https://oauth2.googleapis.com/token

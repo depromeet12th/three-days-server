@@ -7,6 +7,7 @@ import com.depromeet.threedays.data.enums.NotificationType;
 import com.depromeet.threedays.front.domain.model.client.Client;
 import com.depromeet.threedays.front.domain.model.notification.HabitNotificationMessage;
 import com.depromeet.threedays.front.domain.model.notification.NotificationMessage;
+import java.time.LocalDateTime;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -33,6 +34,23 @@ public class NotificationHistoryConverter {
 				.status(status)
 				.type(NotificationType.HABIT)
 				.memberId(client.getMemberId())
+				.build();
+	}
+
+	public static NotificationHistoryEntity from(
+			final HabitNotificationMessage data, NotificationStatus status) {
+		if (data == null) {
+			return null;
+		}
+
+		return NotificationHistoryEntity.builder()
+				.memberId(data.getMemberId())
+				.notificationId(data.getNotificationId())
+				.title(data.getTitle())
+				.contents(data.getContent())
+				.status(status)
+				.type(NotificationType.HABIT)
+				.createAt(LocalDateTime.now())
 				.build();
 	}
 }

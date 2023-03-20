@@ -9,6 +9,7 @@ import com.depromeet.threedays.front.client.property.auth.AuthRequestProperty;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
 import com.depromeet.threedays.front.domain.converter.member.MemberConverter;
 import com.depromeet.threedays.front.domain.model.member.Member;
+import com.depromeet.threedays.front.domain.model.member.MemberEvent;
 import com.depromeet.threedays.front.exception.ExternalIntegrationException;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,20 +29,22 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class DeleteMemberUseCase {
 
-	private final MemberRepository memberRepository;
+	private final MemberRepository repository;
 	private final AuthClient authClient;
 	private final AuthPropertyManager propertyManager;
+	private final ApplicationEventPublisher eventPublisher;
 
 	public Member execute() {
+		log.info("deleteMemberUseCase execute() thread name : " + Thread.currentThread().getName());
 		Long memberId = AuditorHolder.get();
-		Member member = quit(memberId);
 		unlinkSocialAccount(memberId);
-		return member;
+		eventPublisher.publishEvent(new MemberEvent(this, memberId));
+		return quit(memberId);
 	}
 
 	/** 짝심삼일 앱에서 회원 탈퇴 */
 	Member quit(Long memberId) {
-		return memberRepository
+		return repository
 				.findByIdAndStatus(memberId, MemberStatus.REGULAR)
 				.map(MemberEntity::withdraw)
 				.map(MemberConverter::from)
@@ -49,16 +53,16 @@ public class DeleteMemberUseCase {
 
 	/** 카카오 계정 연결끊기 */
 	private void unlinkSocialAccount(Long memberId) {
-		MemberEntity member =
-				memberRepository.findById(memberId).orElseThrow(ResourceNotFoundException::new);
-		if (CertificationSubject.KAKAO.equals(member.getCertificationSubject())) {
+		MemberEntity memberEntity =
+				repository.findById(memberId).orElseThrow(ResourceNotFoundException::new);
+		if (CertificationSubject.KAKAO.equals(memberEntity.getCertificationSubject())) {
 			try {
 				AuthRequestProperty property =
-						propertyManager.getMemberProperty(member.getCertificationSubject());
+						propertyManager.getMemberProperty(memberEntity.getCertificationSubject());
 
 				Map<String, Object> form = new HashMap<>();
 				form.put("target_id_type", "user_id");
-				form.put("target_id", Long.parseLong(member.getCertificationId()));
+				form.put("target_id", Long.parseLong(memberEntity.getCertificationId()));
 				String adminKey = "KakaoAK " + property.getAdminKey();
 				authClient.unlink(new URI(property.getHost() + property.getUnlink()), adminKey, form);
 			} catch (URISyntaxException e) {
@@ -70,7 +74,7 @@ public class DeleteMemberUseCase {
 	public Member executeCallback(CertificationSubject subject, String key, String userId) {
 		AuthRequestProperty property = propertyManager.getMemberProperty(subject);
 		if (key != null && key.equals(property.getAdminKey())) {
-			return memberRepository
+			return repository
 					.findByCertificationIdAndCertificationSubjectAndStatus(
 							userId, subject, MemberStatus.REGULAR)
 					.map(MemberEntity::withdraw)

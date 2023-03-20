@@ -23,7 +23,7 @@ springdoc:
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
   swagger-ui:
-    url: /openapi3.yml
+    url: /openapi3.yaml
     operations-sorter: alpha
     tags-sorter: alpha
     path: /
@@ -71,7 +71,9 @@ firebase:
     email: firebase-adminsdk-v3brd@three-days-bd5f3.iam.gserviceaccount.com
   token:
     uri: https://oauth2.googleapis.com/token
-
+slack:
+  api:
+    token: ${SLACK_API_TOKEN}
 batch:
   global: 30
   habit: 30

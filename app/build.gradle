@@ -4,6 +4,7 @@ dependencyManagement {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
+
 dependencies {
 
     implementation project(':data')
@@ -16,9 +17,9 @@ dependencies {
     implementation "org.springdoc:springdoc-openapi-ui:${springdocVersion}"
 
     //jwt
-    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
-    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+    implementation "io.jsonwebtoken:jjwt-api:${jsonwebtokenVersion}"
+    implementation "io.jsonwebtoken:jjwt-impl:${jsonwebtokenVersion}"
+    implementation "io.jsonwebtoken:jjwt-jackson:${jsonwebtokenVersion}"
     //json
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
     //spring security
@@ -27,10 +28,11 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.7.4'
 
-
     //fcm push notification
-    implementation 'com.google.firebase:firebase-admin:9.1.1'
+    implementation "com.google.firebase:firebase-admin:${firebaseAdminVersion}"
 
+    //slack incoming hooks
+    implementation 'net.gpedro.integrations.slack:slack-webhook:1.4.0'
 }
 
 def imageName = project.hasProperty('imageName') ? imageName : "app:local"
@@ -45,4 +47,17 @@ task buildDockerImage {
             commandLine 'docker', 'build', '-t', "${imageName}", '--build-arg', "RELEASE_VERSION=${releaseVersion}", '.'
         }
     }
+}
+
+
+/*convert snippet to swagger*/
+openapi3 {
+    servers = [ { url = "https://api.jjaksim.com" } , { url = "http://localhost:8080" }]
+    title = 'ThreeDays'
+    version = '1.0.1'
+    format = 'yaml'
+    tagDescriptionsPropertiesFile = 'src/integration-test/resources/docs/tag-descriptions.yaml'
+    snippetsDirectory = "build/generated-snippets/"
+    outputDirectory = "src/main/resources/static/"
+    outputFileNamePrefix = 'openapi3'
 }

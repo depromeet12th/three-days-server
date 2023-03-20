@@ -34,9 +34,4 @@ public class NotificationController {
 	public ApiResponse<ApiResponse.SuccessBody<List<BatchResponse>>> sendHabitNotification() {
 		return ApiResponseGenerator.success(sendHabitNotificationUseCase.execute(), HttpStatus.OK);
 	}
-
-	@PostMapping("/test")
-	public ApiResponse<ApiResponse.SuccessBody<Void>> test() {
-		return ApiResponseGenerator.success(HttpStatus.OK);
-	}
 }

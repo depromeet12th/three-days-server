@@ -21,8 +21,8 @@ class HabitControllerSpec extends IntegrationTestSpecification {
     @Autowired
     private TokenGenerator tokenGenerator
 
-    private String BAD_REQUEST_MESSAGE = "잘못된 요청입니다."
-    private String token;
+    private String BAD_REQUEST_MESSAGE = "알 수 없는 오류가 발생했어요."
+    private String token
     def setup() {
         token = tokenGenerator.generateAccessToken(1L)
     }

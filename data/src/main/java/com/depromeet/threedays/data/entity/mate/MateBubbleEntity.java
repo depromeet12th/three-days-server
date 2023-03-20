@@ -1,8 +1,11 @@
 package com.depromeet.threedays.data.entity.mate;
 
 import com.depromeet.threedays.data.enums.MateType;
+import java.time.LocalDateTime;
 import javax.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Getter
@@ -27,4 +30,12 @@ public class MateBubbleEntity {
 
 	@Column(nullable = false)
 	private Integer level;
+
+	@Column(nullable = false, updatable = false)
+	@CreatedDate
+	private LocalDateTime createAt;
+
+	@Column(nullable = false)
+	@LastModifiedDate
+	private LocalDateTime updateAt;
 }
