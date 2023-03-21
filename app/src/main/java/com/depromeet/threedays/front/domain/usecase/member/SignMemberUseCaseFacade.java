@@ -2,7 +2,7 @@ package com.depromeet.threedays.front.domain.usecase.member;
 
 import com.depromeet.threedays.data.enums.CertificationSubject;
 import com.depromeet.threedays.front.client.AuthClient;
-import com.depromeet.threedays.front.client.model.AppleToken;
+import com.depromeet.threedays.front.client.model.AppleTokenInfo;
 import com.depromeet.threedays.front.client.model.KeyProperties;
 import com.depromeet.threedays.front.client.model.MemberInfo;
 import com.depromeet.threedays.front.client.property.auth.AppleAuthProperty;
@@ -84,9 +84,10 @@ public class SignMemberUseCaseFacade {
 			return null;
 		}
 
+		// fixme execute의 의미 생각하며 수정
 		validateToken(property, request);
 
-		AppleToken newToken = getToken(property, request.getCode());
+		AppleTokenInfo newToken = getToken(property, request.getCode());
 
 		String certificationId = tokenResolver.extractSubByToken(newToken.getIdToken());
 
@@ -123,7 +124,7 @@ public class SignMemberUseCaseFacade {
 		}
 	}
 
-	public AppleToken getToken(AppleAuthProperty property, String code) {
+	public AppleTokenInfo getToken(AppleAuthProperty property, String code) {
 		String clientSecret = tokenGenerator.generateClientSecret(property);
 
 		Map<String, String> authBody = getAuthBody(property, code, clientSecret);
@@ -135,7 +136,7 @@ public class SignMemberUseCaseFacade {
 	}
 
 	private Map<String, String> getAuthBody(
-		AppleAuthProperty property, String code, String clientSecret) {
+			AppleAuthProperty property, String code, String clientSecret) {
 		Map<String, String> authBody = new HashMap<>();
 		authBody.put("client_id", property.getClientId());
 		authBody.put("client_secret", clientSecret);
