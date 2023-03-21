@@ -18,5 +18,5 @@ public interface HabitAchievementRepository extends JpaRepository<HabitAchieveme
 	List<HabitAchievementEntity> findAllByHabitIdAndAchievementDateBetween(
 			final Long habitId, final LocalDate startDate, final LocalDate endDate);
 
-	void deleteAllByMemberId(final Long memberId);
+	void deleteAllByHabitId(final Long habitId);
 }

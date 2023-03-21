@@ -47,7 +47,7 @@ public class SearchHabitUseCase {
 		List<HabitOverview> habitOverviews = new ArrayList<>();
 
 		if (request.getStatus() == null) {
-			habitEntities = repository.findAllByMemberIdAndDeletedFalse(AuditorHolder.get()).orElse(null);
+			habitEntities = repository.findAllByMemberIdAndDeletedFalse(AuditorHolder.get());
 		}
 
 		if (request.getStatus() != null) {

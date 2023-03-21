@@ -1,5 +1,7 @@
 package com.depromeet.threedays.front.domain.usecase.habit
 
+import com.depromeet.threedays.data.entity.habit.HabitAchievementEntity
+import com.depromeet.threedays.data.entity.habit.HabitEntity
 import com.depromeet.threedays.data.entity.member.MemberEntity
 import com.depromeet.threedays.data.enums.HabitStatus
 import com.depromeet.threedays.data.enums.MateStatus
@@ -8,6 +10,7 @@ import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.data.habit.HabitAchievementDataInitializer
 import com.depromeet.threedays.front.data.habit.HabitDataInitializer
 import com.depromeet.threedays.front.data.mate.MateDataInitializer
+import com.depromeet.threedays.front.persistence.repository.habit.HabitAchievementRepository
 import com.depromeet.threedays.front.persistence.repository.habit.HabitRepository
 import com.depromeet.threedays.front.persistence.repository.mate.MateRepository
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository
@@ -39,6 +42,9 @@ class DeleteHabitUseCaseSpec extends IntegrationTestSpecification {
 
     @MockBean
     private MemberRepository memberRepository
+
+    @Autowired
+    private HabitAchievementRepository habitAchievementRepository
 
     def setup() {
         habitDataInitializer.initialize()
@@ -103,5 +109,18 @@ class DeleteHabitUseCaseSpec extends IntegrationTestSpecification {
 
         then:
         result.deleted
+    }
+
+    def "사용자가 습관을 삭제할 경우, 달성 기록도 함께 삭제한다."() {
+        given:
+        def habitData = habitDataInitializer.data.first()
+        habitAchievementDataInitializer.initialize(habitData.id)
+
+        when:
+        deleteUseCase.execute(habitData.id)
+        def result = habitAchievementRepository.findById(habitData.id).orElse(null)
+
+        then:
+        result == null
     }
 }

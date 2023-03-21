@@ -36,46 +36,47 @@ public class DeleteHabitUseCase {
 				.findByIdAndStatus(memberId, MemberStatus.REGULAR)
 				.orElseThrow(() -> new MemberNotFoundException(memberId));
 
-		Habit source =
+		Habit habit =
 				repository.findByIdAndDeletedFalse(habitId).map(HabitConverter::from).orElse(null);
 
-		if (source == null) {
+		if (habit == null) {
 			return;
 		}
 
 		Mate mate =
 				mateRepository.findByHabitIdAndDeletedFalse(habitId).map(MateConverter::from).orElse(null);
 
-		if (source.getStatus().equals(HabitStatus.ACTIVE)) {
+		if (habit.getStatus().equals(HabitStatus.ACTIVE)) {
 			Long achievementCount = habitAchievementRepository.countByHabitId(habitId);
 
 			if (mate != null || achievementCount != 0L) {
-				this.archive(source, mate);
+				this.archive(habit, mate);
 				return;
 			}
 		}
 
-		this.delete(source, mate);
+		this.delete(habit, mate);
 	}
 
-	private void deleteNotification(final Habit source) {
-		if (source == null || source.getNotification() == null) {
+	private void deleteNotification(final Habit habit) {
+		if (habit == null || habit.getNotification() == null) {
 			return;
 		}
 
-		habitNotificationRepository.deleteAllByHabitId(source.getId());
+		habitNotificationRepository.deleteAllByHabitId(habit.getId());
 	}
 
-	private void delete(final Habit source, final Mate mate) {
-		repository.save(HabitConverter.to(source).toBuilder().deleted(true).build());
+	private void delete(final Habit habit, final Mate mate) {
+		repository.save(HabitConverter.to(habit).toBuilder().deleted(true).build());
 		this.deleteMate(mate);
-		this.deleteNotification(source);
+		this.deleteAchievement(habit);
+		this.deleteNotification(habit);
 	}
 
-	private void archive(final Habit source, final Mate mate) {
-		repository.save(HabitConverter.to(source).toBuilder().status(HabitStatus.ARCHIVED).build());
+	private void archive(final Habit habit, final Mate mate) {
+		repository.save(HabitConverter.to(habit).toBuilder().status(HabitStatus.ARCHIVED).build());
 		this.archiveMate(mate);
-		this.deleteNotification(source);
+		this.deleteNotification(habit);
 	}
 
 	private void archiveMate(final Mate mate) {
@@ -92,5 +93,12 @@ public class DeleteHabitUseCase {
 		}
 
 		mateRepository.save(MateConverter.to(mate).toBuilder().deleted(true).build());
+	}
+
+	private void deleteAchievement(final Habit habit) {
+		if (habit == null) {
+			return;
+		}
+		habitAchievementRepository.deleteAllByHabitId(habit.getId());
 	}
 }

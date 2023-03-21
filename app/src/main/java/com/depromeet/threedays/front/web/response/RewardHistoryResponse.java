@@ -4,8 +4,10 @@ import com.depromeet.threedays.front.domain.model.RewardHistory;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
+@Builder
 @Data
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class RewardHistoryResponse {

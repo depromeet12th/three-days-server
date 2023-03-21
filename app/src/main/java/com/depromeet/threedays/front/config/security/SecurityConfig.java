@@ -26,7 +26,7 @@ public class SecurityConfig {
 	private final TokenResolver tokenResolver;
 
 	@Bean
-	@Profile({"local", "dev", "integration-test"})
+	@Profile({"!prod"})
 	public SecurityFilterChain localSecurityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 		http.formLogin().disable();
@@ -36,7 +36,7 @@ public class SecurityConfig {
 						HttpMethod.GET,
 						"/swagger-ui/*",
 						"/api-docs/*",
-						"/openapi3.yml",
+						"/openapi3.yaml",
 						"/actuator/health",
 						"/error")
 				.permitAll()
