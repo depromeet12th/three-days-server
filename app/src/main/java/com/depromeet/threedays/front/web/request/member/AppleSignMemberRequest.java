@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Getter
 public class AppleSignMemberRequest extends SignMemberRequest {
 
-	private String idToken;
 	private String code;
 	private String nonce;
 	private AppleUserInfo user;
@@ -18,9 +17,8 @@ public class AppleSignMemberRequest extends SignMemberRequest {
 		return this.getUser().getName();
 	}
 
-	@Deprecated
-	@Override
-	public String getSocialToken() {
-		return getIdToken();
+	/** socialToken과 idToken은 동일하다. */
+	public String getIdToken() {
+		return super.getSocialToken();
 	}
 }
