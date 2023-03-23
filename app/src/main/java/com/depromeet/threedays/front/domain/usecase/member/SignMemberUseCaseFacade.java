@@ -118,7 +118,7 @@ public class SignMemberUseCaseFacade {
 
 	private KeyProperties getKey(AppleAuthProperty property) {
 		try {
-			return authClient.getKey(new URI(property.getHost() + property.getKeyURI()));
+			return authClient.getKeyProperties(new URI(property.getHost() + property.getKeyURI()));
 		} catch (URISyntaxException e) {
 			throw new ExternalIntegrationException("social.login.error");
 		}
@@ -129,7 +129,7 @@ public class SignMemberUseCaseFacade {
 
 		Map<String, String> authBody = getAuthBody(property, code, clientSecret);
 		try {
-			return authClient.getToken(new URI(property.getHost() + property.getUri()), authBody);
+			return authClient.getAppleTokenInfo(new URI(property.getHost() + property.getUri()), authBody);
 		} catch (URISyntaxException e) {
 			throw new ExternalIntegrationException("social.login.error");
 		}

@@ -21,10 +21,10 @@ public interface AuthClient {
 	MemberInfo getInfo(URI uri, @RequestHeader(TOKEN_HEADER) String token);
 
 	@GetMapping
-	KeyProperties getKey(URI uri);
+	KeyProperties getKeyProperties(URI uri);
 
 	@PostMapping
-	AppleTokenInfo getToken(URI uri, @RequestBody Map<String, String> authBody);
+	AppleTokenInfo getAppleTokenInfo(URI uri, @RequestBody Map<String, String> body);
 
 	@PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	String unlink(
