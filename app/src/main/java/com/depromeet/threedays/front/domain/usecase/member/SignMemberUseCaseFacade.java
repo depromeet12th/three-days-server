@@ -124,7 +124,7 @@ public class SignMemberUseCaseFacade {
 		}
 	}
 
-	public AppleTokenInfo getToken(AppleAuthProperty property, String code) {
+	private AppleTokenInfo getToken(AppleAuthProperty property, String code) {
 		String clientSecret = tokenGenerator.generateClientSecret(property);
 
 		Map<String, String> authBody = getAuthBody(property, code, clientSecret);
