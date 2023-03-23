@@ -3,7 +3,6 @@ package com.depromeet.threedays.front.domain.usecase.member;
 import com.depromeet.threedays.data.enums.CertificationSubject;
 import com.depromeet.threedays.front.client.AuthClient;
 import com.depromeet.threedays.front.client.model.AppleTokenInfo;
-import com.depromeet.threedays.front.client.model.KeyProperties;
 import com.depromeet.threedays.front.client.model.MemberInfo;
 import com.depromeet.threedays.front.client.property.auth.AppleAuthProperty;
 import com.depromeet.threedays.front.client.property.auth.AuthRequestProperty;
@@ -12,6 +11,7 @@ import com.depromeet.threedays.front.domain.converter.member.MemberCommandConver
 import com.depromeet.threedays.front.domain.converter.member.MemberQueryConverter;
 import com.depromeet.threedays.front.domain.model.member.SaveMemberUseCaseResponse;
 import com.depromeet.threedays.front.exception.ExternalIntegrationException;
+import com.depromeet.threedays.front.support.RequestBodyGenerator;
 import com.depromeet.threedays.front.support.TokenGenerator;
 import com.depromeet.threedays.front.support.TokenValidator;
 import com.depromeet.threedays.front.web.request.member.AppleSignMemberRequest;
@@ -19,7 +19,6 @@ import com.depromeet.threedays.front.web.request.member.SignMemberRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -84,14 +83,7 @@ public class SignMemberUseCaseFacade {
 			return null;
 		}
 
-		// fixme execute의 의미 생각하며 수정
-		validateToken(property, request);
-
-		AppleTokenInfo newToken = getToken(property, request.getCode());
-
-		String certificationId = tokenResolver.extractSubByToken(newToken.getIdToken());
-
-		MemberInfo info = MemberInfo.of(certificationId, request.getName());
+		MemberInfo info = getInfo(property, request);
 
 		SaveMemberUseCaseResponse member =
 			getUseCase.execute(MemberQueryConverter.from(info.getId(), request));
@@ -110,38 +102,23 @@ public class SignMemberUseCaseFacade {
 		return (AppleAuthProperty) getMemberProperty(subject);
 	}
 
-	private void validateToken(AppleAuthProperty property, AppleSignMemberRequest request) {
-		KeyProperties keyProperties = getKey(property);
-		tokenValidator.validateIdToken(
-			property, keyProperties, request);
-	}
-
-	private KeyProperties getKey(AppleAuthProperty property) {
-		try {
-			return authClient.getKeyProperties(new URI(property.getHost() + property.getKeyURI()));
-		} catch (URISyntaxException e) {
-			throw new ExternalIntegrationException("social.login.error");
-		}
+	private MemberInfo getInfo(AppleAuthProperty property, AppleSignMemberRequest request) {
+		tokenValidator.validateIdToken(property, request);
+		AppleTokenInfo tokenInfo = getToken(property, request.getCode());
+		String certificationId = tokenResolver.extractSubByToken(tokenInfo.getIdToken());
+		return MemberInfo.of(certificationId, request.getName());
 	}
 
 	private AppleTokenInfo getToken(AppleAuthProperty property, String code) {
 		String clientSecret = tokenGenerator.generateClientSecret(property);
 
-		Map<String, String> authBody = getAuthBody(property, code, clientSecret);
+		Map<String, String> body =
+			RequestBodyGenerator.generateAppleAuthRequestBody(
+				property.getClientId(), code, clientSecret);
 		try {
-			return authClient.getAppleTokenInfo(new URI(property.getHost() + property.getUri()), authBody);
+			return authClient.getAppleTokenInfo(new URI(property.getHost() + property.getUri()), body);
 		} catch (URISyntaxException e) {
 			throw new ExternalIntegrationException("social.login.error");
 		}
-	}
-
-	private Map<String, String> getAuthBody(
-			AppleAuthProperty property, String code, String clientSecret) {
-		Map<String, String> authBody = new HashMap<>();
-		authBody.put("client_id", property.getClientId());
-		authBody.put("client_secret", clientSecret);
-		authBody.put("code", code);
-		authBody.put("grant_type", "authorization_code");
-		return authBody;
 	}
 }
