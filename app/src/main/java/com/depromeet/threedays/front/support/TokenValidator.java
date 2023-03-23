@@ -1,10 +1,12 @@
 package com.depromeet.threedays.front.support;
 
+import com.depromeet.threedays.front.client.AuthClient;
 import com.depromeet.threedays.front.client.model.KeyProperties;
 import com.depromeet.threedays.front.client.model.KeyProperties.KeyProperty;
 import com.depromeet.threedays.front.client.property.auth.AppleAuthProperty;
 import com.depromeet.threedays.front.config.security.filter.token.IdTokenProperties;
 import com.depromeet.threedays.front.config.security.filter.token.TokenResolver;
+import com.depromeet.threedays.front.exception.ExternalIntegrationException;
 import com.depromeet.threedays.front.exception.JsonParsingException;
 import com.depromeet.threedays.front.web.request.member.AppleSignMemberRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,6 +15,8 @@ import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jwt.SignedJWT;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Date;
 import lombok.RequiredArgsConstructor;
@@ -26,10 +30,14 @@ public class TokenValidator {
 
 	private final TokenResolver tokenResolver;
 
-	public void validateIdToken(
-			AppleAuthProperty property, KeyProperties keyProperties, AppleSignMemberRequest request) {
+	private final AuthClient authClient;
 
-		IdTokenProperties idTokenProperties = tokenResolver.extractPropertiesByToken(request.getIdToken());
+	public void validateIdToken(AppleAuthProperty property, AppleSignMemberRequest request) {
+
+		KeyProperties keyProperties = getKeyProperties(property);
+
+		IdTokenProperties idTokenProperties =
+			tokenResolver.extractPropertiesByToken(request.getIdToken());
 
 		Date currentTime = new Date(System.currentTimeMillis());
 		if (!currentTime.before(idTokenProperties.getExp())) {
@@ -51,6 +59,14 @@ public class TokenValidator {
 		// todo publicKey 검증 방법 조사
 		if (!verifyPublicKey(keyProperties, request.getIdToken())) {
 			throw new JsonParsingException("token.not.valid");
+		}
+	}
+
+	private KeyProperties getKeyProperties(AppleAuthProperty property) {
+		try {
+			return authClient.getKeyProperties(new URI(property.getHost() + property.getKeyURI()));
+		} catch (URISyntaxException e) {
+			throw new ExternalIntegrationException("social.login.error");
 		}
 	}
 
