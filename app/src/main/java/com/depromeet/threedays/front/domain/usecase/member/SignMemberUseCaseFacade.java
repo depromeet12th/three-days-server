@@ -99,8 +99,8 @@ public class SignMemberUseCaseFacade {
 				getAppleProperty(request.getCertificationSubject()).orElseThrow(IllegalAccessError::new);
 		KeyProperties keyProperties = getKeyProperties(property);
 		tokenAuthenticator.authenticateIdToken(property, keyProperties, request);
-		AppleTokenInfo tokenInfo = getToken(property, request.getCode());
-		String certificationId = tokenResolver.extractSubByToken(tokenInfo.getIdToken());
+		String token = getToken(property, request.getCode());
+		String certificationId = tokenResolver.extractSubByToken(token);
 		return MemberInfo.builder().id(certificationId).name(request.getName()).build();
 	}
 
@@ -118,14 +118,14 @@ public class SignMemberUseCaseFacade {
 		}
 	}
 
-	private AppleTokenInfo getToken(AppleAuthProperty property, String code) {
+	private String getToken(AppleAuthProperty property, String code) {
 		String clientSecret = tokenGenerator.generateClientSecret(property);
 
 		Map<String, String> body =
 				RequestBodyGenerator.generateAppleAuthRequestBody(
 						AppleAuthRequestWithCodeConverter.from(property.getClientId(), clientSecret, code));
 		try {
-			return authClient.getAppleTokenInfo(new URI(property.getHost() + property.getUri()), body);
+			return authClient.getAppleTokenInfo(new URI(property.getHost() + property.getUri()), body).getIdToken();
 		} catch (URISyntaxException e) {
 			throw new ExternalIntegrationException("social.login.error");
 		}
