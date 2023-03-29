@@ -2,7 +2,6 @@ package com.depromeet.threedays.front.domain.usecase.member;
 
 import com.depromeet.threedays.data.enums.CertificationSubject;
 import com.depromeet.threedays.front.client.AuthClient;
-import com.depromeet.threedays.front.client.model.AppleTokenInfo;
 import com.depromeet.threedays.front.client.model.KeyProperties;
 import com.depromeet.threedays.front.client.model.MemberInfo;
 import com.depromeet.threedays.front.client.property.auth.AppleAuthProperty;
@@ -22,7 +21,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Map;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -95,8 +93,7 @@ public class SignMemberUseCaseFacade {
 
 	private MemberInfo getInfo(AppleSignMemberRequest request) {
 		// todo check 위에서는 NoSuchFieldError::new를 발생시키에 현 상황에서 가장 적당한 IllegalAccessError::new를 선택
-		AppleAuthProperty property =
-				getAppleProperty(request.getCertificationSubject()).orElseThrow(IllegalAccessError::new);
+		AppleAuthProperty property = getAppleProperty(request.getCertificationSubject());
 		KeyProperties keyProperties = getKeyProperties(property);
 		tokenAuthenticator.authenticateIdToken(property, keyProperties, request);
 		String token = getToken(property, request.getCode());
@@ -104,10 +101,11 @@ public class SignMemberUseCaseFacade {
 		return MemberInfo.builder().id(certificationId).name(request.getName()).build();
 	}
 
-	private Optional<AppleAuthProperty> getAppleProperty(CertificationSubject subject) {
-		return subject == CertificationSubject.APPLE
-				? Optional.of((AppleAuthProperty) getMemberProperty(subject))
-				: Optional.empty();
+	private AppleAuthProperty getAppleProperty(CertificationSubject subject) {
+		if (subject != CertificationSubject.APPLE) {
+			throw new IllegalAccessError();
+		}
+		return (AppleAuthProperty) getMemberProperty(subject);
 	}
 
 	private KeyProperties getKeyProperties(AppleAuthProperty property) {
