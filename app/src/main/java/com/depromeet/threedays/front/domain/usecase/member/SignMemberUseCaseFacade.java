@@ -123,7 +123,9 @@ public class SignMemberUseCaseFacade {
 				RequestBodyGenerator.generateAppleAuthRequestBody(
 						AppleAuthRequestWithCodeConverter.from(property.getClientId(), clientSecret, code));
 		try {
-			return authClient.getAppleTokenInfo(new URI(property.getHost() + property.getUri()), body).getIdToken();
+			return authClient
+					.getAppleTokenInfo(new URI(property.getHost() + property.getUri()), body)
+					.getIdToken();
 		} catch (URISyntaxException e) {
 			throw new ExternalIntegrationException("social.login.error");
 		}

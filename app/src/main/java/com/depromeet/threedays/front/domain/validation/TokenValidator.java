@@ -19,9 +19,9 @@ public class TokenValidator {
 	private final TokenResolver tokenResolver;
 
 	public void validateIdToken(
-		AppleAuthProperty property,
-		AppleSignMemberRequest request,
-		IdTokenProperties idTokenProperties) {
+			AppleAuthProperty property,
+			AppleSignMemberRequest request,
+			IdTokenProperties idTokenProperties) {
 
 		Date currentTime = new Date(System.currentTimeMillis());
 		if (!currentTime.before(idTokenProperties.getExp())) {
