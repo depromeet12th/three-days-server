@@ -2,10 +2,10 @@ package com.depromeet.threedays.front.web.controller
 
 import com.depromeet.threedays.data.entity.client.ClientEntity
 import com.depromeet.threedays.front.AsyncIntegrationTestSpecification
+import com.depromeet.threedays.front.config.security.filter.token.TokenGenerator
 import com.depromeet.threedays.front.data.member.MemberInitializer
 import com.depromeet.threedays.front.persistence.repository.client.ClientRepository
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository
-import com.depromeet.threedays.front.support.TokenGenerator
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders

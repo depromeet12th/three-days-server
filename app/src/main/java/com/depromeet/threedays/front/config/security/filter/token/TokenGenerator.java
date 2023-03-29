@@ -1,4 +1,4 @@
-package com.depromeet.threedays.front.support;
+package com.depromeet.threedays.front.config.security.filter.token;
 
 import com.depromeet.threedays.front.client.property.auth.AppleAuthProperty;
 import com.depromeet.threedays.front.domain.model.member.Token;

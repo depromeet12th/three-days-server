@@ -1,6 +1,7 @@
 package com.depromeet.threedays.front.web.controller
 
 import com.depromeet.threedays.front.IntegrationTestSpecification
+import com.depromeet.threedays.front.config.security.filter.token.TokenGenerator
 import com.depromeet.threedays.front.domain.command.SaveMemberCommand
 import com.depromeet.threedays.front.domain.usecase.habit.DeleteHabitAchievementUseCase
 import com.depromeet.threedays.front.domain.usecase.habit.SaveHabitUseCase
@@ -8,7 +9,6 @@ import com.depromeet.threedays.front.domain.usecase.mate.SaveMateUseCase
 import com.depromeet.threedays.front.domain.usecase.member.SaveMemberUseCase
 import com.depromeet.threedays.front.exception.ExternalIntegrationException
 import com.depromeet.threedays.front.exception.PolicyViolationException
-import com.depromeet.threedays.front.support.TokenGenerator
 import com.depromeet.threedays.front.web.request.habit.SaveHabitRequest
 import com.depromeet.threedays.front.web.request.mate.SaveMateRequest
 import com.fasterxml.jackson.databind.ObjectMapper

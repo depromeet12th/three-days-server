@@ -1,5 +1,6 @@
 package com.depromeet.threedays.front.support;
 
+import com.depromeet.threedays.front.config.security.filter.token.TokenGenerator;
 import com.depromeet.threedays.front.config.security.filter.token.TokenResolver;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
