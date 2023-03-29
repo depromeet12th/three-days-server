@@ -2,20 +2,18 @@ package com.depromeet.threedays.front.client.model;
 
 import com.depromeet.threedays.data.enums.CertificationSubject;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberInfo {
 	private String id;
 	private String name;
 	private Properties properties;
-
-	public static MemberInfo of(String id, String name) {
-		return new MemberInfo(id, name, new Properties());
-	}
 
 	@Getter
 	@AllArgsConstructor
