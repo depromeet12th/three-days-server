@@ -1,8 +1,16 @@
 package com.depromeet.threedays.front.config.security.filter.token;
 
+import com.depromeet.threedays.front.client.model.KeyProperties;
+import com.depromeet.threedays.front.client.model.KeyProperties.KeyProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nimbusds.jose.JWSVerifier;
+import com.nimbusds.jose.crypto.RSASSAVerifier;
+import com.nimbusds.jose.jwk.JWK;
+import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jwt.SignedJWT;
 import io.jsonwebtoken.Jwts;
+import java.security.interfaces.RSAPublicKey;
 import java.util.Base64;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
@@ -90,5 +98,25 @@ public class TokenResolver {
 		} catch (ParseException e) {
 			throw new AccessDeniedException(e.getMessage());
 		}
+	}
+
+	public boolean verifyPublicKey(KeyProperties keyProperties, String idToken) {
+		try {
+			SignedJWT signedJWT = SignedJWT.parse(idToken);
+
+			for (KeyProperty key : keyProperties.getKeys()) {
+				ObjectMapper objectMapper = new ObjectMapper();
+				RSAKey rsaKey = (RSAKey) JWK.parse(objectMapper.writeValueAsString(key));
+				RSAPublicKey publicKey = rsaKey.toRSAPublicKey();
+				JWSVerifier verifier = new RSASSAVerifier(publicKey);
+
+				if (signedJWT.verify(verifier)) {
+					return true;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }
