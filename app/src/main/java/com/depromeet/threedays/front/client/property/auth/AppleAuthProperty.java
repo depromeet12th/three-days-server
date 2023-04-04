@@ -11,14 +11,17 @@ public class AppleAuthProperty extends AuthRequestProperty {
 	@Value("${apple.key.uri}")
 	private String keyURI;
 
-	@Value("${apple.key_id}")
+	@Value("${apple.keyId}")
 	private String keyId;
 
-	@Value("${apple.client_id}")
-	private String clientId;
+	@Value("${apple.serviceId}")
+	private String serviceId;
 
-	@Value("${apple.team_id}")
+	@Value("${apple.teamId}")
 	private String teamId;
+
+	@Value("${apple.privateKey}")
+	private String privateKey;
 
 	public AppleAuthProperty(
 			@Value("${apple.host}") String host,

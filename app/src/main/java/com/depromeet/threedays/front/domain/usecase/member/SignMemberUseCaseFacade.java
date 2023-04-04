@@ -121,7 +121,7 @@ public class SignMemberUseCaseFacade {
 
 		Map<String, String> body =
 				RequestBodyGenerator.generateAppleAuthRequestBody(
-						AppleAuthRequestWithCodeConverter.from(property.getClientId(), clientSecret, code));
+						AppleAuthRequestWithCodeConverter.from(property.getServiceId(), clientSecret, code));
 		try {
 			return authClient
 					.getAppleTokenInfo(new URI(property.getHost() + property.getUri()), body)

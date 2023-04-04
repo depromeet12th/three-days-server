@@ -36,7 +36,7 @@ public class TokenValidator {
 			throw new JsonParsingException("token.not.valid");
 		}
 
-		if (!property.getClientId().equals(idTokenProperties.getAud())) {
+		if (!property.getServiceId().equals(idTokenProperties.getAud())) {
 			throw new JsonParsingException("token.not.valid");
 		}
 	}

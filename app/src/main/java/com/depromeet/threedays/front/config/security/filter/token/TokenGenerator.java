@@ -28,7 +28,7 @@ public class TokenGenerator {
 
 	private static final String MEMBER_ID_CLAIM_KEY = "memberId";
 
-	String generateAccessToken(Long memberId) {
+	public String generateAccessToken(Long memberId) {
 		Date now = new Date();
 
 		return Jwts.builder()
@@ -60,8 +60,8 @@ public class TokenGenerator {
 				.setIssuedAt(now)
 				.setExpiration(new Date(now.getTime() + clientSecretValidTime))
 				.setAudience(property.getHost())
-				.setSubject(property.getClientId())
-				.signWith(Keys.hmacShaKeyFor(property.getKeyId().getBytes()), SignatureAlgorithm.ES256)
+				.setSubject(property.getServiceId())
+				.signWith(Keys.hmacShaKeyFor(property.getPrivateKey().getBytes()), SignatureAlgorithm.ES256)
 				.compact();
 	}
 
