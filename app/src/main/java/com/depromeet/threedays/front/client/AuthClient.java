@@ -23,8 +23,8 @@ public interface AuthClient {
 	@GetMapping
 	KeyProperties getKeyProperties(URI uri);
 
-	@PostMapping
-	AppleTokenInfo getAppleTokenInfo(URI uri, @RequestBody Map<String, String> body);
+	@PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	AppleTokenInfo getAppleTokenInfo(URI uri, @RequestBody Map<String, ?> body);
 
 	@PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	String unlink(
