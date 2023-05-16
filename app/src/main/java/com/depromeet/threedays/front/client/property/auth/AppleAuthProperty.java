@@ -20,8 +20,8 @@ public class AppleAuthProperty extends AuthRequestProperty {
 	@Value("${apple.teamId}")
 	private String teamId;
 
-	@Value("${apple.privateKey}")
-	private String privateKey;
+	@Value("${apple.p8}")
+	private String pEight;
 
 	public AppleAuthProperty(
 			@Value("${apple.host}") String host,
