@@ -1,6 +1,4 @@
 package com.depromeet.threedays.front.config.security.filter.token;
-
-import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +10,7 @@ public class IdTokenProperties {
 
 	private String iss;
 	private String aud;
-	private Date exp;
+	private Long exp;
 	private Long iat;
 	private String sub;
 	private String nonce;
