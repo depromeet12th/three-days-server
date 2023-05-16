@@ -6,7 +6,6 @@ import com.depromeet.threedays.front.config.security.filter.token.IdTokenPropert
 import com.depromeet.threedays.front.config.security.filter.token.TokenResolver;
 import com.depromeet.threedays.front.exception.JsonParsingException;
 import com.depromeet.threedays.front.web.request.member.AppleSignMemberRequest;
-import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -23,8 +22,8 @@ public class TokenValidator {
 			AppleSignMemberRequest request,
 			IdTokenProperties idTokenProperties) {
 
-		Date currentTime = new Date(System.currentTimeMillis());
-		if (!currentTime.before(idTokenProperties.getExp())) {
+		Long currentTimeMillis = System.currentTimeMillis();
+		if (currentTimeMillis.compareTo(idTokenProperties.getExp()) < 0) {
 			throw new JsonParsingException("token.not.valid");
 		}
 
