@@ -1,6 +1,10 @@
 package com.depromeet.threedays.front.client.property.auth;
 
+import java.io.IOException;
+import java.io.StringReader;
 import lombok.Getter;
+import org.bouncycastle.util.io.pem.PemObject;
+import org.bouncycastle.util.io.pem.PemReader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -33,5 +37,20 @@ public class AppleAuthProperty extends AuthRequestProperty {
 	@Override
 	public String getAdminKey() {
 		return null;
+	}
+
+	public byte[] getPrivateKey() {
+		byte[] content = null;
+
+		try (PemReader pemReader = new PemReader(new StringReader(getPEight()))) {
+			{
+				PemObject pemObject = pemReader.readPemObject();
+				content = pemObject.getContent();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return content;
 	}
 }
