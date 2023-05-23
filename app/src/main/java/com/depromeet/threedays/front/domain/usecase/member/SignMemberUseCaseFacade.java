@@ -2,6 +2,8 @@ package com.depromeet.threedays.front.domain.usecase.member;
 
 import com.depromeet.threedays.data.enums.CertificationSubject;
 import com.depromeet.threedays.front.client.AuthClient;
+import com.depromeet.threedays.front.client.model.AppleMemberInfo;
+import com.depromeet.threedays.front.client.model.AppleTokenInfo;
 import com.depromeet.threedays.front.client.model.KeyProperties;
 import com.depromeet.threedays.front.client.model.MemberInfo;
 import com.depromeet.threedays.front.client.property.auth.AppleAuthProperty;
@@ -79,7 +81,7 @@ public class SignMemberUseCaseFacade {
 			return null;
 		}
 
-		MemberInfo info = getInfo(request);
+		AppleMemberInfo info = getInfo(request);
 
 		SaveMemberUseCaseResponse member =
 				getUseCase.execute(MemberQueryConverter.from(info.getId(), request));
@@ -91,14 +93,17 @@ public class SignMemberUseCaseFacade {
 		return member;
 	}
 
-	private MemberInfo getInfo(AppleSignMemberRequest request) {
-		// todo check 위에서는 NoSuchFieldError::new를 발생시키에 현 상황에서 가장 적당한 IllegalAccessError::new를 선택
+	private AppleMemberInfo getInfo(AppleSignMemberRequest request) {
 		AppleAuthProperty property = getAppleProperty(request.getCertificationSubject());
 		KeyProperties keyProperties = getKeyProperties(property);
 		tokenAuthenticator.authenticateIdToken(property, keyProperties, request);
-		String token = getToken(property, request.getCode());
-		String certificationId = tokenResolver.extractSubByToken(token);
-		return MemberInfo.builder().id(certificationId).name(request.getName()).build();
+		AppleTokenInfo token = getToken(property, request.getCode());
+		String certificationId = tokenResolver.extractSubByToken(token.getIdToken());
+		return AppleMemberInfo.builder()
+				.id(certificationId)
+				.name(request.getName())
+				.refreshToken(token.getRefreshToken())
+				.build();
 	}
 
 	private AppleAuthProperty getAppleProperty(CertificationSubject subject) {
@@ -116,16 +121,14 @@ public class SignMemberUseCaseFacade {
 		}
 	}
 
-	private String getToken(AppleAuthProperty property, String code) {
+	private AppleTokenInfo getToken(AppleAuthProperty property, String code) {
 		String clientSecret = tokenGenerator.generateClientSecret(property);
 
 		Map<String, String> body =
 				RequestBodyGenerator.generateAppleAuthRequestBody(
 						AppleAuthRequestWithCodeConverter.from(property.getServiceId(), clientSecret, code));
 		try {
-			return authClient
-					.getAppleTokenInfo(new URI(property.getHost() + property.getUri()), body)
-					.getIdToken();
+			return authClient.getAppleTokenInfo(new URI(property.getHost() + property.getUri()), body);
 		} catch (URISyntaxException e) {
 			throw new ExternalIntegrationException("social.login.error");
 		}
