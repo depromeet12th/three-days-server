@@ -29,4 +29,7 @@ public interface AuthClient {
 	@PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	String unlink(
 			URI uri, @RequestHeader(TOKEN_HEADER) String adminToken, @RequestBody Map<String, ?> form);
+
+	@PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	String unlink(URI uri, @RequestBody Map<String, ?> form);
 }
