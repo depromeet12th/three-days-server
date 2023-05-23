@@ -4,15 +4,20 @@ import com.depromeet.threedays.data.entity.member.MemberEntity;
 import com.depromeet.threedays.data.enums.CertificationSubject;
 import com.depromeet.threedays.data.enums.MemberStatus;
 import com.depromeet.threedays.front.client.AuthClient;
+import com.depromeet.threedays.front.client.property.auth.AppleAuthProperty;
 import com.depromeet.threedays.front.client.property.auth.AuthPropertyManager;
 import com.depromeet.threedays.front.client.property.auth.AuthRequestProperty;
 import com.depromeet.threedays.front.config.security.AuditorHolder;
+import com.depromeet.threedays.front.config.security.filter.token.TokenGenerator;
+import com.depromeet.threedays.front.domain.converter.member.AppleAuthRevokeRequestConverter;
 import com.depromeet.threedays.front.domain.converter.member.MemberConverter;
 import com.depromeet.threedays.front.domain.model.member.Member;
 import com.depromeet.threedays.front.domain.model.member.MemberEvent;
 import com.depromeet.threedays.front.exception.ExternalIntegrationException;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository;
+import com.depromeet.threedays.front.support.RequestBodyGenerator;
+import com.google.gson.JsonParser;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -33,6 +38,7 @@ public class DeleteMemberUseCase {
 	private final AuthClient authClient;
 	private final AuthPropertyManager propertyManager;
 	private final ApplicationEventPublisher eventPublisher;
+	private final TokenGenerator tokenGenerator;
 
 	public Member execute() {
 		log.info("deleteMemberUseCase execute() thread name : " + Thread.currentThread().getName());
@@ -68,7 +74,30 @@ public class DeleteMemberUseCase {
 			} catch (URISyntaxException e) {
 				throw new ExternalIntegrationException("social.login.error");
 			}
+		} else if (CertificationSubject.APPLE.equals(memberEntity.getCertificationSubject())) {
+			AppleAuthProperty property =
+					(AppleAuthProperty)
+							propertyManager.getMemberProperty(memberEntity.getCertificationSubject());
+
+			Map<String, String> form = getForm(memberEntity, property);
+
+			try {
+				authClient.unlink(new URI(property.getHost() + property.getUnlink()), form);
+			} catch (URISyntaxException e) {
+				throw new ExternalIntegrationException("social.login.error");
+			}
 		}
+	}
+
+	private Map<String, String> getForm(MemberEntity memberEntity, AppleAuthProperty property) {
+		String clientSecret = tokenGenerator.generateClientSecret(property);
+
+		String token = JsonParser.parseString(memberEntity.getResource()).getAsString();
+
+		Map<String, String> form =
+				RequestBodyGenerator.generateAppleAuthRevokeRequestBody(
+						AppleAuthRevokeRequestConverter.from(property.getServiceId(), clientSecret, token));
+		return form;
 	}
 
 	public Member executeCallback(CertificationSubject subject, String key, String userId) {
