@@ -24,6 +24,18 @@ kakao:
   unlink:
     uri: /v1/user/unlink
   adminKey: ${KAKAO_ADMINKEY}
+apple:
+  serviceId: ${APPLE_SERVICE_ID}
+  teamId: ${APPLE_TEAM_ID}
+  keyId: ${APPLE_KEY_ID}
+  host: ${APPLE_HOST}
+  p8: ${APPLE_P8}
+  key:
+    uri: /auth/keys
+  token:
+    uri: /auth/token
+  unlink:
+    uri: /auth/revoke
 
 firebase:
   multicast-message:
