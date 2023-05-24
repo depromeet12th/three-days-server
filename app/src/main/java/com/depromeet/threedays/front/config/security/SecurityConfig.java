@@ -40,7 +40,8 @@ public class SecurityConfig {
 						"/actuator/health",
 						"/error")
 				.permitAll()
-				.antMatchers(HttpMethod.POST, "/api/v1/members", "/api/v1/members/tokens")
+				.antMatchers(
+						HttpMethod.POST, "/api/v1/members", "/api/v1/members/apple", "/api/v1/members/tokens")
 				.permitAll()
 				.antMatchers("/api/v1/**")
 				.authenticated()
