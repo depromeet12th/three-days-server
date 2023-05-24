@@ -1,4 +1,5 @@
 package com.depromeet.threedays.front.config.security.filter.token;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
