@@ -286,6 +286,20 @@ class Descriptor {
         }
     }
 
+    static FieldDescriptor[] appleSignMemberRequest() {
+        return new FieldDescriptor[]{
+                fieldWithPath("nonce").type(JsonFieldType.STRING).description("애플 로그인 서버에 요청한 nonce"),
+                fieldWithPath('certificationSubject').type(JsonFieldType.STRING).description('device fcmToken'),
+                fieldWithPath("socialToken").type(JsonFieldType.STRING).description("device identifier"),
+                fieldWithPath("code").type(JsonFieldType.STRING).description("애플 로그인 서버에서 받은 code"),
+                fieldWithPath("user").type(JsonFieldType.OBJECT).description("user"),
+                fieldWithPath("user.email").type(JsonFieldType.STRING).description("애플 프록시 email"),
+                fieldWithPath("user.name").type(JsonFieldType.OBJECT).description("애플 사용자 name"),
+                fieldWithPath("user.name.firstName").type(JsonFieldType.STRING).description("애플 사용자 이름"),
+                fieldWithPath("user.name.lastName").type(JsonFieldType.STRING).description("애플 사용자 성")
+        }
+    }
+
     static FieldDescriptor[] token() {
         return new FieldDescriptor[]{
                 fieldWithPath("data.accessToken").type(JsonFieldType.STRING).description("accessToken"),
