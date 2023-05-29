@@ -289,9 +289,9 @@ class Descriptor {
     static FieldDescriptor[] appleSignMemberRequest() {
         return new FieldDescriptor[]{
                 fieldWithPath("nonce").type(JsonFieldType.STRING).description("애플 로그인 서버에 요청한 nonce"),
-                fieldWithPath('certificationSubject').type(JsonFieldType.STRING).description('device fcmToken'),
-                fieldWithPath("socialToken").type(JsonFieldType.STRING).description("device identifier"),
-                fieldWithPath("code").type(JsonFieldType.STRING).description("애플 로그인 서버에서 받은 code"),
+                fieldWithPath('certificationSubject').type(JsonFieldType.STRING).description('소셜 로그인 종류 APPLE'),
+                fieldWithPath("socialToken").type(JsonFieldType.STRING).description("애플 로그인 서버에서 받은 id_token"),
+                fieldWithPath("code").type(JsonFieldType.STRING).description("애플 로그인 서버에서 받은 grant_code"),
                 fieldWithPath("user").type(JsonFieldType.OBJECT).description("user"),
                 fieldWithPath("user.email").type(JsonFieldType.STRING).description("애플 프록시 email"),
                 fieldWithPath("user.name").type(JsonFieldType.OBJECT).description("애플 사용자 name"),

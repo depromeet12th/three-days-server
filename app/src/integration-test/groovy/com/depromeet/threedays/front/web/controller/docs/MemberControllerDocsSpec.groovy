@@ -126,7 +126,7 @@ class MemberControllerDocsSpec extends RestDocsSpecification {
 
     def '애플 회원가입/로그인'() {
         given:
-        def request = new AppleSignMemberRequest(CertificationSubject.APPLE, "social token", "apple auth code", "random nonce", "apple proxy email", "user firstName", "user lastName")
+        def request = new AppleSignMemberRequest(CertificationSubject.APPLE, "apple id_token", "apple grant_code", "random nonce", "apple email", "user firstName", "user lastName")
 
         def content = new ObjectMapper().writeValueAsString(request)
 
