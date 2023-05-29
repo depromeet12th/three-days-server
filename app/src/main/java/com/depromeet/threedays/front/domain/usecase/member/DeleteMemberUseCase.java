@@ -17,7 +17,6 @@ import com.depromeet.threedays.front.exception.ExternalIntegrationException;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository;
 import com.depromeet.threedays.front.support.RequestBodyGenerator;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -80,7 +79,7 @@ public class DeleteMemberUseCase {
 					(AppleAuthProperty)
 							propertyManager.getMemberProperty(memberEntity.getCertificationSubject());
 
-			Map<String, String> form = getForm(memberEntity, property);
+			Map<String, String> form = getForm(memberEntity.getResource(), property);
 
 			try {
 				authClient.unlink(new URI(property.getHost() + property.getUnlink()), form);
@@ -90,19 +89,15 @@ public class DeleteMemberUseCase {
 		}
 	}
 
-	private Map<String, String> getForm(MemberEntity memberEntity, AppleAuthProperty property) {
+	private Map<String, String> getForm(String resource, AppleAuthProperty property) {
 		String clientSecret = tokenGenerator.generateClientSecret(property);
-		String resource = memberEntity.getResource();
 		String token = extractRefreshToken(resource);
-		Map<String, String> form =
-				RequestBodyGenerator.generateAppleAuthRevokeRequestBody(
-						AppleAuthRevokeRequestConverter.from(property.getServiceId(), clientSecret, token));
-		return form;
+		return RequestBodyGenerator.generateAppleAuthRevokeRequestBody(
+				AppleAuthRevokeRequestConverter.from(property.getServiceId(), clientSecret, token));
 	}
 
 	private String extractRefreshToken(String resource) {
-		JsonObject asJsonObject = JsonParser.parseString(resource).getAsJsonObject();
-		return asJsonObject.get("refreshToken").getAsString();
+		return JsonParser.parseString(resource).getAsJsonObject().get("refreshToken").getAsString();
 	}
 
 	public Member executeCallback(CertificationSubject subject, String key, String userId) {
