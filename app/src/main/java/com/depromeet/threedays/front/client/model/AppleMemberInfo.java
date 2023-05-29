@@ -12,8 +12,4 @@ import lombok.experimental.SuperBuilder;
 public class AppleMemberInfo extends MemberInfo {
 
 	private String refreshToken;
-
-	public AppleMemberInfo(String id, String name) {
-		super(id, name);
-	}
 }
