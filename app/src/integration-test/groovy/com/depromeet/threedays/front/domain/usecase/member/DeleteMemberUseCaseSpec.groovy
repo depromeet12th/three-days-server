@@ -6,6 +6,7 @@ import com.depromeet.threedays.data.enums.MemberStatus
 import com.depromeet.threedays.front.IntegrationTestSpecification
 import com.depromeet.threedays.front.client.AuthClient
 import com.depromeet.threedays.front.client.property.auth.AuthPropertyManager
+import com.depromeet.threedays.front.config.security.filter.token.TokenGenerator
 import com.depromeet.threedays.front.data.habit.HabitDataInitializer
 import com.depromeet.threedays.front.data.member.MemberInitializer
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository
@@ -22,6 +23,7 @@ class DeleteMemberUseCaseSpec extends IntegrationTestSpecification {
     AuthPropertyManager propertyManager
     AuthClient authClient
     ApplicationEventPublisher eventPublisher
+    TokenGenerator tokenGenerator
 
     @Autowired
     MemberInitializer initializer
@@ -36,7 +38,7 @@ class DeleteMemberUseCaseSpec extends IntegrationTestSpecification {
         propertyManager = Mock(AuthPropertyManager.class)
         authClient = Mock(AuthClient.class)
         eventPublisher = Mock(ApplicationEventPublisher.class)
-        useCase = new DeleteMemberUseCase(repository, authClient, propertyManager, eventPublisher)
+        useCase = new DeleteMemberUseCase(repository, authClient, propertyManager, eventPublisher, tokenGenerator)
     }
 
     def "사용자를 삭제하면 상태가 WITHDRAWN."() {
