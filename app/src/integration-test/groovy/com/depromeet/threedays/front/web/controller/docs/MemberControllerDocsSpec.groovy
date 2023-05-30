@@ -46,7 +46,7 @@ class MemberControllerDocsSpec extends RestDocsSpecification {
 
     @SpringBean
     SignMemberUseCaseFacade signMemberUseCaseFacade = Stub() {
-//        execute(_ as SignMemberRequest) >> CustomSchema.saveMemberUseCaseResponse()
+        execute(_ as SignMemberRequest) >> CustomSchema.saveMemberUseCaseResponse()
         execute(_ as AppleSignMemberRequest) >> CustomSchema.saveMemberUseCaseResponse()
     }
     @SpringBean
