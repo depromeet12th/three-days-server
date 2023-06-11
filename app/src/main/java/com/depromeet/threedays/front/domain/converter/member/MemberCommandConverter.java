@@ -32,18 +32,13 @@ public class MemberCommandConverter {
 		}
 
 		return SaveMemberCommand.builder()
-				.resource(getResource(data).toString())
+				.resource(new JsonObject().toString())
 				.name(data.getName(request.getCertificationSubject()))
 				.certificationSubject(request.getCertificationSubject())
 				.memberInfo(data)
 				.certificationId(data.getId())
+				.certificationToken(data.getRefreshToken())
 				.notificationConsent(true)
 				.build();
-	}
-
-	private static JsonObject getResource(AppleMemberInfo data) {
-		JsonObject resource = new JsonObject();
-		resource.addProperty("refreshToken", data.getRefreshToken());
-		return resource;
 	}
 }
