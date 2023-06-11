@@ -17,7 +17,6 @@ import com.depromeet.threedays.front.exception.ExternalIntegrationException;
 import com.depromeet.threedays.front.exception.ResourceNotFoundException;
 import com.depromeet.threedays.front.persistence.repository.member.MemberRepository;
 import com.depromeet.threedays.front.support.RequestBodyGenerator;
-import com.google.gson.JsonParser;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -62,42 +61,45 @@ public class DeleteMemberUseCase {
 		MemberEntity memberEntity =
 				repository.findById(memberId).orElseThrow(ResourceNotFoundException::new);
 		if (CertificationSubject.KAKAO.equals(memberEntity.getCertificationSubject())) {
-			try {
-				AuthRequestProperty property =
-						propertyManager.getMemberProperty(memberEntity.getCertificationSubject());
-
-				Map<String, Object> form = new HashMap<>();
-				form.put("target_id_type", "user_id");
-				form.put("target_id", Long.parseLong(memberEntity.getCertificationId()));
-				String adminKey = "KakaoAK " + property.getAdminKey();
-				authClient.unlink(new URI(property.getHost() + property.getUnlink()), adminKey, form);
-			} catch (URISyntaxException e) {
-				throw new ExternalIntegrationException("social.login.error");
-			}
+			kakaoUnlink(memberEntity);
 		} else if (CertificationSubject.APPLE.equals(memberEntity.getCertificationSubject())) {
-			AppleAuthProperty property =
-					(AppleAuthProperty)
-							propertyManager.getMemberProperty(memberEntity.getCertificationSubject());
-
-			Map<String, String> form = getForm(memberEntity.getResource(), property);
-
-			try {
-				authClient.unlink(new URI(property.getHost() + property.getUnlink()), form);
-			} catch (URISyntaxException e) {
-				throw new ExternalIntegrationException("social.login.error");
-			}
+			appleUnlik(memberEntity);
 		}
 	}
 
-	private Map<String, String> getForm(String resource, AppleAuthProperty property) {
-		String clientSecret = tokenGenerator.generateClientSecret(property);
-		String token = extractRefreshToken(resource);
-		return RequestBodyGenerator.generateAppleAuthRevokeRequestBody(
-				AppleAuthRevokeRequestConverter.from(property.getServiceId(), clientSecret, token));
+	private void kakaoUnlink(MemberEntity memberEntity) {
+		try {
+			AuthRequestProperty property =
+					propertyManager.getMemberProperty(memberEntity.getCertificationSubject());
+
+			Map<String, Object> form = new HashMap<>();
+			form.put("target_id_type", "user_id");
+			form.put("target_id", Long.parseLong(memberEntity.getCertificationId()));
+			String adminKey = "KakaoAK " + property.getAdminKey();
+			authClient.unlink(new URI(property.getHost() + property.getUnlink()), adminKey, form);
+		} catch (URISyntaxException e) {
+			throw new ExternalIntegrationException("social.login.error");
+		}
 	}
 
-	private String extractRefreshToken(String resource) {
-		return JsonParser.parseString(resource).getAsJsonObject().get("refreshToken").getAsString();
+	private void appleUnlik(MemberEntity memberEntity) {
+		AppleAuthProperty property =
+				(AppleAuthProperty)
+						propertyManager.getMemberProperty(memberEntity.getCertificationSubject());
+
+		Map<String, String> form = getForm(property, memberEntity.getCertificationToken());
+
+		try {
+			authClient.unlink(new URI(property.getHost() + property.getUnlink()), form);
+		} catch (URISyntaxException e) {
+			throw new ExternalIntegrationException("social.login.error");
+		}
+	}
+
+	private Map<String, String> getForm(AppleAuthProperty property, String token) {
+		String clientSecret = tokenGenerator.generateClientSecret(property);
+		return RequestBodyGenerator.generateAppleAuthRevokeRequestBody(
+				AppleAuthRevokeRequestConverter.from(property.getServiceId(), clientSecret, token));
 	}
 
 	public Member executeCallback(CertificationSubject subject, String key, String userId) {
