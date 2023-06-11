@@ -16,6 +16,7 @@ import com.depromeet.threedays.front.domain.converter.member.MemberQueryConverte
 import com.depromeet.threedays.front.domain.model.member.SaveMemberUseCaseResponse;
 import com.depromeet.threedays.front.domain.validation.TokenAuthenticator;
 import com.depromeet.threedays.front.exception.ExternalIntegrationException;
+import com.depromeet.threedays.front.exception.PolicyViolationException;
 import com.depromeet.threedays.front.support.RequestBodyGenerator;
 import com.depromeet.threedays.front.web.request.member.AppleSignMemberRequest;
 import com.depromeet.threedays.front.web.request.member.SignMemberRequest;
@@ -108,7 +109,7 @@ public class SignMemberUseCaseFacade {
 
 	private AppleAuthProperty getAppleProperty(CertificationSubject subject) {
 		if (subject != CertificationSubject.APPLE) {
-			throw new IllegalAccessError();
+			throw new PolicyViolationException("social.login.error");
 		}
 		return (AppleAuthProperty) getMemberProperty(subject);
 	}
