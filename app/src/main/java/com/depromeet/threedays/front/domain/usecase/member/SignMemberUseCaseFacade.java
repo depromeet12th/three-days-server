@@ -24,6 +24,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Map;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -95,13 +99,34 @@ public class SignMemberUseCaseFacade {
 	}
 
 	private AppleMemberInfo getInfo(AppleSignMemberRequest request) {
+		AppleMemberInfoProperty property = getAppleMemberInfoProperty(request);
+
+		return AppleMemberInfo.builder()
+				.id(property.getId())
+				.name(property.getName())
+				.refreshToken(property.getRefreshToken())
+				.build();
+	}
+
+	@Getter
+	@NoArgsConstructor
+	@AllArgsConstructor
+	@Builder(toBuilder = true)
+	private static class AppleMemberInfoProperty {
+		private String id;
+		private String name;
+		private String refreshToken;
+	}
+
+	private AppleMemberInfoProperty getAppleMemberInfoProperty(AppleSignMemberRequest request) {
 		AppleAuthProperty property = getAppleProperty(request.getCertificationSubject());
 		KeyProperties keyProperties = getKeyProperties(property);
 		tokenAuthenticator.authenticateIdToken(property, keyProperties, request);
+
 		AppleTokenInfo token = getToken(property, request.getCode());
-		String certificationId = tokenResolver.extractSubByToken(token.getIdToken());
-		return AppleMemberInfo.builder()
-				.id(certificationId)
+
+		return AppleMemberInfoProperty.builder()
+				.id(tokenResolver.extractSubByToken(token.getIdToken()))
 				.name(request.getName())
 				.refreshToken(token.getRefreshToken())
 				.build();
