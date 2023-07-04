@@ -1,12 +1,12 @@
 package com.depromeet.threedays.front.domain.usecase.member
 
 import com.depromeet.threedays.front.IntegrationTestSpecification
+import com.depromeet.threedays.front.config.security.filter.token.TokenGenerator
 import com.depromeet.threedays.front.config.security.filter.token.TokenResolver
 import com.depromeet.threedays.front.data.member.MemberInitializer
 import com.depromeet.threedays.front.domain.model.member.Token
 import com.depromeet.threedays.front.exception.PolicyViolationException
 import com.depromeet.threedays.front.exception.RefreshTokenInvalidException
-import com.depromeet.threedays.front.support.TokenGenerator
 import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.Subject
 

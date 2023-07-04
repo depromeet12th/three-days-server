@@ -41,6 +41,7 @@ public class MemberConverter {
 				.name(command.getName())
 				.certificationId(command.getCertificationId())
 				.certificationSubject(command.getCertificationSubject())
+				.certificationToken(command.getCertificationToken())
 				.resource(command.getResource())
 				.notificationConsent(command.getNotificationConsent())
 				.build();

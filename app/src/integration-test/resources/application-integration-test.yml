@@ -61,11 +61,23 @@ kakao:
   unlink:
     uri: /v1/user/unlink
   adminKey: thisIsAdminKey
-
+apple:
+  serviceId: thisIsServiceId
+  teamId: thisIsTeamId
+  keyId: thisIsKeyId
+  host: https://appleid.apple.com
+  p8: "-----BEGIN PRIVATE KEY-----\r\thisIsP8\r\n-----END PRIVATE KEY-----\r\n"
+  key:
+    uri: /auth/keys
+  token:
+    uri: /auth/token
+  unlink:
+    uri: /auth/revoke
 security:
   jwt:
     token:
-      validtime: 72000000
+      validtime:
+        clientSecret: 3600000
       secretkey: 974AE3E91F2972E1BF2951CE1F651974AE3E91F2972E1BF2951CE1F651
 
 firebase:

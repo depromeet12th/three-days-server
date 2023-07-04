@@ -29,6 +29,8 @@ public class MemberEntity {
 
 	@Column private String certificationId;
 
+	@Column private String certificationToken;
+
 	@Column private String name;
 
 	@Column

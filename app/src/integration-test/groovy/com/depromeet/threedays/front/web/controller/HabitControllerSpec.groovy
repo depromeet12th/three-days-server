@@ -1,7 +1,7 @@
 package com.depromeet.threedays.front.web.controller
 
 import com.depromeet.threedays.front.IntegrationTestSpecification
-import com.depromeet.threedays.front.support.TokenGenerator
+import com.depromeet.threedays.front.config.security.filter.token.TokenGenerator
 import com.depromeet.threedays.front.web.request.member.MemberNameUpdateRequest
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Autowired

@@ -9,6 +9,7 @@ import com.depromeet.threedays.front.domain.usecase.client.DeleteClientUseCase
 import com.depromeet.threedays.front.domain.usecase.member.*
 import com.depromeet.threedays.front.web.controller.MemberController
 import com.depromeet.threedays.front.web.request.client.DeleteClientRequest
+import com.depromeet.threedays.front.web.request.member.AppleSignMemberRequest
 import com.depromeet.threedays.front.web.request.member.MemberNameUpdateRequest
 import com.depromeet.threedays.front.web.request.member.MemberNotificationConsentUpdateRequest
 import com.depromeet.threedays.front.web.request.member.MemberResourceUpdateRequest
@@ -46,6 +47,7 @@ class MemberControllerDocsSpec extends RestDocsSpecification {
     @SpringBean
     SignMemberUseCaseFacade signMemberUseCaseFacade = Stub() {
         execute(_ as SignMemberRequest) >> CustomSchema.saveMemberUseCaseResponse()
+        execute(_ as AppleSignMemberRequest) >> CustomSchema.saveMemberUseCaseResponse()
     }
     @SpringBean
     SaveNameUseCase saveNameUseCase = Stub() {
@@ -115,6 +117,36 @@ class MemberControllerDocsSpec extends RestDocsSpecification {
                                                 .requestFields(Descriptor.signMemberRequest())
                                                 .responseSchema(Schema.schema("Member"))
                                                 .requestSchema(Schema.schema("SignMemberRequest"))
+                                                .build()
+                                )
+                        )
+                )
+
+    }
+
+    def '애플 회원가입/로그인'() {
+        given:
+        def request = new AppleSignMemberRequest(CertificationSubject.APPLE, "apple id_token", "apple grant_code", "random nonce", "apple email", "user firstName", "user lastName")
+
+        def content = new ObjectMapper().writeValueAsString(request)
+
+        expect:
+        mockMvc.perform(post("/api/v1/members/apple")
+                .content(content)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is2xxSuccessful())
+                .andDo(
+                        document("saveAppleMember",
+                                resource(
+                                        ResourceSnippetParameters.builder()
+                                                .description("애플 멤버 추가")
+                                                .tag(TAG)
+                                                .responseFields(
+                                                        Descriptor.successResponse(Descriptor.saveMemberResponse())
+                                                )
+                                                .requestFields(Descriptor.appleSignMemberRequest())
+                                                .responseSchema(Schema.schema("AppleMember"))
+                                                .requestSchema(Schema.schema("AppleSignMemberRequest"))
                                                 .build()
                                 )
                         )
