@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.web.filter.CommonsRequestLoggingFilter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -55,5 +56,17 @@ public class WebMvcConfig implements WebMvcConfigurer {
 				.addDeserializer(LocalDateTime.class, new LocalDateTimeJsonConverter.Deserializer())
 				.addSerializer(LocalDate.class, new LocalDateJsonConverter.Serializer())
 				.addDeserializer(LocalDate.class, new LocalDateJsonConverter.Deserializer());
+	}
+
+	@Bean
+	public CommonsRequestLoggingFilter requestLoggingFilter() {
+		CommonsRequestLoggingFilter filter = new CommonsRequestLoggingFilter();
+		filter.setIncludeHeaders(true);
+		filter.setIncludeQueryString(true);
+		filter.setIncludePayload(true);
+		filter.setIncludePayload(true);
+		filter.setIncludeClientInfo(true);
+		filter.setMaxPayloadLength(100000);
+		return filter;
 	}
 }

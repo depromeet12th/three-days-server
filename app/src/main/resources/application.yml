@@ -89,3 +89,11 @@ slack:
 batch:
   global: 30
   habit: 30
+
+logging:
+  exception-conversion-word: '%wEx'
+  level:
+    org:
+      springframework:
+        web:
+          filter: debug
